@@ -112,6 +112,7 @@ class FeedingBot:
             log_path = self.log_file + str(self.log_count)
             self.log_count += 1
 
+            ################################ TODO: Have to change to interface with mujoco instead ################################
             annotated_image, detections, item_masks, item_portions, item_labels = self.inference_server.detect_items(camera_color_data, log_path)
 
             item_labels = [l.replace('strawberry piece', 'strawberry') for l in item_labels]   
@@ -129,25 +130,11 @@ class FeedingBot:
                     exit(1)
             while k == 'n':
                 exit(1)
-                # print("Please manually give the correct labels")
-                # print("Detected items:", item_labels)
-                # label_id = int(input("What label to correct?"))
-                # item_labels[label_id] = input("Correct label:")
-
-                # annotated_image = self.inference_server.get_annotated_image(camera_color_data, detections, item_labels)
-
-                # cv2.imshow('vis', annotated_image)
-                # cv2.waitKey(0)
-
-                # input("Visualzing the detected items. Press Enter to continue.")
-
-                # k = input('Are detected items correct now?')
-                # while k not in ['y', 'n']:
-                #     k = input('Are detected items correct now?')
 
             cv2.destroyAllWindows()
             
             
+            ################################ TODO: Returns item_name and count of items ################################
             clean_item_labels, _ = self.inference_server.clean_labels(item_labels)
 
             # remove detections of blue plate
@@ -209,6 +196,8 @@ class FeedingBot:
 
             #food_id, action_type, metadata = self.inference_server.get_manual_action(annotated_image, camera_color_data, per_food_masks, category_list, per_food_portions, user_preference, bite_history, continue_food_id, log_path)
             # food, dip = self.inference_server.get_manual_action(annotated_image, camera_color_data, per_food_masks, category_list, labels_list, per_food_portions, user_preference, bite_history, continue_food_label, log_path)
+            
+            ################################ TODO: Need to modify to not require images and the other things ################################ 
             food, dip = self.inference_server.get_autonomous_action(annotated_image, camera_color_data, per_food_masks, category_list, labels_list, per_food_portions, user_preference, bite_history, continue_food_label, continue_dip_label, log_path)
             if food is None:
                 exit(1)
@@ -217,7 +206,7 @@ class FeedingBot:
             if dip is not None:
                 dip_id, dip_action_type, dip_metadata = dip
 
-
+            ################################ TODO: Need to modify to not require images and the other things (Probably do in skill_library instead) ################################
             if action_type == 'Twirl':
                 densest_point = metadata['point']
                 twirl_angle = metadata['twirl_angle']
