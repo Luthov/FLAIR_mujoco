@@ -307,6 +307,7 @@ class BiteAcquisitionInference:
             return 'Push Filling'
         return 'Acquire'
 
+    # Probs can give different conditions to decide what to do with food
     def get_scoop_action(self, image, masks, categories, log_path = None):
         
         semisolid_mask = None
@@ -657,20 +658,8 @@ class BiteAcquisitionInference:
 
         self.FOOD_CLASSES = [f.replace('fettuccine', 'noodles') for f in self.FOOD_CLASSES]
         self.FOOD_CLASSES = [f.replace('spaghetti', 'noodles') for f in self.FOOD_CLASSES]
-        # self.FOOD_CLASSES.append('blue plate')
-        # self.FOOD_CLASSES = [f.replace('banana', 'banana piece') for f in self.FOOD_CLASSES]
-        # self.FOOD_CLASSES.append('banana piece')
 
         cropped_image = image.copy()
-
-        # cropped_image = image.copy()[0:440, 550:990]
-
-        # cv2.imshow('img', cropped_image)
-        # cv2.waitKey(0)
-
-        # k = input("Visualizing cropped image, is it correct?")
-        # if k == 'n':
-        #     exit(1)
 
         # detect objects
         detections = self.grounding_dino_model.predict_with_classes(
@@ -680,15 +669,6 @@ class BiteAcquisitionInference:
             text_threshold=self.TEXT_THRESHOLD
         )
         
-        # if IS_NOODLE:
-        #     filtered_idxs = []
-        #     for i in range(len(detections)):
-        #         box = detections.xyxy[i]
-        #         area = (box[2] - box[0])*(box[3] - box[1])
-        #         if area < 50000 and area > 300:
-        #             filtered_idxs.append(i)
-        #     detections = sv.Detections(xyxy=detections.xyxy[filtered_idxs], class_id=np.array(detections.class_id[filtered_idxs]), confidence=detections.confidence[filtered_idxs])
-
         # annotate image with detections
         box_annotator = sv.BoxAnnotator()
         labels = [
@@ -1115,6 +1095,140 @@ class BiteAcquisitionInference:
                 max_occlusion = occlusion_amount
                 max_occluding_mask = mask
         return max_occluding_mask.astype(np.uint8)
+    
+    def get_autonomous_action_mujoco(self, annotated_image, image, masks, categories, labels, portions, preference, history, continue_food_label = None, continue_dip_label = None, log_path = None):
+
+        ## First half of this function is determining the eficiency scores of each food item
+        if continue_food_label is not None:
+            food_to_consider = [i for i in range(len(labels)) if labels[i] == continue_food_label]
+            if continue_dip_label is not None:
+                dip_idx = labels.index(continue_dip_label)
+                food_to_consider.append(dip_idx)
+        else:
+            food_to_consider = range(len(categories))
+
+        print('Food to consider: ', food_to_consider)
+
+        next_actions = []
+        dip_actions = []
+        efficiency_scores = []        
+
+        # Maybe can just assign efficiency score manually for now?
+        print(categories, food_to_consider)
+        for idx in food_to_consider:
+
+            # I'm stupid, you can't pick up noodles using a spoon
+            if categories[idx] == 'noodles':
+                # Check if there are items on top of each other using pos in mujoco?
+                densest, sparsest, twirl_angle, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action = self.get_noodle_action(image, masks, categories)
+                print(valid_actions)
+                if action == 'Acquire':
+                    efficiency_scores.append(1)
+                    next_actions.append((idx, 'Twirl', {'point':densest, 'twirl_angle':twirl_angle}))
+                elif action == 'Push Filling':
+                    efficiency_scores.append(2) 
+                    next_actions.append((idx, 'Push', {'start':filling_push_start, 'end':filling_push_end}))
+                else:
+                    efficiency_scores.append(2.5) # Should this be even higher?
+                    next_actions.append((idx, 'Group', {'start':sparsest, 'end':densest}))
+                    
+            elif categories[idx] == 'semisolid':
+                densest, sparsest, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action, start_px, end_px = self.get_scoop_action(image, masks, categories, log_path)
+                if action == 'Acquire':
+                    efficiency_scores.append(1)
+                    next_actions.append((idx, 'Scoop', {'start':start_px, 'end':end_px}))
+                else:
+                    efficiency_scores.append(2)
+                    next_actions.append((idx, 'Push', {'start':filling_push_start, 'end':filling_push_end}))
+
+            # This one looks like they only use skewer on these
+            elif categories[idx] in ['meat/seafood', 'vegetable', 'fruit', 'brownie']:
+                noodle_or_semisolid_mask = None
+
+                if 'noodles' in categories:
+                    noodle_or_semisolid_mask = masks[categories.index('noodles')][0]
+
+                elif 'semisolid' in categories:
+                    noodle_or_semisolid_mask = masks[categories.index('semisolid')][0]
+
+                if self.mode == 'preference':
+                    id_to_skewer = random.choice(range(len(masks[idx])))
+                    skewer_mask = masks[idx][id_to_skewer]
+
+                else:
+                    skewer_mask = self.detect_most_obstructing_filling(masks[idx], noodle_or_semisolid_mask)
+                    
+                # efficiency_scores.append(0.9)
+                # skewer_point, skewer_angle = self.get_skewer_action(skewer_mask)
+                # print("Adding skewer action for label: ", labels[idx])
+                # next_actions.append((idx, 'Skewer', {'point': skewer_point, 'skewer_angle': skewer_angle}))
+                # vis = visualize_skewer(image, skewer_point, skewer_angle)
+                # if log_path is not None:
+                #     cv2.imwrite(log_path + "_skewer_vis.png", vis)
+
+            # elif categories[idx] == 'dip':
+            #     print('Adding dip action for label: ', labels[idx])
+            #     dip_point = self.get_dip_action(masks[idx][0])
+            #     dip_actions.append((idx, 'Dip', {'point': dip_point}))
+        
+        print('Length of next actions: ', len(next_actions))
+        
+        print('Candidate actions: ', next_actions)
+
+        if self.mode == 'efficiency':
+            return next_actions[np.argmin(efficiency_scores)], None
+        
+        # round efficiency scores to nearest integer
+        efficiency_scores = [round(score) for score in efficiency_scores]
+
+        # take reciprocal of efficiency scores and multiply with LCM
+        print('Efficiency scores before reciprocal: ', efficiency_scores)
+        efficiency_scores = np.array([1/score for score in efficiency_scores]) * int(np.lcm.reduce(efficiency_scores))
+        efficiency_scores = efficiency_scores.astype(int).tolist()
+
+        non_dip_labels = []
+        non_dip_portions_rounded = []
+        # dip_labels = []
+        for idx in range(len(labels)):
+            if categories[idx] != 'dip':
+                non_dip_labels.append(labels[idx])
+                non_dip_portions_rounded.append(round(portions[idx]))
+            # else:
+            #     dip_labels.append(labels[idx])
+
+        if continue_food_label is not None:
+            if continue_dip_label is not None:
+                next_bite = [continue_food_label, continue_dip_label]
+            else:
+                next_bite = [continue_food_label]
+        else:
+
+            print('Non dip labels: ', non_dip_labels)
+            print('Efficiency scores: ', efficiency_scores)
+            print('Bite portions: ', non_dip_portions_rounded)
+            print('Preference: ', preference)
+
+            k = input("Press [n] to exit or otherwise I will query bite sequencing planner...")
+            if k == 'n':
+                return None, None
+
+            next_bite, response = self.preference_planner.plan(non_dip_labels, non_dip_portions_rounded, efficiency_scores, preference, dip_labels, history, mode=self.mode)
+        
+        print('Next bite', next_bite)
+        print('non_dip_labels', non_dip_labels)
+        print('Next actions', next_actions)
+
+        if len(next_bite) == 1 and next_bite[0] in labels:
+            print(non_dip_labels, next_bite[0])
+            idx = non_dip_labels.index(next_bite[0])
+            return next_actions[idx], None
+        # elif len(next_bite) == 2:
+        #     acquire_idx = non_dip_labels.index(next_bite[0])
+        #     dip_idx = dip_labels.index(next_bite[1])
+        #     return next_actions[acquire_idx], dip_actions[dip_idx]
+        else: 
+            return None, None
+        
 
     def get_autonomous_action(self, annotated_image, image, masks, categories, labels, portions, preference, history, continue_food_label = None, continue_dip_label = None, log_path = None):
         vis = image.copy()
@@ -1246,67 +1360,6 @@ class BiteAcquisitionInference:
             return next_actions[acquire_idx], dip_actions[dip_idx]
         else: 
             return None, None
-
-# if __name__ == '__main__':
-#     inference_server = BiteAcquisitionInference()
-
-#     #items = inference_server.recognize_items(image)
-#     #inference_server.FOOD_CLASSES = items
-#     #clean_labels = inference_server.clean_labels(labels[:-1])
-#     #inference_server.get_noodle_action(image, masks, labels, categories)
-#     #inference_server.get_manual_action(annotated_image, image, masks, labels, categories)
-#     #efficiencies = inference_server.plan_efficient_bites(image, labels, categories)
-#     #print(efficiencies)
-
-#     #EVAL_DIR = 'filling_noodles'
-#     EVAL_DIR = 'mashed_potatoes'
-#     SOURCE_IMAGE_DIR = '%s/images'%EVAL_DIR
-#     OUTPUT_DIR = 'outputs'
-
-#     if not os.path.exists(OUTPUT_DIR):
-#         os.mkdir(OUTPUT_DIR)
-
-#     with open(os.path.join(EVAL_DIR, 'priya_labels.txt'), 'r') as f:
-#         gt_actions = [l.strip() for l in f.readlines()]
-
-#     total_count = 0
-#     correct_count = 0
-
-#     for i, fn in enumerate(os.listdir(SOURCE_IMAGE_DIR)):
-#         print(i)
-#         SOURCE_IMAGE_PATH = os.path.join(SOURCE_IMAGE_DIR, '%d.jpg'%(i+1))
-#         image = cv2.imread(SOURCE_IMAGE_PATH)
-#         image = image[0:550, 400:950] 
-#         image = resize_to_square(image, 480)
-
-#         # cv2.imshow('img', image)
-#         # cv2.waitKey(0)
-
-#         annotated_image, masks, portion_weights, labels = inference_server.detect_items(image, log_path = OUTPUT_DIR + '/' + str(i) + '_')
-#         #for j in range(len(masks)):
-#         #    if 'blue' == labels[j]:
-#         #        cv2.imwrite(os.path.join(OUTPUT_DIR, '%02d_%s.jpg'%(i,labels[j])), masks[j])
-
-#         categories = inference_server.categorize_items(labels)
-#         #cv2.imwrite(os.path.join(OUTPUT_DIR, '%02d_all.jpg'%(i)), annotated_image)
-
-#         #result = inference_server.get_noodle_action(image, masks, labels, categories)
-#         result = inference_server.get_scoop_action(image, masks, labels, categories)
-
-#         valid_actions_vis = result[-3]
-#         heatmap = result[-2]
-#         action = result[-1]
-
-#         gt_action = gt_actions[i]
-#         mapping = {'Acquire': 'Scoop', 'Push Filling': 'Push Filling', 'Group': 'Group'}
-#         action = mapping[action]
-#         if gt_action in action.lower():
-#             correct_count += 1
-#         total_count += 1
-#         print('Accuracy', correct_count/total_count)
-
-#         #cv2.imwrite(os.path.join(OUTPUT_DIR, '%02d_valid.jpg'%(i)), valid_actions_vis)
-#         cv2.imwrite(os.path.join(OUTPUT_DIR, '%02d_action.jpg'%(i)), np.hstack((image, heatmap)))
 
 if __name__ == "__main__":
 
