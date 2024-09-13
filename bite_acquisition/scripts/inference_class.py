@@ -1117,22 +1117,22 @@ class BiteAcquisitionInference:
         print(categories, food_to_consider)
         for idx in food_to_consider:
 
-            # I'm stupid, you can't pick up noodles using a spoon
-            if categories[idx] == 'noodles':
-                # Check if there are items on top of each other using pos in mujoco?
-                densest, sparsest, twirl_angle, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action = self.get_noodle_action(image, masks, categories)
-                print(valid_actions)
-                if action == 'Acquire':
-                    efficiency_scores.append(1)
-                    next_actions.append((idx, 'Twirl', {'point':densest, 'twirl_angle':twirl_angle}))
-                elif action == 'Push Filling':
-                    efficiency_scores.append(2) 
-                    next_actions.append((idx, 'Push', {'start':filling_push_start, 'end':filling_push_end}))
-                else:
-                    efficiency_scores.append(2.5) # Should this be even higher?
-                    next_actions.append((idx, 'Group', {'start':sparsest, 'end':densest}))
+            # # I'm stupid, you can't pick up noodles using a spoon
+            # if categories[idx] == 'noodles':
+            #     # Check if there are items on top of each other using pos in mujoco?
+            #     densest, sparsest, twirl_angle, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action = self.get_noodle_action(image, masks, categories)
+            #     print(valid_actions)
+            #     if action == 'Acquire':
+            #         efficiency_scores.append(1)
+            #         next_actions.append((idx, 'Twirl', {'point':densest, 'twirl_angle':twirl_angle}))
+            #     elif action == 'Push Filling':
+            #         efficiency_scores.append(2) 
+            #         next_actions.append((idx, 'Push', {'start':filling_push_start, 'end':filling_push_end}))
+            #     else:
+            #         efficiency_scores.append(2.5) # Should this be even higher?
+            #         next_actions.append((idx, 'Group', {'start':sparsest, 'end':densest}))
                     
-            elif categories[idx] == 'semisolid':
+            if categories[idx] == 'semisolid':
                 densest, sparsest, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action, start_px, end_px = self.get_scoop_action(image, masks, categories, log_path)
                 if action == 'Acquire':
                     efficiency_scores.append(1)
@@ -1157,19 +1157,6 @@ class BiteAcquisitionInference:
 
                 else:
                     skewer_mask = self.detect_most_obstructing_filling(masks[idx], noodle_or_semisolid_mask)
-                    
-                # efficiency_scores.append(0.9)
-                # skewer_point, skewer_angle = self.get_skewer_action(skewer_mask)
-                # print("Adding skewer action for label: ", labels[idx])
-                # next_actions.append((idx, 'Skewer', {'point': skewer_point, 'skewer_angle': skewer_angle}))
-                # vis = visualize_skewer(image, skewer_point, skewer_angle)
-                # if log_path is not None:
-                #     cv2.imwrite(log_path + "_skewer_vis.png", vis)
-
-            # elif categories[idx] == 'dip':
-            #     print('Adding dip action for label: ', labels[idx])
-            #     dip_point = self.get_dip_action(masks[idx][0])
-            #     dip_actions.append((idx, 'Dip', {'point': dip_point}))
         
         print('Length of next actions: ', len(next_actions))
         
