@@ -4,8 +4,8 @@ from scipy.spatial.transform import Rotation as R
 import rospy
 from geometry_msgs.msg import PoseStamped
 
-from bite_acquisition.srv import PoseCommand, PoseCommandRequest, PoseCommandResponse
-from bite_acquisition.srv import JointCommand, JointCommandRequest, JointCommandResponse
+# from bite_acquisition.srv import PoseCommand, PoseCommandRequest, PoseCommandResponse
+# from bite_acquisition.srv import JointCommand, JointCommandRequest, JointCommandResponse
 
 from .base import RobotController
 
@@ -15,21 +15,21 @@ try:
     from utils.transform_utils import quat2euler, quat_distance, quat_error, quat2axisangle, quat2mat, mat2quat
     from controllers import load_controller_config
 except:
-    from mujoco_files.environments.arm_base import ArmBaseEnv
-    from mujoco_files.planners.moveit_planner import MoveItPlanner
-    from mujoco_files.utils.transform_utils import quat2euler, quat_distance, quat_error, quat2axisangle, quat2mat, mat2quat
-    from mujoco_files.controllers import load_controller_config
+    from feeding_mujoco.environments.arm_base import ArmBaseEnv
+    from feeding_mujoco.planners.moveit_planner import MoveItPlanner
+    from feeding_mujoco.utils.transform_utils import quat2euler, quat_distance, quat_error, quat2axisangle, quat2mat, mat2quat
+    from feeding_mujoco.controllers import load_controller_config
 
 class MujocoRobotController(RobotController):
 
-    def __init__(self, config):
+    def __init__(self):
 
         controller_config = load_controller_config(default_controller="IK_POSE")
         controller_config["control_delta"] = False
 
         env_config = {
             "model_path": "/home/luthov_ubuntu/School/FYP/learning_mujoco/models/envs/mujoco_scooping_test/feeding.xml",
-            "sim_timestep": 0.001,
+            "sim_timestep": 0.002,
             "controller_config": controller_config,
             "control_freq": 100,
             "policy_freq": 25,
@@ -52,9 +52,15 @@ class MujocoRobotController(RobotController):
         )
 
         self.planner = MoveItPlanner(dt = 1/self.env._policy_freq)
+        self.env._robot.hard_set_joint_positions([1.3103,  0.1289, -1.2169, -0.9229,  1.6615,  1.6824], self.env._robot._arm_joint_ids)
+        
+        # Step the simulator to update the robot and environment state
+        self.env.sim.step()
 
-        self.acq_pos = [0.02961542490849557, 0.06645885626898033, 5.281153370174079, 3.1258331315231405, 2.04992230955969, 4.737864779372388]
-        self.transfer_pos = [0.3333664491938215, 1.4858324332736625, 1.5856359930210362, 0.8180422599332581, 1.5794872866962613, 4.604932028296647]
+        self.acq_pos = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
+        self.transfer_pos = np.radians([0.0, -65.0, -25.0, 0.0, 0.0, -90.0])
+        # self.acq_pos = [0.02961542490849557, 0.06645885626898033, 5.281153370174079, 3.1258331315231405, 2.04992230955969, 4.737864779372388]
+        # self.transfer_pos = [0.3333664491938215, 1.4858324332736625, 1.5856359930210362, 0.8180422599332581, 1.5794872866962613, 4.604932028296647]
 
     def reset(self):
         # TODO: Probs can look at 
@@ -111,6 +117,8 @@ class MujocoRobotController(RobotController):
                 if final_wp:
                     print("Moved to pose successfuly!")
                     break
+                    
+                    
 
     def move_to_pose(self, pose):
 
@@ -193,8 +201,8 @@ if __name__ == '__main__':
     input('Press enter to move to acquisition position...')
     robot_controller.move_to_acq_pose()
 
-    # input('Press enter to move to transfer position...')
-    # robot_controller.move_to_transfer_pose()
+    input('Press enter to move to transfer position...')
+    robot_controller.move_to_transfer_pose()
 
-    # input('Press enter to reset the robot...')
-    # robot_controller.reset()
+    input('Press enter to reset the robot...')
+    robot_controller.reset()
