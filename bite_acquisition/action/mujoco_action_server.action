@@ -1,12 +1,12 @@
-# Action definition for mujoco_action_server
+# Goal
+geometry_msgs/PoseStamped goal_point
+string function_name
 
-# Define the goal message
-# The goal contains a point defined in quaternions and a string
-# The result is just a boolean and there is no feedback
+---
 
-# Define the goal message
-geometry_msgs/PointStamped goal_point
-string goal_string
+# Result
+bool success
 
-# Define the result message
-bool result
+---
+
+string status

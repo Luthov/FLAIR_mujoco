@@ -1,13 +1,12 @@
+#! /usr/bin/env python
+
 import numpy as np
 from scipy.spatial.transform import Rotation as R
 
 import rospy
 import actionlib
 from geometry_msgs.msg import PoseStamped
-
-
-
-from .base import RobotController
+from bite_acquisition.msg import mujoco_action_serverAction, mujoco_action_serverResult, mujoco_action_serverFeedback
 
 try:
     from environments.arm_base import ArmBaseEnv
@@ -20,9 +19,11 @@ except:
     from feeding_mujoco.utils.transform_utils import quat2euler, quat_distance, quat_error, quat2axisangle, quat2mat, mat2quat
     from feeding_mujoco.controllers import load_controller_config
 
-class MujocoAction(RobotController):
+class MujocoAction(object):
 
-    def __init__(self, name):
+    def __init__(self):
+
+        self.result = mujoco_action_serverResult()
 
         controller_config = load_controller_config(default_controller="IK_POSE")
         controller_config["control_delta"] = False
@@ -60,10 +61,33 @@ class MujocoAction(RobotController):
         self.acq_pos = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
         self.transfer_pos = np.radians([0.0, -65.0, -25.0, 0.0, 0.0, -90.0])
 
-        self._action_name = name
-        self._as = actionlib.SimpleActionServer(self._action_name, mujoco_action_server.msg.goal_point, execute_cb=self.execute_cb, auto_start = False)
-        self._as.start()
+        self.action_name = "mujoco_action_server"
+        self.action_server = actionlib.SimpleActionServer(self.action_name, mujoco_action_serverAction, execute_cb=self.execute_callback, auto_start = False)
+        self.action_server.start()
      
+    def execute_callback(self, goal):
+
+        try:
+            if goal.function_name == "move_to_pose":
+                self.move_to_pose(goal.pose)
+            elif goal.function_name == "move_to_acq_pose":
+                self.move_to_acq_pose()
+            elif goal.function_name == "move_to_transfer_pose":
+                self.move_to_transfer_pose()
+            elif goal.function_name == "reset":
+                self.reset()
+            else:
+                rospy.logerr("Unknown command: %s", goal.function_name)
+                self.action_server.set_aborted(self.result, "Unknown command")
+                return
+
+            self.result.success = True
+            self.action_server.set_succeeded(self.result)
+        except Exception as e:
+            rospy.logerr("Exception in execute_cb: %s", str(e))
+            self.result.success = False
+            self.action_server.set_aborted(self.result, str(e))
+
     def execute_trajectory(self, msg_trajectory):
 
         # Visualize the trajectory in RViz
@@ -164,30 +188,6 @@ class MujocoAction(RobotController):
 
     def reset(self):
         self.move_to_acq_pose()
-
-    def execute_cb(self, goal):
-        result = YourActionResult()
-
-        try:
-            if goal.command == "move_to_pose":
-                self.move_to_pose(goal.pose)
-            elif goal.command == "move_to_acq_pose":
-                self.move_to_acq_pose()
-            elif goal.command == "move_to_transfer_pose":
-                self.move_to_transfer_pose()
-            elif goal.command == "reset":
-                self.reset()
-            else:
-                rospy.logerr("Unknown command: %s", goal.command)
-                self._as.set_aborted(result, "Unknown command")
-                return
-
-            result.success = True
-            self._as.set_succeeded(result)
-        except Exception as e:
-            rospy.logerr("Exception in execute_cb: %s", str(e))
-            result.success = False
-            self._as.set_aborted(result, str(e))
 
 if __name__ == '__main__':
     rospy.init_node('mujoco_action_server', anonymous=True)
