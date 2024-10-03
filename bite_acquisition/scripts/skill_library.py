@@ -64,6 +64,10 @@ class SkillLibrary:
         input("Press enter to actually move utensil.")
         self.robot_controller.move_to_pose(tool_frame_target)
 
+    def move_spoon_to_pose(self, tip_pose, tip_to_wrist = None):
+
+        self.robot_controller.move_to_pose(tip_pose)
+
     def scooping_skill(self, color_image, depth_image, camera_info, keypoints = None):
 
         if keypoints is not None:
@@ -581,6 +585,90 @@ class SkillLibrary:
         self.robot_controller.reset()
 
         return 
+    
+    def pushing_skill_mujoco(self, color_image, depth_image, camera_info, keypoints = None):
+        """
+        keypoints: list of 2 pixel coordinates of the start and end points
+        start: [x, y, z], pixel coordinates of the start point,
+        end: [x, y, z], pixel coordinates of the end point
+        """
+        if keypoints is not None:
+            start, end = keypoints
+        else:
+            clicks = self.pixel_selector.run(color_image, num_clicks=2)
+            start = clicks[0]
+            end = clicks[1]
+        
+        ## Get points in world frame using depth_image and camera_info
+        # validity, end_vec_3d = utils.pixel2World(camera_info, end[0], end[1], depth_image)
+        # if not validity:
+        #     print("Invalid depth detected")
+        #     return
+        
+        # validity, start_vec_3d = utils.pixel2World(camera_info, start[0], start[1], depth_image)
+        # if not validity:
+        #     print("Invalid depth detected")
+        #     return
+        
+        # Get end 3d point from mujoco. Probs can go from 1 end of the bowl to the next
+        start_vec_3d = np.array(start)
+        end_vec_3d = np.array(end)
+
+        # Get angle between start and end points
+        push_angle = utils.angle_between_points(np.array(start), np.array(end)) 
+        
+        # utils.angle_between_pixels(np.array(start), np.array(end), color_image.shape[1], color_image.shape[0], orientation_symmetry = False)
+        
+        print("Executing pushing action.")
+
+        grouping_start_pose = np.zeros((4,4))
+        # I can't visualise why they want to rotate about the z axis
+        grouping_start_pose[:3,:3] = Rotation.from_euler('xyz', [0,0,push_angle], degrees=True).as_matrix()
+        grouping_start_pose[:3,3] = start_vec_3d.reshape(1,3)
+        grouping_start_pose[3,3] = 1
+
+        grouping_start_pose = self.tf_utils.getTransformationFromTF("link_base", "link_tcp") @ grouping_start_pose
+
+        #print('here', grouping_start_pose[2], 'z', grouping_start_pose[2,3])
+        print("Pushing Depth: ", grouping_start_pose[2,3])
+        grouping_start_pose[2,3] = max(PLATE_HEIGHT, grouping_start_pose[2,3])
+
+        grouping_end_pose = np.zeros((4,4))
+        grouping_end_pose[:3,:3] = Rotation.from_euler('xyz', [0,0,push_angle], degrees=True).as_matrix()
+        grouping_end_pose[:3,3] = end_vec_3d.reshape(1,3)
+        grouping_end_pose[3,3] = 1
+
+        grouping_end_pose = self.tf_utils.getTransformationFromTF("link_base", "link_tcp") @ grouping_end_pose
+
+        grouping_end_pose[2,3] = max(PLATE_HEIGHT, grouping_start_pose[2,3])
+
+        # action 1: Move to above start position
+        waypoint_1 = np.copy(grouping_start_pose)
+        waypoint_1[2,3] += 0.05
+        # self.move_utensil_to_pose(waypoint_1)
+        self.move_spoon_to_pose(waypoint_1)
+
+
+        # action 2: Move down until tip touches plate
+        waypoint_2 = np.copy(grouping_start_pose)
+        # self.move_utensil_to_pose(waypoint_2)
+        self.move_spoon_to_pose(waypoint_2)
+
+        # action 3: Move to end position
+        waypoint_3 = np.copy(grouping_end_pose)
+        # self.move_utensil_to_pose(waypoint_3)
+        self.move_spoon_to_pose(waypoint_3)
+
+        # action 4: Move a bite up
+        waypoint_4 = self.tf_utils.getTransformationFromTF('link_base', 'link_tcp')
+        waypoint_4[2,3] += 0.05
+        # self.move_utensil_to_pose(waypoint_4) 
+        self.move_spoon_to_pose(waypoint_4)
+
+        # action 5: Move to above start position
+        self.robot_controller.reset()
+
+        return
 
     def twirling_skill(self, color_image, depth_image, camera_info, keypoint = None, twirl_angle = None):
         

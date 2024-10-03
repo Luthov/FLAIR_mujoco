@@ -152,12 +152,18 @@ class MujocoAction(object):
         # Step the simulator to update the robot and environment state
         self.env.sim.step()
 
+        pose = np.array([[0, 0, 0, 0.4007],
+                        [0, 0, 0, -0.0012],
+                        [0, 0, 0, 0.0373],
+                        [0, 0, 0, 1]])
+        
         # Get the target pose
         target_pos = pose[:3, 3].reshape(3)
         target_quat = R.from_matrix(pose[:3,:3]).as_quat()
 
         goal_pose = PoseStamped()
-        goal_pose.header.frame_id = "world"
+        # goal_pose.header.frame_id = "world"
+        goal_pose.header.frame_id = "link_tcp"
         goal_pose.header.stamp = rospy.Time.now()
         goal_pose.pose.position.x = target_pos[0]
         goal_pose.pose.position.y = target_pos[1]

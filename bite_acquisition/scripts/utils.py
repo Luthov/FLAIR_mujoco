@@ -19,6 +19,10 @@ def angle_between_pixels(source_px, target_px, image_width, image_height, orient
     robot_angle_offset = -90
     return angle + robot_angle_offset
 
+def angle_between_points(source_point, target_point):
+    angle = np.arctan2(target_point[1] - source_point[1], target_point[0] - source_point[0])
+    return np.rad2deg(angle)
+
 
 def pixel2World(camera_info, image_x, image_y, depth_image, box_width = 2):
 
