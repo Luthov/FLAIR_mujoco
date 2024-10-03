@@ -17,7 +17,13 @@ class MujocoRobotController(RobotController):
         goal = mujoco_action_serverGoal()
         goal.function_name = "move_to_pose"
         goal.goal_point.header.frame_id = "world"
-        goal.goal_point.pose = pose
+        goal.goal_point.pose.position.x = pose.pose.position.x
+        goal.goal_point.pose.position.y = pose.pose.position.y
+        goal.goal_point.pose.position.z = pose.pose.position.z
+        goal.goal_point.pose.orientation.x = pose.pose.orientation.x
+        goal.goal_point.pose.orientation.y = pose.pose.orientation.y
+        goal.goal_point.pose.orientation.z = pose.pose.orientation.z
+        goal.goal_point.pose.orientation.w = pose.pose.orientation.w
 
         self.client.send_goal(goal)
         self.client.wait_for_result()

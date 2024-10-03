@@ -11,7 +11,7 @@ import pickle
 # ros imports
 import rospy
 import tf2_ros
-from geometry_msgs.msg import Point
+from geometry_msgs.msg import Point, PoseStamped
 from sensor_msgs.msg import JointState
 from std_msgs.msg import String, Float64, Bool
 
@@ -23,12 +23,13 @@ import argparse
 
 from rs_ros import RealSenseROS
 from pixel_selector import PixelSelector
-from robot_controller.franka_controller import FrankaRobotController
+# from robot_controller.franka_controller import FrankaRobotController
 from robot_controller.kinova_controller import KinovaRobotController
+from robot_controller.mujoco_action_controller import MujocoRobotController
 from wrist_controller import WristController
 from visualizer import Visualizer
 
-ROBOT = 'franka' # 'kinova' or 'franka'
+ROBOT = 'mujoco' # 'kinova' or 'franka'
 PLATE_HEIGHT = 0.2 # 0.192 for scooping, 0.2 for skewering, 0.198 for pushing, twirling
 
 class SkillLibrary:
@@ -36,10 +37,12 @@ class SkillLibrary:
         self.pixel_selector = PixelSelector()
         self.tf_utils = utils.TFUtils()
         self.visualizer = Visualizer()
-        if ROBOT == 'franka':
-            self.robot_controller = FrankaRobotController(config)
-        elif ROBOT == 'kinova':
+        # if ROBOT == 'franka':
+        #     self.robot_controller = FrankaRobotController(config)
+        if ROBOT == 'kinova':
             self.robot_controller = KinovaRobotController()
+        elif ROBOT == 'mujoco':
+            self.robot_controller = MujocoRobotController()
         self.wrist_controller = WristController()
 
         self.beep_publisher = rospy.Publisher('/beep', String, queue_size=10)
@@ -63,6 +66,18 @@ class SkillLibrary:
         
         input("Press enter to actually move utensil.")
         self.robot_controller.move_to_pose(tool_frame_target)
+    
+    def matrix_to_quaternion(matrix):
+        # Extract the rotation part from the 4x4 transformation matrix
+        rotation_matrix = matrix[:3, :3]
+        
+        # Create a Rotation object from the rotation matrix
+        rotation = Rotation.from_matrix(rotation_matrix)
+        
+        # Convert to quaternion (qx, qy, qz, qw)
+        quaternion = rotation.as_quat()  # This returns (x, y, z, w)
+        
+        return quaternion
 
     def move_spoon_to_pose(self, tip_pose, tip_to_wrist = None):
 
@@ -586,18 +601,18 @@ class SkillLibrary:
 
         return 
     
-    def pushing_skill_mujoco(self, color_image, depth_image, camera_info, keypoints = None):
+    def pushing_skill_mujoco(self, keypoints = None):
         """
         keypoints: list of 2 pixel coordinates of the start and end points
         start: [x, y, z], pixel coordinates of the start point,
         end: [x, y, z], pixel coordinates of the end point
         """
-        if keypoints is not None:
-            start, end = keypoints
-        else:
-            clicks = self.pixel_selector.run(color_image, num_clicks=2)
-            start = clicks[0]
-            end = clicks[1]
+        # if keypoints is not None:
+        start, end = keypoints
+        # else:
+        #     clicks = self.pixel_selector.run(color_image, num_clicks=2)
+        #     start = clicks[0]
+        #     end = clicks[1]
         
         ## Get points in world frame using depth_image and camera_info
         # validity, end_vec_3d = utils.pixel2World(camera_info, end[0], end[1], depth_image)
@@ -616,9 +631,7 @@ class SkillLibrary:
 
         # Get angle between start and end points
         push_angle = utils.angle_between_points(np.array(start), np.array(end)) 
-        
-        # utils.angle_between_pixels(np.array(start), np.array(end), color_image.shape[1], color_image.shape[0], orientation_symmetry = False)
-        
+                
         print("Executing pushing action.")
 
         grouping_start_pose = np.zeros((4,4))
@@ -627,41 +640,58 @@ class SkillLibrary:
         grouping_start_pose[:3,3] = start_vec_3d.reshape(1,3)
         grouping_start_pose[3,3] = 1
 
-        grouping_start_pose = self.tf_utils.getTransformationFromTF("link_base", "link_tcp") @ grouping_start_pose
+        grouping_start_pose_quat = self.matrix_to_quaternion(grouping_start_pose)
 
-        #print('here', grouping_start_pose[2], 'z', grouping_start_pose[2,3])
         print("Pushing Depth: ", grouping_start_pose[2,3])
         grouping_start_pose[2,3] = max(PLATE_HEIGHT, grouping_start_pose[2,3])
+
+        grouping_start_pose_msg = PoseStamped()
+        grouping_start_pose_msg.pose.position.x = grouping_start_pose[0,3]
+        grouping_start_pose_msg.pose.position.y = grouping_start_pose[1,3]
+        grouping_start_pose_msg.pose.position.z = grouping_start_pose[2,3]
+
+        grouping_start_pose_msg.pose.orientation.x = grouping_start_pose_quat[0]
+        grouping_start_pose_msg.pose.orientation.y = grouping_start_pose_quat[1]
+        grouping_start_pose_msg.pose.orientation.z = grouping_start_pose_quat[2]
+        grouping_start_pose_msg.pose.orientation.w = grouping_start_pose_quat[3]
 
         grouping_end_pose = np.zeros((4,4))
         grouping_end_pose[:3,:3] = Rotation.from_euler('xyz', [0,0,push_angle], degrees=True).as_matrix()
         grouping_end_pose[:3,3] = end_vec_3d.reshape(1,3)
         grouping_end_pose[3,3] = 1
 
-        grouping_end_pose = self.tf_utils.getTransformationFromTF("link_base", "link_tcp") @ grouping_end_pose
-
         grouping_end_pose[2,3] = max(PLATE_HEIGHT, grouping_start_pose[2,3])
 
+        grouping_end_pose_msg = PoseStamped()
+        grouping_end_pose_msg.pose.position.x = grouping_start_pose[0,3]
+        grouping_end_pose_msg.pose.position.y = grouping_start_pose[1,3]
+        grouping_end_pose_msg.pose.position.z = grouping_start_pose[2,3]
+
+        grouping_end_pose_msg.pose.orientation.x = grouping_start_pose_quat[0]
+        grouping_end_pose_msg.pose.orientation.y = grouping_start_pose_quat[1]
+        grouping_end_pose_msg.pose.orientation.z = grouping_start_pose_quat[2]
+        grouping_end_pose_msg.pose.orientation.w = grouping_start_pose_quat[3]
+
         # action 1: Move to above start position
-        waypoint_1 = np.copy(grouping_start_pose)
-        waypoint_1[2,3] += 0.05
+        waypoint_1 = grouping_start_pose_msg
+        waypoint_1.pose.position.z += 0.05
         # self.move_utensil_to_pose(waypoint_1)
         self.move_spoon_to_pose(waypoint_1)
 
 
         # action 2: Move down until tip touches plate
-        waypoint_2 = np.copy(grouping_start_pose)
+        waypoint_2 = grouping_start_pose_msg
         # self.move_utensil_to_pose(waypoint_2)
         self.move_spoon_to_pose(waypoint_2)
 
         # action 3: Move to end position
-        waypoint_3 = np.copy(grouping_end_pose)
+        waypoint_3 = grouping_end_pose_msg
         # self.move_utensil_to_pose(waypoint_3)
         self.move_spoon_to_pose(waypoint_3)
 
         # action 4: Move a bite up
-        waypoint_4 = self.tf_utils.getTransformationFromTF('link_base', 'link_tcp')
-        waypoint_4[2,3] += 0.05
+        waypoint_4 = grouping_end_pose_msg
+        waypoint_4.pose.position.z += 0.05
         # self.move_utensil_to_pose(waypoint_4) 
         self.move_spoon_to_pose(waypoint_4)
 

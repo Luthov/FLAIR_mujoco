@@ -69,7 +69,7 @@ class MujocoAction(object):
 
         try:
             if goal.function_name == "move_to_pose":
-                self.move_to_pose(goal.pose)
+                self.move_to_pose(goal.goal_point)
             elif goal.function_name == "move_to_acq_pose":
                 self.move_to_acq_pose()
             elif goal.function_name == "move_to_transfer_pose":
@@ -146,32 +146,23 @@ class MujocoAction(object):
 
     def move_to_pose(self, pose):
 
+        print(pose)
         # Reset the planner
         self.planner.reset()
 
         # Step the simulator to update the robot and environment state
         self.env.sim.step()
 
-        pose = np.array([[0, 0, 0, 0.4007],
-                        [0, 0, 0, -0.0012],
-                        [0, 0, 0, 0.0373],
-                        [0, 0, 0, 1]])
-        
-        # Get the target pose
-        target_pos = pose[:3, 3].reshape(3)
-        target_quat = R.from_matrix(pose[:3,:3]).as_quat()
-
         goal_pose = PoseStamped()
-        # goal_pose.header.frame_id = "world"
-        goal_pose.header.frame_id = "link_tcp"
+        goal_pose.header.frame_id = "world"
         goal_pose.header.stamp = rospy.Time.now()
-        goal_pose.pose.position.x = target_pos[0]
-        goal_pose.pose.position.y = target_pos[1]
-        goal_pose.pose.position.z = target_pos[2]
-        goal_pose.pose.orientation.x = target_quat[0]
-        goal_pose.pose.orientation.y = target_quat[1]
-        goal_pose.pose.orientation.z = target_quat[2]
-        goal_pose.pose.orientation.w = target_quat[3]
+        goal_pose.pose.position.x = pose.pose.position.x
+        goal_pose.pose.position.y = pose.pose.position.y
+        goal_pose.pose.position.z = pose.pose.position.z
+        goal_pose.pose.orientation.x = pose.pose.orientation.x
+        goal_pose.pose.orientation.y = pose.pose.orientation.y
+        goal_pose.pose.orientation.z = pose.pose.orientation.z
+        goal_pose.pose.orientation.w = pose.pose.orientation.w
 
         # Get the current joint positions
         start_joint_position = self.env._robot._joint_positions
