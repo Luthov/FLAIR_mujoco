@@ -120,8 +120,45 @@ class MujocoAction(object):
                 policy_step = False       
             
             if final_wp:
-                print("Moved to pose successfuly!")
+                # curent sim step
+                sim_time = self.env._sim.time
+
+                # Get error between the current pose and desired pose
+                pos_error = y[:3] - self.env._robot.get_eef_pose()[:3]
+                pos_error_norm = np.linalg.norm(pos_error)
+                orn_error = np.linalg.norm(quat_error(self.env._robot.get_eef_pose()[3:], y[3:]))
+                pos_error_threshold = 0.001    # 2 cm error  
+                quat_error_threshold = 0.1
+
+                # Control loop to correct the error
+                while pos_error_norm > pos_error_threshold or orn_error > quat_error_threshold:
+                    # Compute the error between the current pose and desired pose
+                    control_action_pos = self.env._robot.get_eef_pose()[:3] + 1.0 * pos_error
+                    control_action_orn = quat2axisangle(y[3:])
+                    control_action = np.concatenate([control_action_pos, control_action_orn])
+                    self.env._robot.control(control_action, policy_step=True)
+                    self.env._sim.step()
+
+                    # Recalculate the error
+                    pos_error = y[:3] - self.env._robot.get_eef_pose()[:3]
+                    pos_error_norm = np.linalg.norm(pos_error)                        
+                    orn_error = np.linalg.norm(quat_error(self.env._robot.get_eef_pose()[3:], y[3:]))
+                    # print("pos_error:", pos_error)
+                    # print("orn_error:", orn_error)
+
+                    # Break if the error is not reducing
+                    if self.env._sim.time - sim_time > 2.0:
+                        print("Failed to reach goal pose. Exiting...")
+                        break
+
+                correction_time = self.env._sim.time - sim_time
+                # print("Correction time:", correction_time, "steps:", int(correction_time/env._sim_timestep))
+
+                print("Final joint pose:", joint_position)
+                print("final eef pose:", self.env._robot.get_eef_pose())
                 break
+                # print("Moved to pose successfuly!")
+                # break
 
     def set_joint_position(self, joint_position):
 

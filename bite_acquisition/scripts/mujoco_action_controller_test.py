@@ -45,3 +45,9 @@ if __name__ == "__main__":
     
     input("Press Enter to move to end pose")
     robot_controller.move_to_pose(goal_point)
+
+    input("Press Enter to move to Bite Acq Pose")
+    robot_controller.move_to_acq_pose()
+
+    input("Press Enter to move to Bite Transfer Pose")
+    robot_controller.move_to_transfer_pose()

@@ -1,9 +1,9 @@
 import rospy
-from push_test import SkillLibrary
+from skill_library_mujoco import SkillLibrary
 
 if __name__ == "__main__":
     rospy.init_node('mujoco_controller')
-    keypoints = [[0.3507, 0.0512, 0.0373 + 0.2], [0.4507, -0.0512, 0.0373 + 0.2]]
+    keypoints = [[0.3507, 0.0512, 0.0373 + 0.1], [0.4507, -0.0512, 0.0373 + 0.1]]
 
     skill_library = SkillLibrary()
 
