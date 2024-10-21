@@ -76,6 +76,8 @@ class MujocoAction(object):
                 self.move_to_transfer_pose()
             elif goal.function_name == "reset":
                 self.reset()
+            elif goal.function_name == "rotate_eef":
+                self.rotate_eef(goal.angle)
             else:
                 rospy.logerr("Unknown command: %s", goal.function_name)
                 self.action_server.set_aborted(self.result, "Unknown command")
@@ -180,6 +182,17 @@ class MujocoAction(object):
 
         if msg_trajectory is not None:
             self.execute_trajectory(msg_trajectory)
+
+    def rotate_eef(self, angle):
+        target_joint_positions = self.env._robot._joint_positions
+
+        print(f"initial_joint_positions: {target_joint_positions}")
+        
+        target_joint_positions[5] += angle
+
+        print(f"target_joint_positions: {target_joint_positions}")
+
+        self.set_joint_position(target_joint_positions)
 
     def move_to_pose(self, pose):
 

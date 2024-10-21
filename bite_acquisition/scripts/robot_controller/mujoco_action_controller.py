@@ -60,6 +60,15 @@ class MujocoRobotController(RobotController):
         self.client.send_goal(goal)
         self.client.wait_for_result()
         return self.client.get_result()
+    
+    def rotate_eef(self, angle):
+        goal = mujoco_action_serverGoal()
+        goal.function_name = "rotate_eef"
+        goal.angle = angle
+
+        self.client.send_goal(goal)
+        self.client.wait_for_result()
+        return self.client.get_result()
 
 if __name__ == '__main__':
     rospy.init_node('mujoco_action_client')
