@@ -53,8 +53,7 @@ class MujocoAction(object):
         )
 
         self.planner = MoveItPlanner(dt = 1/self.env._policy_freq)
-        self.env._robot.hard_set_joint_positions([1.3103,  0.1289, -1.2169, -0.9229,  1.6615,  1.6824], self.env._robot._arm_joint_ids)
-        
+                
         # Step the simulator to update the robot and environment state
         self.env.sim.step()
 
@@ -187,7 +186,7 @@ class MujocoAction(object):
         target_joint_positions = self.env._robot._joint_positions
 
         print(f"initial_joint_positions: {target_joint_positions}")
-        
+
         target_joint_positions[5] += angle
 
         print(f"target_joint_positions: {target_joint_positions}")

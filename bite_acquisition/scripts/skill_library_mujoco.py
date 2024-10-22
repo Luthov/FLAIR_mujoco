@@ -39,9 +39,43 @@ class SkillLibrary:
         self.tf_buffer = tf2_ros.Buffer()
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer)
 
-        self.print_waypoints = False
+        self.print_waypoints = True
 
         print("Skill library initialized")
+
+    def transform_pose(self, pose, source_frame, target_frame):
+
+        # transformed_pose = None
+
+        # while transformed_pose is None:
+        #     try:
+        #         # Look up the transform from 'source_frame' to 'target_frame'
+        #         transform = self.tf_buffer.lookup_transform(target_frame, source_frame, rospy.Time(0), rospy.Duration(1.0))
+
+        #         # Transform the pose
+        #         transformed_pose = tf2_geometry_msgs.do_transform_pose(pose, transform)
+        #     except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
+        #         rospy.logerr("Transform lookup failed!")
+
+        # return transformed_pose
+
+            # Wait for the transform to be available
+        try:
+            self.tf_buffer.can_transform(target_frame, source_frame, rospy.Time(0), rospy.Duration(3.0))
+        except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException) as e:
+            rospy.logerr(f"Transform error: {e}")
+            return None
+
+        # Transform the pose
+        try:
+            transformed_pose = tf2_geometry_msgs.do_transform_pose(
+                pose,
+                self.tf_buffer.lookup_transform(target_frame, source_frame, rospy.Time(0))
+            )
+            return transformed_pose
+        except Exception as e:
+            rospy.logerr(f"Error transforming pose: {e}")
+            return None
 
     def transform_orientation(self, euler_angles):
 
@@ -98,7 +132,7 @@ class SkillLibrary:
             try:
                 # Look up the transform from 'world' to 'spoon_frame
                 transform = self.tf_buffer.lookup_transform('spoon_frame', 'world', rospy.Time(0), rospy.Duration(1.0))
-                print(f"world to spoon transform: {transform}")
+                # print(f"world to spoon transform: {transform}")
 
                 # Transform the pose
                 target_position_spoon = tf2_geometry_msgs.do_transform_pose(target_position_world, transform)
@@ -114,7 +148,7 @@ class SkillLibrary:
             try:
                 # Look up the transform from 'spoon_frame' to 'link_tcp'
                 transform = self.tf_buffer.lookup_transform('link_tcp', 'spoon_frame', rospy.Time(0), rospy.Duration(1.0))
-                print(f"spoon to link_tcp transform: {transform}")
+                # print(f"spoon to link_tcp transform: {transform}")
 
                 # Transform the pose
                 target_position_link_tcp = tf2_geometry_msgs.do_transform_pose(target_position_spoon, transform)
@@ -125,7 +159,7 @@ class SkillLibrary:
             try:
                 # Look up the transform from 'link_tcp' to world
                 transform = self.tf_buffer.lookup_transform('world', 'link_tcp', rospy.Time(0), rospy.Duration(1.0))
-                print(f"link_tcp to world transform: {transform}")
+                # print(f"link_tcp to world transform: {transform}")
 
                 # Transform the pose
                 final_target_position_world = tf2_geometry_msgs.do_transform_pose(target_position_spoon, transform)
@@ -424,17 +458,19 @@ class SkillLibrary:
 
         cutting_pose[2,3] = max(cutting_pose[2,3], PLATE_HEIGHT)
 
-        cutting_pose_msg = PoseStamped()
-        cutting_pose_msg.pose.position.x = cutting_pose[0,3]
-        cutting_pose_msg.pose.position.y = cutting_pose[1,3]
-        cutting_pose_msg.pose.position.z = cutting_pose[2,3]
+        # cutting_pose_msg = tf2_geometry_msgs.PoseStamped()
+        # cutting_pose_msg.header.frame_id = "world"
+        # cutting_pose_msg.header.stamp = rospy.Time.now()
+        # cutting_pose_msg.pose.position.x = cutting_pose[0,3]
+        # cutting_pose_msg.pose.position.y = cutting_pose[1,3]
+        # cutting_pose_msg.pose.position.z = cutting_pose[2,3]
 
-        cutting_pose_msg.pose.orientation.x = cutting_pose_quat[0]
-        cutting_pose_msg.pose.orientation.y = cutting_pose_quat[1]
-        cutting_pose_msg.pose.orientation.z = cutting_pose_quat[2]
-        cutting_pose_msg.pose.orientation.w = cutting_pose_quat[3]
+        # cutting_pose_msg.pose.orientation.x = cutting_pose_quat[0]
+        # cutting_pose_msg.pose.orientation.y = cutting_pose_quat[1]
+        # cutting_pose_msg.pose.orientation.z = cutting_pose_quat[2]
+        # cutting_pose_msg.pose.orientation.w = cutting_pose_quat[3]
 
-        # cutting_pose_msg = self.get_target_eef_pose_in_world([cutting_pose[0,3], cutting_pose[1,3], cutting_pose[2,3]], cutting_pose_quat_spoon_frame)
+        cutting_pose_msg = self.get_target_eef_pose_in_world([cutting_pose[0,3], cutting_pose[1,3], cutting_pose[2,3]], cutting_pose_quat_spoon_frame)
         # cutting_pose_msg = self.get_target_eef_pose_in_world_chat([cutting_pose[0,3], cutting_pose[1,3], cutting_pose[2,3]], cutting_pose_quat_spoon_frame)
 
         waypoint_1_tip = cutting_pose_msg
@@ -456,10 +492,16 @@ class SkillLibrary:
 
         self.robot_controller.rotate_eef(-0.39269908169)
 
-        # action 3: Push orthogonal to the cutting angle, in direction of towards the robot (+y relative to the fork)
+        # # action 3: Push orthogonal to the cutting angle, in direction of towards the robot (+y relative to the fork)
         waypoint_3_tip = cutting_pose_msg
         waypoint_3_tip.pose.position.z = PLATE_HEIGHT - 0.009
-        waypoint_3_tip.pose.position.x -= 0.02
+        print(f"waypoint_3: {waypoint_3_tip}")
+        waypoint_3_tip = self.transform_pose(waypoint_3_tip, "world", "link_tcp")
+        print(f"waypoint_3_2: {waypoint_3_tip}")
+        waypoint_3_tip.pose.position.y += 0.2
+        print(f"waypoint_3_3: {waypoint_3_tip}")
+        waypoint_3_tip = self.transform_pose(waypoint_3_tip, "link_tcp", "world")
+        print(f"waypoint_3_4: {waypoint_3_tip}")
         if self.print_waypoints:
             print(f"waypoint_3: {waypoint_3_tip}")
         self.move_spoon_to_pose(waypoint_3_tip)
