@@ -430,6 +430,8 @@ class SkillLibrary:
 
     def cutting_skill_mujoco(self, keypoint = None, cutting_angle = None):
 
+        self.robot_controller.move_to_acq_pose()
+
         (center_x, center_y, top_z) = keypoint
 
         # shift cutting point perpendicular to the cutting angle in the direction of the fork tines (less y value)
@@ -451,8 +453,8 @@ class SkillLibrary:
         cutting_pose[:3,3] = point.reshape(1,3)
         cutting_pose[3,3] = 1
 
-        cutting_pose_quat = self.transform_orientation([0, 90, cutting_angle])
-        print("quat_start: ", cutting_pose_quat)
+        # cutting_pose_quat = self.transform_orientation([0, 90, cutting_angle])
+        # print("quat_start: ", cutting_pose_quat)
 
         cutting_pose_quat_spoon_frame = Rotation.from_euler('xyz', [0,90,cutting_angle], degrees=True).as_quat()
 
@@ -498,7 +500,7 @@ class SkillLibrary:
         print(f"waypoint_3: {waypoint_3_tip}")
         waypoint_3_tip = self.transform_pose(waypoint_3_tip, "world", "link_tcp")
         print(f"waypoint_3_2: {waypoint_3_tip}")
-        waypoint_3_tip.pose.position.y += 0.2
+        waypoint_3_tip.pose.position.y += 0.02
         print(f"waypoint_3_3: {waypoint_3_tip}")
         waypoint_3_tip = self.transform_pose(waypoint_3_tip, "link_tcp", "world")
         print(f"waypoint_3_4: {waypoint_3_tip}")

@@ -1,11 +1,14 @@
 #! /usr/bin/env python
 
 import numpy as np
+import time
 from scipy.spatial.transform import Rotation as R
 
 import rospy
 import actionlib
 from geometry_msgs.msg import PoseStamped
+from moveit_msgs.msg import RobotTrajectory
+from moveit_msgs.msg import ExecuteTrajectoryAction, ExecuteTrajectoryGoal
 from bite_acquisition.msg import mujoco_action_serverAction, mujoco_action_serverResult, mujoco_action_serverFeedback
 
 try:
@@ -59,11 +62,16 @@ class MujocoAction(object):
 
         self.acq_pos = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
         self.transfer_pos = np.radians([0.0, -65.0, -25.0, 0.0, 0.0, -90.0])
+        self.cutting_pos = np.radians([0.0, -65.0, -25.0, 0.0, 90.0, 0.0])
 
         self.action_name = "mujoco_action_server"
         self.action_server = actionlib.SimpleActionServer(self.action_name, mujoco_action_serverAction, execute_cb=self.execute_callback, auto_start = False)
         self.action_server.start()
-     
+
+        # Create an action client for the ExecuteTrajectory action and wait for the server
+        self.moveit_client = actionlib.SimpleActionClient('execute_trajectory', ExecuteTrajectoryAction)
+        self.moveit_client.wait_for_server()
+
     def execute_callback(self, goal):
 
         try:
@@ -153,15 +161,38 @@ class MujocoAction(object):
                         break
 
                 correction_time = self.env._sim.time - sim_time
-                # print("Correction time:", correction_time, "steps:", int(correction_time/env._sim_timestep))
 
-                print("Final joint pose:", joint_position)
-                print("final eef pose:", self.env._robot.get_eef_pose())
+                # print("Final joint pose:", joint_position)
+                # print("final eef pose:", self.env._robot.get_eef_pose())
                 break
-                # print("Moved to pose successfuly!")
-                # break
 
+    def moveit_execution(self, msg_robot_trajectory):
+
+        # Create a goal message
+        goal = ExecuteTrajectoryGoal()
+
+        # Assign the trajectory to the goal
+        goal.trajectory = msg_robot_trajectory
+
+        # Send the goal to the action server
+        self.moveit_client.send_goal(goal)
+
+        # Wait for the result (blocking call)
+        self.moveit_client.wait_for_result()
+
+        # Check the result of the execution
+        result = self.moveit_client.get_result()
+
+        if result:
+            rospy.loginfo("MoveIt Trajectory executed successfully!")
+        else:
+            rospy.logerr("MoveIt Failed to execute trajectory.")
+        
+        return result
+    
     def set_joint_position(self, joint_position):
+
+        success = False
 
         # Reset the planner
         self.planner.reset()
@@ -180,22 +211,17 @@ class MujocoAction(object):
         )
 
         if msg_trajectory is not None:
+            success = self.moveit_execution(msg_trajectory)
             self.execute_trajectory(msg_trajectory)
 
     def rotate_eef(self, angle):
         target_joint_positions = self.env._robot._joint_positions
-
-        print(f"initial_joint_positions: {target_joint_positions}")
-
         target_joint_positions[5] += angle
-
-        print(f"target_joint_positions: {target_joint_positions}")
-
         self.set_joint_position(target_joint_positions)
 
     def move_to_pose(self, pose):
-
-        print(pose)
+        
+        success = False
         # Reset the planner
         self.planner.reset()
 
@@ -223,11 +249,13 @@ class MujocoAction(object):
             velocity_scaling_factor=0.1
         )
 
-        if msg_trajectory is not None:
+        if msg_trajectory is not None:     
+            success = self.moveit_execution(msg_trajectory)
             self.execute_trajectory(msg_trajectory)
                 
     def move_to_acq_pose(self):
-        self.set_joint_position(self.acq_pos)
+        # self.set_joint_position(self.acq_pos)
+        self.set_joint_position(self.cutting_pos)
 
     def move_to_transfer_pose(self):
         self.set_joint_position(self.transfer_pos)
