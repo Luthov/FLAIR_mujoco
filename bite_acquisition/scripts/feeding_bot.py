@@ -151,7 +151,7 @@ class FeedingBot:
 
             cv2.destroyAllWindows()
             
-            
+            ## Counts the instance of each food item
             clean_item_labels, _ = self.inference_server.clean_labels(item_labels)
 
             # remove detections of blue plate
@@ -170,6 +170,7 @@ class FeedingBot:
             cv2.imwrite(log_path + "_color.png", camera_color_data)
             cv2.imwrite(log_path + "_depth.png", camera_depth_data)
 
+            ## TODO: Understand the rest of this
             categories = self.inference_server.categorize_items(item_labels) 
 
             print("--------------------")
