@@ -61,18 +61,22 @@ class FeedingBot:
         
 
     def clear_plate(self):
+        ############################################################################################################
 
+        ## Everything in this block was commented
         # Identify the items on the plate
-        # camera_header, camera_color_data, camera_info_data, camera_depth_data = self.camera.get_camera_data()
-        # items = self.inference_server.recognize_items(camera_color_data)
-        # print("Food Items recognized:", items)
+        camera_header, camera_color_data, camera_info_data, camera_depth_data = self.camera.get_camera_data()
+        items = self.inference_server.recognize_items(camera_color_data)
+        print("Food Items recognized:", items)
 
-        # input("Did the robot recognize the food items correctly?")
+        input("Did the robot recognize the food items correctly?")
         
         #items = ['mashed potatoes', 'sausage']
         # items = ['noodles', 'meatball']
         # items = ['brownie', 'chocolate sauce']
-        # self.inference_server.FOOD_CLASSES = [f.replace('banana', 'small piece of sliced banana') for f in items]
+        self.inference_server.FOOD_CLASSES = [f.replace('banana', 'small piece of sliced banana') for f in items]
+
+        ############################################################################################################
         # items = ['banana', 'chocolate sauce']
         items = ['oatmeal', 'strawberry']
         # items = ['red strawberry', 'chocolate sauce', 'ranch dressing', 'blue plate']

@@ -695,10 +695,13 @@ class BiteAcquisitionInference:
             f"{self.FOOD_CLASSES[class_id]} {confidence:0.2f}" 
             for _, _, confidence, class_id, _, _
             in detections]
+        # If self.FOOD_CLASSES is ['apple', 'banana', 'orange'] and detections is [(0, 0, 0.95, 1, 0, 0), (0, 0, 0.85, 2, 0, 0)], the resulting labels list would be ['banana 0.95', 'orange 0.85']
         annotated_frame = box_annotator.annotate(scene=cropped_image.copy(), detections=detections, labels=labels)
 
         # NMS post process
         #print(f"Before NMS: {len(detections.xyxy)} boxes")
+
+        ## Get's rid of overlapping boxes (Processing)
         nms_idx = torchvision.ops.nms(
             torch.from_numpy(detections.xyxy), 
             torch.from_numpy(detections.confidence), 
