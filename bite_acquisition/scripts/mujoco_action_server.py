@@ -81,7 +81,7 @@ class MujocoAction(object):
                                                       goal=msg_initial_eef_pose, 
                                                       goal_type="pose_goal", 
                                                       velocity_scaling_factor=1.0)
-        self.execute_traj_in_moveit(msg_joint_traj)
+        # self.execute_traj_in_moveit(msg_joint_traj)
         rospy.loginfo(f"Moved moveit robot to initial pose: {self.env._robot.get_eef_pose()}")
         
         self.acq_pos = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])

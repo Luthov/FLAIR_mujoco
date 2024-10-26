@@ -2,19 +2,19 @@ import cv2
 import time
 import os
 import numpy as np
-import supervision as sv
+# import supervision as sv
 
-import torch
-import torch.nn.functional as F
-import torchvision
-from torchvision.transforms import ToTensor, Compose
+# import torch
+# import torch.nn.functional as F
+# import torchvision
+# from torchvision.transforms import ToTensor, Compose
 
-from groundingdino.util.inference import Model
-from segment_anything import sam_model_registry, SamPredictor
+# from groundingdino.util.inference import Model
+# from segment_anything import sam_model_registry, SamPredictor
 
-from .vision_utils import detect_densest, new_detect_densest, detect_sparsest, detect_centroid, detect_angular_bbox, detect_convex_hull, detect_filling_push_noodles, detect_filling_push_semisolid, efficient_sam_box_prompt_segment, outpaint_masks, detect_blue, proj_pix2mask, cleanup_mask, visualize_keypoints, visualize_skewer, visualize_push, detect_plate, mask_weight, nearest_neighbor, nearest_point_to_mask, detect_furthest_unobstructed_boundary_point, calculate_heatmap_density, calculate_heatmap_entropy, resize_to_square, fill_enclosing_polygon, detect_fillings_in_mask, expanded_detect_furthest_unobstructed_boundary_point
+# from .vision_utils import detect_densest, new_detect_densest, detect_sparsest, detect_centroid, detect_angular_bbox, detect_convex_hull, detect_filling_push_noodles, detect_filling_push_semisolid, efficient_sam_box_prompt_segment, outpaint_masks, detect_blue, proj_pix2mask, cleanup_mask, visualize_keypoints, visualize_skewer, visualize_push, detect_plate, mask_weight, nearest_neighbor, nearest_point_to_mask, detect_furthest_unobstructed_boundary_point, calculate_heatmap_density, calculate_heatmap_entropy, resize_to_square, fill_enclosing_polygon, detect_fillings_in_mask, expanded_detect_furthest_unobstructed_boundary_point
 
-from .preference_planner import PreferencePlanner
+from preference_planner import PreferencePlanner
 
 import os
 from openai import OpenAI
@@ -26,9 +26,9 @@ import requests
 import cmath
 import math
 
-from .src.food_pos_ori_net.model.minispanet import MiniSPANet
-from .src.spaghetti_segmentation.model import SegModel
-import torchvision.transforms as transforms
+# from .src.food_pos_ori_net.model.minispanet import MiniSPANet
+# from .src.spaghetti_segmentation.model import SegModel
+# import torchvision.transforms as transforms
 
 PATH_TO_GROUNDED_SAM = '/home/rkjenamani/Grounded-Segment-Anything'
 PATH_TO_DEPTH_ANYTHING = '/home/rkjenamani/Depth-Anything'
@@ -37,9 +37,9 @@ USE_EFFICIENT_SAM = False
 
 sys.path.append(PATH_TO_DEPTH_ANYTHING)
 
-from depth_anything.dpt import DepthAnything
+# from depth_anything.dpt import DepthAnything
 # from depth_anything.dpt import DPT_DINOv2
-from depth_anything.util.transform import Resize, NormalizeImage, PrepareForNet
+# from depth_anything.util.transform import Resize, NormalizeImage, PrepareForNet
 
 import random
 
@@ -152,49 +152,49 @@ class GPT4VFoodIdentification:
 
 class BiteAcquisitionInference:
     def __init__(self, mode):
-        self.DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        # self.DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
         # GroundingDINO config and checkpoint
         self.GROUNDING_DINO_CONFIG_PATH = PATH_TO_GROUNDED_SAM + "/GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py"
         self.GROUNDING_DINO_CHECKPOINT_PATH = PATH_TO_GROUNDED_SAM + "/groundingdino_swint_ogc.pth"
         
         # Building GroundingDINO inference model
-        self.grounding_dino_model = Model(model_config_path=self.GROUNDING_DINO_CONFIG_PATH, model_checkpoint_path=self.GROUNDING_DINO_CHECKPOINT_PATH)
+        # self.grounding_dino_model = Model(model_config_path=self.GROUNDING_DINO_CONFIG_PATH, model_checkpoint_path=self.GROUNDING_DINO_CHECKPOINT_PATH)
         
         self.use_efficient_sam = USE_EFFICIENT_SAM
 
-        if self.use_efficient_sam:
-            # Building MobileSAM predictor
-            self.EFFICIENT_SAM_CHECKPOINT_PATH = PATH_TO_GROUNDED_SAM + "/efficientsam_s_gpu.jit"
-            self.efficientsam = torch.jit.load(self.EFFICIENT_SAM_CHECKPOINT_PATH)
-        else:
-            # Segment-Anything checkpoint
-            SAM_ENCODER_VERSION = "vit_h"
-            SAM_CHECKPOINT_PATH = PATH_TO_GROUNDED_SAM + "/sam_vit_h_4b8939.pth"
+        # if self.use_efficient_sam:
+        #     # Building MobileSAM predictor
+        #     self.EFFICIENT_SAM_CHECKPOINT_PATH = PATH_TO_GROUNDED_SAM + "/efficientsam_s_gpu.jit"
+        #     self.efficientsam = torch.jit.load(self.EFFICIENT_SAM_CHECKPOINT_PATH)
+        # else:
+        #     # Segment-Anything checkpoint
+        #     SAM_ENCODER_VERSION = "vit_h"
+        #     SAM_CHECKPOINT_PATH = PATH_TO_GROUNDED_SAM + "/sam_vit_h_4b8939.pth"
 
-            # Building SAM Model and SAM Predictor
-            sam = sam_model_registry[SAM_ENCODER_VERSION](checkpoint=SAM_CHECKPOINT_PATH)
-            sam.to(device=self.DEVICE)
-            self.sam_predictor = SamPredictor(sam)
+        #     # Building SAM Model and SAM Predictor
+        #     sam = sam_model_registry[SAM_ENCODER_VERSION](checkpoint=SAM_CHECKPOINT_PATH)
+        #     sam.to(device=self.DEVICE)
+        #     self.sam_predictor = SamPredictor(sam)
 
-        self.depth_anything = DepthAnything.from_pretrained('LiheYoung/depth_anything_vitl14').to(self.DEVICE).eval()
+        # self.depth_anything = DepthAnything.from_pretrained('LiheYoung/depth_anything_vitl14').to(self.DEVICE).eval()
 
         # self.depth_anything = DPT_DINOv2(encoder='vitl', features=256, out_channels=[256, 512, 1024, 1024], localhub=True).cuda()
         # self.depth_anything.load_state_dict(torch.load(PATH_TO_DEPTH_ANYTHING + "/checkpoints/depth_anything_vitl14.pth", map_location='cpu'), strict=True)
         # self.depth_anything.eval()
-        self.depth_anything_transform = Compose([
-            Resize(
-                width=518,
-                height=518,
-                resize_target=False,
-                keep_aspect_ratio=True,
-                ensure_multiple_of=14,
-                resize_method='lower_bound',
-                image_interpolation_method=cv2.INTER_CUBIC,
-            ),
-            NormalizeImage(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-            PrepareForNet(),
-        ])
+        # self.depth_anything_transform = Compose([
+        #     Resize(
+        #         width=518,
+        #         height=518,
+        #         resize_target=False,
+        #         keep_aspect_ratio=True,
+        #         ensure_multiple_of=14,
+        #         resize_method='lower_bound',
+        #         image_interpolation_method=cv2.INTER_CUBIC,
+        #     ),
+        #     NormalizeImage(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        #     PrepareForNet(),
+        # ])
 
         self.FOOD_CLASSES = ["spaghetti", "meatball"]
         self.BOX_THRESHOLD = 0.3
@@ -206,25 +206,25 @@ class BiteAcquisitionInference:
         # read API key from command line argument
         self.api_key =  os.environ['OPENAI_API_KEY']
 
-        self.gpt4v_client = GPT4VFoodIdentification(self.api_key, '/home/isacc/bite_acquisition/scripts/prompts/identification')
+        # self.gpt4v_client = GPT4VFoodIdentification(self.api_key, '/home/isacc/bite_acquisition/scripts/prompts/identification')
         self.client = OpenAI(api_key=self.api_key)
 
-        torch.set_flush_denormal(True)
+        # torch.set_flush_denormal(True)
         checkpoint_dir = PATH_TO_SPAGHETTI_CHECKPOINTS
 
-        self.minispanet = MiniSPANet(out_features=1)
-        self.minispanet_crop_size = 100
-        checkpoint = torch.load('%s/spaghetti_ori_net.pth'%checkpoint_dir, map_location=self.DEVICE)
-        self.minispanet.load_state_dict(checkpoint)
-        self.minispanet.eval()
-        self.minispanet_transform = transforms.Compose([transforms.ToTensor()])
+        # self.minispanet = MiniSPANet(out_features=1)
+        # self.minispanet_crop_size = 100
+        # checkpoint = torch.load('%s/spaghetti_ori_net.pth'%checkpoint_dir, map_location=self.DEVICE)
+        # self.minispanet.load_state_dict(checkpoint)
+        # self.minispanet.eval()
+        # self.minispanet_transform = transforms.Compose([transforms.ToTensor()])
 
-        self.seg_net = SegModel("FPN", "resnet34", in_channels=3, out_classes=1)
-        ckpt = torch.load('%s/spaghetti_seg_resnet.pth'%checkpoint_dir, map_location=self.DEVICE)
-        self.seg_net.load_state_dict(ckpt)
-        self.seg_net.eval()
-        self.seg_net.to(self.DEVICE)
-        self.seg_net_transform = transforms.Compose([transforms.ToTensor()])
+        # self.seg_net = SegModel("FPN", "resnet34", in_channels=3, out_classes=1)
+        # ckpt = torch.load('%s/spaghetti_seg_resnet.pth'%checkpoint_dir, map_location=self.DEVICE)
+        # self.seg_net.load_state_dict(ckpt)
+        # self.seg_net.eval()
+        # self.seg_net.to(self.DEVICE)
+        # self.seg_net_transform = transforms.Compose([transforms.ToTensor()])
 
         self.preference_planner = PreferencePlanner()
 
@@ -306,6 +306,14 @@ class BiteAcquisitionInference:
         elif 'Push Filling' in valid_actions:
             return 'Push Filling'
         return 'Acquire'
+
+    def get_scoop_action_mujoco(self):
+        action = "Acquire"
+        # Placeholder for scoop keypoints
+        scoop_keypoints = [[0.3507, 0.0512, 0.0373 + 0.1], [0.4507, -0.0512, 0.0373 + 0.1]]
+
+        push_keypoints = [[0.3507, 0.0512, 0.0373 + 0.1], [0.4507, -0.0512, 0.0373 + 0.1]]
+        return action, scoop_keypoints[0], scoop_keypoints[1], push_keypoints[0], push_keypoints[1]
 
     def get_scoop_action(self, image, masks, categories, log_path = None):
         
@@ -1032,6 +1040,9 @@ class BiteAcquisitionInference:
                     Input: 'blueberry 0.87'
                     Output: 'fruit'
 
+                    Input: 'rice 0.50'
+                    Output: 'semisolid'
+
                     Input: '%s'
                     Output:
                     """
@@ -1132,7 +1143,8 @@ class BiteAcquisitionInference:
         dip_actions = []
         efficiency_scores = []        
 
-        print(categories, food_to_consider)
+        print(f"catgories: {categories} | Food to consider: {food_to_consider}\n")
+
         for idx in food_to_consider:
             ## What to do if noodles
 
@@ -1149,7 +1161,8 @@ class BiteAcquisitionInference:
             #         efficiency_scores.append(2.5) # Should this be even higher?
             #         next_actions.append((idx, 'Group', {'start':sparsest, 'end':densest}))
             if categories[idx] == 'semisolid':
-                densest, sparsest, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action, start_px, end_px = self.get_scoop_action(image, masks, categories, log_path)
+                # densest, sparsest, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action, start_px, end_px = self.get_scoop_action(image, masks, categories, log_path)
+                action, start_px, end_px, filling_push_start, filling_push_end = self.get_scoop_action_mujoco()
                 if action == 'Acquire':
                     efficiency_scores.append(1)
                     next_actions.append((idx, 'Scoop', {'start':start_px, 'end':end_px}))
@@ -1178,7 +1191,8 @@ class BiteAcquisitionInference:
                 #     skewer_mask = self.detect_most_obstructing_filling(masks[idx], noodle_or_semisolid_mask)
 
                 # efficiency_scores.append(0.9)
-                densest, sparsest, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action, start_px, end_px = self.get_scoop_action(image, masks, categories, log_path)
+                # densest, sparsest, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action, start_px, end_px = self.get_scoop_action(image, masks, categories, log_path)
+                action, start_px, end_px, filling_push_start, filling_push_end = self.get_scoop_action_mujoco()
                 efficiency_scores.append(1)
                 next_actions.append((idx, 'Scoop', {'start':start_px, 'end':end_px}))
 
@@ -1220,7 +1234,7 @@ class BiteAcquisitionInference:
             print('Bite portions: ', non_dip_portions_rounded)
             print('Preference: ', preference)
 
-            k = input("Press [n] to exit or otherwise I will query bite sequencing planner...")
+            k = input("Press [n] to exit or otherwise I will query bite sequencing planner...\n\n")
             if k == 'n':
                 return None, None
 

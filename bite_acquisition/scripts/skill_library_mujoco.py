@@ -244,6 +244,9 @@ class SkillLibrary:
     def move_spoon_to_pose(self, tip_pose, tip_to_wrist = None):
 
         self.robot_controller.move_to_pose(tip_pose)
+
+    def scooping_skill_mujoco(self, keypoints = None):
+        print("Executing scooping action.")
     
     def pushing_skill_mujoco(self, keypoints = None):
         """
@@ -251,6 +254,9 @@ class SkillLibrary:
         start: [x, y, z], pixel coordinates of the start point,
         end: [x, y, z], pixel coordinates of the end point
         """
+
+        # self.robot_controller.move_to_acq_pose()
+
         # if keypoints is not None:
         start, end = keypoints
         
@@ -332,101 +338,6 @@ class SkillLibrary:
         self.robot_controller.reset()
 
         return
-    
-    def cutting_skill(self, color_image, depth_image, camera_info, keypoint = None, cutting_angle = None):
-
-        if keypoint is not None:
-            (center_x, center_y) = keypoint
-
-            # shift cutting point perpendicular to the cutting angle in the direction of the fork tines (less y value)
-            pt = cmath.rect(23, np.pi/2-cutting_angle)
-            center_x = center_x + int(pt.real)
-            center_y = center_y - int(pt.imag)
-            # cv2.line(color_image_vis, (center_x-x2,center_y+y2), (cut_point[0]+x2,cut_point[1]-y2), (255,0,0), 2)
-
-            cutting_angle = math.degrees(cutting_angle)
-            cutting_angle = cutting_angle + 180 # Rajat ToDo - remove this hack bruh
-        else:
-            clicks = self.pixel_selector.run(color_image, num_clicks=2)
-            (left_x, left_y) = clicks[0]
-            (right_x, right_y) = clicks[1]
-            print("Left: ", left_x, left_y)
-            print("Right: ", right_x, right_y)
-            if left_y < right_y:
-                center_x, center_y = left_x, left_y
-                clicks[0], clicks[1] = clicks[1], clicks[0]
-            else:
-                center_x, center_y = right_x, right_y
-            cutting_angle = utils.angle_between_pixels(np.array(clicks[0]), np.array(clicks[1]), color_image.shape[1], color_image.shape[0], orientation_symmetry = False)
-
-        # visualize cutting point and line between left and right points
-        cv2.circle(color_image, (center_x, center_y), 5, (0, 0, 255), -1)
-        # cv2.line(color_image, (left_x, left_y), (right_x, right_y), (0, 0, 255), 2)
-
-        cv2.imshow('vis', color_image)
-        cv2.waitKey(0)
-
-        # get 3D point from depth image
-        validity, point = utils.pixel2World(camera_info, center_x, center_y, depth_image)
-
-        if not validity:
-            print("Invalid point")
-            return
-        
-        fork_rotation = self.tf_utils.getTransformationFromTF('camera_color_optical_frame', 'fork_tip')[:3,:3]
-        
-        # action 1: Set wrist state to cutting angle
-        self.wrist_controller.set_to_cut_pos()
-        self.wrist_controller.set_to_cut_pos()
-        
-        fork_rotation_cut = self.tf_utils.getTransformationFromTF('camera_color_optical_frame', 'fork_tip')[:3,:3]
-        wrist_rotation = np.linalg.inv(fork_rotation) @ fork_rotation_cut
-
-        print('Cutting angle: ', cutting_angle)
-        # update cutting angle to take into account incline of fork tines
-        cutting_angle = cutting_angle + 25
-
-        cutting_pose = np.zeros((4,4))
-        cutting_pose[:3,:3] = Rotation.from_euler('xyz', [0,0,cutting_angle], degrees=True).as_matrix() @ wrist_rotation
-        cutting_pose[:3,3] = point.reshape(1,3)
-        cutting_pose[3,3] = 1
-
-        cutting_pose = self.tf_utils.getTransformationFromTF("base_link", "camera_color_optical_frame") @ cutting_pose
-
-        cutting_pose[2,3] = max(cutting_pose[2,3], PLATE_HEIGHT)
-
-        self.visualizer.visualize_food(cutting_pose)
-
-        waypoint_1_tip = np.copy(cutting_pose)
-        waypoint_1_tip[2,3] += 0.03 
-
-        self.move_utensil_to_pose(waypoint_1_tip)
-
-        # action 2: Move down until tip touches the plate
-
-        waypoint_2_tip = np.copy(cutting_pose)
-        waypoint_2_tip[2,3] = PLATE_HEIGHT - 0.009
-        self.move_utensil_to_pose(waypoint_2_tip)
-
-        tip_to_wrist = self.tf_utils.getTransformationFromTF('fork_tip', 'tool_frame')
-
-        # action 2.5: slightly turn the fork tines so that the food item flips over / separates
-        self.wrist_controller.cutting_tilt()
-
-        # action 3: Push orthogonal to the cutting angle, in direction of towards the robot (+y relative to the fork)
-        waypoint_3_tip = np.copy(cutting_pose)
-        waypoint_3_tip[2,3] = PLATE_HEIGHT - 0.009
-        y_displacement = np.eye(4)
-        y_displacement[1,3] = 0.02
-        waypoint_3_tip = waypoint_3_tip @ y_displacement
-        self.move_utensil_to_pose(waypoint_3_tip, tip_to_wrist)
-
-        ## action 3: Move up
-        
-        waypoint_4_tip = np.copy(waypoint_3_tip)
-        waypoint_4_tip[2,3] += 0.035 
-        
-        self.move_utensil_to_pose(waypoint_4_tip, tip_to_wrist)
 
     def cutting_skill_mujoco(self, keypoint = None, cutting_angle = None):
 
@@ -515,3 +426,7 @@ class SkillLibrary:
         if self.print_waypoints:
             print(f"waypoint_4: {waypoint_4_tip}")
         self.move_spoon_to_pose(waypoint_4_tip)
+
+    def transfer_to_mouth(self):
+        self.robot_controller.move_to_transfer_pose()
+        print("Bite Transfer Executed")

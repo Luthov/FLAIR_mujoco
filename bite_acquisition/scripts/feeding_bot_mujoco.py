@@ -11,7 +11,7 @@ import rospy
 from rs_ros import RealSenseROS
 # import pickle
 
-from skill_library import SkillLibrary
+from skill_library_mujoco import SkillLibrary
 
 # package imports
 # import utils
@@ -35,7 +35,7 @@ class FeedingBot:
         self.camera = RealSenseROS()
         self.skill_library = SkillLibrary()
 
-        print("Feeding Bot initialized")
+        print("Feeding Bot initialized\n")
 
         self.inference_server = BiteAcquisitionInference(mode='ours')
 
@@ -52,12 +52,16 @@ class FeedingBot:
                 self.bite_history = ast.literal_eval(f.read().strip())
                 self.log_count = len(self.bite_history)+1
 
+        print("--------------------")
         print("Log count", self.log_count)
         print("History", self.bite_history)
+        print("--------------------\n")
                 
         # self.log_count should be the maximum numbered file in the log folder + 1
         self.log_count = max([int(x.split('_')[0]) for x in files]) + 1 if len(files) > 0 else 1
         #self.log_count = len(os.listdir('log')) + 1
+
+        self.item_portions = [2.4, 2.8, 1.2]
         
 
     def clear_plate(self):
@@ -79,6 +83,7 @@ class FeedingBot:
         ############################################################################################################
         # items = ['banana', 'chocolate sauce']
         items = ['oatmeal', 'strawberry']
+        items = ['chicken', 'rice', 'egg']
         # items = ['red strawberry', 'chocolate sauce', 'ranch dressing', 'blue plate']
         # items = ['mashed potatoes']
         # items =  ['strawberry', 'ranch dressing', 'blue plate']
@@ -86,30 +91,32 @@ class FeedingBot:
         self.inference_server.FOOD_CLASSES = items
 
         # User preference
-        #user_preference = "I want to eat all the mashed potatoes first, and the sausages after."
-        #user_preference = "Alternating bites of spaghetti and meatballs."
+        # user_preference = "I want to eat all the mashed potatoes first, and the sausages after."
+        # user_preference = "Alternating bites of spaghetti and meatballs."
         # user_preference = "No preference."
-        user_preference = "I want to eat alternating bites of strawberries and oatmeal."
+        # user_preference = "I want to eat alternating bites of rice and chicken."
+        user_preference = "I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally."
 
         # Bite history
         bite_history = self.bite_history
 
         # Continue food
         continue_food_label = None
-        continue_dip_label = None
+        # continue_dip_label = None
 
-        visualize = True
+        # visualize = True
 
         actions_remaining = 10
         success = True
         while actions_remaining:
         # if True:
 
-            self.skill_library.reset()
-
+            # self.skill_library.reset()
+            print("--------------------")
             print('History', bite_history)
             print('Actions remaining', actions_remaining)
-            input('Ready?')
+            input('Ready?\n')
+            print("--------------------\n")
             # camera_header, camera_color_data, camera_info_data, camera_depth_data = self.camera.get_camera_data()
             # vis = camera_color_data.copy()
 
@@ -118,8 +125,8 @@ class FeedingBot:
 
             # annotated_image, detections, item_masks, item_portions, item_labels = self.inference_server.detect_items(camera_color_data, log_path)
 
-            item_labels = [l.replace('strawberry piece', 'strawberry') for l in item_labels]   
-            item_labels = [l.replace('orange baby carrot', 'baby carrot') for l in item_labels]   
+            # item_labels = [l.replace('strawberry piece', 'strawberry') for l in item_labels]   
+            # item_labels = [l.replace('orange baby carrot', 'baby carrot') for l in item_labels]   
 
             # cv2.imshow('vis', annotated_image)
             # cv2.waitKey(0)
@@ -152,7 +159,7 @@ class FeedingBot:
             # cv2.destroyAllWindows()
             
             # Counts the instance of each food item
-            clean_item_labels, _ = self.inference_server.clean_labels(item_labels)
+            # clean_item_labels, _ = self.inference_server.clean_labels(item_labels)
 
             # # remove detections of blue plate
             # if 'blue plate' in clean_item_labels:
@@ -172,15 +179,16 @@ class FeedingBot:
 
             ## TODO: Understand the rest of this
             item_labels = ["chicken 0.82", "rice 0.76", "egg 0.84"]
-            item_portions = [1.2, 1.6, 1.0]
+            
+            clean_item_labels = ["chicken", "rice", "egg"]
 
-            categories = self.inference_server.categorize_items(item_labels) 
+            categories = self.inference_server.categorize_items(item_labels, sim=False) 
 
             print("--------------------")
             print("Labels:", item_labels)
             print("Categories:", categories)
-            print("Portions:", item_portions)
-            print("--------------------")
+            print("Portions:", self.item_portions)
+            print("--------------------\n")
 
             category_list = []
             labels_list = []
@@ -203,24 +211,33 @@ class FeedingBot:
                     category_list.append(categories[i])
                     labels_list.append(clean_item_labels[i])
                     # per_food_masks.append([item_masks[i]])
-                    per_food_portions.append(item_portions[i])
+                    per_food_portions.append(self.item_portions[i])
                 else:
                     index = labels_list.index(clean_item_labels[i])
                     # per_food_masks[index].append(item_masks[i])
-                    per_food_portions[index] += item_portions[i]
-            
+                    per_food_portions[index] += self.item_portions[i]
+
+            print("--------------------")
             print("Bite History", bite_history)
             print("Category List:", category_list)
             print("Labels List:", labels_list)
             # print("Per Food Masks Len:", [len(x) for x in per_food_masks])
             print("Per Food Portions:", per_food_portions)
+            print("--------------------\n")
 
             #food_id, action_type, metadata = self.inference_server.get_manual_action(annotated_image, camera_color_data, per_food_masks, category_list, per_food_portions, user_preference, bite_history, continue_food_id, log_path)
             # food, dip = self.inference_server.get_manual_action(annotated_image, camera_color_data, per_food_masks, category_list, labels_list, per_food_portions, user_preference, bite_history, continue_food_label, log_path)
             food = self.inference_server.get_autonomous_action(category_list, labels_list, per_food_portions, user_preference, bite_history, continue_food_label, log_path)
             if food is None:
                 exit(1)
-            food_id, action_type, metadata = food
+            print("--------------------")
+            print(f"food_id: {food[0][0]} \naction_type: {food[0][1]} \nmetadata: {food[0][2]}")
+            print("--------------------\n")
+            # food_id, action_type, metadata = food
+            food_id = food[0][0]
+            action_type = food[0][1]
+            metadata = food[0][2]
+            
             # dip_id = None
             # if dip is not None:
             #     dip_id, dip_action_type, dip_metadata = dip
@@ -250,27 +267,27 @@ class FeedingBot:
                 #    action = self.skill_library.skewering_skill(camera_color_data, camera_depth_data, camera_info_data, keypoint = center, skewer_angle = skewer_angle)
             if action_type == 'Scoop':
                 start, end = metadata['start'], metadata['end']
-                action = self.skill_library.scooping_skill(camera_color_data, camera_depth_data, camera_info_data, keypoints = [start, end])
+                action = self.skill_library.scooping_skill_mujoco(keypoints = [start, end])
             elif action_type == 'Push':
                 continue_food_label = labels_list[food_id]
                 start, end = metadata['start'], metadata['end']
-                if visualize:
-                    vis = visualize_push(vis, start, end)
-                    cv2.imshow('vis', vis)
-                    cv2.waitKey(0)
+                # if visualize:
+                #     vis = visualize_push(vis, start, end)
+                #     cv2.imshow('vis', vis)
+                #     cv2.waitKey(0)
                 input('Continue pushing skill?')
-                action = self.skill_library.pushing_skill(camera_color_data, camera_depth_data, camera_info_data, keypoints = [start, end])
+                action = self.skill_library.pushing_skill_mujoco(keypoints = [start, end])
             elif action_type == 'Cut':
                 continue_food_label = labels_list[food_id]
-                if dip_id is not None and dip_action_type == 'Dip':
-                    continue_dip_label = labels_list[dip_id]
+                # if dip_id is not None and dip_action_type == 'Dip':
+                #     continue_dip_label = labels_list[dip_id]
                 cut_point = metadata['point']
                 cut_angle = metadata['cut_angle']
-                action = self.skill_library.cutting_skill(camera_color_data, camera_depth_data, camera_info_data, keypoint = cut_point, cutting_angle = cut_angle)            
+                action = self.skill_library.cutting_skill_mujoco(keypoint = cut_point, cutting_angle = cut_angle)            
 
-            # if action_type == 'Twirl' or action_type == 'Scoop': # Terminal actions
-            #     continue_food_label = None
-            #     bite_history.append(labels_list[food_id])
+            if action_type == 'Scoop': # Terminal actions
+                continue_food_label = None
+                bite_history.append(labels_list[food_id])
             # elif action_type == 'Skewer':
             #     if food_on_fork: # Terminal actions
             #         # Dip the food
@@ -287,7 +304,11 @@ class FeedingBot:
             #     else:
             #         continue_food_label = labels_list[food_id]
             #         success = False
-
+            for idx in range(len(clean_item_labels)):
+                if clean_item_labels[food_id] == clean_item_labels[idx]:
+                    self.item_portions[idx] -= 0.5
+                    break
+            
             # Wtf they don't even check if the action is successful
             if success:
                 actions_remaining -= 1
@@ -302,7 +323,7 @@ class FeedingBot:
                 self.skill_library.transfer_to_mouth()
                 k = input('Continue to acquisition? Remember to shutdown horizontal spoon.')
                 while k not in ['y', 'n']:
-                    k = input('Continue to acquisition? Remember to shutdown horizontal spoon.')
+                    k = input('Continue to acquisition? Remember to shutdown horizontal spoon.\n')
                 if k == 'n':
                     exit(1)
 
