@@ -37,7 +37,10 @@ class PreferencePlanner:
     def __init__(self):
         self.gpt_interface = GPTInterface()
 
-    def plan(self, items, portions, efficiencies, preference, dips, history, mode='ours'):
+    def plan(self, items, portions, efficiencies, preference, history, mode='ours'):
+
+        dips = 0.0
+
         if mode == 'ours':
             print("Reading prompts from prompts/ours_new.txt")
             with open('prompts/ours.txt', 'r') as f:

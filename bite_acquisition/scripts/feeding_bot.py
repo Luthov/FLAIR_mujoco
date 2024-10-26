@@ -61,18 +61,22 @@ class FeedingBot:
         
 
     def clear_plate(self):
+        ############################################################################################################
 
+        ## Everything in this block was commented
         # Identify the items on the plate
-        # camera_header, camera_color_data, camera_info_data, camera_depth_data = self.camera.get_camera_data()
-        # items = self.inference_server.recognize_items(camera_color_data)
-        # print("Food Items recognized:", items)
+        camera_header, camera_color_data, camera_info_data, camera_depth_data = self.camera.get_camera_data()
+        items = self.inference_server.recognize_items(camera_color_data)
+        print("Food Items recognized:", items)
 
-        # input("Did the robot recognize the food items correctly?")
+        input("Did the robot recognize the food items correctly?")
         
         #items = ['mashed potatoes', 'sausage']
         # items = ['noodles', 'meatball']
         # items = ['brownie', 'chocolate sauce']
-        # self.inference_server.FOOD_CLASSES = [f.replace('banana', 'small piece of sliced banana') for f in items]
+        self.inference_server.FOOD_CLASSES = [f.replace('banana', 'small piece of sliced banana') for f in items]
+
+        ############################################################################################################
         # items = ['banana', 'chocolate sauce']
         items = ['oatmeal', 'strawberry']
         # items = ['red strawberry', 'chocolate sauce', 'ranch dressing', 'blue plate']
@@ -133,8 +137,7 @@ class FeedingBot:
 
             cv2.destroyAllWindows()
             
-            
-            ################################ TODO: Returns item_name and count of items ################################
+            ## Counts the instance of each food item
             clean_item_labels, _ = self.inference_server.clean_labels(item_labels)
 
             # remove detections of blue plate
@@ -153,6 +156,7 @@ class FeedingBot:
             cv2.imwrite(log_path + "_color.png", camera_color_data)
             cv2.imwrite(log_path + "_depth.png", camera_depth_data)
 
+            ## TODO: Understand the rest of this
             categories = self.inference_server.categorize_items(item_labels) 
 
             print("--------------------")
