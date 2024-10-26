@@ -116,6 +116,7 @@ class FeedingBot:
             log_path = self.log_file + str(self.log_count)
             self.log_count += 1
 
+            ################################ TODO: Have to change to interface with mujoco instead ################################
             annotated_image, detections, item_masks, item_portions, item_labels = self.inference_server.detect_items(camera_color_data, log_path)
 
             item_labels = [l.replace('strawberry piece', 'strawberry') for l in item_labels]   
@@ -133,21 +134,6 @@ class FeedingBot:
                     exit(1)
             while k == 'n':
                 exit(1)
-                # print("Please manually give the correct labels")
-                # print("Detected items:", item_labels)
-                # label_id = int(input("What label to correct?"))
-                # item_labels[label_id] = input("Correct label:")
-
-                # annotated_image = self.inference_server.get_annotated_image(camera_color_data, detections, item_labels)
-
-                # cv2.imshow('vis', annotated_image)
-                # cv2.waitKey(0)
-
-                # input("Visualzing the detected items. Press Enter to continue.")
-
-                # k = input('Are detected items correct now?')
-                # while k not in ['y', 'n']:
-                #     k = input('Are detected items correct now?')
 
             cv2.destroyAllWindows()
             
@@ -214,6 +200,9 @@ class FeedingBot:
 
             #food_id, action_type, metadata = self.inference_server.get_manual_action(annotated_image, camera_color_data, per_food_masks, category_list, per_food_portions, user_preference, bite_history, continue_food_id, log_path)
             # food, dip = self.inference_server.get_manual_action(annotated_image, camera_color_data, per_food_masks, category_list, labels_list, per_food_portions, user_preference, bite_history, continue_food_label, log_path)
+            
+            ## categories = ["list of categories of food items, can directly label I think"]
+            ################################ TODO: Need to modify to not require images and the other things ################################ 
             food, dip = self.inference_server.get_autonomous_action(annotated_image, camera_color_data, per_food_masks, category_list, labels_list, per_food_portions, user_preference, bite_history, continue_food_label, continue_dip_label, log_path)
             if food is None:
                 exit(1)
@@ -222,29 +211,29 @@ class FeedingBot:
             if dip is not None:
                 dip_id, dip_action_type, dip_metadata = dip
 
-
-            if action_type == 'Twirl':
-                densest_point = metadata['point']
-                twirl_angle = metadata['twirl_angle']
-                if visualize:
-                    vis = visualize_keypoints(vis, [densest_point])
-                    cv2.imshow('vis', vis)
-                    cv2.waitKey(0)
-                input('Continue twirling skill?')
-                action = self.skill_library.twirling_skill(camera_color_data, camera_depth_data, camera_info_data, keypoint = densest_point, twirl_angle = twirl_angle)
-            elif action_type == 'Skewer':
-                center = metadata['point']
-                skewer_angle = metadata['skewer_angle']
-                if visualize:
-                    vis = visualize_skewer(vis, center, skewer_angle)
-                    cv2.imshow('vis', vis)
-                    cv2.waitKey(0)
-                input('Continue skewering skill?')
-                action = self.skill_library.skewering_skill(camera_color_data, camera_depth_data, camera_info_data, keypoint = center, skewer_angle = skewer_angle)
-                # keep skewering until the food is on the fork
-                food_on_fork = self.inference_server.food_on_fork(self.camera.get_camera_data()[1], visualize=False, log_path=log_path)
-                print('Food on fork?', food_on_fork)
-                #    action = self.skill_library.skewering_skill(camera_color_data, camera_depth_data, camera_info_data, keypoint = center, skewer_angle = skewer_angle)
+            ################################ TODO: Need to modify to not require images and the other things (Probably do in skill_library instead) ################################
+            # if action_type == 'Twirl':
+            #     densest_point = metadata['point']
+            #     twirl_angle = metadata['twirl_angle']
+            #     if visualize:
+            #         vis = visualize_keypoints(vis, [densest_point])
+            #         cv2.imshow('vis', vis)
+            #         cv2.waitKey(0)
+            #     input('Continue twirling skill?')
+            #     action = self.skill_library.twirling_skill(camera_color_data, camera_depth_data, camera_info_data, keypoint = densest_point, twirl_angle = twirl_angle)
+            # elif action_type == 'Skewer':
+            #     center = metadata['point']
+            #     skewer_angle = metadata['skewer_angle']
+            #     if visualize:
+            #         vis = visualize_skewer(vis, center, skewer_angle)
+            #         cv2.imshow('vis', vis)
+            #         cv2.waitKey(0)
+            #     input('Continue skewering skill?')
+            #     action = self.skill_library.skewering_skill(camera_color_data, camera_depth_data, camera_info_data, keypoint = center, skewer_angle = skewer_angle)
+            #     # keep skewering until the food is on the fork
+            #     food_on_fork = self.inference_server.food_on_fork(self.camera.get_camera_data()[1], visualize=False, log_path=log_path)
+            #     print('Food on fork?', food_on_fork)
+            #     #    action = self.skill_library.skewering_skill(camera_color_data, camera_depth_data, camera_info_data, keypoint = center, skewer_angle = skewer_angle)
             elif action_type == 'Scoop':
                 start, end = metadata['start'], metadata['end']
                 action = self.skill_library.scooping_skill(camera_color_data, camera_depth_data, camera_info_data, keypoints = [start, end])
@@ -268,22 +257,23 @@ class FeedingBot:
             if action_type == 'Twirl' or action_type == 'Scoop': # Terminal actions
                 continue_food_label = None
                 bite_history.append(labels_list[food_id])
-            elif action_type == 'Skewer':
-                if food_on_fork: # Terminal actions
-                    # Dip the food
-                    if dip_id is not None and dip_action_type == 'Dip':
-                        dip_point = dip_metadata['point']
-                        action = self.skill_library.dipping_skill(camera_color_data, camera_depth_data, camera_info_data, keypoint = dip_point)
-                        bite_history.append(labels_list[food_id])
-                        bite_history.append(labels_list[dip_id])
-                        continue_dip_label = None
-                    else:
-                        bite_history.append(labels_list[food_id])
-                    continue_food_label = None
+                
+            # elif action_type == 'Skewer':
+            #     if food_on_fork: # Terminal actions
+            #         # Dip the food
+            #         if dip_id is not None and dip_action_type == 'Dip':
+            #             dip_point = dip_metadata['point']
+            #             action = self.skill_library.dipping_skill(camera_color_data, camera_depth_data, camera_info_data, keypoint = dip_point)
+            #             bite_history.append(labels_list[food_id])
+            #             bite_history.append(labels_list[dip_id])
+            #             continue_dip_label = None
+            #         else:
+            #             bite_history.append(labels_list[food_id])
+            #         continue_food_label = None
                     
-                else:
-                    continue_food_label = labels_list[food_id]
-                    success = False
+            #     else:
+            #         continue_food_label = labels_list[food_id]
+            #         success = False
 
             if success:
                 actions_remaining -= 1
