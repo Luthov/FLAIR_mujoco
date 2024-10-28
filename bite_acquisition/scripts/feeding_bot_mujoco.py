@@ -310,6 +310,7 @@ class FeedingBot:
                     break
             
             # Wtf they don't even check if the action is successful
+            # yea.. welcome to research code HAHA
             if success:
                 actions_remaining -= 1
 

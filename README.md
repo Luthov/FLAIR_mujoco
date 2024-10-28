@@ -66,6 +66,22 @@ Follow these steps to set up and control the feeding utensil using the Dynamixel
 
 ## Running FLAIR
 
+### FLAIR with MuJoCo
+```bash
+# Launch the arm on MoveIt
+roslaunch feeding_xarm feeding_xarm6.launch
+
+# Launch action server
+roscd bite_acquisition/scripts
+python mujoco_action_server.py
+
+# Run FLAIR
+roscd bite_acquisition/scripts
+python feeding_bot_mujoco.py
+```
+
+### Original Instructions
+
 TO run FLAIR, follow these steps, running each command in a separate terminal window. Remember to source your environment in each terminal to ensure all dependencies are properly loaded.
 
 1. Start the ROS core:

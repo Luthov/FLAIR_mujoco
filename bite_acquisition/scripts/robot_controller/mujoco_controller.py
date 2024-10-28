@@ -2,6 +2,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation as R
 
 import rospy
+import rospkg
 from geometry_msgs.msg import PoseStamped
 
 # from bite_acquisition.srv import PoseCommand, PoseCommandRequest, PoseCommandResponse
@@ -27,8 +28,10 @@ class MujocoRobotController(RobotController):
         controller_config = load_controller_config(default_controller="IK_POSE")
         controller_config["control_delta"] = False
 
+        model_folder = rospkg.RosPack().get_path("feeding_mujoco") + "/src/feeding_mujoco/models"
+
         env_config = {
-            "model_path": "/home/luthov_ubuntu/School/FYP/learning_mujoco/models/envs/mujoco_scooping_test/feeding.xml",
+            "model_path": model_folder + "/envs/feeding_luke/feeding.xml",
             "sim_timestep": 0.002,
             "controller_config": controller_config,
             "control_freq": 100,

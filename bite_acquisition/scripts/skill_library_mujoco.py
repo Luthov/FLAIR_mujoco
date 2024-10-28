@@ -28,12 +28,19 @@ from pixel_selector import PixelSelector
 from robot_controller.kinova_controller import KinovaRobotController
 from robot_controller.mujoco_action_controller import MujocoRobotController
 
+# Scooping primitive using DMP
+from feeding_mujoco.planners.scooping_dmp import ScoopingDMPPlanner
+from feeding_mujoco.utils.transform_utils import quat2axisangle
+
 PLATE_HEIGHT = 0.15
 class SkillLibrary:
 
     def __init__(self):
 
         self.robot_controller = MujocoRobotController()
+
+        # TODO: Update the spoon length in XML file to follow real arm. Assume old value for now
+        self.scooping_planner = ScoopingDMPPlanner(dt = 0.01, spoon_length=0.14)   # 100 Hz
 
         # Create a TF2 buffer and listener
         self.tf_buffer = tf2_ros.Buffer()
@@ -245,8 +252,29 @@ class SkillLibrary:
 
         self.robot_controller.move_to_pose(tip_pose)
 
-    def scooping_skill_mujoco(self, keypoints = None):
-        print("Executing scooping action.")
+    def scooping_skill_mujoco(self, keypoints = None, bite_size=1.0):
+        """
+        Executes the scooping primitive
+
+        Args:
+            keypoints (ndarray, optional): Food pose. Defaults to None.
+            bite_site (float, optional): Bite site. Defaults to 1.0.
+        """
+        # Get DMP trajectory for scooping
+        # 1. Update food pose [x,y,z]
+        self.scooping_planner.update_food_pose(keypoints)
+
+        # 2. Update DMP weights (temporarily) to change bite size
+        if bite_size != 1.0:
+            self.scooping_planner.update_dmp_params({"delta_weight": bite_size})
+
+        # 3. Rollout DMP trajectory
+        y, _, _= self.scooping_planner.rollout(eef_traj=True)
+
+        self.robot_controller.execute_scooping(y, keypoints)
+
+        return
+
     
     def pushing_skill_mujoco(self, keypoints = None):
         """
@@ -427,6 +455,7 @@ class SkillLibrary:
             print(f"waypoint_4: {waypoint_4_tip}")
         self.move_spoon_to_pose(waypoint_4_tip)
 
+    # TODO: Luke: rename to transfer_skill (to have consistency with all the primitive naming)
     def transfer_to_mouth(self):
         self.robot_controller.move_to_transfer_pose()
         print("Bite Transfer Executed")

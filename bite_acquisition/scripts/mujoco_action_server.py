@@ -8,6 +8,7 @@ import rospy
 import rospkg
 import actionlib
 from geometry_msgs.msg import PoseStamped
+from std_msgs.msg import Float32MultiArray
 from moveit_msgs.msg import RobotTrajectory, MoveItErrorCodes
 from moveit_msgs.msg import ExecuteTrajectoryAction, ExecuteTrajectoryGoal
 
@@ -35,7 +36,7 @@ class MujocoAction(object):
 
         model_folder = rospkg.RosPack().get_path("feeding_mujoco") + "/src/feeding_mujoco/models"
         env_config = {
-            "model_path": model_folder + "/envs/mujoco_scooping_test/feeding.xml",
+            "model_path": model_folder + "/envs/feeding_luke/feeding.xml",
             # "model_path": model_folder + "/robots/xarm6/xarm6_with_ft_sensor_gripper_with_spoon.xml",
             "sim_timestep": 0.002,
             "controller_config": controller_config,
@@ -84,8 +85,11 @@ class MujocoAction(object):
         # self.execute_traj_in_moveit(msg_joint_traj)
         rospy.loginfo(f"Moved moveit robot to initial pose: {self.env._robot.get_eef_pose()}")
         
+        self.reset_pos = np.array([0.0, 0.0, 0.0, 0.0, -1.3988, 0.0])   # initial pose of the robot
+        # TODO: Luke: these poses should be defined by the client
         self.acq_pos = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
-        self.transfer_pos = np.radians([0.0, -65.0, -25.0, 0.0, 0.0, -90.0])
+        # TODO: Luke: this transfer pose also seems a bit high (in terms of z position)
+        self.transfer_pos = np.radians([0.0, -65.0, -25.0, 0.0, 20.0, 0.0])
 
         self.action_name = "mujoco_action_server"
         self.action_server = actionlib.SimpleActionServer(self.action_name, mujoco_action_serverAction, execute_cb=self.execute_callback, auto_start = False)
@@ -98,10 +102,14 @@ class MujocoAction(object):
             if goal.function_name == "move_to_pose":
                 print("Moving to pose")
                 self.move_to_pose(goal.goal_point)
+            elif goal.function_name == "move_to_reset_pos":
+                self.move_to_reset_pose()
             elif goal.function_name == "move_to_acq_pose":
                 self.move_to_acq_pose()
             elif goal.function_name == "move_to_transfer_pose":
                 self.move_to_transfer_pose()
+            elif goal.function_name == "execute_scooping":
+                self.execute_scooping(goal.scooping_trajectory, goal.goal_point)
             elif goal.function_name == "reset":
                 self.reset()
             elif goal.function_name == "rotate_eef":
@@ -117,6 +125,57 @@ class MujocoAction(object):
             rospy.logerr("Exception in execute_cb: %s", str(e))
             self.result.success = False
             self.action_server.set_aborted(self.result, str(e))
+
+    def execute_scooping(self, scooping_trajectory, food_pose):
+        """
+        Executes the scooping trajectory using the controller in Mujoco.
+        Note: does not use MoveIt for trajectory execution.
+
+        Args:
+            scooping_trajectory (Float32MultiArray): The scooping trajectory to execute.
+            food_pose (PoseStamped): The pose of the food item. Only positions are used.
+        """
+        print("Executing scooping trajectory...")
+        assert scooping_trajectory.layout.dim[1].size == 7, "Invalid scooping trajectory format. Expected 7 elements per waypoint."
+        traj_len = scooping_trajectory.layout.dim[0].size
+        
+        traj = scooping_trajectory.data
+        # Reshape the trajectory
+        traj = np.array(traj).reshape(traj_len, 7)
+
+        # Move to first waypoint
+        print("first wp traj[0]:", traj[0])
+        print("SCOOPING TRAJ LENGTH:", traj_len)
+        msg_pose = PoseStamped()
+        msg_pose.header.frame_id = "world"
+        msg_pose.pose.position.x = traj[0][0]
+        msg_pose.pose.position.y = traj[0][1]
+        msg_pose.pose.position.z = traj[0][2]
+        # Note: somehow cannot plan to the DMP orientation 
+        # TODO: JN: check if DMP error or robot workspace limits
+        msg_pose.pose.orientation.w = -0.1638 #traj[0][3]
+        msg_pose.pose.orientation.x = 0.5587 #traj[0][4]
+        msg_pose.pose.orientation.y = -0.6944 #traj[0][5]
+        msg_pose.pose.orientation.z = 0.4229 #traj[0][6]
+
+        food_pose_arr = [food_pose.pose.position.x, food_pose.pose.position.y, food_pose.pose.position.z]
+        self.env._sim.add_target_to_viewer(food_pose_arr)
+
+        self.move_to_pose(msg_pose)
+        time.sleep(0.5)
+
+        for wp in traj:
+            control_action_pos = wp[:3]
+            control_action_quat = quat2axisangle(wp[3:])
+            control_action = np.concatenate([control_action_pos, control_action_quat])
+
+            policy_step = True
+            # Note: A bit hacky, but you can tune this loop to control the speed of the trajectory in Mujoco
+            for i in range(20):
+                self.env._robot.control(control_action, policy_step=policy_step)
+                policy_step = False
+                self.env.sim.step()
+        time.sleep(0.5)
 
     def execute_trajectory(self, msg_trajectory):
 
@@ -221,6 +280,10 @@ class MujocoAction(object):
         self.set_joint_position(target_joint_positions)
 
     def move_to_pose(self, pose):
+        """
+        Args:
+            pose (PoseStamped): Pose to move the robot to.
+        """
 
         # Reset the planner
         self.planner.reset()
@@ -231,13 +294,7 @@ class MujocoAction(object):
         goal_pose = PoseStamped()
         goal_pose.header.frame_id = "world"
         goal_pose.header.stamp = rospy.Time.now()
-        goal_pose.pose.position.x = pose.pose.position.x
-        goal_pose.pose.position.y = pose.pose.position.y
-        goal_pose.pose.position.z = pose.pose.position.z
-        goal_pose.pose.orientation.x = pose.pose.orientation.x
-        goal_pose.pose.orientation.y = pose.pose.orientation.y
-        goal_pose.pose.orientation.z = pose.pose.orientation.z
-        goal_pose.pose.orientation.w = pose.pose.orientation.w
+        goal_pose.pose = pose.pose
 
         # Get the current joint positions
         start_joint_position = self.env._robot._joint_positions
@@ -253,6 +310,9 @@ class MujocoAction(object):
             print("moveit exec trajectory...")
             self.execute_trajectory(msg_trajectory)
                 
+    def move_to_reset_pose(self):
+        self.set_joint_position(self.reset_pos)
+
     def move_to_acq_pose(self):
         self.set_joint_position(self.acq_pos)
 
