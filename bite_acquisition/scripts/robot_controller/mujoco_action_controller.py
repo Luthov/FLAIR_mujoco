@@ -18,13 +18,13 @@ class MujocoRobotController(RobotController):
     def reset(self):
     # TODO: Luke: Can define a reset pose which is fixed in the action server
     # name the pose appropriately
-        self.move_to_acq_pose()
+        self.move_to_reset_pos()
 
     def move_to_pose(self, pose):
         goal = mujoco_action_serverGoal()
         goal.function_name = "move_to_pose"
         goal.goal_point.header.frame_id = "world"
-        goal.goal_point.pose = pose
+        goal.goal_point = pose
 
         self.client.send_goal(goal)
         self.client.wait_for_result()
