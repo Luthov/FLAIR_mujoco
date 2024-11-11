@@ -307,13 +307,19 @@ class BiteAcquisitionInference:
             return 'Push Filling'
         return 'Acquire'
 
-    def get_scoop_action_mujoco(self):
+    def get_scoop_action_mujoco(self, food_label):
         action = "Acquire"
         # Placeholder for scoop keypoints
-        scoop_keypoints = [[0.3507, 0.0512, 0.0373 + 0.1], [0.4507, -0.0512, 0.0373 + 0.1]]
+        if food_label == 'rice':
+            scoop_keypoints = [[0.4, -0.25, 0.025 + 0.05]]
+        elif food_label == 'chicken':
+            scoop_keypoints = [[0.4, 0, 0.025 + 0.05]]
+        elif food_label == 'egg':
+            scoop_keypoints = [[0.4, 0.25, 0.025 + 0.05]]
+        # scoop_keypoints = [[0.3507, 0.0512, 0.0373 + 0.1]]
 
         push_keypoints = [[0.3507, 0.0512, 0.0373 + 0.1], [0.4507, -0.0512, 0.0373 + 0.1]]
-        return action, scoop_keypoints[0], scoop_keypoints[1], push_keypoints[0], push_keypoints[1]
+        return action, scoop_keypoints[0], push_keypoints[0], push_keypoints[1]
 
     def get_scoop_action(self, image, masks, categories, log_path = None):
         
@@ -1162,10 +1168,11 @@ class BiteAcquisitionInference:
             #         next_actions.append((idx, 'Group', {'start':sparsest, 'end':densest}))
             if categories[idx] == 'semisolid':
                 # densest, sparsest, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action, start_px, end_px = self.get_scoop_action(image, masks, categories, log_path)
-                action, start_px, end_px, filling_push_start, filling_push_end = self.get_scoop_action_mujoco()
+                
+                action, scooping_point, filling_push_start, filling_push_end = self.get_scoop_action_mujoco(labels[idx])
                 if action == 'Acquire':
                     efficiency_scores.append(1)
-                    next_actions.append((idx, 'Scoop', {'start':start_px, 'end':end_px}))
+                    next_actions.append((idx, 'Scoop', {'scooping_point': scooping_point}))
                 else:
                     efficiency_scores.append(2)
                     next_actions.append((idx, 'Push', {'start':filling_push_start, 'end':filling_push_end}))
@@ -1192,9 +1199,9 @@ class BiteAcquisitionInference:
 
                 # efficiency_scores.append(0.9)
                 # densest, sparsest, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action, start_px, end_px = self.get_scoop_action(image, masks, categories, log_path)
-                action, start_px, end_px, filling_push_start, filling_push_end = self.get_scoop_action_mujoco()
+                action, scooping_point, filling_push_start, filling_push_end = self.get_scoop_action_mujoco(labels[idx])
                 efficiency_scores.append(1)
-                next_actions.append((idx, 'Scoop', {'start':start_px, 'end':end_px}))
+                next_actions.append((idx, 'Scoop', {'scooping_point': scooping_point}))
 
                 # skewer_point, skewer_angle = self.get_skewer_action(skewer_mask)
                 # print("Adding skewer action for label: ", labels[idx])

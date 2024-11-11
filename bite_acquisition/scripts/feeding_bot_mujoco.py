@@ -82,7 +82,7 @@ class FeedingBot:
 
         ############################################################################################################
         # items = ['banana', 'chocolate sauce']
-        items = ['oatmeal', 'strawberry']
+        # items = ['oatmeal', 'strawberry']
         items = ['chicken', 'rice', 'egg']
         # items = ['red strawberry', 'chocolate sauce', 'ranch dressing', 'blue plate']
         # items = ['mashed potatoes']
@@ -115,11 +115,18 @@ class FeedingBot:
             print("--------------------")
             print('History', bite_history)
             print('Actions remaining', actions_remaining)
-            input('Ready?\n')
+            print('Current user preference:', user_preference)
+            ready = input('Ready?\n')
+            if ready == 'n':
+                exit(1)
             print("--------------------\n")
             # camera_header, camera_color_data, camera_info_data, camera_depth_data = self.camera.get_camera_data()
             # vis = camera_color_data.copy()
 
+            new_user_preference = input("Do you want to update your preference? Otherwise input [n] to continue\n")
+            if new_user_preference != 'n':
+                user_preference = new_user_preference
+                
             log_path = self.log_file + str(self.log_count)
             self.log_count += 1
 
@@ -231,6 +238,7 @@ class FeedingBot:
             if food is None:
                 exit(1)
             print("--------------------")
+            # print("Food:", food)
             print(f"food_id: {food[0][0]} \naction_type: {food[0][1]} \nmetadata: {food[0][2]}")
             print("--------------------\n")
             # food_id, action_type, metadata = food
@@ -266,8 +274,9 @@ class FeedingBot:
             #     print('Food on fork?', food_on_fork)
                 #    action = self.skill_library.skewering_skill(camera_color_data, camera_depth_data, camera_info_data, keypoint = center, skewer_angle = skewer_angle)
             if action_type == 'Scoop':
-                start, end = metadata['start'], metadata['end']
-                action = self.skill_library.scooping_skill_mujoco(keypoints = [start, end])
+                # start, end = metadata['start'], metadata['end']
+                scooping_point = metadata['scooping_point']
+                action = self.skill_library.scooping_skill_mujoco(keypoints = scooping_point)
             elif action_type == 'Push':
                 continue_food_label = labels_list[food_id]
                 start, end = metadata['start'], metadata['end']

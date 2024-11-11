@@ -12,7 +12,7 @@ from std_msgs.msg import Float32MultiArray
 from moveit_msgs.msg import RobotTrajectory, MoveItErrorCodes
 from moveit_msgs.msg import ExecuteTrajectoryAction, ExecuteTrajectoryGoal
 
-from bite_acquisition.msg import mujoco_action_serverAction, mujoco_action_serverResult, mujoco_action_serverFeedback
+from bite_acquisition.msg import MujocoActionServerAction, MujocoActionServerResult, MujocoActionServerFeedback
 
 try:
     from environments.arm_base import ArmBaseEnv
@@ -29,14 +29,15 @@ class MujocoAction(object):
 
     def __init__(self):
 
-        self.result = mujoco_action_serverResult()
+        self.result = MujocoActionServerResult()
 
         controller_config = load_controller_config(default_controller="IK_POSE")
         controller_config["control_delta"] = False
 
         model_folder = rospkg.RosPack().get_path("feeding_mujoco") + "/src/feeding_mujoco/models"
         env_config = {
-            "model_path": model_folder + "/envs/feeding_luke/feeding.xml",
+            # "model_path": model_folder + "/envs/feeding_luke/feeding.xml",
+            "model_path": model_folder + "/envs/mujoco_scooping_test/feeding.xml",           
             # "model_path": model_folder + "/robots/xarm6/xarm6_with_ft_sensor_gripper_with_spoon.xml",
             "sim_timestep": 0.002,
             "controller_config": controller_config,
@@ -91,8 +92,8 @@ class MujocoAction(object):
         # TODO: Luke: this transfer pose also seems a bit high (in terms of z position)
         self.transfer_pos = np.radians([0.0, -65.0, -25.0, 0.0, 20.0, 0.0])
 
-        self.action_name = "mujoco_action_server"
-        self.action_server = actionlib.SimpleActionServer(self.action_name, mujoco_action_serverAction, execute_cb=self.execute_callback, auto_start = False)
+        self.action_name = "MujocoActionServer"
+        self.action_server = actionlib.SimpleActionServer(self.action_name, MujocoActionServerAction, execute_cb=self.execute_callback, auto_start = False)
         self.action_server.start()
 
      

@@ -2,7 +2,7 @@ import rospy
 import actionlib
 
 from std_msgs.msg import Float32MultiArray, MultiArrayDimension
-from bite_acquisition.msg import mujoco_action_serverAction, mujoco_action_serverGoal
+from bite_acquisition.msg import MujocoActionServerAction, MujocoActionServerGoal
 
 from .base import RobotController
 
@@ -11,7 +11,7 @@ class MujocoRobotController(RobotController):
     def __init__(self):
         # TODO: Luke: Rename action file to MujocoActionServer (not mujoco_action_server)
         # TODO: Luke: Ideally place any relevant actions/srvs/msgs under feeding_msgs for consistency
-        self.client = actionlib.SimpleActionClient('mujoco_action_server', mujoco_action_serverAction)
+        self.client = actionlib.SimpleActionClient('mujoco_action_server', MujocoActionServerAction)
         self.client.wait_for_server()
 
      
@@ -21,7 +21,7 @@ class MujocoRobotController(RobotController):
         self.move_to_reset_pos()
 
     def move_to_pose(self, pose):
-        goal = mujoco_action_serverGoal()
+        goal = MujocoActionServerGoal()
         goal.function_name = "move_to_pose"
         goal.goal_point.header.frame_id = "world"
         goal.goal_point = pose
@@ -30,24 +30,17 @@ class MujocoRobotController(RobotController):
         self.client.wait_for_result()
         return self.client.get_result()
 
-    def move_to_acq_pose(self):
+    def move_to_acq_pose(self, pose):
         """
         Calls the action server to move the robot to the acquisition pose.
         Note that the acquisition pose is defined in the action server.
         TODO: Luke: acquisition pose will change based on the bowl pose 
                     should allow this function to take in a pose
         """
-        goal = mujoco_action_serverGoal()
+        goal = MujocoActionServerGoal()
         goal.function_name = "move_to_acq_pose"
         goal.goal_point.header.frame_id = "world"
-        # TODO: Luke: can remove these lines since they don't affect the poses
-        # goal.goal_point.pose.position.x = 0.0
-        # goal.goal_point.pose.position.y = 0.0
-        # goal.goal_point.pose.position.z = 0.0
-        # goal.goal_point.pose.orientation.x = 0.0
-        # goal.goal_point.pose.orientation.y = 0.0
-        # goal.goal_point.pose.orientation.z = 0.0
-        # goal.goal_point.pose.orientation.w = 1.0
+        goal.goal_point = pose
 
         self.client.send_goal(goal)
         self.client.wait_for_result()
@@ -58,7 +51,7 @@ class MujocoRobotController(RobotController):
         Calls the action server to move the robot to the reset pose.
         Note that the reset pose is defined in the action server.
         """
-        goal = mujoco_action_serverGoal()
+        goal = MujocoActionServerGoal()
         goal.function_name = "move_to_reset_pos"
         goal.goal_point.header.frame_id = "world"
 
@@ -66,24 +59,17 @@ class MujocoRobotController(RobotController):
         self.client.wait_for_result()
         return self.client.get_result()
 
-    def move_to_transfer_pose(self):
+    def move_to_transfer_pose(self, pose):
         """
         Calls the action server to move the robot to the transfer pose.
         Note that the acquisition pose is defined in the action server.
         TODO: Luke: transfer pose will change based on the user's mouth pose, 
                     should allow this function to take in a pose
         """
-        goal = mujoco_action_serverGoal()
+        goal = MujocoActionServerGoal()
         goal.function_name = "move_to_transfer_pose"
         goal.goal_point.header.frame_id = "world"
-        # TODO: Luke: can remove these lines since they don't affect the poses
-        # goal.goal_point.pose.position.x = 0.0
-        # goal.goal_point.pose.position.y = 0.0
-        # goal.goal_point.pose.position.z = 0.0
-        # goal.goal_point.pose.orientation.x = 0.0
-        # goal.goal_point.pose.orientation.y = 0.0
-        # goal.goal_point.pose.orientation.z = 0.0
-        # goal.goal_point.pose.orientation.w = 1.0
+        goal.goal_point = pose
 
         self.client.send_goal(goal)
         self.client.wait_for_result()
@@ -93,7 +79,7 @@ class MujocoRobotController(RobotController):
         """
         Calls the action server to execute the scooping trajectory.
         """
-        goal = mujoco_action_serverGoal()
+        goal = MujocoActionServerGoal()
         goal.function_name = "execute_scooping"
         
         msg_scooping_trajectory = Float32MultiArray()
@@ -122,7 +108,7 @@ class MujocoRobotController(RobotController):
         return self.client.get_result()
     
     def rotate_eef(self, angle):
-        goal = mujoco_action_serverGoal()
+        goal = MujocoActionServerGoal()
         goal.function_name = "rotate_eef"
         goal.angle = angle
 
