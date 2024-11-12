@@ -34,7 +34,7 @@ add_service_files(
 
 add_action_files(
     DIRECTORY action
-    FILES mujoco_action_server.action
+    FILES MujocoActionServer.action
 )
 
 generate_messages(

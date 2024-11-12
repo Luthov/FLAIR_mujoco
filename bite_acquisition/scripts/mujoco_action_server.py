@@ -92,7 +92,7 @@ class MujocoAction(object):
         # TODO: Luke: this transfer pose also seems a bit high (in terms of z position)
         self.transfer_pos = np.radians([0.0, -65.0, -25.0, 0.0, 20.0, 0.0])
 
-        self.action_name = "MujocoActionServer"
+        self.action_name = "mujoco_action_server"
         self.action_server = actionlib.SimpleActionServer(self.action_name, MujocoActionServerAction, execute_cb=self.execute_callback, auto_start = False)
         self.action_server.start()
 
@@ -101,20 +101,26 @@ class MujocoAction(object):
 
         try:
             if goal.function_name == "move_to_pose":
-                print("Moving to pose")
                 self.move_to_pose(goal.goal_point)
+
             elif goal.function_name == "move_to_reset_pos":
                 self.move_to_reset_pose()
+
             elif goal.function_name == "move_to_acq_pose":
-                self.move_to_acq_pose()
+                self.move_to_acq_pose(goal.goal_point)
+
             elif goal.function_name == "move_to_transfer_pose":
-                self.move_to_transfer_pose()
+                self.move_to_transfer_pose(goal.goal_point)
+
             elif goal.function_name == "execute_scooping":
                 self.execute_scooping(goal.scooping_trajectory, goal.goal_point)
+
             elif goal.function_name == "reset":
                 self.reset()
+
             elif goal.function_name == "rotate_eef":
                 self.rotate_eef(goal.angle)
+
             else:
                 rospy.logerr("Unknown command: %s", goal.function_name)
                 self.action_server.set_aborted(self.result, "Unknown command")
@@ -297,6 +303,9 @@ class MujocoAction(object):
         goal_pose.header.stamp = rospy.Time.now()
         goal_pose.pose = pose.pose
 
+        goal_pose_arr = [goal_pose.pose.position.x, goal_pose.pose.position.y, goal_pose.pose.position.z]
+        self.env._sim.add_target_to_viewer(goal_pose_arr)
+
         # Get the current joint positions
         start_joint_position = self.env._robot._joint_positions
 
@@ -314,11 +323,13 @@ class MujocoAction(object):
     def move_to_reset_pose(self):
         self.set_joint_position(self.reset_pos)
 
-    def move_to_acq_pose(self):
-        self.set_joint_position(self.acq_pos)
+    def move_to_acq_pose(self, pose):
+        self.move_to_pose(pose)
+        # self.set_joint_position(self.acq_pos)
 
-    def move_to_transfer_pose(self):
-        self.set_joint_position(self.transfer_pos)
+    def move_to_transfer_pose(self, pose):
+        self.move_to_pose(pose)
+        # self.set_joint_position(self.transfer_pos)
 
     def reset(self):
         self.move_to_acq_pose()
