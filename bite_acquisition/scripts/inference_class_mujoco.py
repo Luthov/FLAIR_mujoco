@@ -1152,63 +1152,22 @@ class BiteAcquisitionInference:
         print(f"catgories: {categories} | Food to consider: {food_to_consider}\n")
 
         for idx in food_to_consider:
-            ## What to do if noodles
 
-            # if categories[idx] == 'noodles':
-            #     densest, sparsest, twirl_angle, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action = self.get_noodle_action(image, masks, categories)
-            #     print(valid_actions)
-            #     if action == 'Acquire':
-            #         efficiency_scores.append(1)
-            #         next_actions.append((idx, 'Twirl', {'point':densest, 'twirl_angle':twirl_angle}))
-            #     elif action == 'Push Filling':
-            #         efficiency_scores.append(2) 
-            #         next_actions.append((idx, 'Push', {'start':filling_push_start, 'end':filling_push_end}))
-            #     else:
-            #         efficiency_scores.append(2.5) # Should this be even higher?
-            #         next_actions.append((idx, 'Group', {'start':sparsest, 'end':densest}))
-            if categories[idx] == 'semisolid':
-                # densest, sparsest, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action, start_px, end_px = self.get_scoop_action(image, masks, categories, log_path)
-                
+            if categories[idx] == 'semisolid':                
                 action, scooping_point, filling_push_start, filling_push_end = self.get_scoop_action_mujoco(labels[idx])
+
                 if action == 'Acquire':
                     efficiency_scores.append(1)
                     next_actions.append((idx, 'Scoop', {'scooping_point': scooping_point}))
+
                 else:
                     efficiency_scores.append(2)
                     next_actions.append((idx, 'Push', {'start':filling_push_start, 'end':filling_push_end}))
+
             elif categories[idx] in ['meat/seafood', 'vegetable', 'fruit', 'brownie']:
-                # if categories[idx] != 'brownie':
-                #     requires_cut, cut_point, cut_angle = self.get_cut_action(masks[idx], image)
-                #     if requires_cut:
-                #         efficiency_scores.append(2)
-                #         next_actions.append((idx, 'Cut', {'point': cut_point, 'cut_angle': cut_angle}))
-                #         continue
-                #     else:
-                #         print('No cut required')
-
-                # noodle_or_semisolid_mask = None
-                # if 'noodles' in categories:
-                #     noodle_or_semisolid_mask = masks[categories.index('noodles')][0]
-                # elif 'semisolid' in categories:
-                #     noodle_or_semisolid_mask = masks[categories.index('semisolid')][0]
-                # if self.mode == 'preference':
-                #     id_to_skewer = random.choice(range(len(masks[idx])))
-                #     skewer_mask = masks[idx][id_to_skewer]
-                # else:
-                #     skewer_mask = self.detect_most_obstructing_filling(masks[idx], noodle_or_semisolid_mask)
-
-                # efficiency_scores.append(0.9)
-                # densest, sparsest, filling_push_start, filling_push_end, valid_actions, valid_actions_vis, heatmap, action, start_px, end_px = self.get_scoop_action(image, masks, categories, log_path)
                 action, scooping_point, filling_push_start, filling_push_end = self.get_scoop_action_mujoco(labels[idx])
                 efficiency_scores.append(1)
                 next_actions.append((idx, 'Scoop', {'scooping_point': scooping_point}))
-
-                # skewer_point, skewer_angle = self.get_skewer_action(skewer_mask)
-                # print("Adding skewer action for label: ", labels[idx])
-                # next_actions.append((idx, 'Skewer', {'point': skewer_point, 'skewer_angle': skewer_angle}))
-                # vis = visualize_skewer(image, skewer_point, skewer_angle)
-                # if log_path is not None:
-                #     cv2.imwrite(log_path + "_skewer_vis.png", vis)
         
         print('Length of next actions: ', len(next_actions))
         
@@ -1245,7 +1204,7 @@ class BiteAcquisitionInference:
             if k == 'n':
                 return None, None
 
-            next_bite, response = self.preference_planner.plan(non_dip_labels, non_dip_portions_rounded, efficiency_scores, preference, history, mode=self.mode)
+            next_bite, bite_size, response = self.preference_planner.plan(non_dip_labels, non_dip_portions_rounded, efficiency_scores, preference, history, mode=self.mode)
         
         print('Next bite', next_bite)
         print('non_dip_labels', non_dip_labels)
@@ -1255,9 +1214,5 @@ class BiteAcquisitionInference:
             print(non_dip_labels, next_bite[0])
             idx = non_dip_labels.index(next_bite[0])
             return next_actions[idx], None
-        # elif len(next_bite) == 2:
-        #     acquire_idx = non_dip_labels.index(next_bite[0])
-        #     dip_idx = dip_labels.index(next_bite[1])
-        #     return next_actions[acquire_idx], dip_actions[dip_idx]
         else: 
             return None, None
