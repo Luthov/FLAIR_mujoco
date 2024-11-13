@@ -1204,7 +1204,7 @@ class BiteAcquisitionInference:
             if k == 'n':
                 return None, None
 
-            next_bite, bite_size, response = self.preference_planner.plan(non_dip_labels, non_dip_portions_rounded, efficiency_scores, preference, history, mode=self.mode)
+            next_bite, bite_size, response = self.preference_planner.plan(non_dip_labels, non_dip_portions_rounded, efficiency_scores, preference, bite_size, history, mode=self.mode)
         
         print('Next bite', next_bite)
         print('non_dip_labels', non_dip_labels)

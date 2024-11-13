@@ -48,9 +48,10 @@ class PreferencePlanner:
         elif mode == 'preference':
             with open('prompts/preference_only.txt', 'r') as f:
                 prompt = f.read()
-        #efficiency_sentence = self.summarize(items, efficiencies)
+
         efficiency_sentence = str(efficiencies)
         portions_sentence = str(portions)
+
         print('==== ITEMS / PORTIONS REMAINING ===')
         print(items, portions_sentence)
         print('====')
@@ -58,6 +59,7 @@ class PreferencePlanner:
         print(efficiency_sentence)
         print('==== HISTORY ===')
         print(history)
+
         if mode == 'ours':
             print("items:", str(items), "portions:", portions_sentence, "efficiencies:", efficiency_sentence, "preference:", preference, "dips:", str(dips), "history:", str(history))
             # check type of each argument
@@ -67,11 +69,69 @@ class PreferencePlanner:
             prompt = prompt%(str(items), portions_sentence, efficiency_sentence, preference, str(dips), str(history))
         else:
             prompt = prompt%(str(items), portions_sentence, preference, str(dips), str(history))
-        # print(prompt)
+
         response = self.gpt_interface.chat_with_openai(prompt).strip()
         print(response)
         next_bites = ast.literal_eval(response.split('Next bite as list:')[1].strip())
+
         return next_bites, response
+
+    def plan_motion_primitives(self, items, portions, efficiencies, preference, bite_preference, history, bite_size=1.0, mode='ours'):
+
+        dips = 0.0
+
+        if mode == 'ours':
+            print("Reading prompts from prompts/ours_new.txt")
+            with open('prompts/ours.txt', 'r') as f:
+                prompt = f.read()
+
+        elif mode == 'preference':
+            with open('prompts/preference_only.txt', 'r') as f:
+                prompt = f.read()
+
+        elif mode == 'motion_primitive':
+            with open('prompts/motion_primitive.txt', 'r') as f:
+                prompt = f.read()
+
+        efficiency_sentence = str(efficiencies)
+        portions_sentence = str(portions)
+        print('==== ITEMS / PORTIONS REMAINING ===')
+        print(items, portions_sentence)
+        print('====')
+        print('==== SUMMARIZED EFFICIENCIES ===')
+        print(efficiency_sentence)
+        print('==== BITE SIZE ===')
+        print(bite_size)
+        print('==== HISTORY ===')
+        print(history)
+
+        if mode == 'ours':
+            print("items:", str(items), "portions:", portions_sentence, "efficiencies:", efficiency_sentence, "preference:", preference, "dips:", str(dips), "history:", str(history))
+
+            if type(portions_sentence) != str or type(efficiency_sentence) != str or type(preference) != str:
+                print("ERROR: type of arguments to plan() is not correct")
+                exit(1)
+            prompt = prompt%(str(items), portions_sentence, efficiency_sentence, preference, str(dips), str(history))
+
+        elif mode == 'motion_primitive':
+            print("items:", str(items), "portions:", portions_sentence, "efficiencies:", efficiency_sentence, "preference:", preference, "bite_preference", bite_preference, "bite_size", bite_size, "dips:", str(dips), "history:", str(history))
+
+            if type(portions_sentence) != str or type(efficiency_sentence) != str or type(preference) != str:
+                print("ERROR: type of arguments to plan() is not correct")
+                exit(1)
+
+            prompt = prompt%(str(items), portions_sentence, efficiency_sentence, preference, bite_preference, str(bite_size), str(dips), str(history))
+
+        else:
+            prompt = prompt%(str(items), portions_sentence, preference, str(dips), str(history))
+
+        print("Prompt:\n", prompt)
+
+        response = self.gpt_interface.chat_with_openai(prompt).strip()
+        print(f" RESPONSE:\n{response}")
+        next_bites = ast.literal_eval(response.split('Next bite as list:')[1].strip())
+        return next_bites, bite_size, response
+
 
     def interactive_test(self, mode):
         items = ast.literal_eval(input('Enter a list of items: '))
