@@ -304,7 +304,7 @@ class MujocoAction(object):
         goal_pose.pose = pose.pose
 
         goal_pose_arr = [goal_pose.pose.position.x, goal_pose.pose.position.y, goal_pose.pose.position.z]
-        self.env._sim.add_target_to_viewer(goal_pose_arr)
+        # self.env._sim.add_target_to_viewer(goal_pose_arr)
 
         # Get the current joint positions
         start_joint_position = self.env._robot._joint_positions

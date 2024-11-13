@@ -456,6 +456,6 @@ class SkillLibrary:
         self.move_spoon_to_pose(waypoint_4_tip)
 
     # TODO: Luke: rename to transfer_skill (to have consistency with all the primitive naming)
-    def transfer_to_mouth(self):
-        self.robot_controller.move_to_transfer_pose()
+    def transfer_to_mouth(self, pose):
+        self.robot_controller.move_to_transfer_pose(pose)
         print("Bite Transfer Executed")
