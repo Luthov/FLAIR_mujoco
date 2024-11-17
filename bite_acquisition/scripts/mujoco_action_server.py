@@ -2,6 +2,7 @@
 
 import numpy as np
 from scipy.spatial.transform import Rotation as R
+import quaternion
 import time
 
 import rospy
@@ -19,11 +20,19 @@ try:
     from planners.moveit_planner import MoveItPlanner
     from utils.transform_utils import quat2euler, quat_distance, quat_error, quat2axisangle, quat2mat, mat2quat
     from controllers import load_controller_config
+    # from bite_transfer import BiteTransfer
 except:
     from feeding_mujoco.environments.arm_base import ArmBaseEnv
     from feeding_mujoco.planners.moveit_planner import MoveItPlanner
     from feeding_mujoco.utils.transform_utils import quat2euler, quat_distance, quat_error, quat2axisangle, quat2mat, mat2quat
     from feeding_mujoco.controllers import load_controller_config
+    # from feeding_mujoco.bite_transfer_mujoco import BiteTransfer
+
+TRANSFER_ANGLE = 80
+DISTANCE_WITHIN_MOUTH = 0.06
+# ENTRY_ANGLE = 90
+ENTRY_INSIDE_ANGLE = 90
+EXIT_DEPTH = 0.03
 
 class MujocoAction(object):
 
@@ -37,7 +46,7 @@ class MujocoAction(object):
         model_folder = rospkg.RosPack().get_path("feeding_mujoco") + "/src/feeding_mujoco/models"
         env_config = {
             # "model_path": model_folder + "/envs/feeding_luke/feeding.xml",
-            "model_path": model_folder + "/envs/mujoco_scooping_test/feeding.xml",           
+            "model_path": model_folder + "/envs/feeding_luke/feeding.xml",           
             # "model_path": model_folder + "/robots/xarm6/xarm6_with_ft_sensor_gripper_with_spoon.xml",
             "sim_timestep": 0.002,
             "controller_config": controller_config,
@@ -62,6 +71,7 @@ class MujocoAction(object):
         )
 
         self.planner = MoveItPlanner(dt = 1/self.env._policy_freq)
+        # self.bite_transfer = BiteTransfer()
 
         # Step the simulator to update the robot and environment state
         self.env.sim.step()
@@ -91,6 +101,9 @@ class MujocoAction(object):
         self.acq_pos = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
         # TODO: Luke: this transfer pose also seems a bit high (in terms of z position)
         self.transfer_pos = np.radians([0.0, -65.0, -25.0, 0.0, 20.0, 0.0])
+
+        # self.mouth_pose = np.array([0.70, 0.0, 0.545])
+        self.initial_transfer_pose_reached = False
 
         self.action_name = "mujoco_action_server"
         self.action_server = actionlib.SimpleActionServer(self.action_name, MujocoActionServerAction, execute_cb=self.execute_callback, auto_start = False)
@@ -327,12 +340,176 @@ class MujocoAction(object):
         self.move_to_pose(pose)
         # self.set_joint_position(self.acq_pos)
 
-    def move_to_transfer_pose(self, pose):
-        self.move_to_pose(pose)
-        # self.set_joint_position(self.transfer_pos)
-
     def reset(self):
         self.move_to_acq_pose()
+
+    def generate_pose(self, position, orientation, offset= [0,0,0]):
+        """
+        Generate a PoseStamped with given position, orientation, and optional offset.
+
+        Parameters:
+            position (array): Array of [x, y, z] coordinates.
+            orientation (array): Array of [w, x, y, z] quaternion values.
+            position_offset (array, optional): Array of offset values to add to position.
+
+        Returns:
+            PoseStamped: PoseStamped message with the specified position and orientation.
+        """
+        pose = PoseStamped()
+        pose.header.frame_id = "world"
+        pose.pose.position.x = position[0] + offset[0]
+        pose.pose.position.y = position[1] + offset[1]
+        pose.pose.position.z = position[2] + offset[2]
+        pose.pose.orientation.w = orientation[0]
+        pose.pose.orientation.x = orientation[1]
+        pose.pose.orientation.y = orientation[2]
+        pose.pose.orientation.z = orientation[3]
+
+        return pose        
+    
+    def move_to_initial_transfer_pose(self, mouth_pose):
+
+        # quat_mouth_pose = np.array([0.4090, 0.5783, 0.5719, 0.4137])
+        # quat_mouth_pose = np.array([0.1204765,  -0.6980302, -0.1129327, -0.6967678])
+        quat_mouth_pose = np.array(R.from_euler('xyz', [0, 90, 0], degrees=True).as_quat())
+        quat_mouth_pose_wxyz = quat_mouth_pose[[3, 0, 1, 2]]
+        # print("quat_mouth_pose_wxyz:", quat_mouth_pose_wxyz)
+        # quat_mouth_pose = np.array([0, 0.707, 0, 0.707])        
+
+        # Make sure the quaternion is normalized
+        quat_mouth_pose = quat_mouth_pose / np.linalg.norm(quat_mouth_pose)
+
+
+        mouth_pose_1 = np.concatenate((np.array(mouth_pose), quat_mouth_pose))
+        
+
+        # Convert from spoon pose to eef pose in world frame
+        eef_in_world = self.get_eef_pose_from_spoon_pose(mouth_pose_1, np.array([0.0, 0.0, 0.13]))
+        # print("eef_in_world:", eef_in_world)
+        eef_pose_1_in_world = self.generate_pose(eef_in_world[:3], eef_in_world[3:])
+        self.move_to_pose(eef_pose_1_in_world)
+        self.initial_transfer_pose_reached = True
+
+    def move_to_inside_mouth_pose(self, mouth_pose):
+
+        # quat_mouth_pose = np.array([0.4090, 0.5783, 0.5719, 0.4137])
+        # quat_mouth_pose = np.array([0.1204765,  -0.6980302, -0.1129327, -0.6967678])
+        quat_mouth_pose = np.array(R.from_euler('xyz', [0, ENTRY_INSIDE_ANGLE, 0], degrees=True).as_quat())
+        quat_mouth_pose_wxyz = quat_mouth_pose[[3, 0, 1, 2]]
+        print("quat_mouth_pose_wxyz:", quat_mouth_pose_wxyz)
+        # quat_mouth_pose = np.array([0, 0.707, 0, 0.707])        
+
+        # Make sure the quaternion is normalized
+        quat_mouth_pose = quat_mouth_pose / np.linalg.norm(quat_mouth_pose)
+        mouth_pose_2 = np.concatenate((np.array(mouth_pose), quat_mouth_pose))
+        # Convert from spoon pose to eef pose in world frame
+        eef_in_world = self.get_eef_pose_from_spoon_pose(mouth_pose_2, np.array([0.0, 0.0, 0.13]))
+        print("eef_in_world:", eef_in_world)
+        eef_pose_2_in_world = self.generate_pose(eef_in_world[:3], eef_in_world[3:], offset=[DISTANCE_WITHIN_MOUTH, 0, 0.01])
+        self.move_to_pose(eef_pose_2_in_world)
+
+    def move_to_outside_mouth_pose(self, mouth_pose):
+
+        quat_mouth_pose = np.array(R.from_euler('xyz', [0, 90, 0], degrees=True).as_quat())
+        quat_mouth_pose_wxyz = quat_mouth_pose[[3, 0, 1, 2]]
+        print("quat_mouth_pose_wxyz:", quat_mouth_pose_wxyz)
+        # quat_mouth_pose = np.array([0, 0.707, 0, 0.707])        
+
+        # Make sure the quaternion is normalized
+        quat_mouth_pose = quat_mouth_pose / np.linalg.norm(quat_mouth_pose)
+        mouth_pose_3 = np.concatenate((np.array(mouth_pose), quat_mouth_pose))
+        # Convert from spoon pose to eef pose in world frame
+        eef_in_world = self.get_eef_pose_from_spoon_pose(mouth_pose_3, np.array([0.0, 0.0, 0.13]))
+        print("eef_in_world:", eef_in_world)
+        eef_pose_3_in_world = self.generate_pose(eef_in_world[:3], eef_in_world[3:], offset=[EXIT_DEPTH, 0, 0.01])
+
+        self.move_to_pose(eef_pose_3_in_world)
+
+
+    def move_to_exit_pose(self, mouth_pose):
+        
+        # quat_mouth_pose = np.array([0.2979085, 0.6439846, 0.6369263, 0.2979085]) 
+        quat_mouth_pose = np.array(R.from_euler('xyz', [0, TRANSFER_ANGLE, 0], degrees=True).as_quat())
+
+        # Make sure the quaternion is normalized
+        quat_mouth_pose = quat_mouth_pose / np.linalg.norm(quat_mouth_pose)
+
+        mouth_pose_4 = np.concatenate((np.array(mouth_pose), quat_mouth_pose))
+
+        # Convert from spoon pose to eef pose in world frame
+        eef_4_in_world = self.get_eef_pose_from_spoon_pose(mouth_pose_4, np.array([0.0, 0.0, 0.13]))
+        eef_pose_4_in_world = self.generate_pose(eef_4_in_world[:3], eef_4_in_world[3:], offset=[-0.03, 0 , 0.03])
+        self.move_to_pose(eef_pose_4_in_world)
+
+    def get_eef_pose_from_spoon_pose(self, spoon_pose, spoon_offset):
+        """
+        Removes the spoon offset from the spoon trajectory to get the eef trajectory
+
+        Args:
+            spoon_pose (ndarray): Numpy array of the spoon pose in [x, y, z, w, x, y, z]
+            spoon_offset (ndarray): Offset to be applied to the spoon in [x, y, z]
+
+        Returns:
+            ndarray: Numpy array of the eef pose in [x, y, z, w, x, y, z]
+        """
+        # get rotation matrix of eef orientation
+        spoon_pos = spoon_pose[: 3]
+        spoon_quat = spoon_pose[3 :]
+        spoon_quat = np.quaternion(spoon_quat[0], spoon_quat[1], spoon_quat[2], spoon_quat[3])
+        spoon_rot_mat = quaternion.as_rotation_matrix(spoon_quat)
+
+        # calculate eef position and orientation in world frame
+        eef_offset_world = spoon_rot_mat.dot(spoon_offset)
+        eef_pos = spoon_pos - eef_offset_world
+
+        # spoon quat should be the same as eef_quat
+        eef_quat = spoon_quat
+
+        # update eef_traj
+        eef_pose = np.hstack((eef_pos, eef_quat.components))
+        
+        return eef_pose
+    
+    def close_mouth(self):
+        i = 0
+        # print(self.env.sim.get_actuator_id_from_name("jaw_pitch"))
+        while self.env.sim.get_actuator_ctrl(41) < 20:
+            self.env.sim.step()
+            # forces = self.env._sim.plot_contacts_with_force_colors([-1, 17], 20)
+            skull_forces = self.env._sim.plot_contacts_with_force_colors([27, 17], 20)
+            # jaw_forces = self.env._sim.plot_contacts_with_force_colors([28, 17], 20)
+            # if forces is not None:
+                # self.contact_forces.append(forces)
+                # self.mesh_sim_times.append(self.env._sim.time)
+            if skull_forces is not None:
+                self.skull_contact_forces.append(skull_forces)
+                self.skull_sim_times.append(self.env._sim.time)
+            # if jaw_forces is not None:
+                # self.jaw_contact_forces.append(jaw_forces)
+                # self.jaw_sim_times.append(self.env._sim.time)
+            self.env.sim.set_actuator_ctrl(i, 41)
+            i += 0.02
+            self.env.sim.step()
+        self.env.sim.step()
+
+
+    def wait_time(self, time):
+        rospy.sleep(time)
+    
+    def move_to_transfer_pose(self, pose):
+        # self.move_to_pose(pose)
+        # self.set_joint_position(self.transfer_pos)
+        mouth_pose = np.array([pose.pose.position.x, pose.pose.position.y, pose.pose.position.z])
+        self.move_to_initial_transfer_pose(mouth_pose)
+        # print("initial transfer pose reached")
+        self.move_to_inside_mouth_pose(mouth_pose)
+        # print("inside mouth pose reached")
+        # self.close_mouth()
+        # print("mouth closed")
+        self.move_to_outside_mouth_pose(mouth_pose)
+        # print("outside mouth pose reached")
+        self.move_to_exit_pose(mouth_pose)
+        # print("exit pose reached")
 
     def execute_traj_in_moveit(self, msg_robot_traj):
         start_time = time.time()

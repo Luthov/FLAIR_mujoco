@@ -9,6 +9,7 @@ import rospy
 # from sensor_msgs.msg import Image
 
 from rs_ros import RealSenseROS
+from geometry_msgs.msg import PoseStamped
 # import pickle
 
 from skill_library_mujoco import SkillLibrary
@@ -37,7 +38,7 @@ class FeedingBot:
 
         print("Feeding Bot initialized\n")
 
-        self.inference_server = BiteAcquisitionInference(mode='ours')
+        self.inference_server = BiteAcquisitionInference(mode='motion_primitive')
 
         if not os.path.exists("log"):
             os.mkdir("log")
@@ -62,6 +63,13 @@ class FeedingBot:
         #self.log_count = len(os.listdir('log')) + 1
 
         self.item_portions = [2.4, 2.8, 1.2]
+        
+        mouth_pose = np.array([0.70, 0.0, 0.545])
+
+        self.transfer_pose = PoseStamped()
+        self.transfer_pose.pose.position.x = mouth_pose[0]
+        self.transfer_pose.pose.position.y = mouth_pose[1]
+        self.transfer_pose.pose.position.z = mouth_pose[2]
         
 
     def clear_plate(self):
@@ -96,6 +104,7 @@ class FeedingBot:
         # user_preference = "No preference."
         # user_preference = "I want to eat alternating bites of rice and chicken."
         user_preference = "I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally."
+        bite_preference = "I am fine with the amount I'm eating now."
         bite_size = 1.0
 
         # Bite history
@@ -124,9 +133,13 @@ class FeedingBot:
             # camera_header, camera_color_data, camera_info_data, camera_depth_data = self.camera.get_camera_data()
             # vis = camera_color_data.copy()
 
-            new_user_preference = input("Do you want to update your preference? Otherwise input [n] to continue\n")
-            if new_user_preference != 'n':
+            new_user_preference = input("Do you want to update your preference? Otherwise input [n] or Enter to continue\n")
+            if new_user_preference != 'n' or new_user_preference != '':
                 user_preference = new_user_preference
+
+            new_bite_preference = input("Do you want to update your bite size? Otherwise input [n] or Enter to continue\n")
+            if new_bite_preference != 'n' or new_bite_preference != '':
+                bite_preference = new_bite_preference
                 
             log_path = self.log_file + str(self.log_count)
             self.log_count += 1
@@ -234,21 +247,23 @@ class FeedingBot:
             print("--------------------\n")
             
             
-            food = self.inference_server.get_autonomous_action(category_list, labels_list, per_food_portions, user_preference, bite_size, bite_history, continue_food_label, log_path)
+            food, bite_size = self.inference_server.get_autonomous_action(category_list, labels_list, per_food_portions, user_preference, bite_preference, bite_size, bite_history, continue_food_label, log_path)
             if food is None:
                 exit(1)
+            
+            print(f"food: {food}\nbite_size: {bite_size}")
                 
             print("--------------------")
-            print(f"food_id: {food[0][0]} \naction_type: {food[0][1]} \nmetadata: {food[0][2]}")
+            print(f"food_id: {food[0]} \naction_type: {food[1]} \nmetadata: {food[2]}")
             print("--------------------\n")
 
-            food_id = food[0][0]
-            action_type = food[0][1]
-            metadata = food[0][2]
+            food_id = food[0]
+            action_type = food[1]
+            metadata = food[2]
             
             if action_type == 'Scoop':
                 scooping_point = metadata['scooping_point']
-                action = self.skill_library.scooping_skill_mujoco(keypoints = scooping_point)
+                action = self.skill_library.scooping_skill_mujoco(keypoints = scooping_point, bite_size = bite_size)
 
             elif action_type == 'Push':
                 continue_food_label = labels_list[food_id]
@@ -281,7 +296,7 @@ class FeedingBot:
             while k not in ['y', 'n']:
                 k = input('Continue to transfer? Remember to start horizontal spoon.')
             if k == 'y':
-                self.skill_library.transfer_to_mouth()
+                self.skill_library.transfer_skill(self.transfer_pose)
                 k = input('Continue to acquisition? Remember to shutdown horizontal spoon.')
                 while k not in ['y', 'n']:
                     k = input('Continue to acquisition? Remember to shutdown horizontal spoon.\n')

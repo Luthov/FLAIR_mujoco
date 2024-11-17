@@ -76,7 +76,7 @@ class PreferencePlanner:
 
         return next_bites, response
 
-    def plan_motion_primitives(self, items, portions, efficiencies, preference, bite_preference, history, bite_size=1.0, mode='ours'):
+    def plan_motion_primitives(self, items, portions, efficiencies, preference, bite_preference, bite_size, history, mode='ours'):
 
         dips = 0.0
 
@@ -125,14 +125,15 @@ class PreferencePlanner:
         else:
             prompt = prompt%(str(items), portions_sentence, preference, str(dips), str(history))
 
-        print("Prompt:\n", prompt)
+        # print("Prompt:\n", prompt)
 
         response = self.gpt_interface.chat_with_openai(prompt).strip()
-        print(f" RESPONSE:\n{response}")
+        # print(f" RESPONSE:\n{response}")
         intermediate_response = response.split('Next bite as list:')[1]
         next_bites = ast.literal_eval(intermediate_response.split('Next bite size:')[0].strip())
         bite_size = ast.literal_eval(intermediate_response.split('Next bite size as float:')[1].strip())
-        print(f"next_bites: {type(next_bites)}\nbite_size: {type(bite_size)}")
+        print(f"next_bites: {(next_bites)}\nbite_size: {(bite_size)}")
+        
         return next_bites, bite_size, response
 
     def interactive_test(self, mode):

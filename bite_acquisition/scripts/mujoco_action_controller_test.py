@@ -48,7 +48,7 @@ if __name__ == "__main__":
     transfer_pose.pose.orientation.z = quat[2]
     transfer_pose.pose.orientation.w = quat[3]
 
-    print(f"trasnfer_pose: {transfer_pose}")
+    # print(f"trasnfer_pose: {transfer_pose}")
 
     # copy = goal_point
 
@@ -56,8 +56,8 @@ if __name__ == "__main__":
 
     # robot_controller.rotate_eef(0.5)
     
-    input("Press Enter to move to pose")
-    robot_controller.move_to_pose(goal_point)
+    # input("Press Enter to move to pose")
+    # robot_controller.move_to_pose(goal_point)
 
     # goal_point = PoseStamped()
     # goal_point.pose.position.x = 0.4507
@@ -76,8 +76,8 @@ if __name__ == "__main__":
     # input("Press Enter to move to end pose")
     # robot_controller.move_to_pose(goal_point)
 
-    input("Press Enter to move to Bite Acq Pose")
-    robot_controller.move_to_acq_pose(acq_pose)
+    # input("Press Enter to move to Bite Acq Pose")
+    # robot_controller.move_to_acq_pose(acq_pose)
 
     input("Press Enter to move to Bite Transfer Pose")
     robot_controller.move_to_transfer_pose(transfer_pose)

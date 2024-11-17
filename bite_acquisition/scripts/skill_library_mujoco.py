@@ -31,6 +31,7 @@ from robot_controller.mujoco_action_controller import MujocoRobotController
 # Scooping primitive using DMP
 from feeding_mujoco.planners.scooping_dmp import ScoopingDMPPlanner
 from feeding_mujoco.utils.transform_utils import quat2axisangle
+from feeding_mujoco.bite_transfer_mujoco import BiteTransfer
 
 PLATE_HEIGHT = 0.15
 class SkillLibrary:
@@ -41,6 +42,7 @@ class SkillLibrary:
 
         # TODO: Update the spoon length in XML file to follow real arm. Assume old value for now
         self.scooping_planner = ScoopingDMPPlanner(dt = 0.01, spoon_length=0.14)   # 100 Hz
+        self.bite_transfer = BiteTransfer()
 
         # Create a TF2 buffer and listener
         self.tf_buffer = tf2_ros.Buffer()
@@ -455,7 +457,7 @@ class SkillLibrary:
             print(f"waypoint_4: {waypoint_4_tip}")
         self.move_spoon_to_pose(waypoint_4_tip)
 
-    # TODO: Luke: rename to transfer_skill (to have consistency with all the primitive naming)
-    def transfer_to_mouth(self, pose):
+    def transfer_skill(self, pose):
+
         self.robot_controller.move_to_transfer_pose(pose)
         print("Bite Transfer Executed")
