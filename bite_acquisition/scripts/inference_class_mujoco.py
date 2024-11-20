@@ -311,11 +311,11 @@ class BiteAcquisitionInference:
         action = "Acquire"
         # Placeholder for scoop keypoints
         if food_label == 'rice':
-            scoop_keypoints = [[0.4, -0.25, 0.025 + 0.05]]
+            scoop_keypoints = [[0.4, -0.25, 0.075]]
         elif food_label == 'chicken':
-            scoop_keypoints = [[0.4, 0, 0.025 + 0.05]]
+            scoop_keypoints = [[0.4, 0, 0.075]]
         elif food_label == 'egg':
-            scoop_keypoints = [[0.4, 0.25, 0.025 + 0.05]]
+            scoop_keypoints = [[0.4, 0.25, 0.075]]
         # scoop_keypoints = [[0.3507, 0.0512, 0.0373 + 0.1]]
 
         push_keypoints = [[0.3507, 0.0512, 0.0373 + 0.1], [0.4507, -0.0512, 0.0373 + 0.1]]
@@ -1143,13 +1143,12 @@ class BiteAcquisitionInference:
         else:
             food_to_consider = range(len(categories))
 
-        print('Food to consider: ', food_to_consider)
-
         next_actions = []
         dip_actions = []
         efficiency_scores = []        
 
-        print(f"catgories: {categories} | Food to consider: {food_to_consider}\n")
+        print('Food to consider: ', food_to_consider)
+        print(f"catgories: {categories}\n")
 
         for idx in food_to_consider:
 
@@ -1199,6 +1198,7 @@ class BiteAcquisitionInference:
             print('Efficiency scores: ', efficiency_scores)
             print('Bite portions: ', non_dip_portions_rounded)
             print('Preference: ', preference)
+            print('Bite preference: ', bite_preference)
 
             k = input("Press [n] to exit or otherwise I will query bite sequencing planner...\n\n")
             if k == 'n':

@@ -90,7 +90,7 @@ class PreferencePlanner:
                 prompt = f.read()
 
         elif mode == 'motion_primitive':
-            with open('prompts/motion_primitive.txt', 'r') as f:
+            with open('prompts/motion_primitive_v2.txt', 'r') as f:
                 prompt = f.read()
 
         efficiency_sentence = str(efficiencies)
@@ -114,13 +114,13 @@ class PreferencePlanner:
             prompt = prompt%(str(items), portions_sentence, efficiency_sentence, preference, str(dips), str(history))
 
         elif mode == 'motion_primitive':
-            print("items:", str(items), "portions:", portions_sentence, "efficiencies:", efficiency_sentence, "preference:", preference, "bite_preference", bite_preference, "bite_size", bite_size, "dips:", str(dips), "history:", str(history))
+            print(f"items: {items}\nportions: {portions_sentence}\nefficiencies: {efficiency_sentence}\npreference: {preference}\nbite_preference: {bite_preference}\ndips: {dips}\nhistory: {history}")
 
             if type(portions_sentence) != str or type(efficiency_sentence) != str or type(preference) != str:
                 print("ERROR: type of arguments to plan() is not correct")
                 exit(1)
 
-            prompt = prompt%(str(items), portions_sentence, efficiency_sentence, preference, bite_preference, str(bite_size), str(dips), str(history))
+            prompt = prompt%(str(items), portions_sentence, efficiency_sentence, preference, bite_preference, str(dips), str(history))
 
         else:
             prompt = prompt%(str(items), portions_sentence, preference, str(dips), str(history))
@@ -128,7 +128,7 @@ class PreferencePlanner:
         # print("Prompt:\n", prompt)
 
         response = self.gpt_interface.chat_with_openai(prompt).strip()
-        # print(f" RESPONSE:\n{response}")
+        print(f" RESPONSE:\n{response}")
         intermediate_response = response.split('Next bite as list:')[1]
         next_bites = ast.literal_eval(intermediate_response.split('Next bite size:')[0].strip())
         bite_size = ast.literal_eval(intermediate_response.split('Next bite size as float:')[1].strip())

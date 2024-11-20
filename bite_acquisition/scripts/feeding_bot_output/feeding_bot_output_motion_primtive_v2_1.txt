@@ -1,0 +1,412 @@
+pybullet build time: Nov 28 2023 23:51:11
+Loading demo trajectory from file:  data/scooping_bowl_left_new_tf_rotated.csv
+Skill library initialized
+Feeding Bot initialized
+
+--------------------
+Log count 1
+History []
+--------------------
+
+--------------------
+History []
+Actions remaining 10
+Current user preference: I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+Current bite preference: I want bigger bites of meat but smaller bites of rice.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want bigger bites of meat but smaller bites of rice.
+--------------------
+Labels: ['chicken 0.82', 'rice 0.76', 'egg 0.84']
+Categories: ['meat/seafood', 'semisolid', 'meat/seafood']
+Portions: [2.4, 2.8, 1.2]
+--------------------
+
+--------------------
+Bite History []
+Category List: ['meat/seafood', 'semisolid', 'meat/seafood']
+Labels List: ['chicken', 'rice', 'egg']
+Per Food Portions: [2.4, 2.8, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['meat/seafood', 'semisolid', 'meat/seafood']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['chicken', 'rice', 'egg']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [2, 3, 1]
+Preference:  I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+Bite preference:  I want bigger bites of meat but smaller bites of rice.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['chicken', 'rice', 'egg'] [2, 3, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.0
+==== HISTORY ===
+[]
+items: ['chicken', 'rice', 'egg']
+portions: [2, 3, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+bite_preference: I want bigger bites of meat but smaller bites of rice.
+dips: 0.0
+history: []
+ RESPONSE:
+Food Items Left: There are 2 portions of chicken, 3 portions of rice, and 1 portion of egg left on the plate.
+Strategy: The strategy is to alternate between feeding chicken and rice, with larger bites for chicken and smaller bites for rice, incorporating an occasional bite of egg to satisfy the preference stated, focusing on a balanced approach to mixing the flavors while adhering closely to the specified alternating preference.
+Next bite: Feed chicken
+Next bite (accounting for efficiency): Feed chicken, as all items have the same efficiency rating of 1 and chicken is a preferred item to start alternating with.
+Next bite as list: ['chicken']
+Next bite size: Slightly larger bite of chicken
+Next bite size as float: 0.5
+next_bites: ['chicken']
+bite_size: 0.5
+Next bite ['chicken']
+Next bite size: 0.5
+non_dip_labels ['chicken', 'rice', 'egg']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['chicken', 'rice', 'egg'] chicken
+food: (0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]})
+bite_size: 0.5
+--------------------
+food_id: 0 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0, 0.075]}
+--------------------
+
+Continue to transfer? Remember to start horizontal spoon.Bite Transfer Executed
+Continue to acquisition? Remember to shutdown horizontal spoon.--------------------
+History [('chicken', 0.5)]
+Actions remaining 9
+Current user preference: I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+Current bite preference: I want bigger bites of meat but smaller bites of rice.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want bigger bites of meat but smaller bites of rice.
+--------------------
+Labels: ['chicken 0.82', 'rice 0.76', 'egg 0.84']
+Categories: ['meat/seafood', 'semisolid', 'meat/seafood']
+Portions: [1.9, 2.8, 1.2]
+--------------------
+
+--------------------
+Bite History [('chicken', 0.5)]
+Category List: ['meat/seafood', 'semisolid', 'meat/seafood']
+Labels List: ['chicken', 'rice', 'egg']
+Per Food Portions: [1.9, 2.8, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['meat/seafood', 'semisolid', 'meat/seafood']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['chicken', 'rice', 'egg']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [2, 3, 1]
+Preference:  I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+Bite preference:  I want bigger bites of meat but smaller bites of rice.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['chicken', 'rice', 'egg'] [2, 3, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.5
+==== HISTORY ===
+[('chicken', 0.5)]
+items: ['chicken', 'rice', 'egg']
+portions: [2, 3, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+bite_preference: I want bigger bites of meat but smaller bites of rice.
+dips: 0.0
+history: [('chicken', 0.5)]
+ RESPONSE:
+Food Items Left: There are 2 portions of chicken, 3 portions of rice, and 1 portion of egg left on the plate.
+
+Strategy: The strategy is to alternate between bites of chicken and rice primarily, with larger bites for chicken and smaller bites for rice, while occasionally integrating a bite of egg per the preference for occasional variety. Considering the efficiency is the same for all items, the focus will remain on fulfilling the preference pattern.
+
+Next bite: Since the preference is to alternate between chicken and rice and considering the last bite was chicken, the next bite should be rice to maintain the alternation pattern.
+
+Next bite (accounting for efficiency): Given that all items have the same efficiency for picking up (1), the decision to choose rice next remains the same.
+
+Next bite as list: ['rice']
+
+Next bite size: Since the preference is for smaller bites of rice, choose a slightly smaller bite size compared to the previous chicken bite which was 0.5.
+
+Next bite size as float: 0.3
+next_bites: ['rice']
+bite_size: 0.3
+Next bite ['rice']
+Next bite size: 0.3
+non_dip_labels ['chicken', 'rice', 'egg']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['chicken', 'rice', 'egg'] rice
+food: (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]})
+bite_size: 0.3
+--------------------
+food_id: 1 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, -0.25, 0.075]}
+--------------------
+
+Continue to transfer? Remember to start horizontal spoon.Bite Transfer Executed
+Continue to acquisition? Remember to shutdown horizontal spoon.--------------------
+History [('chicken', 0.5), ('rice', 0.3)]
+Actions remaining 8
+Current user preference: I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+Current bite preference: I want bigger bites of meat but smaller bites of rice.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want to eat the same amount of food as the amount of rice you fed to me previously
+--------------------
+Labels: ['chicken 0.82', 'rice 0.76', 'egg 0.84']
+Categories: ['meat/seafood', 'semisolid', 'meat/seafood']
+Portions: [1.9, 2.3, 1.2]
+--------------------
+
+--------------------
+Bite History [('chicken', 0.5), ('rice', 0.3)]
+Category List: ['meat/seafood', 'semisolid', 'meat/seafood']
+Labels List: ['chicken', 'rice', 'egg']
+Per Food Portions: [1.9, 2.3, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['meat/seafood', 'semisolid', 'meat/seafood']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['chicken', 'rice', 'egg']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [2, 2, 1]
+Preference:  I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+Bite preference:  I want to eat the same amount of food as the amount of rice you fed to me previously
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['chicken', 'rice', 'egg'] [2, 2, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.3
+==== HISTORY ===
+[('chicken', 0.5), ('rice', 0.3)]
+items: ['chicken', 'rice', 'egg']
+portions: [2, 2, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+bite_preference: I want to eat the same amount of food as the amount of rice you fed to me previously
+dips: 0.0
+history: [('chicken', 0.5), ('rice', 0.3)]
+ RESPONSE:
+Food Items Left: There are 2 portions of chicken, 2 portions of rice, and 1 portion of egg remaining on the plate.
+Strategy: Given your preference for alternating bites of chicken and rice with occasional egg, my plan will focus on maintaining this balance. Starting with chicken since the last bite was rice, I'll alternate between chicken and rice, incorporating egg occasionally to satisfy your preference for variety. Bite sizes will be adjusted to match the most recent rice bite to keep the experience consistent and enjoyable.
+Next bite: Feed chicken
+Next bite (accounting for efficiency): Feed chicken
+Next bite as list: ['chicken']
+Next bite size: Match the last rice bite size
+Next bite size as float: 0.3
+next_bites: ['chicken']
+bite_size: 0.3
+Next bite ['chicken']
+Next bite size: 0.3
+non_dip_labels ['chicken', 'rice', 'egg']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['chicken', 'rice', 'egg'] chicken
+food: (0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]})
+bite_size: 0.3
+--------------------
+food_id: 0 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0, 0.075]}
+--------------------
+
+Continue to transfer? Remember to start horizontal spoon.Bite Transfer Executed
+Continue to acquisition? Remember to shutdown horizontal spoon.--------------------
+History [('chicken', 0.5), ('rice', 0.3), ('chicken', 0.3)]
+Actions remaining 7
+Current user preference: I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+Current bite preference: I want to eat the same amount of food as the amount of rice you fed to me previously
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want to eat the same amount of food as the amount of rice you fed to me previously
+--------------------
+Labels: ['chicken 0.82', 'rice 0.76', 'egg 0.84']
+Categories: ['meat/seafood', 'semisolid', 'meat/seafood']
+Portions: [1.4, 2.3, 1.2]
+--------------------
+
+--------------------
+Bite History [('chicken', 0.5), ('rice', 0.3), ('chicken', 0.3)]
+Category List: ['meat/seafood', 'semisolid', 'meat/seafood']
+Labels List: ['chicken', 'rice', 'egg']
+Per Food Portions: [1.4, 2.3, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['meat/seafood', 'semisolid', 'meat/seafood']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['chicken', 'rice', 'egg']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [1, 2, 1]
+Preference:  I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+Bite preference:  I want to eat the same amount of food as the amount of rice you fed to me previously
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['chicken', 'rice', 'egg'] [1, 2, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.3
+==== HISTORY ===
+[('chicken', 0.5), ('rice', 0.3), ('chicken', 0.3)]
+items: ['chicken', 'rice', 'egg']
+portions: [1, 2, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+bite_preference: I want to eat the same amount of food as the amount of rice you fed to me previously
+dips: 0.0
+history: [('chicken', 0.5), ('rice', 0.3), ('chicken', 0.3)]
+ RESPONSE:
+Food Items Left: There are three food items remaining on the plate: 1 portion of chicken, 2 portions of rice, and 1 portion of egg.
+Strategy: Considering your preference to alternate between chicken and rice while occasionally incorporating some egg, the strategy would be to follow the pattern of chicken, rice, chicken, rice, and then introducing an egg bite before concluding with the remaining chicken and rice. The order of chicken and rice is determined by your preference and the fact they have been consumed alternately in the past, respecting your desire for alternation and considering the last bite size to determine the size of the next bite of a different food item.
+Next bite: Given that the last bite was chicken, the next bite I plan to feed is rice.
+Next bite (accounting for efficiency): The decision stays the same (to feed rice next) because the efficiency for all items is the same (1).
+Next bite as list: ['rice']
+Next bite size: Since the previous rice bite was 0.3 and you want the same amount of food as the last rice portion you consumed, I will choose the same size again.
+Next bite size as float: 0.3
+next_bites: ['rice']
+bite_size: 0.3
+Next bite ['rice']
+Next bite size: 0.3
+non_dip_labels ['chicken', 'rice', 'egg']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['chicken', 'rice', 'egg'] rice
+food: (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]})
+bite_size: 0.3
+--------------------
+food_id: 1 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, -0.25, 0.075]}
+--------------------
+
+Continue to transfer? Remember to start horizontal spoon.Bite Transfer Executed
+Continue to acquisition? Remember to shutdown horizontal spoon.--------------------
+History [('chicken', 0.5), ('rice', 0.3), ('chicken', 0.3), ('rice', 0.3)]
+Actions remaining 6
+Current user preference: I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally.
+Current bite preference: I want to eat the same amount of food as the amount of rice you fed to me previously
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I mostly just want to eat eggs now
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want to eat the same amount of food as the amount of rice you fed to me previously
+--------------------
+Labels: ['chicken 0.82', 'rice 0.76', 'egg 0.84']
+Categories: ['meat/seafood', 'semisolid', 'meat/seafood']
+Portions: [1.4, 1.7999999999999998, 1.2]
+--------------------
+
+--------------------
+Bite History [('chicken', 0.5), ('rice', 0.3), ('chicken', 0.3), ('rice', 0.3)]
+Category List: ['meat/seafood', 'semisolid', 'meat/seafood']
+Labels List: ['chicken', 'rice', 'egg']
+Per Food Portions: [1.4, 1.7999999999999998, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['meat/seafood', 'semisolid', 'meat/seafood']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['chicken', 'rice', 'egg']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [1, 2, 1]
+Preference:  I mostly just want to eat eggs now
+Bite preference:  I want to eat the same amount of food as the amount of rice you fed to me previously
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['chicken', 'rice', 'egg'] [1, 2, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.3
+==== HISTORY ===
+[('chicken', 0.5), ('rice', 0.3), ('chicken', 0.3), ('rice', 0.3)]
+items: ['chicken', 'rice', 'egg']
+portions: [1, 2, 1]
+efficiencies: [1, 1, 1]
+preference: I mostly just want to eat eggs now
+bite_preference: I want to eat the same amount of food as the amount of rice you fed to me previously
+dips: 0.0
+history: [('chicken', 0.5), ('rice', 0.3), ('chicken', 0.3), ('rice', 0.3)]
+ RESPONSE:
+Food Items Left: There are chicken (1 portion), rice (2 portions), and egg (1 portion) remaining on the plate.
+Strategy: Since the preference is mostly for eggs now, the next bite will prioritize the egg, followed by bites of rice equal to the last rice bite size to maintain variety and preference. Chicken will be served last.
+Next bite: Feed egg
+Next bite (accounting for efficiency): Feed egg, as efficiency is equal across all items.
+Next bite as list: ['egg']
+Next bite size: Same amount as the amount of rice previously fed to match the bite preference
+Next bite size as float: 0.3
+next_bites: ['egg']
+bite_size: 0.3
+Next bite ['egg']
+Next bite size: 0.3
+non_dip_labels ['chicken', 'rice', 'egg']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['chicken', 'rice', 'egg'] egg
+food: (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: 0.3
+--------------------
+food_id: 2 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Continue to transfer? Remember to start horizontal spoon.Bite Transfer Executed
+Continue to acquisition? Remember to shutdown horizontal spoon.--------------------
+History [('chicken', 0.5), ('rice', 0.3), ('chicken', 0.3), ('rice', 0.3), ('egg', 0.3)]
+Actions remaining 5
+Current user preference: I mostly just want to eat eggs now
+Current bite preference: I want to eat the same amount of food as the amount of rice you fed to me previously
+Ready?

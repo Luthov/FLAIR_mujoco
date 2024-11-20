@@ -30,7 +30,6 @@ except:
 
 TRANSFER_ANGLE = 80
 DISTANCE_WITHIN_MOUTH = 0.06
-# ENTRY_ANGLE = 90
 ENTRY_INSIDE_ANGLE = 90
 EXIT_DEPTH = 0.03
 
@@ -98,9 +97,9 @@ class MujocoAction(object):
         
         self.reset_pos = np.array([0.0, 0.0, 0.0, 0.0, -1.3988, 0.0])   # initial pose of the robot
         # TODO: Luke: these poses should be defined by the client
-        self.acq_pos = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
+        # self.acq_pos = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
         # TODO: Luke: this transfer pose also seems a bit high (in terms of z position)
-        self.transfer_pos = np.radians([0.0, -65.0, -25.0, 0.0, 20.0, 0.0])
+        # self.transfer_pos = np.radians([0.0, -65.0, -25.0, 0.0, 20.0, 0.0])
 
         # self.mouth_pose = np.array([0.70, 0.0, 0.545])
         self.initial_transfer_pose_reached = False
