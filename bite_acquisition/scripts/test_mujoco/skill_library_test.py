@@ -4,6 +4,8 @@ from scipy.spatial.transform import Rotation
 
 from geometry_msgs.msg import PoseStamped
 
+import sys
+sys.path.insert(0, '/home/luthov_ubuntu/School/FYP/feeding_ws/src/feeding/task_planner/src/FLAIR_mujoco/bite_acquisition/scripts')
 from skill_library_mujoco import SkillLibrary
 
 if __name__ == "__main__":
@@ -49,7 +51,13 @@ if __name__ == "__main__":
     # skill_library.scooping_skill_mujoco(scoop_rice_keypoint, bite_size=-1.0)
     # skill_library.transfer_to_mouth(transfer_pose)
 
-    # skill_library.scooping_skill_mujoco(scoop_chicken_keypoint, bite_size=0.0)
+    bite_size = 0.0
+    while True:
+        input(f"bite_size={bite_size}")
+        skill_library.scooping_skill_mujoco(scoop_chicken_keypoint, bite_size=bite_size)
+        if bite_size == 1.0:
+            break
+        bite_size += 0.2
     # skill_library.transfer_to_mouth()
 
     # skill_library.scooping_skill_mujoco(scoop_egg_keypoint, bite_size=0.0)
@@ -57,13 +65,13 @@ if __name__ == "__main__":
 
     # skill_library.scooping_skill_mujoco(scoop_keypoint_2, bite_size=1.0)
     # skill_library.transfer_to_mouth()
-    mouth_pose = np.array([0.70, 0.0, 0.545])
+    # mouth_pose = np.array([0.70, 0.0, 0.545])
 
-    transfer_pose = PoseStamped()
-    transfer_pose.pose.position.x = mouth_pose[0]
-    transfer_pose.pose.position.y = mouth_pose[1]
-    transfer_pose.pose.position.z = mouth_pose[2]
+    # transfer_pose = PoseStamped()
+    # transfer_pose.pose.position.x = mouth_pose[0]
+    # transfer_pose.pose.position.y = mouth_pose[1]
+    # transfer_pose.pose.position.z = mouth_pose[2]
 
-    input("Transfer to mouth")
-    skill_library.transfer_to_mouth(transfer_pose)
+    # input("Transfer to mouth")
+    # skill_library.transfer_to_mouth(transfer_pose)
 

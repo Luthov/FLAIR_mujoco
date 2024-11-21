@@ -131,8 +131,10 @@ class PreferencePlanner:
         print(f" RESPONSE:\n{response}")
         intermediate_response = response.split('Next bite as list:')[1]
         next_bites = ast.literal_eval(intermediate_response.split('Next bite size:')[0].strip())
+        print(f"next_bites: {(next_bites)}")
         bite_size = ast.literal_eval(intermediate_response.split('Next bite size as float:')[1].strip())
-        print(f"next_bites: {(next_bites)}\nbite_size: {(bite_size)}")
+        print(f"bite_size: {(bite_size)}")
+        # print(f"next_bites: {(next_bites)}\nbite_size: {(bite_size)}")
         
         return next_bites, bite_size, response
 

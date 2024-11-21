@@ -1,0 +1,641 @@
+pybullet build time: Nov 28 2023 23:51:11
+Loading demo trajectory from file:  data/scooping_bowl_left_new_tf_rotated.csv
+Skill library initialized
+Feeding Bot initialized
+
+--------------------
+Log count 1
+History []
+--------------------
+
+--------------------
+History []
+Actions remaining 10
+Current user preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Current bite preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+--------------------
+Labels: ['chicken 0.82', 'rice 0.76', 'egg 0.84']
+Categories: ['meat/seafood', 'semisolid', 'meat/seafood']
+Portions: [2.4, 2.8, 1.2]
+--------------------
+
+--------------------
+Bite History []
+Category List: ['meat/seafood', 'semisolid', 'meat/seafood']
+Labels List: ['chicken', 'rice', 'egg']
+Per Food Portions: [2.4, 2.8, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['meat/seafood', 'semisolid', 'meat/seafood']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['chicken', 'rice', 'egg']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [2, 3, 1]
+Preference:  I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Bite preference:  I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['chicken', 'rice', 'egg'] [2, 3, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.0
+==== HISTORY ===
+[]
+items: ['chicken', 'rice', 'egg']
+portions: [2, 3, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+bite_preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+dips: 0.0
+history: []
+ RESPONSE:
+Food Items Left: There are 2 portions of chicken, 3 portions of rice, and 1 portion of egg left on the plate.
+Strategy: I will start by alternating bites of egg and rice in compliance with your preference to enjoy these two items together initially. Given the portions, I will serve one bite of egg, followed by an equal number of rice bites. Once the egg is fully consumed, I will continue to feed rice until its portions align with the chicken, then proceed to serve chicken until the plate is almost empty.
+Next bite: Feed egg
+Next bite (accounting for efficiency): Feed egg
+Next bite as list: ['egg']
+Next bite size: Delicate slivers of egg
+Next bite size as float: -0.5
+next_bites: ['egg']
+bite_size: -0.5
+Next bite ['egg']
+Next bite size: -0.5
+non_dip_labels ['chicken', 'rice', 'egg']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['chicken', 'rice', 'egg'] egg
+food: (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: -0.5
+--------------------
+food_id: 2 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('egg', -0.5)]
+Actions remaining 9
+Current user preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Current bite preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+--------------------
+Labels: ['chicken 0.82', 'rice 0.76', 'egg 0.84']
+Categories: ['meat/seafood', 'semisolid', 'meat/seafood']
+Portions: [2.4, 2.8, 0.7]
+--------------------
+
+--------------------
+Bite History [('egg', -0.5)]
+Category List: ['meat/seafood', 'semisolid', 'meat/seafood']
+Labels List: ['chicken', 'rice', 'egg']
+Per Food Portions: [2.4, 2.8, 0.7]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['meat/seafood', 'semisolid', 'meat/seafood']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['chicken', 'rice', 'egg']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [2, 3, 1]
+Preference:  I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Bite preference:  I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['chicken', 'rice', 'egg'] [2, 3, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+-0.5
+==== HISTORY ===
+[('egg', -0.5)]
+items: ['chicken', 'rice', 'egg']
+portions: [2, 3, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+bite_preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+dips: 0.0
+history: [('egg', -0.5)]
+ RESPONSE:
+Food Items Left: There are 2 portions of chicken, 3 portions of rice, and 1 portion of egg remaining on the plate. 
+
+Strategy: Since you prefer alternating bites of egg and rice at the beginning, followed by just chicken, my strategy will focus on serving the egg and rice in alternation until the egg is finished, as there's only one portion of it, then continue with rice until its portions match the chicken's, after which I will switch to serving chicken exclusively. This respects your preference for alternation and finishes with a focus on chicken, per your instructions. Given the past bite of egg was a delicate sliver, I'll continue to serve the egg in delicate slivers and adjust bite sizes for the other items correspondingly. 
+
+Next bite: Feed rice 
+
+Next bite (accounting for efficiency): Feed rice 
+
+Next bite as list: ['rice']
+
+Next bite size: Serve rice in bite-sized scoops
+
+Next bite size as float: 0.5
+next_bites: ['rice']
+bite_size: 0.5
+Next bite ['rice']
+Next bite size: 0.5
+non_dip_labels ['chicken', 'rice', 'egg']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['chicken', 'rice', 'egg'] rice
+food: (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]})
+bite_size: 0.5
+--------------------
+food_id: 1 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, -0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('egg', -0.5), ('rice', 0.5)]
+Actions remaining 8
+Current user preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Current bite preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+--------------------
+Labels: ['chicken 0.82', 'rice 0.76', 'egg 0.84']
+Categories: ['meat/seafood', 'semisolid', 'meat/seafood']
+Portions: [2.4, 2.3, 0.7]
+--------------------
+
+--------------------
+Bite History [('egg', -0.5), ('rice', 0.5)]
+Category List: ['meat/seafood', 'semisolid', 'meat/seafood']
+Labels List: ['chicken', 'rice', 'egg']
+Per Food Portions: [2.4, 2.3, 0.7]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['meat/seafood', 'semisolid', 'meat/seafood']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['chicken', 'rice', 'egg']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [2, 2, 1]
+Preference:  I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Bite preference:  I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['chicken', 'rice', 'egg'] [2, 2, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.5
+==== HISTORY ===
+[('egg', -0.5), ('rice', 0.5)]
+items: ['chicken', 'rice', 'egg']
+portions: [2, 2, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+bite_preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+dips: 0.0
+history: [('egg', -0.5), ('rice', 0.5)]
+ RESPONSE:
+Food Items Left: There are 2 portions of chicken, 2 portions of rice, and 1 portion of egg left on the plate.
+Strategy: I will start by alternating between egg and rice in the order specified by your preference, since you want to eat these two items first in an alternating fashion. Once the egg is finished (since there's only one portion left of it), I'll switch to feeding you chicken in large, hearty chunks as per your preference until the plate is almost empty. Given efficiency is the same across all items (1 for each), I will prioritize based on your food preference and bite size preference.
+Next bite: Feed rice, considering the past bites and your preference for alternating bites of egg and rice.
+Next bite (accounting for efficiency): Since all items have the same efficiency, the choice remains the same: Feed rice.
+Next bite as list: ['rice']
+Next bite size: Given the preference for bite-sized scoops of rice, and the most recent bite size for rice was 0.5, we will maintain a bite size that respects your preference for bite size.
+Next bite size as float: 0.5
+next_bites: ['rice']
+bite_size: 0.5
+Next bite ['rice']
+Next bite size: 0.5
+non_dip_labels ['chicken', 'rice', 'egg']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['chicken', 'rice', 'egg'] rice
+food: (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]})
+bite_size: 0.5
+--------------------
+food_id: 1 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, -0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('egg', -0.5), ('rice', 0.5), ('rice', 0.5)]
+Actions remaining 7
+Current user preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Current bite preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+--------------------
+Labels: ['chicken 0.82', 'rice 0.76', 'egg 0.84']
+Categories: ['meat/seafood', 'semisolid', 'meat/seafood']
+Portions: [2.4, 1.7999999999999998, 0.7]
+--------------------
+
+--------------------
+Bite History [('egg', -0.5), ('rice', 0.5), ('rice', 0.5)]
+Category List: ['meat/seafood', 'semisolid', 'meat/seafood']
+Labels List: ['chicken', 'rice', 'egg']
+Per Food Portions: [2.4, 1.7999999999999998, 0.7]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['meat/seafood', 'semisolid', 'meat/seafood']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['chicken', 'rice', 'egg']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [2, 2, 1]
+Preference:  I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Bite preference:  I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['chicken', 'rice', 'egg'] [2, 2, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.5
+==== HISTORY ===
+[('egg', -0.5), ('rice', 0.5), ('rice', 0.5)]
+items: ['chicken', 'rice', 'egg']
+portions: [2, 2, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+bite_preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+dips: 0.0
+history: [('egg', -0.5), ('rice', 0.5), ('rice', 0.5)]
+ RESPONSE:
+Food Items Left: There are 2 portions of chicken, 2 portions of rice, and 1 portion of egg left on the plate.
+Strategy: According to your preferences, I will feed alternating bites of egg and rice until the egg is finished, then continue with bites of rice, and switch to chicken, feeding it in large, hearty chunks. Since there is no dipping sauce and all items are efficient to pick up, my primary focus is on following the specified order and preference for biting.
+Next bite: Feed egg in a delicate sliver.
+Next bite (accounting for efficiency): Feed egg in a delicate sliver.
+Next bite as list: ['egg']
+Next bite size: A delicate sliver, similar to the past bite of egg.
+Next bite size as float: -0.5
+next_bites: ['egg']
+bite_size: -0.5
+Next bite ['egg']
+Next bite size: -0.5
+non_dip_labels ['chicken', 'rice', 'egg']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['chicken', 'rice', 'egg'] egg
+food: (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: -0.5
+--------------------
+food_id: 2 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5)]
+Actions remaining 6
+Current user preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Current bite preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+--------------------
+Labels: ['chicken 0.82', 'rice 0.76', 'egg 0.84']
+Categories: ['meat/seafood', 'semisolid', 'meat/seafood']
+Portions: [2.4, 1.7999999999999998, 0.19999999999999996]
+--------------------
+
+--------------------
+Bite History [('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5)]
+Category List: ['meat/seafood', 'semisolid', 'meat/seafood']
+Labels List: ['chicken', 'rice', 'egg']
+Per Food Portions: [2.4, 1.7999999999999998, 0.19999999999999996]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['meat/seafood', 'semisolid', 'meat/seafood']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['chicken', 'rice', 'egg']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [2, 2, 0]
+Preference:  I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Bite preference:  I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['chicken', 'rice', 'egg'] [2, 2, 0]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+-0.5
+==== HISTORY ===
+[('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5)]
+items: ['chicken', 'rice', 'egg']
+portions: [2, 2, 0]
+efficiencies: [1, 1, 1]
+preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+bite_preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+dips: 0.0
+history: [('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5)]
+ RESPONSE:
+Food Items Left: There are 2 portions of chicken and rice left, and 0 portions of egg.
+Strategy: Given the preference to alternate between egg and rice initially but no egg portions remaining, we will shift directly to feeding chicken in large, hearty chunks until nearly finished, respecting the user's request for order and bite size preferences.
+Next bite: Feed chicken
+Next bite (accounting for efficiency): Feed chicken
+Next bite as list: ['chicken']
+Next bite size: A large, hearty chunk
+Next bite size as float: 0.8
+next_bites: ['chicken']
+bite_size: 0.8
+Next bite ['chicken']
+Next bite size: 0.8
+non_dip_labels ['chicken', 'rice', 'egg']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['chicken', 'rice', 'egg'] chicken
+food: (0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]})
+bite_size: 0.8
+--------------------
+food_id: 0 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5), ('chicken', 0.8)]
+Actions remaining 5
+Current user preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Current bite preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+--------------------
+Labels: ['chicken 0.82', 'rice 0.76', 'egg 0.84']
+Categories: ['meat/seafood', 'semisolid', 'meat/seafood']
+Portions: [1.9, 1.7999999999999998, 0.19999999999999996]
+--------------------
+
+--------------------
+Bite History [('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5), ('chicken', 0.8)]
+Category List: ['meat/seafood', 'semisolid', 'meat/seafood']
+Labels List: ['chicken', 'rice', 'egg']
+Per Food Portions: [1.9, 1.7999999999999998, 0.19999999999999996]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['meat/seafood', 'semisolid', 'meat/seafood']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['chicken', 'rice', 'egg']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [2, 2, 0]
+Preference:  I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Bite preference:  I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['chicken', 'rice', 'egg'] [2, 2, 0]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.8
+==== HISTORY ===
+[('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5), ('chicken', 0.8)]
+items: ['chicken', 'rice', 'egg']
+portions: [2, 2, 0]
+efficiencies: [1, 1, 1]
+preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+bite_preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+dips: 0.0
+history: [('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5), ('chicken', 0.8)]
+ RESPONSE:
+Food Items Left: There are 2 portions of chicken, 2 portions of rice, and 0 portions of egg left on the plate.
+
+Strategy: Since the preference is to eat alternating bites of egg and rice first, but there are no portions of egg left, we skip directly to feeding chicken until it's almost gone, following the preference for bite order and considering the past bites to determine the next bite size.
+
+Next bite: Feed chicken
+
+Next bite (accounting for efficiency): Feed chicken, as efficiency is equal for all remaining items, and preference dictates chicken should be eaten next.
+
+Next bite as list: ['chicken']
+
+Next bite size: Large, hearty chunk
+
+Next bite size as float: 0.8
+next_bites: ['chicken']
+bite_size: 0.8
+Next bite ['chicken']
+Next bite size: 0.8
+non_dip_labels ['chicken', 'rice', 'egg']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['chicken', 'rice', 'egg'] chicken
+food: (0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]})
+bite_size: 0.8
+--------------------
+food_id: 0 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5), ('chicken', 0.8), ('chicken', 0.8)]
+Actions remaining 4
+Current user preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Current bite preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+--------------------
+Labels: ['chicken 0.82', 'rice 0.76', 'egg 0.84']
+Categories: ['meat/seafood', 'semisolid', 'meat/seafood']
+Portions: [1.4, 1.7999999999999998, 0.19999999999999996]
+--------------------
+
+--------------------
+Bite History [('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5), ('chicken', 0.8), ('chicken', 0.8)]
+Category List: ['meat/seafood', 'semisolid', 'meat/seafood']
+Labels List: ['chicken', 'rice', 'egg']
+Per Food Portions: [1.4, 1.7999999999999998, 0.19999999999999996]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['meat/seafood', 'semisolid', 'meat/seafood']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['chicken', 'rice', 'egg']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [1, 2, 0]
+Preference:  I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Bite preference:  I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['chicken', 'rice', 'egg'] [1, 2, 0]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.8
+==== HISTORY ===
+[('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5), ('chicken', 0.8), ('chicken', 0.8)]
+items: ['chicken', 'rice', 'egg']
+portions: [1, 2, 0]
+efficiencies: [1, 1, 1]
+preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+bite_preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+dips: 0.0
+history: [('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5), ('chicken', 0.8), ('chicken', 0.8)]
+ RESPONSE:
+Food Items Left: There are 1 portion of chicken, 2 portions of rice, and no portions of egg left on the plate.
+Strategy: Since there are no eggs left, we'll skip the alternating bites of egg and rice and move directly to feeding chicken in large, hearty chunks as per the preference until it is finished, considering there's only 1 portion of chicken left.
+Next bite: Feed chicken
+Next bite (accounting for efficiency): Feed chicken
+Next bite as list: ['chicken']
+Next bite size: A large, hearty chunk
+Next bite size as float: 0.8
+next_bites: ['chicken']
+bite_size: 0.8
+Next bite ['chicken']
+Next bite size: 0.8
+non_dip_labels ['chicken', 'rice', 'egg']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['chicken', 'rice', 'egg'] chicken
+food: (0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]})
+bite_size: 0.8
+--------------------
+food_id: 0 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5), ('chicken', 0.8), ('chicken', 0.8), ('chicken', 0.8)]
+Actions remaining 3
+Current user preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Current bite preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+--------------------
+Labels: ['chicken 0.82', 'rice 0.76', 'egg 0.84']
+Categories: ['meat/seafood', 'semisolid', 'meat/seafood']
+Portions: [0.8999999999999999, 1.7999999999999998, 0.19999999999999996]
+--------------------
+
+--------------------
+Bite History [('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5), ('chicken', 0.8), ('chicken', 0.8), ('chicken', 0.8)]
+Category List: ['meat/seafood', 'semisolid', 'meat/seafood']
+Labels List: ['chicken', 'rice', 'egg']
+Per Food Portions: [0.8999999999999999, 1.7999999999999998, 0.19999999999999996]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['meat/seafood', 'semisolid', 'meat/seafood']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, -0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['chicken', 'rice', 'egg']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [1, 2, 0]
+Preference:  I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+Bite preference:  I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['chicken', 'rice', 'egg'] [1, 2, 0]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.8
+==== HISTORY ===
+[('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5), ('chicken', 0.8), ('chicken', 0.8), ('chicken', 0.8)]
+items: ['chicken', 'rice', 'egg']
+portions: [1, 2, 0]
+efficiencies: [1, 1, 1]
+preference: I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.
+bite_preference: I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.
+dips: 0.0
+history: [('egg', -0.5), ('rice', 0.5), ('rice', 0.5), ('egg', -0.5), ('chicken', 0.8), ('chicken', 0.8), ('chicken', 0.8)]
+ RESPONSE:
+Food Items Left: There is 1 portion of chicken, 2 portions of rice, and no portions of egg left on the plate.
+Strategy: Since there are no egg portions left, I'll proceed with the next preference, which is feeding chicken in large, hearty chunks until it's almost all consumed, then continue with rice in bite-sized scoops.
+Next bite: Feed chicken
+Next bite (accounting for efficiency): Feed chicken
+Next bite as list: ['chicken']
+Next bite size: Large, hearty chunk
+Next bite size as float: 0.8
+---
+Traceback (most recent call last):
+  File "feeding_bot_mujoco.py", line 256, in <module>
+    feeding_bot.clear_plate()
+  File "feeding_bot_mujoco.py", line 182, in clear_plate
+    food, bite_size = self.inference_server.get_autonomous_action(
+  File "/home/luthov_ubuntu/School/FYP/feeding_ws/src/feeding/task_planner/src/FLAIR_mujoco/bite_acquisition/scripts/inference_class_mujoco.py", line 1207, in get_autonomous_action
+    next_bite, bite_size, response = self.preference_planner.plan_motion_primitives(
+  File "/home/luthov_ubuntu/School/FYP/feeding_ws/src/feeding/task_planner/src/FLAIR_mujoco/bite_acquisition/scripts/preference_planner.py", line 134, in plan_motion_primitives
+    bite_size = ast.literal_eval(intermediate_response.split('Next bite size as float:')[1].strip())
+  File "/home/luthov_ubuntu/miniconda3/envs/mjrl/lib/python3.8/ast.py", line 59, in literal_eval
+    node_or_string = parse(node_or_string, mode='eval')
+  File "/home/luthov_ubuntu/miniconda3/envs/mjrl/lib/python3.8/ast.py", line 47, in parse
+    return compile(source, filename, mode, flags,
+  File "<unknown>", line 2
+    ---
+    ^
+SyntaxError: invalid syntax

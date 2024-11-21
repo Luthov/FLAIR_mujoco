@@ -67,9 +67,45 @@ class FeedingBot:
 
         self.inference_server.FOOD_CLASSES = items
 
-        user_preference = "I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally."
-        # bite_preference = "I am fine with the amount I'm eating now."
-        bite_preference = "I want bigger bites of meat but smaller bites of rice."
+        user_preferences_hospital = [
+            "I want to start with a spoonful of mashed potatoes, then have a small bite of chicken breast, and finish with a taste of steamed carrots.",
+            "Alternate between bites of green beans and turkey slices, but make sure I get a spoonful of gravy-covered mashed potatoes every third bite.",
+            "Serve me all the soup first, followed by alternating bites of plain rice and baked fish, and end with a nibble of bread roll.",
+            "I like to mix bites of rice and steamed broccoli together, with a small slice of grilled chicken every fourth bite.",
+            "Give me alternating bites of oatmeal and scrambled eggs for the first half, then finish with a couple of bites of fruit salad."
+        ]
+
+        bite_preferences_hospital = [
+            "I want big spoonfuls of mashed potatoes, medium-sized bites of chicken, and very tiny bites of carrots.",
+            "I’d like my turkey sliced thin and in small pieces, green beans in moderate bites, and mashed potatoes served in generous scoops.",
+            "I prefer large chunks of baked fish, small bites of broccoli, and rice in medium spoonfuls.",
+            "Serve the soup in big hearty spoonfuls, but keep the bread roll in small bite-sized pieces.",
+            "I want small spoonfuls of oatmeal, large chunks of scrambled eggs, and fruit salad in tiny bites for a fresh finish."
+        ]
+
+        user_preferences_same_food = [
+            # "Start with a big bite of rice mixed with chicken, followed by two small bites of egg, and finish with a pinch of plain rice.",
+            "I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.",
+            "Serve me rice and egg together in the first few bites, then chicken in a standalone bite to reset my palate.",
+            "I want small bites of rice with egg until there’s only half the rice left, then finish the plate with chicken-only bites.",
+            "I like bites to alternate between chicken, rice, and egg in a clockwise rotation, but add an extra piece of chicken every fourth bite."
+        ]
+
+        bite_preferences_same_food = [
+            "I want medium-sized bites of chicken, very tiny bites of egg, and rice served in generous spoonfuls.",
+            "I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.",
+            "Serve rice in tiny portions, egg in medium-sized bites, and chicken in large chunks with crispy edges.",
+            "I prefer all my rice to be served in one big portion at the start, then small, even bites of chicken and egg for the rest.",
+            "I want each bite to be a mix of chicken, egg, and rice, but the chicken should dominate in size and flavor."
+        ]
+
+        # user_preference = "I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally."
+        # bite_preference = "I want bigger bites of meat but smaller bites of rice."
+        
+        user_preference_idx = 1
+        user_preference = user_preferences_same_food[user_preference_idx-1]
+        bite_preference = bite_preferences_same_food[user_preference_idx]
+
         bite_size = 0.0
 
         # Bite history
@@ -143,7 +179,18 @@ class FeedingBot:
             print("--------------------\n")
             
             
-            food, bite_size = self.inference_server.get_autonomous_action(category_list, labels_list, per_food_portions, user_preference, bite_preference, bite_size, bite_history, continue_food_label, log_path)
+            food, bite_size = self.inference_server.get_autonomous_action(
+                category_list, 
+                labels_list, 
+                per_food_portions, 
+                user_preference, 
+                bite_preference, 
+                bite_size, 
+                bite_history, 
+                continue_food_label, 
+                log_path
+                )
+            
             if food is None:
                 exit(1)
             
@@ -188,16 +235,19 @@ class FeedingBot:
             with open('history.txt', 'w') as f:
                 f.write(str(bite_history))
 
-            k = input('Continue to transfer? Remember to start horizontal spoon.')
-            while k not in ['y', 'n']:
-                k = input('Continue to transfer? Remember to start horizontal spoon.')
+            k = input('Exit?')
             if k == 'y':
-                self.skill_library.transfer_skill(self.transfer_pose)
-                k = input('Continue to acquisition? Remember to shutdown horizontal spoon.')
-                while k not in ['y', 'n']:
-                    k = input('Continue to acquisition? Remember to shutdown horizontal spoon.\n')
-                if k == 'n':
-                    exit(1)
+                exit(1)
+            # k = input('Continue to transfer? Remember to start horizontal spoon.')
+            # while k not in ['y', 'n']:
+            #     k = input('Continue to transfer? Remember to start horizontal spoon.')
+            # if k == 'y':
+            #     self.skill_library.transfer_skill(self.transfer_pose)
+            #     k = input('Continue to acquisition? Remember to shutdown horizontal spoon.')
+            #     while k not in ['y', 'n']:
+            #         k = input('Continue to acquisition? Remember to shutdown horizontal spoon.\n')
+            #     if k == 'n':
+            #         exit(1)
 
 if __name__ == "__main__":
 

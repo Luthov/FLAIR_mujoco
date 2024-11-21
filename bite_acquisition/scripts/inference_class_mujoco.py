@@ -1204,7 +1204,15 @@ class BiteAcquisitionInference:
             if k == 'n':
                 return None, None
 
-            next_bite, bite_size, response = self.preference_planner.plan_motion_primitives(non_dip_labels, non_dip_portions_rounded, efficiency_scores, preference, bite_preference, bite_size, history, mode=self.mode)
+            next_bite, bite_size, response = self.preference_planner.plan_motion_primitives(
+                non_dip_labels, 
+                non_dip_portions_rounded, 
+                efficiency_scores, 
+                preference, 
+                bite_preference, 
+                bite_size, 
+                history, 
+                mode=self.mode)
         
         print('Next bite', next_bite)
         print(f'Next bite size: {bite_size}')
