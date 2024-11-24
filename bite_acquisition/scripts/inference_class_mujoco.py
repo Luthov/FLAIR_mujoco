@@ -1136,7 +1136,7 @@ class BiteAcquisitionInference:
                 max_occluding_mask = mask
         return max_occluding_mask.astype(np.uint8)
 
-    def get_autonomous_action(self, categories, labels, portions, preference, bite_preference, bite_size, history, continue_food_label = None, log_path = None):
+    def get_autonomous_action(self, categories, labels, portions, preference, bite_preference, transfer_preference, bite_size, history, continue_food_label = None, log_path = None):
 
         if continue_food_label is not None:
             food_to_consider = [i for i in range(len(labels)) if labels[i] == continue_food_label]
@@ -1210,6 +1210,7 @@ class BiteAcquisitionInference:
                 efficiency_scores, 
                 preference, 
                 bite_preference, 
+                transfer_preference,
                 bite_size, 
                 history, 
                 mode=self.mode)

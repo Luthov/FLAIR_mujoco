@@ -139,8 +139,6 @@ class FeedingBot:
             "I want sweet potatoes in generous servings, turkey in moderate portions, and mixed vegetables in smaller bites."
         ]
 
-
-
         # user_preference = "I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally."
         # bite_preference = "I want bigger bites of meat but smaller bites of rice."
         
@@ -148,6 +146,7 @@ class FeedingBot:
         preference_idx = 0
         user_preference = user_preferences_hospital[preference_idx]
         bite_preference = bite_preferences_hospital[preference_idx]
+        transfer_preference = "Please start further from my mouth"
         self.items = [food_items[preference_idx]]
 
         self.inference_server.FOOD_CLASSES = self.items
@@ -187,6 +186,11 @@ class FeedingBot:
             if new_bite_preference not in ['n', '']:
                 bite_preference = new_bite_preference
             print(f"BITE PREFERENCE: {bite_preference}")
+
+            new_transfer_preference = input("Do you want to update your transfer preference? Otherwise input [n] or Enter to continue\n")
+            if new_transfer_preference not in ['n', '']:
+                transfer_preference = new_transfer_preference
+            print(f"TRANSFER PREFERENCE: {transfer_preference}")
                 
             log_path = self.log_file + str(self.log_count)
             self.log_count += 1
@@ -234,6 +238,7 @@ class FeedingBot:
                 per_food_portions, 
                 user_preference, 
                 bite_preference, 
+                transfer_preference,
                 bite_size, 
                 bite_history, 
                 continue_food_label, 

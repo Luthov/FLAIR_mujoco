@@ -30,6 +30,7 @@ class GPTInterface:
                    model='gpt-4-0125-preview',
                    messages=[message]
                   )
+        # print(response)
         chatbot_response = response.choices[0].message.content
         return chatbot_response.strip()
 
@@ -76,7 +77,7 @@ class PreferencePlanner:
 
         return next_bites, response
 
-    def plan_motion_primitives(self, items, portions, efficiencies, preference, bite_preference, bite_size, history, mode='ours'):
+    def plan_motion_primitives(self, items, portions, efficiencies, preference, bite_preference, transfer_preference, bite_size, history, mode='ours'):
 
         dips = 0.0
 
@@ -90,7 +91,8 @@ class PreferencePlanner:
                 prompt = f.read()
 
         elif mode == 'motion_primitive':
-            with open('prompts/motion_primitive_v3.txt', 'r') as f:
+            # with open('prompts/motion_primitive_v3.txt', 'r') as f:
+            with open('prompts/motion_primitive_v4_transfer_params.txt', 'r') as f:
                 prompt = f.read()
 
         efficiency_sentence = str(efficiencies)
@@ -114,13 +116,13 @@ class PreferencePlanner:
             prompt = prompt%(str(items), portions_sentence, efficiency_sentence, preference, str(dips), str(history))
 
         elif mode == 'motion_primitive':
-            print(f"items: {items}\nportions: {portions_sentence}\nefficiencies: {efficiency_sentence}\npreference: {preference}\nbite_preference: {bite_preference}\ndips: {dips}\nhistory: {history}")
+            print(f"items: {items}\nportions: {portions_sentence}\nefficiencies: {efficiency_sentence}\npreference: {preference}\nbite_preference: {bite_preference}\ntransfer_preference: {transfer_preference}\ndips: {dips}\nhistory: {history}")
 
             if type(portions_sentence) != str or type(efficiency_sentence) != str or type(preference) != str:
                 print("ERROR: type of arguments to plan() is not correct")
                 exit(1)
 
-            prompt = prompt%(str(items), portions_sentence, efficiency_sentence, preference, bite_preference, str(dips), str(history))
+            prompt = prompt%(str(items), portions_sentence, efficiency_sentence, preference, bite_preference, transfer_preference, str(dips), str(history))
 
         else:
             prompt = prompt%(str(items), portions_sentence, preference, str(dips), str(history))
@@ -129,11 +131,24 @@ class PreferencePlanner:
 
         response = self.gpt_interface.chat_with_openai(prompt).strip()
         print(f" RESPONSE:\n{response}")
-        intermediate_response = response.split('Next bite as list:')[1]
-        next_bites = ast.literal_eval(intermediate_response.split('Next bite size:')[0].strip())
-        print(f"next_bites: {(next_bites)}")
-        bite_size = ast.literal_eval(intermediate_response.split('Next bite size as float:')[1].strip())
-        print(f"bite_size: {(bite_size)}")
+        # intermediate_response = response.split('Next bite as list:')[1]
+        # next_bites = ast.literal_eval(intermediate_response.split('Next bite size:')[0].strip())
+        # print(f"next_bites: {(next_bites)}")
+        # bite_size = ast.literal_eval(intermediate_response.split('Next bite size as float:')[1].strip())
+        # print(f"bite_size: {(bite_size)}")
+        intermediate_response = response.split('Next bite as list:')[1].strip()
+        feeding_parameters = intermediate_response.split('\n')
+        next_bites = ast.literal_eval(feeding_parameters[0])
+        bite_size = ast.literal_eval(feeding_parameters[2].split('Next bite size as float:')[1].strip())
+        distance_to_mouth = ast.literal_eval(feeding_parameters[4].split('Next distance to mouth as float:')[1].strip())
+        entry_angle = ast.literal_eval(feeding_parameters[6].split('Next entry angle as float:')[1].strip())
+        exit_angle = ast.literal_eval(feeding_parameters[8].split('Next exit angle as float:')[1].strip())
+        print(f"next_bites: {next_bites} (type: {type(next_bites)})")
+        print(f"bite_size: {bite_size} (type: {type(bite_size)})")
+        print(f"distance_to_mouth: {distance_to_mouth} (type: {type(distance_to_mouth)})")
+        print(f"entry_angle: {entry_angle} (type: {type(entry_angle)})")
+        print(f"exit_angle: {exit_angle} (type: {type(exit_angle)})")
+        
         # print(f"next_bites: {(next_bites)}\nbite_size: {(bite_size)}")
         
         return next_bites, bite_size, response
