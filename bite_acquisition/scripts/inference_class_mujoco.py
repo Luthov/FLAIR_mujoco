@@ -314,8 +314,8 @@ class BiteAcquisitionInference:
             scoop_keypoints = [[0.4, -0.25, 0.075]]
         elif food_label == 'chicken':
             scoop_keypoints = [[0.4, 0, 0.075]]
-        elif food_label == 'egg':
-            scoop_keypoints = [[0.4, 0.25, 0.075]]
+        # elif food_label == 'egg':
+        scoop_keypoints = [[0.4, 0.25, 0.075]]
         # scoop_keypoints = [[0.3507, 0.0512, 0.0373 + 0.1]]
 
         push_keypoints = [[0.3507, 0.0512, 0.0373 + 0.1], [0.4507, -0.0512, 0.0373 + 0.1]]

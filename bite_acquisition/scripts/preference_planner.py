@@ -90,7 +90,7 @@ class PreferencePlanner:
                 prompt = f.read()
 
         elif mode == 'motion_primitive':
-            with open('prompts/motion_primitive_v2.txt', 'r') as f:
+            with open('prompts/motion_primitive_v3.txt', 'r') as f:
                 prompt = f.read()
 
         efficiency_sentence = str(efficiencies)

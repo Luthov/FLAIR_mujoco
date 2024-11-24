@@ -4,6 +4,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 import math
 import os
+import random
 
 import rospy
 
@@ -55,56 +56,101 @@ class FeedingBot:
         self.transfer_pose.pose.position.x = mouth_pose[0]
         self.transfer_pose.pose.position.y = mouth_pose[1]
         self.transfer_pose.pose.position.z = mouth_pose[2]
-        
+
+        self.execute = False
 
     def clear_plate(self):
+
+        # user_preferences_hospital = [
+        #     "I want to start with a spoonful of mashed potatoes, then have a small bite of chicken breast, and finish with a taste of steamed carrots.",
+        #     "Alternate between bites of green beans and turkey slices, but make sure I get a spoonful of gravy-covered mashed potatoes every third bite.",
+        #     "Serve me all the soup first, followed by alternating bites of plain rice and baked fish, and end with a nibble of bread roll.",
+        #     "I like to mix bites of rice and steamed broccoli together, with a small slice of grilled chicken every fourth bite.",
+        #     "Give me alternating bites of oatmeal and scrambled eggs for the first half, then finish with a couple of bites of fruit salad."
+        # ]
+
+        # bite_preferences_hospital = [
+        #     "I want big spoonfuls of mashed potatoes, medium-sized bites of chicken, and very tiny bites of carrots.",
+        #     "I’d like my turkey sliced thin and in small pieces, green beans in moderate bites, and mashed potatoes served in generous scoops.",
+        #     "I prefer large chunks of baked fish, small bites of broccoli, and rice in medium spoonfuls.",
+        #     "Serve the soup in big hearty spoonfuls, but keep the bread roll in small bite-sized pieces.",
+        #     "I want small spoonfuls of oatmeal, large chunks of scrambled eggs, and fruit salad in tiny bites for a fresh finish."
+        # ]
+
+        # user_preferences_same_food = [
+        #     # "Start with a big bite of rice mixed with chicken, followed by two small bites of egg, and finish with a pinch of plain rice.",
+        #     "I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.",
+        #     "Serve me rice and egg together in the first few bites, then chicken in a standalone bite to reset my palate.",
+        #     "I want small bites of rice with egg until there’s only half the rice left, then finish the plate with chicken-only bites.",
+        #     "I like bites to alternate between chicken, rice, and egg in a clockwise rotation, but add an extra piece of chicken every fourth bite."
+        # ]
+
+        # bite_preferences_same_food = [
+        #     "I want medium-sized bites of chicken, very tiny bites of egg, and rice served in generous spoonfuls.",
+        #     "I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.",
+        #     "Serve rice in tiny portions, egg in medium-sized bites, and chicken in large chunks with crispy edges.",
+        #     "I prefer all my rice to be served in one big portion at the start, then small, even bites of chicken and egg for the rest.",
+        #     "I want each bite to be a mix of chicken, egg, and rice, but the chicken should dominate in size and flavor."
+        # ]
+
         # items = ['banana', 'chocolate sauce']
         # items = ['oatmeal', 'strawberry']
-        items = ['chicken', 'rice', 'egg']
+        # items = ['chicken', 'rice', 'egg']
         # items = ['red strawberry', 'chocolate sauce', 'ranch dressing', 'blue plate']
         # items = ['mashed potatoes']
         # items =  ['strawberry', 'ranch dressing', 'blue plate']
 
-        self.inference_server.FOOD_CLASSES = items
+        food_items = [
+            ["mashed potato", "turkey", "green bean"],
+            ["carrot", "chicken", "rice"],
+            ["soup", "bread", "salad"],
+            ["turkey", "stuffing", "cranberry sauce"],
+            ["rice", "broccoli", "grilled fish", "pudding"],
+            ["oatmeal", "scrambled eggs", "toast"],
+            ["soup", "chicken", "peas"],
+            ["bread roll", "mashed potato", "meatloaf"],
+            ["rice", "steamed vegetables", "baked fish"],
+            ["turkey", "gravy", "sweet potato", "mixed vegetables"]
+        ]
 
         user_preferences_hospital = [
-            "I want to start with a spoonful of mashed potatoes, then have a small bite of chicken breast, and finish with a taste of steamed carrots.",
-            "Alternate between bites of green beans and turkey slices, but make sure I get a spoonful of gravy-covered mashed potatoes every third bite.",
-            "Serve me all the soup first, followed by alternating bites of plain rice and baked fish, and end with a nibble of bread roll.",
-            "I like to mix bites of rice and steamed broccoli together, with a small slice of grilled chicken every fourth bite.",
-            "Give me alternating bites of oatmeal and scrambled eggs for the first half, then finish with a couple of bites of fruit salad."
+            "I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.",
+            "I like to alternate between bites of steamed carrots and grilled chicken, saving the rice for last.",
+            "I want to eat soup first, followed by bread, and end with small portions of salad.",
+            "Serve me alternating bites of turkey and stuffing, with a nibble of cranberry sauce occasionally.",
+            "I want to eat rice and steamed broccoli together, followed by grilled fish, and end with a taste of pudding.",
+            "I like to start with oatmeal, then move to scrambled eggs, and finish with a bite of toast.",
+            "I want a spoonful of soup first, then a small piece of chicken, and finally a few peas.",
+            "Serve me bread rolls first, then mashed potatoes, and end with a small slice of meatloaf.",
+            "I enjoy alternating between spoonfuls of rice and steamed vegetables, with an occasional bite of baked fish.",
+            "I want to eat turkey and gravy first, followed by sweet potatoes, and finish with a small portion of mixed vegetables."
         ]
 
         bite_preferences_hospital = [
-            "I want big spoonfuls of mashed potatoes, medium-sized bites of chicken, and very tiny bites of carrots.",
-            "I’d like my turkey sliced thin and in small pieces, green beans in moderate bites, and mashed potatoes served in generous scoops.",
-            "I prefer large chunks of baked fish, small bites of broccoli, and rice in medium spoonfuls.",
-            "Serve the soup in big hearty spoonfuls, but keep the bread roll in small bite-sized pieces.",
-            "I want small spoonfuls of oatmeal, large chunks of scrambled eggs, and fruit salad in tiny bites for a fresh finish."
+            "I want larger bites of meat and smaller bites of vegetables.",
+            "I’d like my soup served in hearty spoonfuls, bread in moderate pieces, and salad in small bites.",
+            "I prefer big chunks of turkey, medium-sized bites of stuffing, and very tiny portions of cranberry sauce.",
+            "Serve me mashed potatoes in generous portions, chicken in moderate bites, and peas in small spoonfuls.",
+            "I want big bites of rice, small bites of steamed broccoli, and moderate bites of grilled fish.",
+            "I like oatmeal in medium spoonfuls, scrambled eggs in larger portions, and toast in small, crisp pieces.",
+            "Serve soup in big, warm spoonfuls, chicken in moderate bites, and vegetables in small, manageable portions.",
+            "I’d like bread rolls served whole, mashed potatoes in large scoops, and meatloaf in thin slices.",
+            "I prefer rice in medium-sized servings, steamed vegetables in small portions, and baked fish in larger pieces.",
+            "I want sweet potatoes in generous servings, turkey in moderate portions, and mixed vegetables in smaller bites."
         ]
 
-        user_preferences_same_food = [
-            # "Start with a big bite of rice mixed with chicken, followed by two small bites of egg, and finish with a pinch of plain rice.",
-            "I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.",
-            "Serve me rice and egg together in the first few bites, then chicken in a standalone bite to reset my palate.",
-            "I want small bites of rice with egg until there’s only half the rice left, then finish the plate with chicken-only bites.",
-            "I like bites to alternate between chicken, rice, and egg in a clockwise rotation, but add an extra piece of chicken every fourth bite."
-        ]
 
-        bite_preferences_same_food = [
-            "I want medium-sized bites of chicken, very tiny bites of egg, and rice served in generous spoonfuls.",
-            "I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.",
-            "Serve rice in tiny portions, egg in medium-sized bites, and chicken in large chunks with crispy edges.",
-            "I prefer all my rice to be served in one big portion at the start, then small, even bites of chicken and egg for the rest.",
-            "I want each bite to be a mix of chicken, egg, and rice, but the chicken should dominate in size and flavor."
-        ]
 
         # user_preference = "I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally."
         # bite_preference = "I want bigger bites of meat but smaller bites of rice."
         
-        user_preference_idx = 1
-        user_preference = user_preferences_same_food[user_preference_idx-1]
-        bite_preference = bite_preferences_same_food[user_preference_idx]
+    
+        preference_idx = 0
+        user_preference = user_preferences_hospital[preference_idx]
+        bite_preference = bite_preferences_hospital[preference_idx]
+        self.items = [food_items[preference_idx]]
+
+        self.inference_server.FOOD_CLASSES = self.items
 
         bite_size = 0.0
 
@@ -135,7 +181,7 @@ class FeedingBot:
             new_user_preference = input("Do you want to update your preference? Otherwise input [n] or Enter to continue\n")
             if new_user_preference not in ['n', '']:
                 user_preference = new_user_preference
-            print(f"USER PREFERENCE: {user_preference}")
+            print(f"USER PREFERENCE: {user_preference}\n")
 
             new_bite_preference = input("Do you want to update your bite size? Otherwise input [n] or Enter to continue\n")
             if new_bite_preference not in ['n', '']:
@@ -146,9 +192,12 @@ class FeedingBot:
             self.log_count += 1
 
             # Hard coded for mujoco
-            item_labels = ["chicken 0.82", "rice 0.76", "egg 0.84"]
+            food_item_labels = [[f"{food} {random.uniform(0.5, 1.0):.2f}" for food in items] for items in self.items]
+            item_labels = food_item_labels[0]
+            # item_labels = ["chicken 0.82", "rice 0.76", "egg 0.84"]
             
-            clean_item_labels = ["chicken", "rice", "egg"]
+            clean_item_labels = self.items[0] # ["chicken", "rice", "egg"]
+            # print(f"Clean item labels: {clean_item_labels}")
 
             categories = self.inference_server.categorize_items(item_labels, sim=False) 
 
@@ -203,31 +252,35 @@ class FeedingBot:
             food_id = food[0]
             action_type = food[1]
             metadata = food[2]
+
+            if self.execute:
             
-            if action_type == 'Scoop':
-                scooping_point = metadata['scooping_point']
-                action = self.skill_library.scooping_skill_mujoco(keypoints = scooping_point, bite_size = bite_size)
+                if action_type == 'Scoop':
+                    scooping_point = metadata['scooping_point']
+                    action = self.skill_library.scooping_skill_mujoco(keypoints = scooping_point, bite_size = bite_size)
 
-            elif action_type == 'Push':
-                continue_food_label = labels_list[food_id]
-                start, end = metadata['start'], metadata['end']
-                input('Continue pushing skill?')
-                action = self.skill_library.pushing_skill_mujoco(keypoints = [start, end])
+                elif action_type == 'Push':
+                    continue_food_label = labels_list[food_id]
+                    start, end = metadata['start'], metadata['end']
+                    input('Continue pushing skill?')
+                    action = self.skill_library.pushing_skill_mujoco(keypoints = [start, end])
 
-            elif action_type == 'Cut':
-                continue_food_label = labels_list[food_id]
-                cut_point = metadata['point']
-                cut_angle = metadata['cut_angle']
-                action = self.skill_library.cutting_skill_mujoco(keypoint = cut_point, cutting_angle = cut_angle)            
+                elif action_type == 'Cut':
+                    continue_food_label = labels_list[food_id]
+                    cut_point = metadata['point']
+                    cut_angle = metadata['cut_angle']
+                    action = self.skill_library.cutting_skill_mujoco(keypoint = cut_point, cutting_angle = cut_angle)            
 
-            if action_type == 'Scoop': # Terminal actions
-                continue_food_label = None
-                bite_history.append((labels_list[food_id], bite_size))
+                if action_type == 'Scoop': # Terminal actions
+                    continue_food_label = None
+                    bite_history.append((labels_list[food_id], bite_size))
 
             for idx in range(len(clean_item_labels)):
                 if clean_item_labels[food_id] == clean_item_labels[idx]:
-                    self.item_portions[idx] -= 0.5
+                    # self.item_portions[idx] -= 0.5
+                    self.item_portions[idx] -= round(0.5 + (bite_size - -1.0) * (1.0 - 0.5) / (1.0 - -1.0), 2)
                     break
+            bite_history.append((labels_list[food_id], bite_size))
             
             if success:
                 actions_remaining -= 1

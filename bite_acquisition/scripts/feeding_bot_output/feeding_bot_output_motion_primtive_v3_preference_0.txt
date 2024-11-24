@@ -1,0 +1,797 @@
+pybullet build time: Nov 28 2023 23:51:11
+Loading demo trajectory from file:  data/scooping_bowl_left_new_tf_rotated.csv
+Skill library initialized
+Feeding Bot initialized
+
+--------------------
+Log count 1
+History []
+--------------------
+
+--------------------
+History []
+Actions remaining 10
+Current user preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Current bite preference: I want larger bites of meat and smaller bites of vegetables.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want larger bites of meat and smaller bites of vegetables.
+--------------------
+Labels: ['mashed potato 0.70', 'turkey 0.67', 'green bean 0.95']
+Categories: ['semisolid', 'meat/seafood', 'vegetable']
+Portions: [2.4, 2.8, 1.2]
+--------------------
+
+--------------------
+Bite History []
+Category List: ['semisolid', 'meat/seafood', 'vegetable']
+Labels List: ['mashed potato', 'turkey', 'green bean']
+Per Food Portions: [2.4, 2.8, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['semisolid', 'meat/seafood', 'vegetable']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['mashed potato', 'turkey', 'green bean']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [2, 3, 1]
+Preference:  I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Bite preference:  I want larger bites of meat and smaller bites of vegetables.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['mashed potato', 'turkey', 'green bean'] [2, 3, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.0
+==== HISTORY ===
+[]
+items: ['mashed potato', 'turkey', 'green bean']
+portions: [2, 3, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+bite_preference: I want larger bites of meat and smaller bites of vegetables.
+dips: 0.0
+history: []
+ RESPONSE:
+Food Items Left: There are 2 portions of mashed potato, 3 portions of turkey, and 1 portion of green bean left on the plate.
+Strategy: The strategy is to follow your preference by feeding you all the mashed potatoes first because you want to eat all the mashed potatoes first before moving on to the other items. Since you prefer larger bites of meat and smaller bites of vegetables, the turkey bites will be larger than the vegetable bites when we get to those.
+Next bite: Feed mashed potato
+Next bite (accounting for efficiency): Feed mashed potato, considering all options have the same efficiency of 1.
+Next bite as list: ['mashed potato']
+Next bite size: Choose a default bite size since there's no specific preference mentioned for varying the size of mashed potato bites.
+Next bite size as float: 0.0
+next_bites: ['mashed potato']
+bite_size: 0.0
+Next bite ['mashed potato']
+Next bite size: 0.0
+non_dip_labels ['mashed potato', 'turkey', 'green bean']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['mashed potato', 'turkey', 'green bean'] mashed potato
+food: (0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: 0.0
+--------------------
+food_id: 0 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('mashed potato', 0.0)]
+Actions remaining 9
+Current user preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Current bite preference: I want larger bites of meat and smaller bites of vegetables.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want larger bites of meat and smaller bites of vegetables.
+--------------------
+Labels: ['mashed potato 0.71', 'turkey 0.53', 'green bean 0.79']
+Categories: ['semisolid', 'meat/seafood', 'vegetable']
+Portions: [1.9, 2.8, 1.2]
+--------------------
+
+--------------------
+Bite History [('mashed potato', 0.0)]
+Category List: ['semisolid', 'meat/seafood', 'vegetable']
+Labels List: ['mashed potato', 'turkey', 'green bean']
+Per Food Portions: [1.9, 2.8, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['semisolid', 'meat/seafood', 'vegetable']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['mashed potato', 'turkey', 'green bean']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [2, 3, 1]
+Preference:  I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Bite preference:  I want larger bites of meat and smaller bites of vegetables.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['mashed potato', 'turkey', 'green bean'] [2, 3, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.0
+==== HISTORY ===
+[('mashed potato', 0.0)]
+items: ['mashed potato', 'turkey', 'green bean']
+portions: [2, 3, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+bite_preference: I want larger bites of meat and smaller bites of vegetables.
+dips: 0.0
+history: [('mashed potato', 0.0)]
+ RESPONSE:
+Food Items Left: There are 2 portions of mashed potatoes, 3 portions of turkey, and 1 portion of green beans left on the plate.
+Strategy: Since the preference is to finish all the mashed potatoes first, followed by a bite of turkey, and then finishing with some green beans, the strategy will be to comply fully with this requested order. Bigger bites of meat and smaller bites of vegetables will also be adhered to.
+Next bite: Feed mashed potato
+Next bite (accounting for efficiency): Feed mashed potato
+Next bite as list: ['mashed potato']
+Next bite size: Choose a default bite size for the mashed potatoes.
+Next bite size as float: 0.0
+next_bites: ['mashed potato']
+bite_size: 0.0
+Next bite ['mashed potato']
+Next bite size: 0.0
+non_dip_labels ['mashed potato', 'turkey', 'green bean']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['mashed potato', 'turkey', 'green bean'] mashed potato
+food: (0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: 0.0
+--------------------
+food_id: 0 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('mashed potato', 0.0), ('mashed potato', 0.0)]
+Actions remaining 8
+Current user preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Current bite preference: I want larger bites of meat and smaller bites of vegetables.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want larger bites of meat and smaller bites of vegetables.
+--------------------
+Labels: ['mashed potato 0.76', 'turkey 0.71', 'green bean 0.77']
+Categories: ['semisolid', 'meat/seafood', 'vegetable']
+Portions: [1.4, 2.8, 1.2]
+--------------------
+
+--------------------
+Bite History [('mashed potato', 0.0), ('mashed potato', 0.0)]
+Category List: ['semisolid', 'meat/seafood', 'vegetable']
+Labels List: ['mashed potato', 'turkey', 'green bean']
+Per Food Portions: [1.4, 2.8, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['semisolid', 'meat/seafood', 'vegetable']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['mashed potato', 'turkey', 'green bean']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [1, 3, 1]
+Preference:  I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Bite preference:  I want larger bites of meat and smaller bites of vegetables.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['mashed potato', 'turkey', 'green bean'] [1, 3, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.0
+==== HISTORY ===
+[('mashed potato', 0.0), ('mashed potato', 0.0)]
+items: ['mashed potato', 'turkey', 'green bean']
+portions: [1, 3, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+bite_preference: I want larger bites of meat and smaller bites of vegetables.
+dips: 0.0
+history: [('mashed potato', 0.0), ('mashed potato', 0.0)]
+ RESPONSE:
+Food Items Left: There remains 1 portion of mashed potato, 3 portions of turkey, and 1 portion of green beans on the plate.
+Strategy: Based on your preference, I will start by feeding you all of the mashed potato, follow with the turkey for larger bites due to your preference for larger bites of meat, and finish with the green beans. Since you prefer larger bites of meat and smaller bites of vegetables, I will adjust the bite sizes accordingly.
+Next bite: Feed mashed potato
+Next bite (accounting for efficiency): Feed mashed potato
+Next bite as list: ['mashed potato']
+Next bite size: A default bite size since there's no specific size preference mentioned other than meat being larger than vegetables.
+Next bite size as float: 0.0
+next_bites: ['mashed potato']
+bite_size: 0.0
+Next bite ['mashed potato']
+Next bite size: 0.0
+non_dip_labels ['mashed potato', 'turkey', 'green bean']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['mashed potato', 'turkey', 'green bean'] mashed potato
+food: (0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: 0.0
+--------------------
+food_id: 0 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0)]
+Actions remaining 7
+Current user preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Current bite preference: I want larger bites of meat and smaller bites of vegetables.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want larger bites of meat and smaller bites of vegetables.
+--------------------
+Labels: ['mashed potato 0.65', 'turkey 0.78', 'green bean 0.86']
+Categories: ['semisolid', 'meat/seafood', 'vegetable']
+Portions: [0.8999999999999999, 2.8, 1.2]
+--------------------
+
+--------------------
+Bite History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0)]
+Category List: ['semisolid', 'meat/seafood', 'vegetable']
+Labels List: ['mashed potato', 'turkey', 'green bean']
+Per Food Portions: [0.8999999999999999, 2.8, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['semisolid', 'meat/seafood', 'vegetable']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['mashed potato', 'turkey', 'green bean']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [1, 3, 1]
+Preference:  I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Bite preference:  I want larger bites of meat and smaller bites of vegetables.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['mashed potato', 'turkey', 'green bean'] [1, 3, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.0
+==== HISTORY ===
+[('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0)]
+items: ['mashed potato', 'turkey', 'green bean']
+portions: [1, 3, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+bite_preference: I want larger bites of meat and smaller bites of vegetables.
+dips: 0.0
+history: [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0)]
+ RESPONSE:
+Food Items Left: There are mashed potato, turkey, and green beans left on the plate, with portions corresponding to 1, 3, and 1 respectively.
+Strategy: Following the preference of eating all the mashed potatoes first, then having a bite of turkey, and finishing with some green beans, and considering the desire for larger bites of meat and smaller bites of vegetables, the plan is to feed mashed potatoes until they are finished, proceed with turkey in larger bites, and end with green beans in a smaller bite.
+Next bite: Feed mashed potato
+Next bite (accounting for efficiency): Feed mashed potato, considering all items have equal efficiency.
+Next bite as list: ['mashed potato']
+Next bite size: Since the preference dictates the order and not the size explicitly, but there was a mention of larger bites for meat and smaller for vegetables, a medium bite for the mashed potato seems appropriate to start with a default size.
+Next bite size as float: 0.0
+next_bites: ['mashed potato']
+bite_size: 0.0
+Next bite ['mashed potato']
+Next bite size: 0.0
+non_dip_labels ['mashed potato', 'turkey', 'green bean']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['mashed potato', 'turkey', 'green bean'] mashed potato
+food: (0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: 0.0
+--------------------
+food_id: 0 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0)]
+Actions remaining 6
+Current user preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Current bite preference: I want larger bites of meat and smaller bites of vegetables.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want larger bites of meat and smaller bites of vegetables.
+--------------------
+Labels: ['mashed potato 0.68', 'turkey 0.90', 'green bean 0.59']
+Categories: ['semisolid', 'meat/seafood', 'vegetable']
+Portions: [0.3999999999999999, 2.8, 1.2]
+--------------------
+
+--------------------
+Bite History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0)]
+Category List: ['semisolid', 'meat/seafood', 'vegetable']
+Labels List: ['mashed potato', 'turkey', 'green bean']
+Per Food Portions: [0.3999999999999999, 2.8, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['semisolid', 'meat/seafood', 'vegetable']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['mashed potato', 'turkey', 'green bean']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [0, 3, 1]
+Preference:  I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Bite preference:  I want larger bites of meat and smaller bites of vegetables.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['mashed potato', 'turkey', 'green bean'] [0, 3, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.0
+==== HISTORY ===
+[('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0)]
+items: ['mashed potato', 'turkey', 'green bean']
+portions: [0, 3, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+bite_preference: I want larger bites of meat and smaller bites of vegetables.
+dips: 0.0
+history: [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0)]
+ RESPONSE:
+Food Items Left: There are no mashed potatoes left, 3 portions of turkey, and 1 portion of green bean left on the plate.
+Strategy: According to your preference, I will feed you the turkey next since all the mashed potatoes are already consumed, followed by a bite of turkey, and finally, we will finish with the green beans. Given your preference for larger bites of meat and smaller bites of vegetables, I will adjust the bite size accordingly.
+Next bite: Turkey
+Next bite (accounting for efficiency): Turkey
+Next bite as list: ['turkey']
+Next bite size: Larger bite of turkey
+Next bite size as float: 0.75
+next_bites: ['turkey']
+bite_size: 0.75
+Next bite ['turkey']
+Next bite size: 0.75
+non_dip_labels ['mashed potato', 'turkey', 'green bean']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['mashed potato', 'turkey', 'green bean'] turkey
+food: (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: 0.75
+--------------------
+food_id: 1 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75)]
+Actions remaining 5
+Current user preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Current bite preference: I want larger bites of meat and smaller bites of vegetables.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want larger bites of meat and smaller bites of vegetables.
+--------------------
+Labels: ['mashed potato 0.67', 'turkey 0.87', 'green bean 0.88']
+Categories: ['semisolid', 'meat/seafood', 'vegetable']
+Portions: [0.3999999999999999, 2.3, 1.2]
+--------------------
+
+--------------------
+Bite History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75)]
+Category List: ['semisolid', 'meat/seafood', 'vegetable']
+Labels List: ['mashed potato', 'turkey', 'green bean']
+Per Food Portions: [0.3999999999999999, 2.3, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['semisolid', 'meat/seafood', 'vegetable']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['mashed potato', 'turkey', 'green bean']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [0, 2, 1]
+Preference:  I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Bite preference:  I want larger bites of meat and smaller bites of vegetables.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['mashed potato', 'turkey', 'green bean'] [0, 2, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.75
+==== HISTORY ===
+[('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75)]
+items: ['mashed potato', 'turkey', 'green bean']
+portions: [0, 2, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+bite_preference: I want larger bites of meat and smaller bites of vegetables.
+dips: 0.0
+history: [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75)]
+ RESPONSE:
+Food Items Left: There are mashed potatoes (0 portions left), turkey (2 portions left), and green beans (1 portion left) remaining on the plate.
+
+Strategy: Given your preference to finish all the mashed potatoes first (which is already done), followed by having a bite of turkey, and then finishing with some green beans, the next step aligns with serving you turkey. Since you prefer larger bites of meat, the next bite should be a sizable portion of turkey, respecting your order and bite size preference.
+
+Next bite: Feed turkey
+
+Next bite (accounting for efficiency): Feed turkey
+
+Next bite as list: ['turkey']
+
+Next bite size: Choose a larger bite size for turkey
+
+Next bite size as float: 0.75
+next_bites: ['turkey']
+bite_size: 0.75
+Next bite ['turkey']
+Next bite size: 0.75
+non_dip_labels ['mashed potato', 'turkey', 'green bean']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['mashed potato', 'turkey', 'green bean'] turkey
+food: (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: 0.75
+--------------------
+food_id: 1 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75)]
+Actions remaining 4
+Current user preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Current bite preference: I want larger bites of meat and smaller bites of vegetables.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want larger bites of meat and smaller bites of vegetables.
+--------------------
+Labels: ['mashed potato 0.78', 'turkey 0.72', 'green bean 0.52']
+Categories: ['semisolid', 'meat/seafood', 'vegetable']
+Portions: [0.3999999999999999, 1.7999999999999998, 1.2]
+--------------------
+
+--------------------
+Bite History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75)]
+Category List: ['semisolid', 'meat/seafood', 'vegetable']
+Labels List: ['mashed potato', 'turkey', 'green bean']
+Per Food Portions: [0.3999999999999999, 1.7999999999999998, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['semisolid', 'meat/seafood', 'vegetable']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['mashed potato', 'turkey', 'green bean']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [0, 2, 1]
+Preference:  I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Bite preference:  I want larger bites of meat and smaller bites of vegetables.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['mashed potato', 'turkey', 'green bean'] [0, 2, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.75
+==== HISTORY ===
+[('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75)]
+items: ['mashed potato', 'turkey', 'green bean']
+portions: [0, 2, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+bite_preference: I want larger bites of meat and smaller bites of vegetables.
+dips: 0.0
+history: [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75)]
+ RESPONSE:
+Food Items Left: There are portions of turkey and green bean left on the plate, with 2 portions of turkey and 1 portion of green bean remaining. Mashed potato is fully consumed.  
+Strategy: Following the preference to eat all of one food before moving onto the next where practical and considering the given bite preference for larger bites of meat and smaller bites of vegetables, the plan is to feed turkey next as it aligns with the order of preference and past bite sizes indicate a preference for larger bites of turkey. After turkey is consumed, green beans will be served.  
+Next bite: Feed turkey  
+Next bite (accounting for efficiency): Feed turkey  
+Next bite as list: ['turkey']  
+Next bite size: A large bite, similar to past preferences for turkey  
+Next bite size as float: 0.75
+next_bites: ['turkey']
+bite_size: 0.75
+Next bite ['turkey']
+Next bite size: 0.75
+non_dip_labels ['mashed potato', 'turkey', 'green bean']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['mashed potato', 'turkey', 'green bean'] turkey
+food: (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: 0.75
+--------------------
+food_id: 1 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75)]
+Actions remaining 3
+Current user preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Current bite preference: I want larger bites of meat and smaller bites of vegetables.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want larger bites of meat and smaller bites of vegetables.
+--------------------
+Labels: ['mashed potato 0.65', 'turkey 0.56', 'green bean 0.76']
+Categories: ['semisolid', 'meat/seafood', 'vegetable']
+Portions: [0.3999999999999999, 1.2999999999999998, 1.2]
+--------------------
+
+--------------------
+Bite History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75)]
+Category List: ['semisolid', 'meat/seafood', 'vegetable']
+Labels List: ['mashed potato', 'turkey', 'green bean']
+Per Food Portions: [0.3999999999999999, 1.2999999999999998, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['semisolid', 'meat/seafood', 'vegetable']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['mashed potato', 'turkey', 'green bean']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [0, 1, 1]
+Preference:  I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Bite preference:  I want larger bites of meat and smaller bites of vegetables.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['mashed potato', 'turkey', 'green bean'] [0, 1, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.75
+==== HISTORY ===
+[('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75)]
+items: ['mashed potato', 'turkey', 'green bean']
+portions: [0, 1, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+bite_preference: I want larger bites of meat and smaller bites of vegetables.
+dips: 0.0
+history: [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75)]
+ RESPONSE:
+Food Items Left: There are no mashed potatoes left, one portion of turkey, and one portion of green beans remaining on the plate.
+Strategy: My strategy is to follow your preference order by giving you the turkey next since mashed potatoes are finished, and then finishing with the green beans. Since you prefer larger bites of meat and smaller bites of vegetables, I will adjust the bite sizes accordingly.
+Next bite: Feed turkey
+Next bite (accounting for efficiency): Feed turkey
+Next bite as list: ['turkey']
+Next bite size: A larger bite of turkey
+Next bite size as float: 0.75
+next_bites: ['turkey']
+bite_size: 0.75
+Next bite ['turkey']
+Next bite size: 0.75
+non_dip_labels ['mashed potato', 'turkey', 'green bean']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['mashed potato', 'turkey', 'green bean'] turkey
+food: (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: 0.75
+--------------------
+food_id: 1 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75)]
+Actions remaining 2
+Current user preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Current bite preference: I want larger bites of meat and smaller bites of vegetables.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want larger bites of meat and smaller bites of vegetables.
+--------------------
+Labels: ['mashed potato 0.69', 'turkey 0.76', 'green bean 0.88']
+Categories: ['semisolid', 'meat/seafood', 'vegetable']
+Portions: [0.3999999999999999, 0.7999999999999998, 1.2]
+--------------------
+
+--------------------
+Bite History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75)]
+Category List: ['semisolid', 'meat/seafood', 'vegetable']
+Labels List: ['mashed potato', 'turkey', 'green bean']
+Per Food Portions: [0.3999999999999999, 0.7999999999999998, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['semisolid', 'meat/seafood', 'vegetable']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['mashed potato', 'turkey', 'green bean']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [0, 1, 1]
+Preference:  I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Bite preference:  I want larger bites of meat and smaller bites of vegetables.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['mashed potato', 'turkey', 'green bean'] [0, 1, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.75
+==== HISTORY ===
+[('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75)]
+items: ['mashed potato', 'turkey', 'green bean']
+portions: [0, 1, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+bite_preference: I want larger bites of meat and smaller bites of vegetables.
+dips: 0.0
+history: [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75)]
+ RESPONSE:
+Food Items Left: Mashed potato is no longer available, turkey and green bean are left with one portion each.
+Strategy: Considering the preference for larger meat bites and smaller vegetable bites, and respecting the order of eating all mashed potato (already consumed), then turkey, and finishing with green beans, my approach is to feed turkey next.
+Next bite: Feed turkey
+Next bite (accounting for efficiency): Since efficiency is the same for all remaining items, there is no change in my decision to feed turkey next.
+Next bite as list: ['turkey']
+Next bite size: A larger bite, similar to the last turkey bites which were 0.75
+Next bite size as float: 0.75
+next_bites: ['turkey']
+bite_size: 0.75
+Next bite ['turkey']
+Next bite size: 0.75
+non_dip_labels ['mashed potato', 'turkey', 'green bean']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['mashed potato', 'turkey', 'green bean'] turkey
+food: (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: 0.75
+--------------------
+food_id: 1 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75)]
+Actions remaining 1
+Current user preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Current bite preference: I want larger bites of meat and smaller bites of vegetables.
+Ready?
+--------------------
+
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+USER PREFERENCE: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+BITE PREFERENCE: I want larger bites of meat and smaller bites of vegetables.
+--------------------
+Labels: ['mashed potato 0.52', 'turkey 0.86', 'green bean 0.98']
+Categories: ['semisolid', 'meat/seafood', 'vegetable']
+Portions: [0.3999999999999999, 0.2999999999999998, 1.2]
+--------------------
+
+--------------------
+Bite History [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75)]
+Category List: ['semisolid', 'meat/seafood', 'vegetable']
+Labels List: ['mashed potato', 'turkey', 'green bean']
+Per Food Portions: [0.3999999999999999, 0.2999999999999998, 1.2]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['semisolid', 'meat/seafood', 'vegetable']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['mashed potato', 'turkey', 'green bean']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [0, 0, 1]
+Preference:  I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+Bite preference:  I want larger bites of meat and smaller bites of vegetables.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['mashed potato', 'turkey', 'green bean'] [0, 0, 1]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== BITE SIZE ===
+0.75
+==== HISTORY ===
+[('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75)]
+items: ['mashed potato', 'turkey', 'green bean']
+portions: [0, 0, 1]
+efficiencies: [1, 1, 1]
+preference: I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.
+bite_preference: I want larger bites of meat and smaller bites of vegetables.
+dips: 0.0
+history: [('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('mashed potato', 0.0), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75), ('turkey', 0.75)]
+ RESPONSE:
+Food Items Left: There is one portion of green beans left on the plate.
+Strategy: Since the preferences indicate a desire to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans, and considering all mashed potato and turkey portions are consumed, the next and final bite should be green beans.
+Next bite: Feed green beans.
+Next bite (accounting for efficiency): Feed green beans.
+Next bite as list: ['green bean']
+Next bite size: Opt for a smaller bite, aligning with the preference for larger bites of meat and smaller bites of vegetables.
+Next bite size as float: 0.0
+next_bites: ['green bean']
+bite_size: 0.0
+Next bite ['green bean']
+Next bite size: 0.0
+non_dip_labels ['mashed potato', 'turkey', 'green bean']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['mashed potato', 'turkey', 'green bean'] green bean
+food: (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: 0.0
+--------------------
+food_id: 2 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?
