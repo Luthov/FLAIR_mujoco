@@ -143,15 +143,15 @@ class PreferencePlanner:
         distance_to_mouth = ast.literal_eval(feeding_parameters[4].split('Next distance to mouth as float:')[1].strip())
         entry_angle = ast.literal_eval(feeding_parameters[6].split('Next entry angle as float:')[1].strip())
         exit_angle = ast.literal_eval(feeding_parameters[8].split('Next exit angle as float:')[1].strip())
-        print(f"next_bites: {next_bites} (type: {type(next_bites)})")
-        print(f"bite_size: {bite_size} (type: {type(bite_size)})")
-        print(f"distance_to_mouth: {distance_to_mouth} (type: {type(distance_to_mouth)})")
-        print(f"entry_angle: {entry_angle} (type: {type(entry_angle)})")
-        print(f"exit_angle: {exit_angle} (type: {type(exit_angle)})")
+        # print(f"next_bites: {next_bites} (type: {type(next_bites)})")
+        # print(f"bite_size: {bite_size} (type: {type(bite_size)})")
+        # print(f"distance_to_mouth: {distance_to_mouth} (type: {type(distance_to_mouth)})")
+        # print(f"entry_angle: {entry_angle} (type: {type(entry_angle)})")
+        # print(f"exit_angle: {exit_angle} (type: {type(exit_angle)})")
         
         # print(f"next_bites: {(next_bites)}\nbite_size: {(bite_size)}")
         
-        return next_bites, bite_size, response
+        return next_bites, bite_size, distance_to_mouth, entry_angle, exit_angle, response
 
     def interactive_test(self, mode):
         items = ast.literal_eval(input('Enter a list of items: '))

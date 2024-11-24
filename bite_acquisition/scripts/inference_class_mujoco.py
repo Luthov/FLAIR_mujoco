@@ -1204,7 +1204,7 @@ class BiteAcquisitionInference:
             if k == 'n':
                 return None, None
 
-            next_bite, bite_size, response = self.preference_planner.plan_motion_primitives(
+            next_bite, bite_size, distance_to_mouth, entry_angle, exit_angle, response = self.preference_planner.plan_motion_primitives(
                 non_dip_labels, 
                 non_dip_portions_rounded, 
                 efficiency_scores, 
@@ -1223,6 +1223,6 @@ class BiteAcquisitionInference:
         if len(next_bite) == 1 and next_bite[0] in labels:
             print(non_dip_labels, next_bite[0])
             idx = non_dip_labels.index(next_bite[0])
-            return next_actions[idx], bite_size
+            return next_actions[idx], bite_size, distance_to_mouth, entry_angle, exit_angle
         else: 
             return None, None
