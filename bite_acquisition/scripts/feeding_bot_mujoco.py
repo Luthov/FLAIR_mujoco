@@ -48,7 +48,7 @@ class FeedingBot:
         # self.log_count should be the maximum numbered file in the log folder + 1
         self.log_count = max([int(x.split('_')[0]) for x in files]) + 1 if len(files) > 0 else 1
 
-        self.item_portions = [2.4, 2.8, 1.2]
+        self.item_portions = [5.0, 5.0, 5.0]
         
         mouth_pose = np.array([0.70, 0.0, 0.545])
 
@@ -60,45 +60,6 @@ class FeedingBot:
         self.execute = False
 
     def clear_plate(self):
-
-        # user_preferences_hospital = [
-        #     "I want to start with a spoonful of mashed potatoes, then have a small bite of chicken breast, and finish with a taste of steamed carrots.",
-        #     "Alternate between bites of green beans and turkey slices, but make sure I get a spoonful of gravy-covered mashed potatoes every third bite.",
-        #     "Serve me all the soup first, followed by alternating bites of plain rice and baked fish, and end with a nibble of bread roll.",
-        #     "I like to mix bites of rice and steamed broccoli together, with a small slice of grilled chicken every fourth bite.",
-        #     "Give me alternating bites of oatmeal and scrambled eggs for the first half, then finish with a couple of bites of fruit salad."
-        # ]
-
-        # bite_preferences_hospital = [
-        #     "I want big spoonfuls of mashed potatoes, medium-sized bites of chicken, and very tiny bites of carrots.",
-        #     "I’d like my turkey sliced thin and in small pieces, green beans in moderate bites, and mashed potatoes served in generous scoops.",
-        #     "I prefer large chunks of baked fish, small bites of broccoli, and rice in medium spoonfuls.",
-        #     "Serve the soup in big hearty spoonfuls, but keep the bread roll in small bite-sized pieces.",
-        #     "I want small spoonfuls of oatmeal, large chunks of scrambled eggs, and fruit salad in tiny bites for a fresh finish."
-        # ]
-
-        # user_preferences_same_food = [
-        #     # "Start with a big bite of rice mixed with chicken, followed by two small bites of egg, and finish with a pinch of plain rice.",
-        #     "I want to eat alternating bites of egg and rice for a while, then switch to just chicken until the plate is almost empty.",
-        #     "Serve me rice and egg together in the first few bites, then chicken in a standalone bite to reset my palate.",
-        #     "I want small bites of rice with egg until there’s only half the rice left, then finish the plate with chicken-only bites.",
-        #     "I like bites to alternate between chicken, rice, and egg in a clockwise rotation, but add an extra piece of chicken every fourth bite."
-        # ]
-
-        # bite_preferences_same_food = [
-        #     "I want medium-sized bites of chicken, very tiny bites of egg, and rice served in generous spoonfuls.",
-        #     "I’d like my chicken in large, hearty chunks, egg in delicate slivers, and rice in bite-sized scoops.",
-        #     "Serve rice in tiny portions, egg in medium-sized bites, and chicken in large chunks with crispy edges.",
-        #     "I prefer all my rice to be served in one big portion at the start, then small, even bites of chicken and egg for the rest.",
-        #     "I want each bite to be a mix of chicken, egg, and rice, but the chicken should dominate in size and flavor."
-        # ]
-
-        # items = ['banana', 'chocolate sauce']
-        # items = ['oatmeal', 'strawberry']
-        # items = ['chicken', 'rice', 'egg']
-        # items = ['red strawberry', 'chocolate sauce', 'ranch dressing', 'blue plate']
-        # items = ['mashed potatoes']
-        # items =  ['strawberry', 'ranch dressing', 'blue plate']
 
         food_items = [
             ["mashed potato", "turkey", "green bean"],
@@ -115,7 +76,7 @@ class FeedingBot:
 
         user_preferences_hospital = [
             "I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.",
-            "I like to alternate between bites of steamed carrots and grilled chicken, saving the rice for last.",
+            "I like to alternate between bites of rice and grilled chicken, saving the carrots for last.",
             "I want to eat soup first, followed by bread, and end with small portions of salad.",
             "Serve me alternating bites of turkey and stuffing, with a nibble of cranberry sauce occasionally.",
             "I want to eat rice and steamed broccoli together, followed by grilled fish, and end with a taste of pudding.",
@@ -128,7 +89,7 @@ class FeedingBot:
 
         bite_preferences_hospital = [
             "I want larger bites of meat and smaller bites of vegetables.",
-            "I’d like my soup served in hearty spoonfuls, bread in moderate pieces, and salad in small bites.",
+            "I want larger bites of meat and smaller bites of vegetables.",
             "I prefer big chunks of turkey, medium-sized bites of stuffing, and very tiny portions of cranberry sauce.",
             "Serve me mashed potatoes in generous portions, chicken in moderate bites, and peas in small spoonfuls.",
             "I want big bites of rice, small bites of steamed broccoli, and moderate bites of grilled fish.",
@@ -143,10 +104,12 @@ class FeedingBot:
         # bite_preference = "I want bigger bites of meat but smaller bites of rice."
         
     
-        preference_idx = 0
+        preference_idx = 1
         user_preference = user_preferences_hospital[preference_idx]
         bite_preference = bite_preferences_hospital[preference_idx]
-        transfer_preference = "Please start further from my mouth"
+        # transfer_preference = "Tilt the spoon a little higher as it exits my mouth"
+        distance_to_mouth_preference = "Keep the spoon closer to my mouth when feeding me rice"
+        exit_angle_preference = "Tilt the spoon a little higher when feeding me rice"
         self.items = [food_items[preference_idx]]
 
         self.inference_server.FOOD_CLASSES = self.items
@@ -174,26 +137,37 @@ class FeedingBot:
             print('Actions remaining', actions_remaining)
             print('Current user preference:', user_preference)
             print('Current bite preference:', bite_preference)
+            print('Current distance to mouth preference:', distance_to_mouth_preference)
+            print('Current exit angle preference:', exit_angle_preference)
             ready = input('Ready?\n')
             if ready == 'n':
                 exit(1)
             print("--------------------\n")
 
             # Get user preferences
+            print(f"CURRENT USER PREFERENCE: {user_preference}")
             new_user_preference = input("Do you want to update your preference? Otherwise input [n] or Enter to continue\n")
             if new_user_preference not in ['n', '']:
                 user_preference = new_user_preference
-            print(f"USER PREFERENCE: {user_preference}\n")
+                print(f"NEW USER PREFERENCE: {user_preference}\n")
 
+            print(f"CURRENT BITE PREFERENCE: {bite_preference}")
             new_bite_preference = input("Do you want to update your bite size? Otherwise input [n] or Enter to continue\n")
             if new_bite_preference not in ['n', '']:
                 bite_preference = new_bite_preference
-            print(f"BITE PREFERENCE: {bite_preference}")
-
-            new_transfer_preference = input("Do you want to update your transfer preference? Otherwise input [n] or Enter to continue\n")
-            if new_transfer_preference not in ['n', '']:
-                transfer_preference = new_transfer_preference
-            print(f"TRANSFER PREFERENCE: {transfer_preference}")
+                print(f"NEW BITE PREFERENCE: {bite_preference}\n")
+            
+            print(f"CURRENT DISTANCE TO MOUTH PREFERENCE: {distance_to_mouth_preference}")
+            new_distance_to_mouth_preference = input("Do you want to update your distance to mouth preference? Otherwise input [n] or Enter to continue\n")
+            if new_distance_to_mouth_preference not in ['n', '']:
+                distance_to_mouth_preference = new_distance_to_mouth_preference
+                print(f"NEW DISTANCE TO MOUTH PREFERENCE: {distance_to_mouth_preference}\n")
+                
+            print(f"CURRENT EXIT ANGLE PREFERENCE: {exit_angle_preference}")
+            new_exit_angle_preference = input("Do you want to update your exit angle preference? Otherwise input [n] or Enter to continue\n")
+            if new_exit_angle_preference not in ['n', '']:
+                exit_angle_preference = new_exit_angle_preference
+                print(f"NEW EXIT ANGLE PREFERENCE: {exit_angle_preference}\n")
                 
             log_path = self.log_file + str(self.log_count)
             self.log_count += 1
@@ -235,13 +209,14 @@ class FeedingBot:
             print("--------------------\n")
             
             
-            food, bite_size, distance_to_mouth, entry_angle, exit_angle = self.inference_server.get_autonomous_action(
+            food, bite_size, distance_to_mouth, exit_angle = self.inference_server.get_autonomous_action(
                 category_list, 
                 labels_list, 
                 per_food_portions, 
                 user_preference, 
                 bite_preference, 
-                transfer_preference,
+                distance_to_mouth_preference,
+                exit_angle_preference,
                 bite_size, 
                 bite_history, 
                 continue_food_label, 
@@ -251,7 +226,13 @@ class FeedingBot:
             if food is None:
                 exit(1)
             
-            print(f"food: {food}\nbite_size: {bite_size}")
+            print("\n--------------------")
+            print(f"food: {food}")
+            print(f"bite: {labels_list[food[0]]}")
+            print(f"bite_size: {bite_size}")
+            print(f"distance_to_mouth: {distance_to_mouth}")
+            print(f"entry_angle: {exit_angle}")
+            print("--------------------\n")
                 
             print("--------------------")
             print(f"food_id: {food[0]} \naction_type: {food[1]} \nmetadata: {food[2]}")
@@ -285,10 +266,10 @@ class FeedingBot:
 
             for idx in range(len(clean_item_labels)):
                 if clean_item_labels[food_id] == clean_item_labels[idx]:
-                    # self.item_portions[idx] -= 0.5
-                    self.item_portions[idx] -= round(0.5 + (bite_size - -1.0) * (1.0 - 0.5) / (1.0 - -1.0), 2)
+                    self.item_portions[idx] -= 0.2
+                    # self.item_portions[idx] -= round(0.5 + (bite_size - -1.0) * (1.0 - 0.5) / (1.0 - -1.0), 2)
                     break
-            bite_history.append((labels_list[food_id], bite_size, distance_to_mouth, entry_angle, exit_angle))
+            bite_history.append((labels_list[food_id], bite_size, distance_to_mouth, exit_angle))
             
             if success:
                 actions_remaining -= 1

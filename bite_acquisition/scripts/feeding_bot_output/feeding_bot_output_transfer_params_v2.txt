@@ -1,0 +1,185 @@
+pybullet build time: Nov 28 2023 23:51:11
+Loading demo trajectory from file:  data/scooping_bowl_left_new_tf_rotated.csv
+Skill library initialized
+Feeding Bot initialized
+
+--------------------
+Log count 1
+History []
+--------------------
+
+--------------------
+History []
+Actions remaining 10
+Current user preference: I like to alternate between bites of rice and grilled chicken, saving the carrots for last.
+Current bite preference: I want larger bites of meat and smaller bites of vegetables.
+Current transfer preference: Tilt the spoon a little higher when feeding me rice as well as keep the spoon closer to my mouth
+Ready?
+--------------------
+
+CURRENT USER PREFERENCE: I like to alternate between bites of rice and grilled chicken, saving the carrots for last.
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+CURRENT BITE PREFERENCE: I want larger bites of meat and smaller bites of vegetables.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+CURRENT TRANSFER PREFERENCE: Tilt the spoon a little higher when feeding me rice as well as keep the spoon closer to my mouth
+Do you want to update your transfer preference? Otherwise input [n] or Enter to continue
+--------------------
+Labels: ['carrot 0.80', 'chicken 0.97', 'rice 0.60']
+Categories: ['vegetable', 'meat/seafood', 'semisolid']
+Portions: [5.0, 5.0, 5.0]
+--------------------
+
+--------------------
+Bite History []
+Category List: ['vegetable', 'meat/seafood', 'semisolid']
+Labels List: ['carrot', 'chicken', 'rice']
+Per Food Portions: [5.0, 5.0, 5.0]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['vegetable', 'meat/seafood', 'semisolid']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['carrot', 'chicken', 'rice']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [5, 5, 5]
+Preference:  I like to alternate between bites of rice and grilled chicken, saving the carrots for last.
+Bite preference:  I want larger bites of meat and smaller bites of vegetables.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['carrot', 'chicken', 'rice'] [5, 5, 5]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== PREFERENCES ===
+user preference: I like to alternate between bites of rice and grilled chicken, saving the carrots for last.
+bite preference: I want larger bites of meat and smaller bites of vegetables.
+transfer preference: Tilt the spoon a little higher when feeding me rice as well as keep the spoon closer to my mouth
+==== BITE SIZE ===
+0.0
+==== HISTORY ===
+[]
+RESPONSE:
+Food Items Left: There are 5 portions of carrot, chicken, and rice left on the plate, making it well-balanced in terms of variety.
+Strategy: Given the preference for alternating between bites of rice and grilled chicken and saving carrots for last, the strategy will involve feeding rice and chicken in an alternating sequence first, respecting the preference for larger bites of meat and smaller bites of vegetables.
+Next bite: Feed chicken
+Next bite (accounting for efficiency): Feed chicken, as all items have the same efficiency.
+Next bite as list: ['chicken']
+Next bite size: Opting for a larger bite of chicken due to the preference for larger meat bites.
+Next bite size as float: 0.5
+Next distance to mouth: Opting for the default value since there's no specific distance preference mentioned other than keeping the spoon closer for rice.
+Next distance to mouth as float: 7.5
+Next exit angle: Slightly higher angle for rice, but since the next bite is chicken, we'll use the default value.
+Next exit angle as float: 90.0
+Next bite ['chicken']
+Next bite size: 0.5
+non_dip_labels ['carrot', 'chicken', 'rice']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['carrot', 'chicken', 'rice'] chicken
+IDX: 1
+
+--------------------
+food: (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: 0.5
+distance_to_mouth: 7.5
+entry_angle: 90.0
+--------------------
+
+--------------------
+food_id: 1 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?--------------------
+History [('chicken', 0.5, 7.5, 90.0)]
+Actions remaining 9
+Current user preference: I like to alternate between bites of rice and grilled chicken, saving the carrots for last.
+Current bite preference: I want larger bites of meat and smaller bites of vegetables.
+Current transfer preference: Tilt the spoon a little higher when feeding me rice as well as keep the spoon closer to my mouth
+Ready?
+--------------------
+
+CURRENT USER PREFERENCE: I like to alternate between bites of rice and grilled chicken, saving the carrots for last.
+Do you want to update your preference? Otherwise input [n] or Enter to continue
+CURRENT BITE PREFERENCE: I want larger bites of meat and smaller bites of vegetables.
+Do you want to update your bite size? Otherwise input [n] or Enter to continue
+CURRENT TRANSFER PREFERENCE: Tilt the spoon a little higher when feeding me rice as well as keep the spoon closer to my mouth
+Do you want to update your transfer preference? Otherwise input [n] or Enter to continue
+--------------------
+Labels: ['carrot 0.73', 'chicken 0.85', 'rice 1.00']
+Categories: ['vegetable', 'meat/seafood', 'semisolid']
+Portions: [5.0, 4.12, 5.0]
+--------------------
+
+--------------------
+Bite History [('chicken', 0.5, 7.5, 90.0)]
+Category List: ['vegetable', 'meat/seafood', 'semisolid']
+Labels List: ['carrot', 'chicken', 'rice']
+Per Food Portions: [5.0, 4.12, 5.0]
+--------------------
+
+Food to consider:  range(0, 3)
+catgories: ['vegetable', 'meat/seafood', 'semisolid']
+
+Length of next actions:  3
+Candidate actions:  [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+Efficiency scores before reciprocal:  [1, 1, 1]
+Non dip labels:  ['carrot', 'chicken', 'rice']
+Efficiency scores:  [1, 1, 1]
+Bite portions:  [5, 4, 5]
+Preference:  I like to alternate between bites of rice and grilled chicken, saving the carrots for last.
+Bite preference:  I want larger bites of meat and smaller bites of vegetables.
+Press [n] to exit or otherwise I will query bite sequencing planner...
+
+==== ITEMS / PORTIONS REMAINING ===
+['carrot', 'chicken', 'rice'] [5, 4, 5]
+====
+==== SUMMARIZED EFFICIENCIES ===
+[1, 1, 1]
+==== PREFERENCES ===
+user preference: I like to alternate between bites of rice and grilled chicken, saving the carrots for last.
+bite preference: I want larger bites of meat and smaller bites of vegetables.
+transfer preference: Tilt the spoon a little higher when feeding me rice as well as keep the spoon closer to my mouth
+==== BITE SIZE ===
+0.5
+==== HISTORY ===
+[('chicken', 0.5, 7.5, 90.0)]
+RESPONSE:
+Food Items Left: There are 5 portions of carrot, 4 portions of chicken, and 5 portions of rice remaining on the plate.
+
+Strategy: Considering your preferences, the strategy is to alternate between bites of rice and grilled chicken, incorporating larger bites of chicken than rice, and saving the carrots for last. The ordering of foods will respect your eating preferences and the efficiency aspect will be considered by maintaining equal portion distribution.
+
+Next bite: Feed rice.
+Next bite (accounting for efficiency): Feed rice.
+Next bite as list: ['rice']
+Next bite size: Smaller bite of rice, following the preference for larger bites of meat and smaller bites of vegetables.
+Next bite size as float: 0.0
+Next distance to mouth: Tilt the spoon a little higher and keep it closer, following the preference for feeding rice.
+Next distance to mouth as float: 6.5
+Next exit angle: Keep the exit angle the same to ensure comfortable feeding.
+Next exit angle as float: 90.0
+Next bite ['rice']
+Next bite size: 0.0
+non_dip_labels ['carrot', 'chicken', 'rice']
+Next actions [(0, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (1, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]}), (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})]
+['carrot', 'chicken', 'rice'] rice
+IDX: 2
+
+--------------------
+food: (2, 'Scoop', {'scooping_point': [0.4, 0.25, 0.075]})
+bite_size: 0.0
+distance_to_mouth: 6.5
+entry_angle: 90.0
+--------------------
+
+--------------------
+food_id: 2 
+action_type: Scoop 
+metadata: {'scooping_point': [0.4, 0.25, 0.075]}
+--------------------
+
+Exit?

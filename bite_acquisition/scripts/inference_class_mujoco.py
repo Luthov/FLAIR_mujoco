@@ -1136,7 +1136,7 @@ class BiteAcquisitionInference:
                 max_occluding_mask = mask
         return max_occluding_mask.astype(np.uint8)
 
-    def get_autonomous_action(self, categories, labels, portions, preference, bite_preference, transfer_preference, bite_size, history, continue_food_label = None, log_path = None):
+    def get_autonomous_action(self, categories, labels, portions, preference, bite_preference, distance_to_mouth_preference, exit_angle_preference, bite_size, history, continue_food_label = None, log_path = None):
 
         if continue_food_label is not None:
             food_to_consider = [i for i in range(len(labels)) if labels[i] == continue_food_label]
@@ -1204,13 +1204,14 @@ class BiteAcquisitionInference:
             if k == 'n':
                 return None, None
 
-            next_bite, bite_size, distance_to_mouth, entry_angle, exit_angle, response = self.preference_planner.plan_motion_primitives(
+            next_bite, bite_size, distance_to_mouth, entry_angle, response = self.preference_planner.plan_motion_primitives(
                 non_dip_labels, 
                 non_dip_portions_rounded, 
                 efficiency_scores, 
                 preference, 
                 bite_preference, 
-                transfer_preference,
+                distance_to_mouth_preference,
+                exit_angle_preference,
                 bite_size, 
                 history, 
                 mode=self.mode)
@@ -1223,6 +1224,7 @@ class BiteAcquisitionInference:
         if len(next_bite) == 1 and next_bite[0] in labels:
             print(non_dip_labels, next_bite[0])
             idx = non_dip_labels.index(next_bite[0])
-            return next_actions[idx], bite_size, distance_to_mouth, entry_angle, exit_angle
+            print(f"IDX: {idx}")
+            return next_actions[idx], bite_size, distance_to_mouth, entry_angle
         else: 
             return None, None
