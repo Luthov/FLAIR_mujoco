@@ -76,6 +76,18 @@ class PreferencePlanner:
         next_bites = ast.literal_eval(response.split('Next bite as list:')[1].strip())
 
         return next_bites, response
+    
+    def parse_preferences(self, preference):
+
+        with open('prompts/preference_parser.txt', 'r') as f:
+            prompt = f.read()
+
+        prompt = prompt%(preference)
+
+        print(f"USER PREFERENCE: {preference}")
+
+        response = self.gpt_interface.chat_with_openai(prompt)
+        print(f"RESPONSE:\n{response}")
 
     def plan_motion_primitives(self, items, portions, efficiencies, preference, bite_preference, distance_to_mouth_preference, exit_angle_preference, bite_size, history, mode='ours'):
 

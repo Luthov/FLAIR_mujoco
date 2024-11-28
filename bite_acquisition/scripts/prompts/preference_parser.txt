@@ -1,0 +1,17 @@
+You are parsing a sentence which describes a user's preference for two possible things in a robot assisted feeding pipeline. 1) A preference on the bite sequence the user prefers. 2) A preference on the bite transfer portion of the feeding process.
+User preference: %s
+---
+Given this preference, you will decide whether the user is giving a preference for the bite sequencing or the bite transfer portion of the feeding process. 
+The bite sequencing preference includes the order that a user wants to eat their food in as well as the amount of food they want to have in each bite. For example, "I want to eat alternating bites of rice and grilled chicken, saving the carrots for last." denotes a preference for bite sequence and "I want larger bites of meat and smaller bites of vegetables." describes a preference for bite sizing. These two combined into one user preference will look like "I want to eat alternating bites of rice and grilled chicken, saving the carrots for last. Feed me larger bites of meat and smaller bites of vegetables"
+The bite transfer preference includes how far the user wants the spoon from their mouth and the angle of tilt they prefer when the spoon is exiting their mouth. An example of a preference for the distance of the spoon to the user's mouth is "Keep the spoon closer to my mouth when feeding me rice but further when feeding me chicken." and an example for the angle of tilt is "Tilt the spoon a little higher when feeding me rice". These two combined into one user preference would look like "Keep the spoon closer to my mouth and tilt the spoon a little higher when feeding me rice but keep the spoon further when feeding me meat.
+These two preferences combined would be something like "I want to eat alternating bites of rice and grilled chicken, saving the carrots for last. I want larger bites of meat and smaller bites of vegetables. I also prefer to have the spoon closer to my mouth and tilted a little higher when feeding me rice but for meat I want the spoon to be kept further."
+
+Now, I want you to read the user preference to decide whether it contains a bite sequence preference, bite transfer preference or both.
+Then, I want you to extract the preferences you detect and output them into two separate preference sentences.
+Format your response as follows, be concise but thorough:
+Bite sequence preference: <Sentence describing the bite sequence preference based on the original user preference>
+Bite sequence reason: <Sentence describing why you think the sentence you chose it the bite sequence preference>
+Bite transfer preference: <Sentence describing the bite transfer preference based on the original user preference>
+Bite transfer reason: <Sentence describing why you think the sentence you chose it the bite transfer preference>
+---
+Output your response here. Ensure that the last line begins with "Bite transfer preference: "
