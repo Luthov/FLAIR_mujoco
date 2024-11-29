@@ -38,6 +38,28 @@ class PreferencePlanner:
     def __init__(self):
         self.gpt_interface = GPTInterface()
 
+    def parse_preferences(self, preference):
+
+        with open('prompts/preference_parser.txt', 'r') as f:
+            prompt = f.read()
+
+        prompt = prompt%(preference)
+
+        print(f"USER PREFERENCE: {preference}")
+
+        response = self.gpt_interface.chat_with_openai(prompt)
+        print(f"RESPONSE:\n{response}")
+        intermediate_response = response.split('Bite sequence preference:')[1].strip()
+        preferences = intermediate_response.split('\n')
+        print(f"INTERMEDIATE PREFERENCES: {preferences}")
+        bite_preference = preferences[0]
+        transfer_preference = preferences[2].split('Bite transfer preference: ')[1].strip()
+
+        print(f"BITE PREFERENCE: {bite_preference}")
+        print(f"TRANSFER PREFERENCE: {transfer_preference}")
+        
+        return bite_preference, transfer_preference
+        
     def plan(self, items, portions, efficiencies, preference, history, mode='ours'):
 
         dips = 0.0
@@ -76,18 +98,10 @@ class PreferencePlanner:
         next_bites = ast.literal_eval(response.split('Next bite as list:')[1].strip())
 
         return next_bites, response
-    
-    def parse_preferences(self, preference):
 
-        with open('prompts/preference_parser.txt', 'r') as f:
-            prompt = f.read()
+    def plan_motion_primitives(self, items, portions, efficiencies, preference, bite_preference, distance_to_mouth_preference, exit_angle_preference, bite_size, history, mode='ours'):
 
-        prompt = prompt%(preference)
-
-        print(f"USER PREFERENCE: {preference}")
-
-        response = self.gpt_interface.chat_with_openai(prompt)
-        print(f"RESPONSE:\n{response}")
+            self.parse_preferences(preference)
 
     def plan_motion_primitives(self, items, portions, efficiencies, preference, bite_preference, distance_to_mouth_preference, exit_angle_preference, bite_size, history, mode='ours'):
 
