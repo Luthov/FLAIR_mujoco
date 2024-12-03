@@ -209,15 +209,25 @@ class FeedingBot:
             print("--------------------\n")
             
             
+            # food, bite_size, distance_to_mouth, exit_angle = self.inference_server.get_autonomous_action(
+            #     category_list, 
+            #     labels_list, 
+            #     per_food_portions, 
+            #     user_preference, 
+            #     bite_preference, 
+            #     distance_to_mouth_preference,
+            #     exit_angle_preference,
+            #     bite_size, 
+            #     bite_history, 
+            #     continue_food_label, 
+            #     log_path
+            #     )
+
             food, bite_size, distance_to_mouth, exit_angle = self.inference_server.get_autonomous_action(
                 category_list, 
                 labels_list, 
                 per_food_portions, 
                 user_preference, 
-                bite_preference, 
-                distance_to_mouth_preference,
-                exit_angle_preference,
-                bite_size, 
                 bite_history, 
                 continue_food_label, 
                 log_path
@@ -269,7 +279,7 @@ class FeedingBot:
                     self.item_portions[idx] -= 0.2
                     # self.item_portions[idx] -= round(0.5 + (bite_size - -1.0) * (1.0 - 0.5) / (1.0 - -1.0), 2)
                     break
-            bite_history.append((labels_list[food_id], bite_size, distance_to_mouth, exit_angle))
+            bite_history.append([labels_list[food_id], bite_size, distance_to_mouth, exit_angle])
             
             if success:
                 actions_remaining -= 1

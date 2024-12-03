@@ -1,4 +1,4 @@
-import cv2
+# import cv2
 import time
 import numpy as np
 import math
@@ -48,10 +48,10 @@ class PreferencePlanner:
         print(f"USER PREFERENCE: {preference}")
 
         response = self.gpt_interface.chat_with_openai(prompt)
-        print(f"RESPONSE:\n{response}")
+        print(f"PREFERENCE_PARSER_RESPONSE:\n{response}")
         intermediate_response = response.split('Bite sequence preference:')[1].strip()
         preferences = intermediate_response.split('\n')
-        print(f"INTERMEDIATE PREFERENCES: {preferences}")
+        # print(f"INTERMEDIATE PREFERENCES: {preferences}")
         bite_preference = preferences[0]
         transfer_preference = preferences[2].split('Bite transfer preference: ')[1].strip()
 
@@ -99,9 +99,38 @@ class PreferencePlanner:
 
         return next_bites, response
 
-    def plan_motion_primitives(self, items, portions, efficiencies, preference, bite_preference, distance_to_mouth_preference, exit_angle_preference, bite_size, history, mode='ours'):
+    def plan_motion_and_transfer_primitives(self, items, portions, efficiencies, preference, history):
 
-            self.parse_preferences(preference)
+        # Extracting bite preference and transfer preference
+        bite_preference, transfer_preference = self.parse_preferences(preference)
+
+        # Extracting bite sequencing history and transfer parameters history
+        bite_sequencing_history = [item[:2] for item in history]
+        transfer_param_history = [item[2:] for item in history]
+
+        # Reading prompts
+        with open('prompts/motion_primitive_v4.txt', 'r') as f:
+            bite_sequencing_prompt = f.read()
+
+        # with open('prompts/transfer_params.txt', 'r') as f:
+        #     transfer_params_prompt = f.read()
+
+        portions_sentence = str(portions)
+        efficiency_sentence = str(efficiencies)
+        print('==== ITEMS / PORTIONS REMAINING ===')
+        print(f"{items} / {portions_sentence}")
+        print('==== PREFERENCES ===')
+        print(f"user preference: {preference}")
+        print(f"bite_preference: {bite_preference}")
+        print(f"transfer_preference: {transfer_preference}")
+        print('==== HISTORY ===')
+        print(history)
+        
+        bite_sequencing_prompt = bite_sequencing_prompt%(str(items), portions_sentence, efficiency_sentence, bite_preference, str(bite_sequencing_history))
+
+        bite_sequencing_response = self.gpt_interface.chat_with_openai(bite_sequencing_prompt).strip()
+
+        print(f"RESPONSE:\n{bite_sequencing_response}")
 
     def plan_motion_primitives(self, items, portions, efficiencies, preference, bite_preference, distance_to_mouth_preference, exit_angle_preference, bite_size, history, mode='ours'):
 
