@@ -48,15 +48,16 @@ class PreferencePlanner:
         print(f"USER PREFERENCE: {preference}")
 
         response = self.gpt_interface.chat_with_openai(prompt)
-        print(f"PREFERENCE_PARSER_RESPONSE:\n{response}")
+        print(f"=== PREFERENCE_PARSER_RESPONSE ===")
+        print(response)
         intermediate_response = response.split('Bite sequence preference:')[1].strip()
         preferences = intermediate_response.split('\n')
         # print(f"INTERMEDIATE PREFERENCES: {preferences}")
         bite_preference = preferences[0]
         transfer_preference = preferences[2].split('Bite transfer preference: ')[1].strip()
 
-        print(f"BITE PREFERENCE: {bite_preference}")
-        print(f"TRANSFER PREFERENCE: {transfer_preference}")
+        # print(f"BITE PREFERENCE: {bite_preference}")
+        # print(f"TRANSFER PREFERENCE: {transfer_preference}")
         
         return bite_preference, transfer_preference
         
@@ -106,31 +107,52 @@ class PreferencePlanner:
 
         # Extracting bite sequencing history and transfer parameters history
         bite_sequencing_history = [item[:2] for item in history]
-        transfer_param_history = [item[2:] for item in history]
+        transfer_param_history = [[item[0]] + item[2:] for item in history]
 
         # Reading prompts
         with open('prompts/motion_primitive_v4.txt', 'r') as f:
             bite_sequencing_prompt = f.read()
 
-        # with open('prompts/transfer_params.txt', 'r') as f:
-        #     transfer_params_prompt = f.read()
+        with open('prompts/transfer_param.txt', 'r') as f:
+            transfer_params_prompt = f.read()
 
         portions_sentence = str(portions)
         efficiency_sentence = str(efficiencies)
-        print('==== ITEMS / PORTIONS REMAINING ===')
+        print('\n==== ITEMS / PORTIONS REMAINING ===')
         print(f"{items} / {portions_sentence}")
         print('==== PREFERENCES ===')
-        print(f"user preference: {preference}")
-        print(f"bite_preference: {bite_preference}")
-        print(f"transfer_preference: {transfer_preference}")
+        print(f"USER PREFERENCE: {preference}")
+        print(f"BITE PREFERENCE: {bite_preference}")
+        print(f"TRANSFER PREFERENCE: {transfer_preference}")
         print('==== HISTORY ===')
         print(history)
         
         bite_sequencing_prompt = bite_sequencing_prompt%(str(items), portions_sentence, efficiency_sentence, bite_preference, str(bite_sequencing_history))
 
         bite_sequencing_response = self.gpt_interface.chat_with_openai(bite_sequencing_prompt).strip()
+        print("\n=== BITE SEQUENCING RESPONSE ===")
+        print(f"BITE PREFERENCE:, {bite_preference}\n")
+        print(bite_sequencing_response)
+        bite_response = bite_sequencing_response.split('Next bite as list:')[1].strip()
+        bite_parameters = bite_response.split('\n')
+        next_bite = ast.literal_eval(bite_parameters[0])
+        bite_size = ast.literal_eval(bite_parameters[2].split('Next bite size as float:')[1].strip())
 
-        print(f"RESPONSE:\n{bite_sequencing_response}")
+        transfer_params_prompt = transfer_params_prompt%(transfer_preference, next_bite[0], str(transfer_param_history))
+        transfer_parameter_response = self.gpt_interface.chat_with_openai(transfer_params_prompt).strip()
+        print("\n=== TRANSFER PARAMS RESPONSE ===")
+        print(f"TRANSFER PREFERENCE: {transfer_preference}\n")
+        print(transfer_parameter_response)
+        transfer_response = transfer_parameter_response.split('Next distance to mouth as float:')[1].strip()
+        transfer_parameters = transfer_response.split('\n')
+        distance_to_mouth = ast.literal_eval(transfer_parameters[0])
+        exit_angle = ast.literal_eval(transfer_parameters[2].split('Next exit angle as float:')[1].strip())
+
+        print("\n=== PARAMETERS ===")
+        print("NEXT BITE:", next_bite)
+        print("BITE SIZE:", bite_size)
+        print("DISTANCE TO MOUTH:", distance_to_mouth)
+        print("EXIT ANGLE:", exit_angle)
 
     def plan_motion_primitives(self, items, portions, efficiencies, preference, bite_preference, distance_to_mouth_preference, exit_angle_preference, bite_size, history, mode='ours'):
 

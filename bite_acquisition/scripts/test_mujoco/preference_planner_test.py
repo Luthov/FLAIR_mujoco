@@ -12,7 +12,7 @@ planner = PreferencePlanner()
 user_preferences = [
     # "I want to start with a generous serving of mashed potatoes, then move on to turkey slices, and finish with fresh green beans. Serve mashed potatoes in hearty portions, turkey in moderate bites, and green beans in smaller sizes. Keep the spoon close for mashed potatoes and tilt it gently upward when offering turkey."
 
-    "I prefer alternating bites of rice and grilled chicken, saving the steamed carrots for the end. Provide smaller bites of carrots, larger pieces of chicken, and medium scoops of rice. Hold the spoon slightly farther away for carrots and tilt it downward for chicken."
+    "I prefer alternating bites of rice and grilled chicken, saving the steamed carrots for the end. Provide smaller bites of carrots, larger pieces of chicken, and medium scoops of rice. Hold the spoon slightly farther away for rice and tilt it downward for chicken."
 
     # "I’d like to begin with warm soup, then enjoy some soft bread, and finish with a small helping of salad. Offer the soup in large spoonfuls, bread in moderate pieces, and salad in delicate portions. Position the spoon at a medium range for soup and tilt it higher for salad.",
 
@@ -33,7 +33,12 @@ user_preferences = [
 items = ['carrot', 'chicken', 'rice']
 efficiency_scores =  [1, 1, 1]
 bite_portions = [5, 5, 5]
-history = [['rice', 0.0, 7.0, 95.0], ['chicken', 0.5, 7.5, 90.0], ['rice', 0.0, 7.0, 95.0]]
+# history = [['rice', 0.0, 7.0, 95.0], ['chicken', 0.5, 7.5, 85.0]]
+history = [['chicken', 0.5, 7.5, 85.0]]
+
+# test = [[item[0]] + item[2:] for item in history]
+
+# print(test)
 
 planner.plan_motion_and_transfer_primitives(items, bite_portions, efficiency_scores, user_preferences[0], history)
 
