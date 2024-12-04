@@ -1141,10 +1141,6 @@ class BiteAcquisitionInference:
                               labels, 
                               portions, 
                               preference, 
-                              bite_preference, 
-                              distance_to_mouth_preference, 
-                              exit_angle_preference, 
-                              bite_size, 
                               history, 
                               continue_food_label = None, 
                               log_path = None):
@@ -1209,21 +1205,16 @@ class BiteAcquisitionInference:
             print('Efficiency scores: ', efficiency_scores)
             print('Bite portions: ', non_dip_portions_rounded)
             print('Preference: ', preference)
-            print('Bite preference: ', bite_preference)
 
             k = input("Press [n] to exit or otherwise I will query bite sequencing planner...\n\n")
             if k == 'n':
                 return None, None
 
-            next_bite, bite_size, distance_to_mouth, entry_angle, response = self.preference_planner.plan_motion_primitives(
+            next_bite, bite_size, distance_to_mouth, entry_angle, token_data = self.preference_planner.plan_no_decomposer(
                 non_dip_labels, 
                 non_dip_portions_rounded, 
                 efficiency_scores, 
                 preference, 
-                bite_preference, 
-                distance_to_mouth_preference,
-                exit_angle_preference,
-                bite_size, 
                 history, 
                 mode=self.mode)
         
@@ -1236,11 +1227,11 @@ class BiteAcquisitionInference:
             print(non_dip_labels, next_bite[0])
             idx = non_dip_labels.index(next_bite[0])
             print(f"IDX: {idx}")
-            return next_actions[idx], bite_size, distance_to_mouth, entry_angle
+            return next_actions[idx], bite_size, distance_to_mouth, entry_angle, token_data
         else: 
             return None, None
         
-    def get_autonomous_action_test(self, 
+    def get_autonomous_action_decomposer(self, 
                               categories, 
                               labels, 
                               portions, 
@@ -1313,7 +1304,7 @@ class BiteAcquisitionInference:
             if k == 'n':
                 return None, None
 
-            next_bite, bite_size, distance_to_mouth, exit_angle, token_data = self.preference_planner.plan_motion_and_transfer_primitives(
+            next_bite, bite_size, distance_to_mouth, exit_angle, token_data = self.preference_planner.plan_decomposer(
                 non_dip_labels, 
                 non_dip_portions_rounded, 
                 efficiency_scores, 

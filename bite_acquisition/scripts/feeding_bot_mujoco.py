@@ -60,6 +60,9 @@ class FeedingBot:
         self.execute = False
         self.preference_interrupt = False
 
+        # Choose to use decomposer or not
+        self.decompose = False
+
     def clear_plate(self):
 
         food_items = [
@@ -74,6 +77,7 @@ class FeedingBot:
             ["rice", "steamed vegetables", "baked fish"],
             ["turkey", "gravy", "sweet potato", "mixed vegetables"]
         ]
+
         user_preferences = [
             "I want to start with a generous serving of mashed potatoes, then move on to turkey slices, and finish with fresh green beans. Serve mashed potatoes in hearty portions, turkey in moderate bites, and green beans in smaller sizes. Keep the spoon close for mashed potatoes and tilt it gently upward when offering turkey.",
 
@@ -165,10 +169,8 @@ class FeedingBot:
             # Hard coded for mujoco
             food_item_labels = [[f"{food} {random.uniform(0.5, 1.0):.2f}" for food in items] for items in self.items]
             item_labels = food_item_labels[0]
-            # item_labels = ["chicken 0.82", "rice 0.76", "egg 0.84"]
             
-            clean_item_labels = self.items[0] # ["chicken", "rice", "egg"]
-            # print(f"Clean item labels: {clean_item_labels}")
+            clean_item_labels = self.items[0] 
 
             categories = self.inference_server.categorize_items(item_labels, sim=False) 
 
@@ -198,22 +200,18 @@ class FeedingBot:
             print("Per Food Portions:", per_food_portions)
             print("--------------------\n")
             
-            
-            # food, bite_size, distance_to_mouth, exit_angle = self.inference_server.get_autonomous_action(
-            #     category_list, 
-            #     labels_list, 
-            #     per_food_portions, 
-            #     user_preference, 
-            #     bite_preference, 
-            #     distance_to_mouth_preference,
-            #     exit_angle_preference,
-            #     bite_size, 
-            #     bite_history, 
-            #     continue_food_label, 
-            #     log_path
-            #     )
-
-            food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action_test(
+            if self.decompose:
+                food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action_decomposer(
+                    category_list, 
+                    labels_list, 
+                    per_food_portions, 
+                    user_preference, 
+                    bite_history, 
+                    continue_food_label, 
+                    log_path
+                    )
+            else:
+                food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action(
                 category_list, 
                 labels_list, 
                 per_food_portions, 
@@ -269,6 +267,7 @@ class FeedingBot:
                     self.item_portions[idx] -= 0.2
                     # self.item_portions[idx] -= round(0.5 + (bite_size - -1.0) * (1.0 - 0.5) / (1.0 - -1.0), 2)
                     break
+            
             bite_history.append([labels_list[food_id], bite_size, distance_to_mouth, exit_angle])
             token_history.append(token_data)
             if success:
