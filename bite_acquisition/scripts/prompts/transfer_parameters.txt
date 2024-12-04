@@ -2,7 +2,8 @@ You are feeding me a spoonfull of food.
 Preference: %s
 Next bite: %s
 ---
-Given this information, you will decide what parameters to change in the bite transfer process. There are 2 parameters which you can modify 1) distance of the spoon to the patient's mouth (distance_to_mouth) and 2) the angle of tile of the spoon as it is exiting the patient's mouth (exit_angle). For the distance_to_mouth parameter you may ONLY suggest a number from 5.0 to 10.0, taking 7.5 as the DEFAULT value, for example, if the value for distance to mouth is lesser than 7.5 it means the spoon is closer to the mouth. For the exit_angle parameter you may ONLY suggest a number from 80.0 to 120.0 with 90.0 as the DEFAULT, the larger the value the higher the tilt, for example, if exit angle is less than 90.0 it means that the spoon is tilted lower than the default value. These 2 parameters are completely SEPARATE parameters.
+Given this information, you will decide what parameters to change in the bite transfer process. There are 2 parameters which you can modify: 
+1) distance of the spoon to the patient's mouth (distance_to_mouth) and 2) the angle of tilt of the spoon as it is exiting the patient's mouth (exit_angle). For the distance_to_mouth parameter you may ONLY suggest a number from 5.0 to 10.0, taking 7.5 as the DEFAULT value, for example, if the value for distance to mouth is lesser than 7.5 it means the spoon is closer to the mouth. For the exit_angle parameter you may ONLY suggest a number from 80.0 to 120.0 with 90.0 as the DEFAULT, the larger the value the higher the tilt, for example, if exit angle is less than 90.0 it means that the spoon is tilted lower than the default value. These 2 parameters are completely SEPARATE parameters.
 1) First, summarize and decompose what the preference is asking for.
 2) Next, summarize your high-level reasoning behind the values you plan to choose for these 2 parameters.
     Decision Criteria:

@@ -32,7 +32,15 @@ class GPTInterface:
                   )
         # print(response)
         chatbot_response = response.choices[0].message.content
-        return chatbot_response.strip()
+
+        chatbot_usage = response.usage
+        # [completion_tokens, prompt_tokens, total_tokens]
+        tokens = [chatbot_usage.completion_tokens, chatbot_usage.prompt_tokens, chatbot_usage.total_tokens]
+
+        print(f"=== TOKENS ===")
+        print(tokens)
+
+        return chatbot_response.strip(), tokens
 
 class PreferencePlanner:
     def __init__(self):
@@ -44,8 +52,6 @@ class PreferencePlanner:
 
     def parse_preferences(self, preference):
 
-
-
         with open('prompts/' + self.decomposer_prompt_file, 'r') as f:
             prompt = f.read()
 
@@ -53,7 +59,7 @@ class PreferencePlanner:
 
         print(f"USER PREFERENCE: {preference}")
 
-        response = self.gpt_interface.chat_with_openai(prompt)
+        response, decomposer_tokens = self.gpt_interface.chat_with_openai(prompt)
         print(f"=== PREFERENCE_PARSER_RESPONSE ===")
         print(response)
         intermediate_response = response.split('Bite sequence preference:')[1].strip()
@@ -61,11 +67,8 @@ class PreferencePlanner:
         # print(f"INTERMEDIATE PREFERENCES: {preferences}")
         bite_preference = preferences[0]
         transfer_preference = preferences[2].split('Bite transfer preference: ')[1].strip()
-
-        # print(f"BITE PREFERENCE: {bite_preference}")
-        # print(f"TRANSFER PREFERENCE: {transfer_preference}")
         
-        return bite_preference, transfer_preference
+        return bite_preference, transfer_preference, decomposer_tokens
         
     def plan(self, items, portions, efficiencies, preference, history, mode='ours'):
 
@@ -109,13 +112,12 @@ class PreferencePlanner:
     def plan_motion_and_transfer_primitives(self, items, portions, efficiencies, preference, history):
 
         # Extracting bite preference and transfer preference
-        bite_preference, transfer_preference = self.parse_preferences(preference)
+        bite_preference, transfer_preference, decomposer_tokens = self.parse_preferences(preference)
 
         # Extracting bite sequencing history and transfer parameters history
         bite_sequencing_history = [item[:2] for item in history]
         transfer_param_history = [[item[0]] + item[2:] for item in history]
 
-        
         # Reading prompts
         with open('prompts/' + self.bite_sequencing_prompt_file, 'r') as f:
             bite_sequencing_prompt = f.read()
@@ -136,7 +138,8 @@ class PreferencePlanner:
         
         bite_sequencing_prompt = bite_sequencing_prompt%(str(items), portions_sentence, efficiency_sentence, bite_preference, str(bite_sequencing_history))
 
-        bite_sequencing_response = self.gpt_interface.chat_with_openai(bite_sequencing_prompt).strip()
+        bite_sequencing_response, bite_sequencing_tokens = self.gpt_interface.chat_with_openai(bite_sequencing_prompt)
+        bite_sequencing_response = bite_sequencing_response.strip()
         print("\n=== BITE SEQUENCING RESPONSE ===")
         print(f"BITE PREFERENCE:, {bite_preference}\n")
         print(bite_sequencing_response)
@@ -146,7 +149,8 @@ class PreferencePlanner:
         bite_size = ast.literal_eval(bite_parameters[2].split('Next bite size as float:')[1].strip())
 
         transfer_params_prompt = transfer_params_prompt%(transfer_preference, next_bite[0], str(transfer_param_history))
-        transfer_parameter_response = self.gpt_interface.chat_with_openai(transfer_params_prompt).strip()
+        transfer_parameter_response, transfer_param_tokens = self.gpt_interface.chat_with_openai(transfer_params_prompt)
+        transfer_parameter_response = transfer_parameter_response.strip()
         print("\n=== TRANSFER PARAMS RESPONSE ===")
         print(f"TRANSFER PREFERENCE: {transfer_preference}\n")
         print(transfer_parameter_response)
@@ -161,7 +165,16 @@ class PreferencePlanner:
         print("DISTANCE TO MOUTH:", distance_to_mouth)
         print("EXIT ANGLE:", exit_angle)
 
-        return next_bite, bite_size, distance_to_mouth, exit_angle
+        # Arranging tokens
+        token_usage = {}
+        token_usage['decomposer_tokens'] = decomposer_tokens
+        token_usage['bite_sequencing_tokens'] = bite_sequencing_tokens
+        token_usage['transfer_param_tokens'] = transfer_param_tokens
+
+        print("\n=== TOKENS ===")
+        print(token_usage)
+
+        return next_bite, bite_size, distance_to_mouth, exit_angle, token_usage
 
     def plan_motion_primitives(self, items, portions, efficiencies, preference, bite_preference, distance_to_mouth_preference, exit_angle_preference, bite_size, history, mode='ours'):
 

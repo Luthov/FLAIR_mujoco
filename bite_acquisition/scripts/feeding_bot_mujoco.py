@@ -94,43 +94,10 @@ class FeedingBot:
             "I enjoy alternating between spoonfuls of rice and steamed vegetables, with the occasional bite of baked fish. Provide rice and vegetables in smaller portions and baked fish in larger, tender pieces. Hold the spoon close for fish and angle it slightly downward for vegetables.",
             
             "I’d like to start with turkey and gravy, followed by creamy sweet potatoes, and finish with a light portion of mixed vegetables. Serve turkey in large portions, sweet potatoes in moderate servings, and mixed vegetables in small bites. Position the spoon at a medium range for sweet potatoes and tilt it gently upward for vegetables."
-        ]
-        # user_preferences_hospital = [
-        #     "I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.",
-        #     "I like to alternate between bites of rice and grilled chicken, saving the carrots for last.",
-        #     "I want to eat soup first, followed by bread, and end with small portions of salad.",
-        #     "Serve me alternating bites of turkey and stuffing, with a nibble of cranberry sauce occasionally.",
-        #     "I want to eat rice and steamed broccoli together, followed by grilled fish, and end with a taste of pudding.",
-        #     "I like to start with oatmeal, then move to scrambled eggs, and finish with a bite of toast.",
-        #     "I want a spoonful of soup first, then a small piece of chicken, and finally a few peas.",
-        #     "Serve me bread rolls first, then mashed potatoes, and end with a small slice of meatloaf.",
-        #     "I enjoy alternating between spoonfuls of rice and steamed vegetables, with an occasional bite of baked fish.",
-        #     "I want to eat turkey and gravy first, followed by sweet potatoes, and finish with a small portion of mixed vegetables."
-        # ]
-
-        # bite_preferences_hospital = [
-        #     "I want larger bites of meat and smaller bites of vegetables.",
-        #     "I want larger bites of meat and smaller bites of vegetables.",
-        #     "I prefer big chunks of turkey, medium-sized bites of stuffing, and very tiny portions of cranberry sauce.",
-        #     "Serve me mashed potatoes in generous portions, chicken in moderate bites, and peas in small spoonfuls.",
-        #     "I want big bites of rice, small bites of steamed broccoli, and moderate bites of grilled fish.",
-        #     "I like oatmeal in medium spoonfuls, scrambled eggs in larger portions, and toast in small, crisp pieces.",
-        #     "Serve soup in big, warm spoonfuls, chicken in moderate bites, and vegetables in small, manageable portions.",
-        #     "I’d like bread rolls served whole, mashed potatoes in large scoops, and meatloaf in thin slices.",
-        #     "I prefer rice in medium-sized servings, steamed vegetables in small portions, and baked fish in larger pieces.",
-        #     "I want sweet potatoes in generous servings, turkey in moderate portions, and mixed vegetables in smaller bites."
-        # ]
-
-        # user_preference = "I want to eat alternating bites of chicken and rice most of the time but I would like to eat some egg occasionally."
-        # bite_preference = "I want bigger bites of meat but smaller bites of rice."
-        
+        ]  
     
         preference_idx = 1
         user_preference = user_preferences[preference_idx]
-        # bite_preference = bite_preferences_hospital[preference_idx]
-        # transfer_preference = "Tilt the spoon a little higher as it exits my mouth"
-        # distance_to_mouth_preference = "Keep the spoon closer to my mouth when feeding me rice"
-        # exit_angle_preference = "Tilt the spoon a little higher when feeding me rice"
         self.items = [food_items[preference_idx]]
 
         self.inference_server.FOOD_CLASSES = self.items
@@ -142,6 +109,9 @@ class FeedingBot:
 
         # Bite history
         bite_history = self.bite_history
+
+        # Token history
+        token_history = []
 
         # Continue food
         continue_food_label = None
@@ -155,11 +125,9 @@ class FeedingBot:
 
             print("--------------------")
             print('History', bite_history)
+            print('Token History', token_history)
             print('Actions remaining', actions_remaining)
             print('Current user preference:', user_preference)
-            print('Current bite preference:', bite_preference)
-            print('Current distance to mouth preference:', distance_to_mouth_preference)
-            print('Current exit angle preference:', exit_angle_preference)
             ready = input('Ready?\n')
             if ready == 'n':
                 exit(1)
@@ -245,7 +213,7 @@ class FeedingBot:
             #     log_path
             #     )
 
-            food, bite_size, distance_to_mouth, exit_angle = self.inference_server.get_autonomous_action_test(
+            food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action_test(
                 category_list, 
                 labels_list, 
                 per_food_portions, 
@@ -302,12 +270,15 @@ class FeedingBot:
                     # self.item_portions[idx] -= round(0.5 + (bite_size - -1.0) * (1.0 - 0.5) / (1.0 - -1.0), 2)
                     break
             bite_history.append([labels_list[food_id], bite_size, distance_to_mouth, exit_angle])
-            
+            token_history.append(token_data)
             if success:
                 actions_remaining -= 1
 
             with open('history.txt', 'w') as f:
                 f.write(str(bite_history))
+
+            with open('token_history.txt', 'w') as f:
+                f.write(str(token_history))
 
             k = input('Exit?')
             if k == 'y':
