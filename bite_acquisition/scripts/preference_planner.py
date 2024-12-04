@@ -38,9 +38,15 @@ class PreferencePlanner:
     def __init__(self):
         self.gpt_interface = GPTInterface()
 
+        self.decomposer_prompt_file = 'preference_decomposer.txt'
+        self.bite_sequencing_prompt_file = 'bite_sequencing.txt'
+        self.transfer_parameter_prompt_file = 'transfer_parameters.txt'
+
     def parse_preferences(self, preference):
 
-        with open('prompts/preference_parser.txt', 'r') as f:
+
+
+        with open('prompts/' + self.decomposer_prompt_file, 'r') as f:
             prompt = f.read()
 
         prompt = prompt%(preference)
@@ -109,11 +115,12 @@ class PreferencePlanner:
         bite_sequencing_history = [item[:2] for item in history]
         transfer_param_history = [[item[0]] + item[2:] for item in history]
 
+        
         # Reading prompts
-        with open('prompts/motion_primitive_v4.txt', 'r') as f:
+        with open('prompts/' + self.bite_sequencing_prompt_file, 'r') as f:
             bite_sequencing_prompt = f.read()
 
-        with open('prompts/transfer_param.txt', 'r') as f:
+        with open('prompts/' + self.transfer_parameter_prompt_file, 'r') as f:
             transfer_params_prompt = f.read()
 
         portions_sentence = str(portions)
@@ -153,6 +160,8 @@ class PreferencePlanner:
         print("BITE SIZE:", bite_size)
         print("DISTANCE TO MOUTH:", distance_to_mouth)
         print("EXIT ANGLE:", exit_angle)
+
+        return next_bite, bite_size, distance_to_mouth, exit_angle
 
     def plan_motion_primitives(self, items, portions, efficiencies, preference, bite_preference, distance_to_mouth_preference, exit_angle_preference, bite_size, history, mode='ours'):
 

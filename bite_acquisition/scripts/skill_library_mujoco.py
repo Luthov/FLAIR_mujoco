@@ -1,5 +1,5 @@
 import time
-import cv2
+# import cv2
 import numpy as np
 from scipy.spatial.transform import Rotation
 import math
@@ -31,7 +31,7 @@ from robot_controller.mujoco_action_controller import MujocoRobotController
 # Scooping primitive using DMP
 from feeding_mujoco.planners.scooping_dmp import ScoopingDMPPlanner
 from feeding_mujoco.utils.transform_utils import quat2axisangle
-from feeding_mujoco.bite_transfer_mujoco import BiteTransfer
+# from feeding_mujoco.bite_transfer_mujoco import BiteTransfer
 
 PLATE_HEIGHT = 0.15
 class SkillLibrary:
@@ -42,7 +42,7 @@ class SkillLibrary:
 
         # TODO: Update the spoon length in XML file to follow real arm. Assume old value for now
         self.scooping_planner = ScoopingDMPPlanner(dt = 0.01, spoon_length=0.14)   # 100 Hz
-        self.bite_transfer = BiteTransfer()
+        # self.bite_transfer = BiteTransfer()
 
         # Create a TF2 buffer and listener
         self.tf_buffer = tf2_ros.Buffer()

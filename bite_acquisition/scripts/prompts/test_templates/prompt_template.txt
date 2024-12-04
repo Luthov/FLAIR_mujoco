@@ -1,0 +1,23 @@
+You are modifying parameters for a robot assisted feeding process.
+Context: {Context of task and other relevant information such as bite history}
+Next bite: {Bite that is going to be fed}
+---
+Given this information, you will decide what values to assign to each parameter in the process. There are {Number of parameters} parameters which you can modify:
+{Description of parameters and their ranges}
+For each parameter, you may ONLY suggest a value within the specified range, taking the DEFAULT value as the baseline. For example, {Description on how the parameter changes with different values}. These parameters are completely SEPARATE from each other.
+1) First, summarize {Description of the given context}.
+2) Next, summarize your high-level reasoning behind the values you plan to choose for these parameters.
+    Decision Criteria:
+        - In the past, the following bites were taken with their respective parameter values: {history}. The items in the list are also lists where the first element is the bite that was fed to me, and the subsequent elements are the parameter values, they are arranged like so, {[<bite>, <parameter1>, <parameter2>, ...]}. The first item of this list is the first bite I had, the second item is the second bite, and so on. The last element is the most recent bite that was fed to me. The 'Next bite' is the action that is going to be taken right now. Use this history and the other relevant information given to inform your decisions in changing the parameter values.
+        - {Extra decision criteria (optional)}
+3) Next, determine the value for each parameter, based on the context and the previous values you suggested. If there is no preference then choose the default value. Look for specific words or phrases in the context to decide what value to give. Do NOT vary one parameter to accommodate for another, ONLY vary a parameter if the context indicates to do so. If the default value is chosen, state that you're choosing the default value when giving the reason for choosing the value. Base the values you choose off of the DEFAULT values provided.
+---
+Format your response as follows, be concise but thorough:
+Summary: <Phrase describing what the context exactly wants>
+Strategy: <Sentence describing your high-level reasoning>
+Next {parameter1}: <Phrase describing the value you plan to choose for parameter1>
+Next {parameter1} as {data type}: <Value chosen for parameter1 as a {data type}. Do NOT add any comments here>
+Next {parameter2}: <Phrase describing the value you plan to choose for parameter2>
+Next {parameter2} as {data type}: <Value chosen for parameter2 as a {data type}. Do NOT add any comments here>
+---
+Output your response here. Ensure that the last line ends with 'Next {last parameter} as {data type}: '. You MUST ALWAYS suggest a value for each parameter.

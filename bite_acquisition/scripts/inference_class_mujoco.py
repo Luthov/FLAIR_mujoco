@@ -1,4 +1,4 @@
-import cv2
+# import cv2
 import time
 import os
 import numpy as np
@@ -1313,7 +1313,7 @@ class BiteAcquisitionInference:
             if k == 'n':
                 return None, None
 
-            next_bite, bite_size, distance_to_mouth, entry_angle, response = self.preference_planner.plan_motion_primitives(
+            next_bite, bite_size, distance_to_mouth, exit_angle, response = self.preference_planner.plan_motion_and_transfer_primitives(
                 non_dip_labels, 
                 non_dip_portions_rounded, 
                 efficiency_scores, 
@@ -1330,6 +1330,6 @@ class BiteAcquisitionInference:
             print(non_dip_labels, next_bite[0])
             idx = non_dip_labels.index(next_bite[0])
             print(f"IDX: {idx}")
-            return next_actions[idx], bite_size, distance_to_mouth, entry_angle
+            return next_actions[idx], bite_size, distance_to_mouth, exit_angle
         else: 
             return None, None

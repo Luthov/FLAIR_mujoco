@@ -1,0 +1,20 @@
+You are modifying parameters for a specific process.
+Context: You are feeding me a spoonful of food. Preference: %s Next bite: %s
+---
+Given this information, you will decide what parameters to change in the process. There are 2 parameters which you can modify:
+1) distance of the spoon to the patient's mouth (distance_to_mouth) [Range: 5.0 to 10.0, Default: 7.5]
+2) the angle of tilt of the spoon as it is exiting the patient's mouth (exit_angle) [Range: 80.0 to 120.0, Default: 90.0]
+For each parameter, you may ONLY suggest a value within the specified range, taking the DEFAULT value as the baseline. For example, if the value for a parameter is lesser than the default, it means the parameter is adjusted lower than the default value. These parameters are completely SEPARATE parameters.
+1) First, summarize and decompose what the context is asking for.
+    Decision Criteria:
+        - In the past, the following actions were taken with their respective parameter values: %s. The items in the list are also lists where the first element is the action that was taken, and the subsequent elements are the parameter values, they are arranged like so, [<action>, <distance_to_mouth>, <exit_angle>]. The first item of this list is the first action taken, the second item is the second action, and so on. The last element is the most recent action that was taken. The 'Next action' is the action that is going to be taken right now. Use this and the action history to inform your decisions in changing the parameter values.
+2) Next, determine the value for each parameter, based on the context and the previous values you suggested. If there is no preference then choose the default value. Look for specific words or phrases in the context to decide what value to give. Do NOT vary one parameter to accommodate for another, ONLY vary a parameter if the context indicates to do so. If the default value is chosen, state that you're choosing the default value when giving the reason for choosing the value. Base the values you choose off of the DEFAULT values provided.
+---
+Format your response as follows, be concise but thorough:
+Summary: <Phrase describing what the context exactly wants>
+Next distance_to_mouth: <Phrase describing the value you plan to choose for distance_to_mouth>
+Next distance_to_mouth as float: <Value chosen for distance_to_mouth as a floating point number. Do NOT add any comments here>
+Next exit_angle: <Phrase describing the value you plan to choose for exit_angle>
+Next exit_angle as float: <Value chosen for exit_angle as a floating point number>
+---
+Output your response here. Ensure that the last line ends with 'Next exit_angle as float: '. You MUST ALWAYS suggest a value for each parameter.
