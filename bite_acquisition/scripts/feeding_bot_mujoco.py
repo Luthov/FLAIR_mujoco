@@ -61,7 +61,7 @@ class FeedingBot:
         self.preference_interrupt = False
 
         # Choose to use decomposer or not
-        self.decompose = False
+        self.decompose = True
         self.old_prompt = False
 
     def clear_plate(self):
@@ -177,7 +177,7 @@ class FeedingBot:
             ["chicken", "rice", "carrots"]
         ]
 
-        for preference_idx in range(19, len(test_preferences)):
+        for preference_idx in range(15, len(test_preferences)):
             if not self.old_prompt:
                 user_preference = test_preferences[preference_idx]
             else:
@@ -290,6 +290,7 @@ class FeedingBot:
                         per_food_portions, 
                         user_preference, 
                         bite_history, 
+                        preference_idx,
                         continue_food_label, 
                         log_path
                         )
@@ -388,14 +389,12 @@ class FeedingBot:
 
                 if actions_remaining == 0:
 
-                    with open(f'feeding_bot_output/icorr_outputs/no_decomposer_output_test/decomposer_output_idx_{preference_idx}.txt', 'a') as f:
+                    with open(f'feeding_bot_output/icorr_outputs/decomposer_output_test/decomposer_output_idx_{preference_idx}.txt', 'a') as f:
                         f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
                         f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
-                    with open(f'feeding_bot_output/icorr_outputs/no_decomposer_output_test/histories_idx_{preference_idx}.txt', 'a') as f:
+                    with open(f'feeding_bot_output/icorr_outputs/decomposer_output_test/histories_idx_{preference_idx}.txt', 'a') as f:
                         f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
                         f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
-                    with open('history.txt', 'w') as f:
-                        f.write(str([]))
                     bite_history = []
                 # k = input('Continue to transfer? Remember to start horizontal spoon.')
                 # while k not in ['y', 'n']:

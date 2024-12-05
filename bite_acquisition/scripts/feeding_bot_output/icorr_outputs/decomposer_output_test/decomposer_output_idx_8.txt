@@ -1,0 +1,323 @@
+=== HISTORY ===
+[]
+=== BITE PREFERENCE ===
+Serve rice and chicken with vegetables in between each bite.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user’s preference is to serve rice and chicken with vegetables (peas) in between each bite.
+
+Strategy: Since there is no bite history and the preference indicates alternating between types of food, the strategy will start with one of the main components (rice or chicken), followed by the vegetable (peas), and then alternate. Since no prior bite_size is indicated and no specific preference is stated for bite sizes, the default value of 5.0 will be used. Given the alternating preference and no history to inform the initial choice, starting with rice as it is typically lighter than chicken might fit well to begin the sequence.
+
+Next bite size: Default to the middle value due to lack of specific user preference.  
+Next bite size as float: 5.0  
+Next food item: Starting with rice to follow the user's preference of alternating types of food and because it's typically a lighter start.  
+Next food item as string: 'rice'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not provided any specific preference for the next bite of food, which is rice. Therefore, no explicit preference for distance to mouth or exit angle can be inferred from the provided information.
+Strategy: Given the absence of user's preferences and no history of previous bites to compare, the default values will be used for both parameters. Considering the food type is rice, which generally does not require a specialized approach for a successful bite transfer compared to larger or more cohesive food items, sticking to the defaults seems reasonable.
+Next distance to mouth: Since there is no specified preference and no past bite history to inform adjustments, the default distance will be used.
+Next distance to mouth as float: 7.5
+Next exit angle: With no preference or past bite information provided, the default exit angle is selected to ensure a straightforward bite transfer.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Serve rice and chicken in an alternating pattern, with vegetables included in the sequence.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user’s preference is for a meal sequence that alternates between rice and chicken, with vegetables included in the pattern.
+
+Strategy: Since the last bite was rice and considering the preference for alternating between rice and chicken, with vegetables also included, the next food item should logically be chicken to maintain the alternating pattern. Incorporating vegetables should also be considered but can follow the chicken to keep the sequence balanced. The bite size from the history is 5.0, which is the default value. Since there's no specific preference indicated for a smaller or larger bite this time, maintaining the same size is reasonable to ensure consistency and satisfaction.
+
+Next bite size: Maintaining the same size as the previous bite for consistency.
+Next bite size as float: 5.0
+Next food item: Since the last served item was rice, the next should be chicken to continue the alternating pattern. Vegetables (peas, in this case) can be considered after to ensure a varied and balanced intake as per the user's preference.
+Next food item as string: 'chicken'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user’s preference does not specify any particular adjustments for the distance to mouth or the exit angle based on the last recorded bite of rice. No cues are provided toward preferring closer, further, higher tilt, or lower tilt for the next bite of chicken.
+
+Strategy: Since there's no specific preference expressed and only one previous bite information is available, it seems reasonable to maintain the settings used for that bite. This will provide consistency and potentially gather more data on user preference for future adjustments.
+
+Next distance to mouth: The last bite (rice) was successfully delivered at a distance of 7.5, which serves as a neutral and acceptable position given no preference has been indicated. Thus, the same distance will be used for the chicken to cater to consistency.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: With only one prior bite and an exit angle of 90.0 used without any feedback suggesting a change, the default exit angle of 90.0 will be selected again for the chicken. This angle represents a middle ground and should work well in absence of specific requirements.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Serve rice and chicken alternately, with vegetables in between each cycle.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user's preference is to have rice and chicken served alternately, with vegetables served in between each cycle of rice and chicken.
+
+Strategy: Based on the bite history, the last item fed was chicken, and given the user's preference for alternating rice and chicken with vegetables in between, the next food item should be a vegetable. Since peas are the only vegetable and food item remaining that fits this criterion, it's the logical choice. Regarding the bite size, since there's no specific preference indicated and the previous bites for rice and chicken were both 5.0, maintaining this default size keeps consistency and adheres to the user's implied satisfaction with this amount.
+
+Next bite size: Maintaining the previous default value as there's no indication the user desires a change.
+Next bite size as float: 5.0
+Next food item: Peas are selected as they are the logical follow-up based on the user's alternating preference and the fact that it's time for a vegetable after chicken.
+Next food item as string: 'peas'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has no specified preference for both distance to mouth and exit angle, as informed by their bite history of having both parameters set uniformly for previous foods.
+Strategy: Given the lack of explicit preference or any discernible pattern leaning towards closer or further distances and lower or higher tilt angles from the user’s bite history, the default values will be used for the next spoonful of food. This approach assumes the default settings provided an acceptable experience for the user since there were no adjustments recorded previously.
+Next distance to mouth: Default value chosen due to absence of preference.
+Next distance to mouth as float: 7.5
+Next exit angle: Default value selected due to lack of specified preference.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['peas', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Serve rice and chicken, alternating with vegetables in between.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user’s preference is to alternate servings between rice and chicken, with vegetables served in between these two items.
+
+Strategy: Given the user’s preference for alternating rice and chicken with vegetables in between, since the last food item consumed was 'peas', a vegetable, the next logical choice based on the sequence and previous bites is 'rice'. Considering the history of bite sizes, which consistently have been 5.0, and without any specific instruction to alter this size, the default value of 5.0 will be maintained for the bite size.
+
+Next bite size: Keeping consistency with the user's previous preferences and the lack of specific instructions to alter the bite size.
+Next bite size as float: 5.0
+Next food item: Since 'peas' was the last item served and the user prefers to alternate between rice and chicken with vegetables in between, the next item should be 'rice' to follow the preferred sequence.
+Next food item as string: 'rice'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not expressed any specific preferences for the distance to mouth or exit angle based on the provided bite history. All previous bites have used the default parameters.
+
+Strategy: Without any explicit preferences indicated via the user's past choices, the default parameters should be used for both the distance to mouth and the exit angle. This strategy is chosen because of the consistency in the user's prior selections, suggesting comfort or satisfaction with these settings.
+
+Next distance to mouth: Since all previous bites defaulted to 7.5 with no indication of wanting to adjust closer or further, it is logical to maintain this distance for consistency.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Given the uniform use of a 90.0-degree exit angle for all types of food (rice, chicken, peas) without any adjustments suggested or noted, it's reasonable to continue with this angle to ensure the food is comfortably delivered to the mouth.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['peas', 5.0, 7.5, 90.0], ['rice', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Serve rice and chicken in alternating bites, with vegetables included intermittently.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user's preference involves serving rice and chicken in alternating bites, with vegetables included intermittently among these.
+
+Strategy: Since the last bite given was rice, and considering the alternating pattern of rice and chicken with vegetables included intermittently, the next logical step fits within the sequence to choose chicken. Given that all previous bites were size 5.0, and no specific preference for changing bite size is mentioned, maintaining the default size seems appropriate. Considering efficiency and portions remaining, adjusting based on these wouldn't be required since all items have the same efficiency value and there are sufficient portions of each food item remaining.
+
+Next bite size: No specific preference for bite size change was stated, so we stick to the default and historical choice.
+Next bite size as float: 5.0
+Next food item: Following the alternating pattern and considering that the last bite was rice, the next should logically be chicken to maintain the preferred sequence.
+Next food item as string: 'chicken'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user's preference does not indicate any specific direction for adjusting the distance to the mouth or the exit angle based on the provided bite history. All previous parameters are set to the default values of 7.5 for distance to mouth and 90.0 for exit angle, which means there are no clear preferences for closer or further distance, or for a higher or lower tilt.
+
+Strategy: Since the user's preferences are not explicitly mentioned and the bite history shows consistent use of default values for both parameters, the strategy is to stick with these default values for the chicken bite. This approach ensures consistency with the user's previous experiences.
+
+Next distance to mouth: Given no specific preference is indicated, and previous values consistently match the default, the default value of 7.5 is chosen to maintain consistency and comfort for the user.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Since there’s no expressed preference for a change in the exit angle, and all previous bites were served at the default exit angle of 90.0, it is reasonable to continue with this default setting.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 2]
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['peas', 5.0, 7.5, 90.0], ['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Serve rice and chicken alternately, with vegetables in between each serving.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user's preference is to alternate between servings of rice and chicken, with vegetables served in between each. Based on the bite history, it appears that this pattern was being followed, along with a default bite size of 5.0.
+
+Strategy: Given the bite history shows a pattern of alternating between rice and chicken with peas in between and considering the sequence preferences and remaining portions, the next item to serve, following another serving of chicken, should be peas, as that aligns with the user preference of having vegetables in between the servings of rice and chicken.
+
+Next bite size: Since there is no specific preference stated and the previous bites were all 5.0, the bite size should remain the default of 5.0 to maintain consistency.
+
+Next bite size as float: 5.0
+
+Next food item: The last food item served was chicken, and according to the user's preference of alternating rice and chicken with vegetables in between, the next item should be peas, especially since it's the only remaining vegetable and fits the pattern of serving order.
+
+Next food item as string: 'peas'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not expressed any specific preferences, and all the previous bites have the same parameters.
+Strategy: Since there is no expressed preference and the previous parameters for each type of food were consistent, it is reasonable to assume those parameters were satisfactory. Therefore, maintaining the same settings for both distance_to_mouth and exit_angle would be the best approach.
+Next distance to mouth: Given the absence of expressed preferences and recalling the bite history where a distance of 7.5 was consistently used, it makes sense to stick with this value as it likely meets the user's needs.
+Next distance to mouth as float: 7.5
+Next exit angle: With no specific cues regarding the user's preference for a higher or lower tilt and observing that an exit angle of 90.0 was used previously for all types of food, including peas, repeating this value seems appropriate.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 2]
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['peas', 5.0, 7.5, 90.0], ['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['peas', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Serve rice and chicken, alternating with vegetables in between.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers a dining sequence that alternates between rice and chicken, with vegetables served in the interim. 
+
+Strategy: Considering the bite history and user preference, the next item should continue this sequence, ensuring a balanced variety of food is served. Given that the most recent food item was 'peas', a vegetable, the next food item should alternate back to either rice or chicken. Following the sequence and the last served protein being 'chicken', 'rice' should be the next in line. Regarding bite size, since there's no mentioned preference for changing this and the history consistently shows a size of 5.0, maintaining this size respects both user preference and consistency.
+
+Next bite size: Maintaining consistency and no express preference for change.
+Next bite size as float: 5.0
+Next food item: Following the alternating sequence and ensuring a balanced diet.
+Next food item as string: 'rice'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has shown no specific preference towards distance to mouth or exit angle, as all previous bites have used the default settings of 7.5 for distance to mouth and 90.0 for exit angle.
+
+Strategy: Given the absence of explicit preferences, the decision will be based on maintaining consistency with previous bites, assuming comfort or satisfaction with the defaults.
+
+Next distance to mouth: No preference indicated; using the default value of 7.5 which matches all previous bites.
+Next distance to mouth as float: 7.5
+
+Next exit angle: No preference has been expressed; maintaining the default value of 90.0 as it has been consistent across all previous bite entries.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['peas', 5.0, 7.5, 90.0], ['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['peas', 5.0, 7.5, 90.0], ['rice', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Serve rice and chicken alternatingly, including some vegetables between the servings of rice and chicken.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to have rice and chicken alternately, with vegetables included between the servings of rice and chicken. This suggests a structured sequence in the meals served, acknowledging the user’s desire for variety and balanced nutrition in their diet.
+
+Strategy: Given the history of bites and user preference, the next bite should follow the sequence, considering what was last eaten and what items remain. Since the last consumed item was rice and the preference is to alternate between rice and chicken with vegetables included in-between, the choice should reflect this pattern.
+
+Next bite size: The bite size has consistently been 5.0, which seems to suit the user’s needs well as there’s no indication to adjust it. Sticking to the default value maintains consistency in the servings.
+
+Next bite size as float: 5.0
+
+Next food item: Considering the sequence and preference, since the last item consumed was rice and the pattern includes alternating between rice and chicken with vegetables in-between, and since all items are still available, the logical next item should be chicken, adhering to the user's alternating preference.
+
+Next food item as string: 'chicken'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user's preference does not indicate any specific requests for adjustment based on the input details provided. All previous bites, regardless of the food type (rice, chicken, peas), have been served with the same parameters (7.5 distance to mouth and 90.0 exit angle).
+
+Strategy: Given there is no direct preference stated or implied from the bite history, I will maintain the default parameters that have been consistently used for each type of food. This approach ensures consistency with previous experiences and assumes the user's satisfaction with these settings.
+
+Next distance to mouth: Since all previous bites have used a 7.5 distance to mouth and no preference was indicated for alteration, the default of 7.5 is most suitable. Keeping the distance unchanged aligns with maintaining a consistent eating experience for the user.
+Next distance to mouth as float: 7.5
+
+Next exit angle: The exit angle has consistently been 90.0 for all types of bites with no expressed desire for change. The choice to maintain this angle supports uniformity in how the food is delivered to the mouth, presumably according to the user's unspoken comfort with this setting.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['peas', 5.0, 7.5, 90.0], ['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['peas', 5.0, 7.5, 90.0], ['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Serve rice and chicken alternately with vegetables in between each sequence.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to have rice and chicken served alternately with vegetables in between each sequence. This means after every portion of rice or chicken, a vegetable should be served before moving back to rice or chicken.
+
+Strategy: Given the bite history has shown a consistent pattern of alternating between rice, chicken, and peas with a consistent bite size of 5.0, the strategy will continue this pattern and bite size preference to comply with the user's preference and maintain a predictable feeding experience.
+
+Next bite size: Since all the previous bites were 5.0 and there is no indication of a preference for changing this bite size, it will remain the same to ensure consistency and satisfaction for the user.
+
+Next bite size as float: 5.0
+Next food item: The last item fed was 'chicken', following the preferred sequence of rice, chicken, and vegetables; peas have been served as the vegetable in the sequence. Since all components are now equally consumed, and following the alternation rule with a vegetable already provided in the last complete cycle, the next item should be 'rice' to start a new sequence cycle.
+
+Next food item as string: 'rice'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not expressed a specific preference for the distance_to_mouth or exit_angle based on their bite history. All previous parameters are set to default values (7.5 for distance_to_mouth and 90.0 for exit_angle).
+
+Strategy: Given the lack of expressed preference for adjustments to the distance_to_mouth or the exit_angle and the consistency in the settings for all types of food items (rice, chicken, peas), the default values will be maintained for the next bite. This decision is based on the assumption that the default settings adequately meet the user's needs, as indicated by the absence of changes or feedback on the parameters after multiple bites.
+
+Next distance to mouth: Since all previous bites have used the default distance of 7.5 and no preference was indicated, this value will be kept for consistency and presumed satisfaction.
+Next distance to mouth as float: 7.5
+Next exit angle: The default exit angle of 90.0 degrees has been consistently used without changes, suggesting it is satisfactory for the user. Thus, this angle will remain the same for the next bite.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['peas', 5.0, 7.5, 90.0], ['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['peas', 5.0, 7.5, 90.0], ['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['rice', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Serve rice and chicken alternatingly with vegetables in between.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user's preference is to alternately serve rice and chicken, with vegetables inserted in between each round of these two items.
+
+Strategy: Based on the bite history and the given preference, we see a pattern of alternating between rice, chicken, and then a vegetable. Given the portions remaining, it seems rice is no longer available (0 portions left), while there is one portion each of chicken and peas left. Since the last food item served was rice, and following the preference pattern with the available portions, the next item should be chicken as the sequence calls for an alternation, and it's the next available item in line after rice.
+
+Next bite size: The history suggests a consistent use of a bite size of 5.0 for all items, with no specific preference for smaller or larger bites stated. Thus, we'll continue with the default size to maintain consistency.
+
+Next bite size as float: 5.0
+
+Next food item: Given the pattern of alternating between rice and chicken with vegetables in between, and considering the items left and the most recent item served, chicken is the logical next choice.
+
+Next food item as string: 'chicken'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user’s previous bite history shows a consistent pattern in choice of distance to mouth and exit angle, with all bites being delivered at a distance of 7.5 and an exit angle of 90.0. There are no explicit preferences stated, but the consistency in the parameters chosen may indicate a comfort or satisfaction with these settings.
+
+Strategy: Given the lack of expressed preferences and considering the consistency in the user’s bite history, it would be prudent to stick with the parameters that have been repeatedly used. This approach assumes that the consistent choice of parameters indicates a user preference or at least satisfaction with these settings.
+
+Next distance to mouth: Since all previous bites have been delivered with a distance of 7.5 and there is no indication of a desire for change, the same distance will be used for the next spoonful of chicken. This is based on the assumption that the user is comfortable with this distance.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Likewise, there has been no expressed preference for changing the exit angle, and all previous bites were delivered with an exit angle of 90.0. It is logical to continue with this angle, assuming it suits the user's needs for eating.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 1, 1]
+=== FINAL HISTORY ===
+[['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['peas', 5.0, 7.5, 90.0], ['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['peas', 5.0, 7.5, 90.0], ['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0], ['rice', 5.0, 7.5, 90.0], ['chicken', 5.0, 7.5, 90.0]]
+=== FINAL TOKEN HISTORY ===
+[{'decomposer_tokens': [22, 172, 194], 'bite_sequencing_tokens': [194, 412, 606], 'transfer_param_tokens': [180, 357, 537]}, {'decomposer_tokens': [27, 172, 199], 'bite_sequencing_tokens': [216, 424, 640], 'transfer_param_tokens': [234, 370, 604]}, {'decomposer_tokens': [25, 172, 197], 'bite_sequencing_tokens': [212, 431, 643], 'transfer_param_tokens': [150, 384, 534]}, {'decomposer_tokens': [22, 172, 194], 'bite_sequencing_tokens': [199, 437, 636], 'transfer_param_tokens': [201, 397, 598]}, {'decomposer_tokens': [25, 172, 197], 'bite_sequencing_tokens': [197, 448, 645], 'transfer_param_tokens': [234, 411, 645]}, {'decomposer_tokens': [25, 172, 197], 'bite_sequencing_tokens': [225, 457, 682], 'transfer_param_tokens': [187, 425, 612]}, {'decomposer_tokens': [22, 172, 194], 'bite_sequencing_tokens': [186, 463, 649], 'transfer_param_tokens': [149, 438, 587]}, {'decomposer_tokens': [29, 172, 201], 'bite_sequencing_tokens': [229, 478, 707], 'transfer_param_tokens': [243, 452, 695]}, {'decomposer_tokens': [24, 172, 196], 'bite_sequencing_tokens': [236, 482, 718], 'transfer_param_tokens': [235, 465, 700]}, {'decomposer_tokens': [22, 172, 194], 'bite_sequencing_tokens': [235, 488, 723], 'transfer_param_tokens': [259, 479, 738]}]

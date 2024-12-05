@@ -1,0 +1,335 @@
+=== HISTORY ===
+[]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has no stated preference in terms of food items or bite size.
+Strategy: Since there are no specific preferences or previous bites to infer from, the default values will be selected for bite size. For the next food item, the choice will be to rotate through the available options in a fair manner to ensure variety.
+Next bite size: Default value is used due to lack of specific preference.
+Next bite size as float: 5.0
+Next food item: Since there’s no previous item to consider and no preference, the first item in the list will be selected to start the feeding sequence.
+Next food item as string: 'mashed potato'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: Since there's no provided user preference or prior bite history to analyze, we cannot derive a specific preference for the next spoonful of mashed potatoes.
+Strategy: Given the lack of specific user preferences or historical data to inform adjustments, the default values will be used for both adjustable parameters. The choice for mashed potatoes, a commonly soft and potentially sticky food, suggests that an approach that balances ease of loading the spoon and ensuring the food can comfortably reach and be deposited into the mouth is prudent.
+Next distance to mouth: The default distance is a middle-ground choice that should work well for a variety of food types and user comfort, especially in the absence of specific guidance or preferences.
+Next distance to mouth as float: 7.5
+Next exit angle: Without specific instructions or past feedback to indicate a preference for a higher or lower exit angle, the default is chosen to hopefully provide a comfortable angle for transferring mashed potatoes into the mouth.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: mashed potato
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['mashed potato', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has no explicit preference for food. We aim to rotate through the available food items to ensure variety and to evenly consume the portions. The last bite was a medium-size (5.0) of mashed potato.
+
+Strategy: Since the user has no stated preference, we'll rotate through the food items to provide variety and maintain a balance in the consumption of the available food options. The last bite was of a medium size (5.0), and without specific dietary restrictions or preferences noted, we'll maintain this size to ensure consistency and meet an average requirement for bite size.
+
+Next bite size: Considering the last bite size and no expressed preference for size adjustment, we will maintain the bite size at the default of 5.0 to ensure consistency and adequacy of the meal portions.
+
+Next bite size as float: 5.0
+
+Next food item: The previous food item was 'mashed potato'. To ensure variety and follow a balanced dietary pattern, the next food item should be different. Following a simple rotation, and given that 'mashed potato' was the last item served, 'carrots' should be the next food item to maintain a variety and follow a sequence in the provided list.
+
+Next food item as string: 'carrots'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user’s preference appears to be unestablished based on the single data point from eating mashed potatoes. No explicit preference for the distance to mouth or the exit angle was provided after consuming the mashed potato with the default parameters.
+
+Strategy: Given the absence of specific preference feedback and only a single data point of eating mashed potatoes with default settings, it is reasonable to maintain the default settings for carrots. Carrots, typically being firmer than mashed potatoes, should not require adjustments to the distance to mouth or the exit angle without explicit feedback indicating a preference.
+
+Next distance to mouth: Since there was no feedback indicating that the user found the default distance of 7.5 unsatisfactory, and without specific preference cues, we will maintain this setting for consistency.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Similarly, there was no feedback suggesting that the default exit angle of 90.0 degrees was problematic. Without clear preference indicators, we will keep this setting unchanged to ensure a consistent eating experience.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has no stated preferences, so choices will be made based on past actions and the need for variety in the food items presented.
+
+Strategy: Since the preference is not explicitly stated, the default value for the bite size will be used, considering the historical data indicates a consistency with this size. The next food item will be chosen to ensure variety, following the sequence of previously fed items to avoid repetition.
+
+Next bite size: No specific preference stated, and past bites have consistently been 5.0.
+Next bite size as float: 5.0
+Next food item: 'beef' is chosen to introduce a new flavor as the last items fed were 'mashed potato' and 'carrots'.
+Next food item as string: 'beef'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not expressed a specific preference for either the distance to mouth or exit angle based on the bite history provided.
+
+Strategy: Given the lack of expressed preference or variance in previous parameters, I will default to the standard values for both parameters. This approach ensures consistency and comfort based on the default settings, aligning with what has been used previously with other food items.
+
+Next distance to mouth: Since the user has shown comfort with the default setting in previous bites, I will maintain the same distance for consistency.
+Next distance to mouth as float: 7.5
+
+Next exit angle: Similarly, there is no indication the previous angles were problematic or could be optimized for the user; therefore, staying with the default is the logical choice.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: beef
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has no stated preference, suggesting a flexible attitude towards the variety and size of bites. The bite history indicates a default size of 5.0 has been previously used for mashed potato, carrots, and beef, with each food item fed once in sequence.
+
+Strategy: Given the absence of a specific preference and the importance of providing a balanced meal, I will continue the sequence of offering food items, ensuring each type is consumed evenly. Since the bite size of 5.0 has been consistently used, it will be maintained unless a new preference is indicated. 
+
+Next bite size: Considering no specific size preference was provided and previous bites were all set to a default of 5.0, maintaining this size ensures consistency and likely meets user satisfaction based on past consumption.
+
+Next bite size as float: 5.0
+
+Next food item: Since the last food item fed was beef, and aiming to keep a balanced rotation without preferences stated, the next food item in sequence after beef, returning to the start of the list, should be mashed potato.
+
+Next food item as string: 'mashed potato'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not expressed any specific preference for distance to mouth or exit angle during the consumption of mashed potatoes, carrots, or beef. All previous bites were served at a default distance of 7.5 and an exit angle of 90.0.
+
+Strategy: Given the lack of expressed preference and the consistency in previously served parameters, it is logical to maintain these default settings. This approach ensures consistency with the user's experience so far.
+
+Next distance to mouth: Since all previous bites were successfully served at 7.5 without feedback suggesting a need for adjustment, this distance appears to be suitable and comfortable for the user.
+Next distance to mouth as float: 7.5
+
+Next exit angle: The exit angle has also been consistent at 90.0, indicating a neutral position that likely matches the user's comfort or lack of preference. There's no reported issue that would necessitate a change.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: mashed potato
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0], ['mashed potato', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has no stated preference for bite size or food item order, and portions of mashed potato, carrots, and beef remain, with equal efficiency ratings for each. The bite history indicates a consistent bite size of 5.0 for each item, suggesting either a default preference or no preference from the user.
+
+Strategy: Given no specific user preference and a consistent pattern of serving sizes in the bite history, we'll maintain the default bite size. Since the last food item served was mashed potato, and aiming to provide variety, the next food item should cycle through the remaining items in the list to ensure an even distribution and variety in the meal.
+
+Next bite size: There's no indication that the default bite size of 5.0 was unsatisfactory, and without specific instructions to adjust, we will stick to this value as it seems to have been acceptable for previous servings.
+
+Next bite size as float: 5.0
+
+Next food item: Considering the sequence and aiming to alternate between items, the last food item served was 'mashed potato'. To maintain variety and considering that each food item has the same efficiency rating, we would logically move to the next item in the remaining list that hasn't been served as the last bite, following the pattern of providing a balanced meal. Since 'mashed potato' was the last item served and there's an implied sequence in the previous bites, the next logical choice, promoting variety, would be 'carrots', which also aligns in serving an item not served immediately prior.
+
+Next food item as string: 'carrots'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user's preference appears neutral with no specific inclination towards closer or further distances to mouth nor towards higher or lower exit angles, as all the parameter values for previous bites are consistent at the default settings (7.5 for distance to mouth and 90.0 for exit angle).
+
+Strategy: Since the user has not expressed or demonstrated any preference towards distance to mouth or exit angle through prior bites, and there is no provided preference for the next bite of carrots, the default values will be used. This approach maintains consistency with previous actions and accommodates the user's apparent satisfaction with these settings.
+
+Next distance to mouth: There is no indicated preference for modifying the distance to mouth, and previously logged bites have consistently used the default value 7.5. Therefore, maintaining this default value is logical to ensure consistency and user satisfaction.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Similar to the distance to mouth, there is no evidence suggesting a preference for changing the exit angle. Previous bites all utilized the default exit angle of 90.0. Sticking with this value supports consistency and is likely aligned with the user's expectations or comfort level.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 2]
+=== HISTORY ===
+[['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0], ['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: Based on the input details, the user does not have a stated preference for food items or bite sizes. The user has been served alternating bites of mashed potato, carrots, and beef, each with a bite size of 5.0. 
+
+Strategy: Since there's no specific preference stated and the bite sizes have been consistent at 5.0 without indication of user displeasure, it's reasonable to continue with the default bite size. For the next food item, considering the sequence of feeding (mashed potato, carrots, beef, mashed potato, carrots), and the remaining portions ([1, 1, 2]), beef should be the next choice to maintain the rotation and because it has the most portions remaining.
+
+Next bite size: There's no indicated preference for larger or smaller bites, and all previous bites were at a 5.0. To maintain consistency and in the absence of any adjustments required by user feedback, we'll stick with the default size.
+
+Next bite size as float: 5.0
+
+Next food item: Given the rotation and the previous bite being carrots, the next item should logically be beef to continue the variation in food items served and considering the portions remaining.
+
+Next food item as string: 'beef'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not expressed any explicit preference for the distance to mouth or the exit angle. Their bite history does show consistency in using the default values of 7.5 for distance to mouth and 90.0 for exit angle for the various food types consumed (mashed potato, carrots, and beef).
+
+Strategy: Since the user has consistently used the default parameters without any noted preferences or adjustments, it's reasonable to continue with these settings. The consistency in their bite history suggests that these parameters are satisfactory across different food types.
+
+Next distance to mouth: Stick to the default value as it aligns with the consistent historical choice made by the user for a variety of foods.
+Next distance to mouth as float: 7.5
+Next exit angle: Maintain the default exit angle, as it has been consistently chosen and there is no indication that the user desires a change.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: beef
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 2]
+=== HISTORY ===
+[['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0], ['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: Given the lack of specific user preferences, we must rely on the bite history and the sequence of food already provided as cues for determining bite size and the next food item. 
+
+Strategy: The bite history shows a consistent pattern of rotating through mashed potato, carrots, and beef, all with a bite size of 5.0. This suggests a balanced approach to feeding without any preference for larger or smaller bites or for any particular food item over another. To maintain this consistency, we'll follow the established sequence and bite size.
+
+Next bite size: Since all past bites have been 5.0 and there's no indication the user prefers a change, we'll continue with this default value.
+
+Next bite size as float: 5.0
+
+Next food item: The last food item fed was beef, and the pattern indicates rotating through the items in the order they're listed. Therefore, the next food item should be mashed potato to continue the pattern.
+
+Next food item as string: 'mashed potato'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not expressed a specific preference based on the bite history provided. All previous parameters for different types of food (mashed potato, carrots, beef) have been consistent, with a distance_to_mouth of 7.5 and an exit_angle of 90.0.
+
+Strategy: Since the user has not shown any preference for adjustments in the distance_to_mouth and exit_angle through their bite history, it is prudent to stick to the default parameters for the next bite of mashed potato, assuming these settings are comfortable for the user.
+
+Next distance to mouth: No specific preference shown; maintaining the default value as it suits previous choices.
+Next distance to mouth as float: 7.5
+Next exit angle: No preference indicated for adjusting tilt; keeping the default angle which has been consistently acceptable.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: mashed potato
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+=== HISTORY ===
+[['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0], ['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0], ['mashed potato', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has no stated preference according to the available information. The bite history reveals an alternating pattern among three food items - mashed potato, carrots, and beef - with a consistent bite size of 5.0.
+
+Strategy: The adjustment of parameters will be based on maintaining the observed pattern of food item rotation and the consistent bite size, as no specific preference is mentioned. The sequence in the bite history suggests a rotation among the listed food items without repetition of the same item consecutively. The last food item the user was fed is mashed potato, so the next item should follow the sequence, which points to carrots, given the rotation observed.
+
+Next bite size: The bite history consistently shows a bite size of 5.0, with no indication that this needed adjustment. Therefore, keeping this size maintains consistency with the user's previous experiences.
+
+Next bite size as float: 5.0
+Next food item: Following the observed sequence in the bite history and the last food item being 'mashed potato', the next item to maintain rotation is 'carrots'.
+
+Next food item as string: 'carrots'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user’s preference does not show a variation from the default settings for both distance_to_mouth and exit_angle. All previous bites, regardless of the food type, have used the default settings of 7.5 for distance_to_mouth and 90.0 for exit_angle.
+
+Strategy: Given the lack of explicit preferences or adjustments in the bite history, it's prudent to stick with the default values, as these seem to have met the user's needs across different types of food, including carrots.
+
+Next distance to mouth: Since the user has consistently used a distance_to_mouth of 7.5 without indicating a preference for closer or further adjustments, the default setting seems suitable for the next bite of carrots.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Likewise, the exit_angle has consistently been set at 90.0 for all types of food, including carrots, indicating satisfaction with this angle. Without specific cues to adjust the tilt, maintaining this default is advisable.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+=== HISTORY ===
+[['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0], ['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0], ['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has no stated preference, allowing for flexibility in choice. Given the history of alternating between food items and maintaining a consistent bite size, it suggests a pattern of equal treatment across all items, without any obvious preference for smaller or larger bites or specific foods over others.
+
+Strategy: Considering the pattern in bite history, it's prudent to maintain the bite size at the default (5.0) since all prior bites across different food types have adhered to this size, indicating a balanced approach towards portion sizes. For the next food item, following the sequence presented in the bite history, after 'carrots' should logically be 'beef,' as this ensures each food item is offered in turn, promoting variety and following the established rotation, ensuring all items are consumed evenly.
+
+Next bite size: Maintaining the default size as it aligns with all previously recorded bites.
+Next bite size as float: 5.0
+Next food item: Following the alternating sequence observed, 'beef' comes after 'carrots' in the historical pattern.
+Next food item as string: 'beef'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not expressed any specific preference, and all previous bites have been given with the same parameters of 7.5 for distance_to_mouth and 90.0 for exit_angle. 
+
+Strategy: Since there's a consistent track record of using the default parameters for both distance to mouth and exit angle, and no expressed preference has been provided, it would be logical to continue with these parameters. This consistency suggests either a satisfaction with these settings or a lack of feedback provided, indicating they are at least acceptable.
+
+Next distance to mouth: Given the consistent usage of 7.5 in the bite history without any noted preference for adjustment, it seems best to continue with this distance as it likely meets the user's needs or expectations.
+Next distance to mouth as float: 7.5
+
+Next exit angle: Since all previous bites used an exit angle of 90.0 and no preference for change has been stated or implied, maintaining this angle would ensure continuity and likely adherence to the user's unexpressed or unknown preference.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: beef
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+=== HISTORY ===
+[['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0], ['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0], ['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user does not have specified preferences, so we will rely on the sequence of feeding and previous bite sizes to determine the next actions.
+
+Strategy: Given the pattern of feeding and bite sizes in the history, it seems that a rotation among the food items with a consistent bite size has been established. The most recent bites have been consistent at 5.0 for all food items, showing no specific preference for smaller or larger bites. Following the pattern, the next food item should be the one immediately succeeding the most recently fed item, maintaining the order and balance in the meal.
+
+Next bite size: Since the history shows a default bite size of 5.0 consistently used and no specific preference is indicated, we'll continue with this size to maintain consistency.
+
+Next bite size as float: 5.0
+
+Next food item: The last food item fed was 'beef'. Following the established sequence and ensuring each food is presented in turn, the next food item to be fed should be 'mashed potato', which follows the sequence observed in the bite history.
+
+Next food item as string: 'mashed potato'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not expressed a specific preference for either the distance to mouth or the exit angle through verbal feedback. However, based on bite history, they have consistently used the default settings for both parameters across various foods, suggesting a preference for the default values.
+
+Strategy: Given the absence of explicit preference and the consistency in previous settings, it is reasonable to continue using the default values for both parameters. This approach aligns with the user's demonstrated comfort or satisfaction level with these settings across different foods.
+
+Next distance to mouth: Since the user has consistently used a distance to mouth of 7.5 in the past without indicating a preference for adjustment, we will maintain this distance. This choice is based on their apparent satisfaction with the default distance across different types of food.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Similar to the distance to mouth, the user has consistently used an exit angle of 90.0 for various foods without indicating a desire for change. Maintaining this angle supports consistency with the user's apparent preferences as observed in the bite history.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: mashed potato
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+=== FINAL HISTORY ===
+[['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0], ['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0], ['mashed potato', 5.0, 7.5, 90.0], ['carrots', 5.0, 7.5, 90.0], ['beef', 5.0, 7.5, 90.0], ['mashed potato', 5.0, 7.5, 90.0]]
+=== FINAL TOKEN HISTORY ===
+[{'decomposer_tokens': [13, 164, 177], 'bite_sequencing_tokens': [134, 404, 538], 'transfer_param_tokens': [198, 359, 557]}, {'decomposer_tokens': [13, 164, 177], 'bite_sequencing_tokens': [255, 413, 668], 'transfer_param_tokens': [218, 372, 590]}, {'decomposer_tokens': [13, 164, 177], 'bite_sequencing_tokens': [155, 422, 577], 'transfer_param_tokens': [160, 386, 546]}, {'decomposer_tokens': [13, 164, 177], 'bite_sequencing_tokens': [225, 431, 656], 'transfer_param_tokens': [194, 401, 595]}, {'decomposer_tokens': [13, 164, 177], 'bite_sequencing_tokens': [319, 441, 760], 'transfer_param_tokens': [247, 415, 662]}, {'decomposer_tokens': [13, 164, 177], 'bite_sequencing_tokens': [253, 450, 703], 'transfer_param_tokens': [187, 429, 616]}, {'decomposer_tokens': [13, 164, 177], 'bite_sequencing_tokens': [204, 459, 663], 'transfer_param_tokens': [174, 444, 618]}, {'decomposer_tokens': [13, 164, 177], 'bite_sequencing_tokens': [226, 469, 695], 'transfer_param_tokens': [215, 458, 673]}, {'decomposer_tokens': [13, 164, 177], 'bite_sequencing_tokens': [222, 478, 700], 'transfer_param_tokens': [220, 472, 692]}, {'decomposer_tokens': [13, 164, 177], 'bite_sequencing_tokens': [226, 487, 713], 'transfer_param_tokens': [230, 487, 717]}]

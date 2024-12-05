@@ -1,0 +1,323 @@
+=== HISTORY ===
+[]
+=== BITE PREFERENCE ===
+Larger bites are preferred; rice should not be fed.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers larger bites and does not want to be fed rice.
+
+Strategy: Given the preference for larger bites, we will aim for the larger end of the bite_size spectrum while avoiding rice due to the user's aversion. Given no specific previous bite history to draw from, we'll prioritize the user's preference for larger bites and the sequence of food items, considering their preferences and the portions remaining.
+
+Next bite size: Since larger bites are preferred and there are no previous bites to consider for adjusting the bite size, we'll go towards the larger end of our scale.
+Next bite size as float: 10.0
+Next food item: Avoiding rice and focusing on the user's preference for larger bites, out of the remaining food items ('peas', 'rice', 'meatballs'), meatballs are likely the best choice for larger bites, aligning with the user's preferences and suitable for the bite size chosen.
+Next food item as string: 'meatballs'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not provided any specific preferences for the adjustment of bite transfer parameters.
+Strategy: Since there are no given preferences or past bite history to infer from, I will rely on the defaults for both parameters.
+Next distance to mouth: Defaulting to 7.5 due to the lack of preference or historical data indicating otherwise.
+Next distance to mouth as float: 7.5
+Next exit angle: Defaulting to 90.0 because there is no indicated preference for a higher or lower tilt.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: meatballs
+BITE SIZE: 10.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['meatballs', 10.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+The user prefers larger bites and does not want to be fed any rice.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers larger bites and explicitly wants to avoid rice in their diet.
+
+Strategy: Given the preference for large bites, the most recent bite size of 10.0 should be maintained to align with the user's preference. Since rice is to be avoided and 'meatballs' were the last item fed, 'peas' should be the next food item to ensure variety and adherence to the user's dietary restrictions and preferences.
+
+Next bite size: The user's preference for larger bites is noted, and the last recorded bite was at the maximum value of 10.0, which aligns with their preference.
+Next bite size as float: 10.0
+Next food item: 'meatballs' were the last food item fed, and since rice is to be avoided, 'peas' are the logical next choice to maintain variety and respect the user's preferences.
+Next food item as string: 'peas'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: With only one entry in the bite history and no explicit preferences provided, it's difficult to deduce a specific preference pattern. The history shows a single entry for "meatballs" with default parameters of 7.5 for distance_to_mouth and 90.0 for exit_angle.
+
+Strategy: Given the lack of explicit preference and the consistency of parameters in the bite history, the default values will be used as a baseline. Adjustments will consider the consistency of the food type between the bites.
+
+Next distance to mouth: Since the food type is changing from meatballs to peas, and given the lack of explicit preferences or indicative trends, I'll maintain the default setting. Peas are smaller and might not require closer distance but ensuring a neutral, middle-ground approach will help in observing any upcoming preferences without making drastic changes.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: The exit angle of 90.0 can accommodate a variety of food types without specific preference stated. Peas are less likely to require a significant adjustment in tilt compared to meatballs, considering their smaller size and potentially less effort to scoop and retain on the spoon. Sticking with the standard angle seems reasonable until more preference data is available.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 10.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Provide larger bites and exclude rice from the feeding selection.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers larger bites and does not want to be fed rice.
+
+Strategy: Given the user's preference for larger bites, the bite size will be adjusted towards the upper end of the range, considering the previous large bite sizes recorded. Since rice is to be excluded based on the user's preference, the selection will be between peas and meatballs. Given peas and meatballs have already been fed with large bites, and to maintain a varied diet, the next item should logically follow the sequence while adhering to the preference and excluding rice.
+
+Next bite size: The user's preference for larger bites with past large bites suggests continuing with large bite sizes.
+Next bite size as float: 10.0
+Next food item: Given the exclusion of rice and that the previous bites included meatballs and then peas, repeating the sequence logically but alternating to maintain variety suggests returning to meatballs to avoid repetition of peas consecutively.
+Next food item as string: 'meatballs'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not expressed any specific preferences regarding the distance to mouth or the exit angle for their bites. Both meatballs and peas, the only foods mentioned thus far, were served at the default settings of 7.5 for distance to mouth and 90.0 for the exit angle.
+
+Strategy: Given the lack of explicit preference and considering the consistency in previous parameters, it would be prudent to maintain the default settings. Meatballs, being potentially more substantial in size and texture compared to peas, do not necessitate any adjustment based on the previous settings provided.
+
+Next distance to mouth: Since the user has not indicated a preference for the distance and both of the previous bites were served at the default distance of 7.5, it seems reasonable to maintain this distance. This consistency should provide the user with a familiar and possibly preferred experience during the meal.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: The exit angle for both of the previous bites was set at the default of 90.0. Without any feedback indicating that these angles were unsatisfactory or could be optimized for a better dining experience, it is sensible to keep the exit angle the same for this next bite of meatballs.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: meatballs
+BITE SIZE: 10.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+The user wants larger bites and does not want to be fed any rice.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers larger bites and specifically does not want to be fed any rice.
+
+Strategy: Given the user's preference for larger bites, we reference the bite history which consistently shows a preference for the largest bite size of 10.0 across different food items. Avoiding rice as per the user's preference, we evaluate the remaining food items to alternately feed the user something other than what was last fed ('meatballs'), while also considering the portions remaining to ensure a varied diet.
+
+Next bite size: The user has a clear preference for the largest bites based on their history, thereby justifying the maximum bite size.
+Next bite size as float: 10.0
+Next food item: Given the user’s last bite was 'meatballs', and aiming to alternate the type of food item to maintain variety in the diet, along with the restriction against rice, 'peas' is the logical choice, also considering there are sufficient portions left.
+Next food item as string: 'peas'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not expressed a specific preference for distance to mouth or exit angle for their bites. Past parameters for both peas and meatballs were set at the default values of 7.5 for distance to mouth and 90.0 for exit angle.
+
+Strategy: Given the absence of indicated preferences and the consistency in past bite parameters, I will maintain the default settings. This ensures consistency with the user's experience so far, assuming the default settings met their needs adequately.
+
+Next distance to mouth: The previous bites, whether they were peas or meatballs, used a distance of 7.5. Without any specific preference indicated or variation in past usage, defaulting to this distance is logical to maintain a consistent feeding experience.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Just like with the distance to mouth, previous bites of both peas and meatballs utilized an exit angle of 90.0. Since there were no issues reported or preferences stated regarding the angle, maintaining this angle for the next bite of peas seems appropriate.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 10.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 1]
+=== HISTORY ===
+[['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+The user wants larger bites and prefers not to be fed any rice.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers larger bite sizes and does not want to be fed any rice.
+
+Strategy: Given the user's preference for larger bites, and considering the previous bite sizes in the history were all 10.0, the bite size will be set to the maximum, 10.0. For the next food item, since rice is to be avoided and there seems to be a pattern of alternating between 'meatballs' and 'peas' - with 'peas' being the most recent - the logical choice will be to offer 'meatballs' next, especially since it aligns both with the alternation pattern and the efficiency of feeding, not to mention the remaining portion aligns with user preference and the history of bites given.
+
+Next bite size: The user prefers larger bites, and the history shows a consistent choice of 10.0 as the bite size.
+Next bite size as float: 10.0
+Next food item: 'meatballs' are chosen as the next food item because it follows the pattern of alternating between 'peas' and 'meatballs', aligns with the user's preference for larger bites, avoids the non-preferred 'rice', and matches the portions remaining with efficiency considered.
+Next food item as string: 'meatballs'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not expressed a specific preference for both the distance to mouth and the exit angle, as the historical parameters for both meatballs and peas have remained constant at a distance_to_mouth of 7.5 and an exit_angle of 90.0.
+
+Strategy: Given that there is no expressed preference and the user has consistently been served with the parameters set to the default values of distance_to_mouth at 7.5 and exit_angle at 90.0, repeating these values for the next bite of meatballs seems to be the most suitable choice. This strategy follows the principle of consistency, assuming the user's satisfaction with previous bites having those parameters.
+
+Next distance to mouth: Since the user seems content with the standard setting of 7.5 for distance_to_mouth based on their bite history, and no preference has been indicated, we will maintain this default value for the next bite.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Similarly, the exit angle has remained at 90.0 for all previous bites, indicating a neutral or satisfactory user experience with this tilt level. There is no evidence to suggest a change, so we will continue with this default setting.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: meatballs
+BITE SIZE: 10.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 1]
+=== HISTORY ===
+[['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Larger bites, no rice.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers larger bites and does not want to be fed rice.
+
+Strategy: Considering the user's preference for larger bites and avoiding rice, alongside the bite history which consistently showcases a preference for the largest possible bite size of 10.0 for the food items fed, the strategy will focus on selecting the next food item based on sequence and preference while maximizing the bite size parameter.
+
+Next bite size: The user clearly prefers larger bites, evidenced by the historical bite sizes of 10.0. Therefore, we will continue with this preference.
+
+Next bite size as float: 10.0
+
+Next food item: Given the user's preference to avoid rice and the sequential alternation in the bite history between 'meatballs' and 'peas', with 'meatballs' being the most recent, the next logical selection should be 'peas'. This choice respects the sequence observed in the bite history and adheres to the user's dietary preferences.
+
+Next food item as string: 'peas'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has no explicitly stated preference, and the bite history shows consistent use of default settings for both distance to mouth and exit angle for two different types of food.
+Strategy: Given the absence of a clear preference from the provided information, and considering the consistency in prior settings, it's reasonable to adhere to these defaults once more. This approach ensures a neutral and safe starting point that is equally likely to have been satisfactory in the past for the user.
+Next distance to mouth: Since all previous bites were served with a distance of 7.5, and no preference was stated, maintaining this distance seems sensible as it likely aligns with the user's comfort or the physical setup's requirement.
+Next distance to mouth as float: 7.5
+Next exit angle: All previous servings were given at an exit angle of 90.0 degrees, suggesting this angle likely facilitated a satisfactory feeding experience for both peas and meatballs, despite their different consistencies. Maintaining this angle provides a balanced approach between the two.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 10.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 1]
+=== HISTORY ===
+[['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+The user prefers larger bites and does not want any rice.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers larger bites and does not want to eat any rice. The bite history indicates a recurring pattern, alternating between 'meatballs' and 'peas', with a bite size of 10.0, which is the largest.
+
+Strategy: Given the user's preference for larger bites and the bite history which consistently shows a choice of the largest bite size (10.0), the bite size will be set to the maximum. For the next food item, considering the user does not want rice and there's a pattern of alternating between 'meatballs' and 'peas' in the bite history, with 'peas' being the most recent item, the next logical choice, following the pattern and user preferences, would be 'meatballs'.
+
+Next bite size: The user prefers larger bites, and the bite history consistently shows a preference for the largest possible bite size.
+Next bite size as float: 10.0
+Next food item: Following the alternating pattern from the bite history and adhering to the user's aversion to rice, 'meatballs' is chosen as they're due next in the sequence.
+Next food item as string: 'meatballs'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not indicated any specific preference, having consistently used the default settings of 7.5 for distance_to_mouth and 90.0 for exit_angle for both meatballs and peas.
+
+Strategy: Given the lack of expressed preferences and the consistency in prior settings, it is reasonable to adhere to these default values once again. This approach ensures the experience remains consistent with what has been acceptable to the user so far.
+
+Next distance to mouth: Since all previous bites utilized a distance of 7.5, and no preference for adjustment has been stated, maintaining this distance is sensible.
+Next distance to mouth as float: 7.5
+
+Next exit angle: With every previous bite recorded at an exit angle of 90.0, and no specific preference to alter this angle, it's logical to continue using this as the standard setting.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: meatballs
+BITE SIZE: 10.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 1]
+=== HISTORY ===
+[['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Prefers larger bites and does not want any rice.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers larger bites and does not want to eat rice. They have a history of consuming both meatballs and peas in large bite sizes of 10.0.
+
+Strategy: The strategy will take into account the preference for larger bites and the sequence of previously consumed food items, avoiding rice due to the user's preferences. Given the bite history, there seems to be an alternating pattern between meatballs and peas, both being consumed in the largest bite size of 10.0. Given the remaining portions, rice will be excluded from the options.
+
+Next bite size: Since the user prefers larger bites and the bite history consistently shows a preference for the largest bite size of 10.0, we will continue with this value to match the user's preference.
+
+Next bite size as float: 10.0
+
+Next food item: Considering the alternating pattern in the bite history and the user's preference for not having rice, along with the last item consumed being meatballs, the next logical choice following the pattern and preferences would be peas. Peas are available, and the portions remaining support this choice.
+
+Next food item as string: 'peas'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user does not have a clearly stated preference based on the provided information, as the distance to mouth and exit angle values have remained consistent (7.5 for distance and 90.0 for exit angle) for all types of food listed in the bite history.
+Strategy: Since no explicit preference is indicated and all historical values are the same, maintaining the default values seems to be the most logical approach. This consistency could suggest satisfaction with these settings or a lack of feedback provided on preferred adjustments.
+Next distance to mouth: No changes have been made previously, and no preference was expressed, so the default will be used again.
+Next distance to mouth as float: 7.5
+Next exit angle: There have been no requested adjustments to the exit angle in the past, indicating that the default setting may be suitable.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 10.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 0]
+=== HISTORY ===
+[['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+I want larger bites, and don't feed me any rice.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers larger bites and does not want to be fed any rice. The user's preference for larger bites suggests using the maximum value based on prior history, and exclusion of rice indicates selecting from the remaining food items, which are peas and meatballs, with rice being disregarded due to preference.
+
+Strategy: Given the user's preference for larger bites, the bite size will be set to the maximum of 10.0 based on the history of previous bites which predominantly were of maximum size. Since the last item fed was peas and considering the sequence and variety, the next logical choice would be to alternate to the next available item that the user has not excluded due to preference. Given the items and portions remaining, alongside the avoidance of rice and the necessity for alternation for variety, meatballs should be the next item, however, it's noted that the portions remaining for meatballs are zero. This leads to the only viable option left which is peas, even though typically it would be ideal to alternate.
+
+Next bite size: Since the preference is towards larger bites and the bite history shows a trend towards the maximum permissible bite size of 10.0, the largest possible bite size is chosen.
+Next bite size as float: 10.0
+Next food item: Despite the preference for variety, the only option available that fits the user's specifications (not rice and considering the portions available) is peas, as both rice is excluded by preference and there are no remaining portions of meatballs.
+Next food item as string: 'peas'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user’s preference appears consistent without any specified adjustments or requests for change from the default settings for both distance to mouth and exit angle while consuming both peas and meatballs.
+
+Strategy: Given that the bite history shows a consistent use of the default settings (7.5 for distance to mouth and 90.0 for exit angle) without any indications of dissatisfaction or requests for adjustments, we will maintain these settings for the next bite. The absence of any explicit preferences suggests that the user is comfortable with these parameters.
+
+Next distance to mouth: Since all previous bites have consistently used a distance of 7.5 without any mention of a preference for change, and no specific context has been provided to warrant a modification, it is prudent to adhere to this historically preferred distance.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Similarly, the exit angle has remained at 90.0 for all recorded bites, indicating a satisfactory experience with this tilt. Without any feedback suggesting a need for alteration, retaining this angle is advisable.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 10.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 2, 0]
+=== HISTORY ===
+[['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+The user requests larger bites and does not want any rice.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers larger bites and specifically requests to avoid rice. The bite history indicates a preference for the maximum bite size (10.0) with a pattern of alternating between meatballs and peas.
+
+Strategy: Given the user's preference for larger bites and the bite history showing a maximum bite size of 10.0, we will continue with this bite size. Since 'rice' is to be avoided and the pattern indicates alternating between 'meatballs' and 'peas', with 'peas' being the most recent food item, the next logical choice based on the remaining items and user preference is 'meatballs', despite there being no portions of meatballs left according to the provided portions remaining. However, considering the necessity to suggest a value and the impossibility of feeding 'rice' or non-available 'meatballs', and with 'peas' having been fed in the two most recent instances, this situation presents a contradiction with the data given (portions remaining). In alignment with the requirement to suggest a value and given the limitation in available choices ('rice' not wanted, 'meatballs' seemingly unavailable), a logical next step can't be determined based on the provided portions. Assuming a correction or an overlook in the portions remaining for the sake of continuity, 'meatballs' would be the intended choice based on user preference and history if we strictly follow the preference and history ignoring the portions remaining contradiction.
+
+Next bite size: Given the user's preference for larger bites and previous bite sizes being 10.0, the same value is chosen to maintain consistency with the user's likings.
+Next bite size as float: 10.0
+Next food item: Considering the user's preferences and the pattern of alternating food items, 'meatballs' would be the next choice if not for the portions inconsistency. Given the circumstances provided and the need to suggest a value, this scenario necessitates an adaptive strategy not covered by the data's constraints (portions remaining). Thus, in alignment with requirements but acknowledging a data inconsistency, we're forced to leave the next item indeterminate per the original parameters.
+Next food item as string: 'meatballs'
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has consistently used a distance_to_mouth of 7.5 and an exit_angle of 90.0 for both meatballs and peas, indicating a comfort or preference for these settings.
+
+Strategy: Given the consistent use of the same parameters for all previous bites regardless of the food type, it suggests a preference for these specific settings. There's no data suggesting a preference for adjusting these values for different types of food, so it's logical to continue with these established parameters.
+
+Next distance to mouth: Since all previous bites used a distance of 7.5, this indicates that the user finds this distance agreeable or has not found a reason to adjust it.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Similarly, an exit angle of 90.0 has been consistently used, suggesting satisfaction with this angle for facilitating the eating process without modification for different foods.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: meatballs
+BITE SIZE: 10.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 2, 0]
+=== FINAL HISTORY ===
+[['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['peas', 10.0, 7.5, 90.0], ['meatballs', 10.0, 7.5, 90.0]]
+=== FINAL TOKEN HISTORY ===
+[{'decomposer_tokens': [22, 172, 194], 'bite_sequencing_tokens': [201, 414, 615], 'transfer_param_tokens': [114, 359, 473]}, {'decomposer_tokens': [26, 172, 198], 'bite_sequencing_tokens': [190, 426, 616], 'transfer_param_tokens': [262, 372, 634]}, {'decomposer_tokens': [22, 172, 194], 'bite_sequencing_tokens': [198, 431, 629], 'transfer_param_tokens': [259, 387, 646]}, {'decomposer_tokens': [26, 172, 198], 'bite_sequencing_tokens': [204, 445, 649], 'transfer_param_tokens': [224, 401, 625]}, {'decomposer_tokens': [25, 172, 197], 'bite_sequencing_tokens': [263, 453, 716], 'transfer_param_tokens': [257, 416, 673]}, {'decomposer_tokens': [17, 172, 189], 'bite_sequencing_tokens': [204, 456, 660], 'transfer_param_tokens': [216, 430, 646]}, {'decomposer_tokens': [23, 172, 195], 'bite_sequencing_tokens': [243, 470, 713], 'transfer_param_tokens': [182, 445, 627]}, {'decomposer_tokens': [22, 172, 194], 'bite_sequencing_tokens': [233, 479, 712], 'transfer_param_tokens': [176, 459, 635]}, {'decomposer_tokens': [24, 172, 196], 'bite_sequencing_tokens': [312, 490, 802], 'transfer_param_tokens': [221, 473, 694]}, {'decomposer_tokens': [23, 172, 195], 'bite_sequencing_tokens': [441, 498, 939], 'transfer_param_tokens': [194, 488, 682]}]
