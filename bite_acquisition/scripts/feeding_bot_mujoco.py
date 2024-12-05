@@ -32,13 +32,15 @@ class FeedingBot:
         self.log_file = "log/"
         files = os.listdir(self.log_file)
 
-        if not os.path.exists('history.txt'):
-            self.log_count = 1
-            self.bite_history = []
-        else:
-            with open('history.txt', 'r') as f:
-                self.bite_history = ast.literal_eval(f.read().strip())
-                self.log_count = len(self.bite_history)+1
+        # if not os.path.exists('history.txt'):
+        #     self.log_count = 1
+        #     self.bite_history = []
+        # else:
+        #     with open('history.txt', 'r') as f:
+        #         self.bite_history = ast.literal_eval(f.read().strip())
+        #         self.log_count = len(self.bite_history)+1
+        self.bite_history = []
+        self.log_count = 1
 
         print("--------------------")
         print("Log count", self.log_count)
@@ -47,8 +49,6 @@ class FeedingBot:
                 
         # self.log_count should be the maximum numbered file in the log folder + 1
         self.log_count = max([int(x.split('_')[0]) for x in files]) + 1 if len(files) > 0 else 1
-
-        self.item_portions = [5.0, 5.0, 5.0]
         
         mouth_pose = np.array([0.70, 0.0, 0.545])
 
@@ -61,8 +61,9 @@ class FeedingBot:
         self.preference_interrupt = False
 
         # Choose to use decomposer or not
-        self.decompose = True
+        self.decompose = False
         self.old_prompt = False
+
     def clear_plate(self):
 
         food_items = [
@@ -126,219 +127,286 @@ class FeedingBot:
             "I want sweet potatoes in generous servings, turkey in moderate portions, and mixed vegetables in smaller bites."
         ]
     
-        preference_idx = 1
-        if not self.old_prompt:
-            user_preference = user_preferences[preference_idx]
-        else:
-            user_preference = user_preferences_hospital[preference_idx]
-            bite_preference = bite_preferences_hospital[preference_idx]
-            transfer_preference = "Hold the spoon slightly farther away for rice and tilt it downward for chicken."
+        test_preferences = [
+            "I want to eat the vegetables first, then the chicken, and save the rice for last.",
+            "Start with a big piece of fish, followed by a small portion of salad.",
+            "Serve me alternating bites of chicken and broccoli, with smaller bites of chicken",
+            "I’d like rice served first, followed by vegetables.",
+            "Finish the rice and meat first, then the soup.",
+            "I prefer having smaller bites for rice but bigger bites for others",
+            "I have no preference",
+            "I want larger bites, and don't feed me any rice",
+            "Serve me rice and chicken, with some vege in between",
+            "Feed me potatoes last",
 
-        self.items = [food_items[preference_idx]]
+            "Keep the spoon close to my mouth when offering rice.",
+            "Tilt the spoon slightly upward when feeding me soup.",
+            "Hold the spoon farther away when offering meat.",
+            "Position the spoon closer to my mouth.",
+            "Tilt the spoon gently downward when serving vegetables.",
 
-        self.inference_server.FOOD_CLASSES = self.items
-
-        bite_size = 0.0
-        distance_to_mouth = 7.5
-        entry_angle = 90.0
-        exit_angle = 90.0
-
-        # Bite history
-        bite_history = self.bite_history
-
-        # Token history
-        token_history = []
-
-        # Continue food
-        continue_food_label = None
-
-        # visualize = True
-
-        actions_remaining = 10
-        success = True
+            "I’d like to start with soup and then move to rice. Feed closer for soup.",
+            "Begin with mashed potatoes and finish with turkey. Move the spoon closer to me",
+            "Serve alternating bites of rice and chicken. Hold the spoon farther for rice.",
+            "Start with a medium bite of salad. Keep the spoon tilted higher for soup.",
+            "I want to eat the chicken first. Tilt the spoon higher when feeding me."
+            ]
         
-        while actions_remaining:
+        test_food_items = [
+            ["carrots", "chicken", "rice"],
+            ["fish", "salad", "mashed potatoes"],
+            ["chicken", "broccoli", "mashed potatoes"],
+            ["rice", "carrots", "peas"],
+            ["rice", "beef", "soup"],
+            ["rice", "broccoli", "chicken"],
+            ["mashed potato", "carrots", "beef"],
+            ["peas", "rice", "meatballs"],
+            ["rice", "chicken", "peas"],
+            ["potatoes", "meatballs", "green beans"],
 
-            print("--------------------")
-            print('History', bite_history)
-            print('Token History', token_history)
-            print('Actions remaining', actions_remaining)
-            print('Current user preference:', user_preference)
-            ready = input('Ready?\n')
-            if ready == 'n':
-                exit(1)
-            print("--------------------\n")
+            ["rice", "beans", "corn"],
+            ["soup", "rice", "chicken"],
+            ["beef", "potatoes", "carrots"],
+            ["yogurt", "fruit", "oatmeal"],
+            ["carrots", "chicken", "mashed potatoes"],
 
-            if self.preference_interrupt:
-                # Get user preferences
-                print(f"CURRENT USER PREFERENCE: {user_preference}")
-                new_user_preference = input("Do you want to update your preference? Otherwise input [n] or Enter to continue\n")
-                if new_user_preference not in ['n', '']:
-                    user_preference = new_user_preference
-                    print(f"NEW USER PREFERENCE: {user_preference}\n")
+            ["soup", "rice", "beef"],
+            ["mashed potatoes", "turkey", "carrots"],
+            ["rice", "chicken", "broccoli"],
+            ["salad", "soup", "potatoes"],
+            ["chicken", "rice", "carrots"]
+        ]
 
-                print(f"CURRENT BITE PREFERENCE: {bite_preference}")
-                new_bite_preference = input("Do you want to update your bite size? Otherwise input [n] or Enter to continue\n")
-                if new_bite_preference not in ['n', '']:
-                    bite_preference = new_bite_preference
-                    print(f"NEW BITE PREFERENCE: {bite_preference}\n")
-                
-                print(f"CURRENT DISTANCE TO MOUTH PREFERENCE: {distance_to_mouth_preference}")
-                new_distance_to_mouth_preference = input("Do you want to update your distance to mouth preference? Otherwise input [n] or Enter to continue\n")
-                if new_distance_to_mouth_preference not in ['n', '']:
-                    distance_to_mouth_preference = new_distance_to_mouth_preference
-                    print(f"NEW DISTANCE TO MOUTH PREFERENCE: {distance_to_mouth_preference}\n")
-                    
-                print(f"CURRENT EXIT ANGLE PREFERENCE: {exit_angle_preference}")
-                new_exit_angle_preference = input("Do you want to update your exit angle preference? Otherwise input [n] or Enter to continue\n")
-                if new_exit_angle_preference not in ['n', '']:
-                    exit_angle_preference = new_exit_angle_preference
-                    print(f"NEW EXIT ANGLE PREFERENCE: {exit_angle_preference}\n")
-                
-            log_path = self.log_file + str(self.log_count)
-            self.log_count += 1
-
-            # Hard coded for mujoco
-            food_item_labels = [[f"{food} {random.uniform(0.5, 1.0):.2f}" for food in items] for items in self.items]
-            item_labels = food_item_labels[0]
-            
-            clean_item_labels = self.items[0] 
-
-            categories = self.inference_server.categorize_items(item_labels, sim=False) 
-
-            print("--------------------")
-            print("Labels:", item_labels)
-            print("Categories:", categories)
-            print("Portions:", self.item_portions)        
-            print("--------------------\n")
-
-            category_list = []
-            labels_list = []
-            per_food_portions = []
-
-            for i in range(len(categories)):
-                if labels_list.count(clean_item_labels[i]) == 0:
-                    category_list.append(categories[i])
-                    labels_list.append(clean_item_labels[i])
-                    per_food_portions.append(self.item_portions[i])
-                else:
-                    index = labels_list.index(clean_item_labels[i])
-                    per_food_portions[index] += self.item_portions[i]
-
-            print("--------------------")
-            print("Bite History", bite_history)
-            print("Category List:", category_list)
-            print("Labels List:", labels_list)
-            print("Per Food Portions:", per_food_portions)
-            print("--------------------\n")
-            
-            if self.decompose:
-                food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action_decomposer(
-                    category_list, 
-                    labels_list, 
-                    per_food_portions, 
-                    user_preference, 
-                    bite_history, 
-                    continue_food_label, 
-                    log_path
-                    )
-            elif self.old_prompt:
-                print("USING OLD PROMPT")
-                food, bite_size, distance_to_mouth, exit_angle = self.inference_server.get_autonomous_action_old_prompt(
-                    category_list, 
-                    labels_list, 
-                    per_food_portions, 
-                    user_preference, 
-                    bite_preference, 
-                    transfer_preference,
-                    bite_history, 
-                    continue_food_label, 
-                    log_path
-                    )
-            else:
-                food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action(
-                category_list, 
-                labels_list, 
-                per_food_portions, 
-                user_preference, 
-                bite_history, 
-                continue_food_label, 
-                log_path
-                )
-            
-            if food is None:
-                exit(1)
-            
-            print("\n--------------------")
-            print(f"food: {food}")
-            print(f"bite: {labels_list[food[0]]}")
-            print(f"bite_size: {bite_size}")
-            print(f"distance_to_mouth: {distance_to_mouth}")
-            print(f"entry_angle: {exit_angle}")
-            print("--------------------\n")
-                
-            print("--------------------")
-            print(f"food_id: {food[0]} \naction_type: {food[1]} \nmetadata: {food[2]}")
-            print("--------------------\n")
-
-            food_id = food[0]
-            action_type = food[1]
-            metadata = food[2]
-
-            if self.execute:
-            
-                if action_type == 'Scoop':
-                    scooping_point = metadata['scooping_point']
-                    action = self.skill_library.scooping_skill_mujoco(keypoints = scooping_point, bite_size = bite_size)
-
-                elif action_type == 'Push':
-                    continue_food_label = labels_list[food_id]
-                    start, end = metadata['start'], metadata['end']
-                    input('Continue pushing skill?')
-                    action = self.skill_library.pushing_skill_mujoco(keypoints = [start, end])
-
-                elif action_type == 'Cut':
-                    continue_food_label = labels_list[food_id]
-                    cut_point = metadata['point']
-                    cut_angle = metadata['cut_angle']
-                    action = self.skill_library.cutting_skill_mujoco(keypoint = cut_point, cutting_angle = cut_angle)            
-
-                if action_type == 'Scoop': # Terminal actions
-                    continue_food_label = None
-                    bite_history.append((labels_list[food_id], bite_size))
-
-            for idx in range(len(clean_item_labels)):
-                if clean_item_labels[food_id] == clean_item_labels[idx]:
-                    self.item_portions[idx] -= 0.2
-                    # self.item_portions[idx] -= round(0.5 + (bite_size - -1.0) * (1.0 - 0.5) / (1.0 - -1.0), 2)
-                    break
-            
-            bite_history.append([labels_list[food_id], bite_size, distance_to_mouth, exit_angle])
-            
+        for preference_idx in range(19, len(test_preferences)):
             if not self.old_prompt:
-                token_history.append(token_data)
-            if success:
-                actions_remaining -= 1
+                user_preference = test_preferences[preference_idx]
+            else:
+                user_preference = user_preferences_hospital[preference_idx]
+                bite_preference = bite_preferences_hospital[preference_idx]
+                transfer_preference = "Hold the spoon slightly farther away for rice and tilt it downward for chicken."
 
-            with open('history.txt', 'w') as f:
-                f.write(str(bite_history))
+            self.items = [test_food_items[preference_idx]]
+            self.item_portions = [2.0, 2.0, 2.0]
 
-            with open('token_history.txt', 'w') as f:
-                f.write(str(token_history))
+            self.inference_server.FOOD_CLASSES = self.items
 
-            k = input('Exit?')
-            if k == 'y':
-                exit(1)
-            # k = input('Continue to transfer? Remember to start horizontal spoon.')
-            # while k not in ['y', 'n']:
-            #     k = input('Continue to transfer? Remember to start horizontal spoon.')
-            # if k == 'y':
-            #     self.skill_library.transfer_skill(self.transfer_pose)
-            #     k = input('Continue to acquisition? Remember to shutdown horizontal spoon.')
-            #     while k not in ['y', 'n']:
-            #         k = input('Continue to acquisition? Remember to shutdown horizontal spoon.\n')
-            #     if k == 'n':
-            #         exit(1)
+            # Bite history
+            bite_history = []
+            # Token history
+            token_history = []
+
+            # Continue food
+            continue_food_label = None
+
+            # visualize = True
+
+            actions_remaining = 10
+            success = True
+            
+            while actions_remaining:
+
+                print(f"=== RUN NUMBER ===")
+                print(preference_idx)
+                print(f"=== RUN NUMBER ===")
+
+                print("--------------------")
+                print('History', bite_history)
+                print('Token History', token_history)
+                print('Actions remaining', actions_remaining)
+                print('Current user preference:', user_preference)
+                # ready = input('Ready?\n')
+                # if ready == 'n':
+                #     exit(1)
+                print("--------------------\n")
+
+                if self.preference_interrupt:
+                    # Get user preferences
+                    print(f"CURRENT USER PREFERENCE: {user_preference}")
+                    new_user_preference = input("Do you want to update your preference? Otherwise input [n] or Enter to continue\n")
+                    if new_user_preference not in ['n', '']:
+                        user_preference = new_user_preference
+                        print(f"NEW USER PREFERENCE: {user_preference}\n")
+
+                    print(f"CURRENT BITE PREFERENCE: {bite_preference}")
+                    new_bite_preference = input("Do you want to update your bite size? Otherwise input [n] or Enter to continue\n")
+                    if new_bite_preference not in ['n', '']:
+                        bite_preference = new_bite_preference
+                        print(f"NEW BITE PREFERENCE: {bite_preference}\n")
+                    
+                    print(f"CURRENT DISTANCE TO MOUTH PREFERENCE: {distance_to_mouth_preference}")
+                    new_distance_to_mouth_preference = input("Do you want to update your distance to mouth preference? Otherwise input [n] or Enter to continue\n")
+                    if new_distance_to_mouth_preference not in ['n', '']:
+                        distance_to_mouth_preference = new_distance_to_mouth_preference
+                        print(f"NEW DISTANCE TO MOUTH PREFERENCE: {distance_to_mouth_preference}\n")
+                        
+                    print(f"CURRENT EXIT ANGLE PREFERENCE: {exit_angle_preference}")
+                    new_exit_angle_preference = input("Do you want to update your exit angle preference? Otherwise input [n] or Enter to continue\n")
+                    if new_exit_angle_preference not in ['n', '']:
+                        exit_angle_preference = new_exit_angle_preference
+                        print(f"NEW EXIT ANGLE PREFERENCE: {exit_angle_preference}\n")
+                    
+                log_path = self.log_file + str(self.log_count)
+                self.log_count += 1
+
+                # Hard coded for mujoco
+                food_item_labels = [[f"{food} {random.uniform(0.5, 1.0):.2f}" for food in items] for items in self.items]
+                item_labels = food_item_labels[0]
+                
+                clean_item_labels = self.items[0] 
+
+                categories = self.inference_server.categorize_items(item_labels, sim=False) 
+
+                print("--------------------")
+                print("Labels:", item_labels)
+                print("Categories:", categories)
+                print("Portions:", self.item_portions)        
+                print("--------------------\n")
+
+                category_list = []
+                labels_list = []
+                per_food_portions = []
+
+                for i in range(len(categories)):
+                    if labels_list.count(clean_item_labels[i]) == 0:
+                        category_list.append(categories[i])
+                        labels_list.append(clean_item_labels[i])
+                        per_food_portions.append(self.item_portions[i])
+                    else:
+                        index = labels_list.index(clean_item_labels[i])
+                        per_food_portions[index] += self.item_portions[i]
+
+                print("--------------------")
+                print("Bite History", bite_history)
+                print("Category List:", category_list)
+                print("Labels List:", labels_list)
+                print("Per Food Portions:", per_food_portions)
+                print("--------------------\n")
+                
+                if self.decompose:
+                    print("USING DECOMPOSER")
+                    food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action_decomposer(
+                        category_list, 
+                        labels_list, 
+                        per_food_portions, 
+                        user_preference, 
+                        bite_history, 
+                        continue_food_label, 
+                        log_path
+                        )
+                elif self.old_prompt:
+                    print("USING OLD PROMPT")
+                    food, bite_size, distance_to_mouth, exit_angle = self.inference_server.get_autonomous_action_old_prompt(
+                        category_list, 
+                        labels_list, 
+                        per_food_portions, 
+                        user_preference, 
+                        bite_preference, 
+                        transfer_preference,
+                        bite_history, 
+                        continue_food_label, 
+                        log_path
+                        )
+                else:
+                    print("USING NON DECOMPOSER")
+                    food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action_no_decomposer(
+                    category_list, 
+                    labels_list, 
+                    per_food_portions, 
+                    user_preference, 
+                    bite_history, 
+                    preference_idx,
+                    continue_food_label, 
+                    log_path
+                    )
+                
+                if food is None:
+                    exit(1)
+                
+                print("\n--------------------")
+                print(f"food: {food}")
+                print(f"bite: {labels_list[food[0]]}")
+                print(f"bite_size: {bite_size}")
+                print(f"distance_to_mouth: {distance_to_mouth}")
+                print(f"entry_angle: {exit_angle}")
+                print("--------------------\n")
+                    
+                print("--------------------")
+                print(f"food_id: {food[0]} \naction_type: {food[1]} \nmetadata: {food[2]}")
+                print("--------------------\n")
+
+                food_id = food[0]
+                action_type = food[1]
+                metadata = food[2]
+
+                if self.execute:
+                
+                    if action_type == 'Scoop':
+                        scooping_point = metadata['scooping_point']
+                        action = self.skill_library.scooping_skill_mujoco(keypoints = scooping_point, bite_size = bite_size)
+
+                    elif action_type == 'Push':
+                        continue_food_label = labels_list[food_id]
+                        start, end = metadata['start'], metadata['end']
+                        input('Continue pushing skill?')
+                        action = self.skill_library.pushing_skill_mujoco(keypoints = [start, end])
+
+                    elif action_type == 'Cut':
+                        continue_food_label = labels_list[food_id]
+                        cut_point = metadata['point']
+                        cut_angle = metadata['cut_angle']
+                        action = self.skill_library.cutting_skill_mujoco(keypoint = cut_point, cutting_angle = cut_angle)            
+
+                    if action_type == 'Scoop': # Terminal actions
+                        continue_food_label = None
+                        bite_history.append((labels_list[food_id], bite_size))
+
+                for idx in range(len(clean_item_labels)):
+                    if clean_item_labels[food_id] == clean_item_labels[idx]:
+                        self.item_portions[idx] -= 0.45
+                        # self.item_portions[idx] -= round(0.5 + (bite_size - -1.0) * (1.0 - 0.5) / (1.0 - -1.0), 2)
+                        break
+                
+                bite_history.append([labels_list[food_id], bite_size, distance_to_mouth, exit_angle])
+                
+                if not self.old_prompt:
+                    token_history.append(token_data)
+                if success:
+                    actions_remaining -= 1
+
+                with open('history.txt', 'w') as f:
+                    f.write(str(bite_history))
+
+                with open('token_history.txt', 'w') as f:
+                    f.write(str(token_history))
+
+                # k = input('Exit?')
+                # if k == 'y':
+                #     exit(1)
+                print("=== ACTIONS REMAINING ===")
+                print(actions_remaining)
+                print("=== ACTIONS REMAINING ===\n")
+
+                if actions_remaining == 0:
+
+                    with open(f'feeding_bot_output/icorr_outputs/no_decomposer_output_test/decomposer_output_idx_{preference_idx}.txt', 'a') as f:
+                        f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
+                        f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
+                    with open(f'feeding_bot_output/icorr_outputs/no_decomposer_output_test/histories_idx_{preference_idx}.txt', 'a') as f:
+                        f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
+                        f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
+                    with open('history.txt', 'w') as f:
+                        f.write(str([]))
+                    bite_history = []
+                # k = input('Continue to transfer? Remember to start horizontal spoon.')
+                # while k not in ['y', 'n']:
+                #     k = input('Continue to transfer? Remember to start horizontal spoon.')
+                # if k == 'y':
+                #     self.skill_library.transfer_skill(self.transfer_pose)
+                #     k = input('Continue to acquisition? Remember to shutdown horizontal spoon.')
+                #     while k not in ['y', 'n']:
+                #         k = input('Continue to acquisition? Remember to shutdown horizontal spoon.\n')
+                #     if k == 'n':
+                #         exit(1)
 
 if __name__ == "__main__":
 

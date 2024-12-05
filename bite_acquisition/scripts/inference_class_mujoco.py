@@ -1031,6 +1031,9 @@ class BiteAcquisitionInference:
                     Input: 'oatmeal 0.43'
                     Output: 'semisolid'
 
+                    Input: 'salad 0.47'
+                    Output: 'vegetable'
+
                     Input: 'blue'
                     Output: 'plate'
 
@@ -1136,12 +1139,13 @@ class BiteAcquisitionInference:
                 max_occluding_mask = mask
         return max_occluding_mask.astype(np.uint8)
 
-    def get_autonomous_action(self, 
+    def get_autonomous_action_no_decomposer(self, 
                               categories, 
                               labels, 
                               portions, 
                               preference, 
-                              history, 
+                              history,
+                              preference_idx, 
                               continue_food_label = None, 
                               log_path = None):
 
@@ -1206,9 +1210,10 @@ class BiteAcquisitionInference:
             print('Bite portions: ', non_dip_portions_rounded)
             print('Preference: ', preference)
 
-            k = input("Press [n] to exit or otherwise I will query bite sequencing planner...\n\n")
-            if k == 'n':
-                return None, None
+            # k = input("Press [n] to exit or otherwise I will query bite sequencing planner...\n\n")
+            # if k == 'n':
+            #     return None, None
+            print("=== CALLING PLANNER ===")
 
             next_bite, bite_size, distance_to_mouth, entry_angle, token_data = self.preference_planner.plan_no_decomposer(
                 non_dip_labels, 
@@ -1216,20 +1221,19 @@ class BiteAcquisitionInference:
                 efficiency_scores, 
                 preference, 
                 history, 
-                mode=self.mode)
+                preference_idx,
+                mode='no_decomposer')
         
         print('Next bite', next_bite)
         print(f'Next bite size: {bite_size}')
         print('non_dip_labels', non_dip_labels)
         print('Next actions', next_actions)
 
-        if len(next_bite) == 1 and next_bite[0] in labels:
-            print(non_dip_labels, next_bite[0])
-            idx = non_dip_labels.index(next_bite[0])
-            print(f"IDX: {idx}")
-            return next_actions[idx], bite_size, distance_to_mouth, entry_angle, token_data
-        else: 
-            return None, None
+        print(non_dip_labels, next_bite)
+        idx = non_dip_labels.index(next_bite)
+        print(f"IDX: {idx}")
+
+        return next_actions[idx], bite_size, distance_to_mouth, entry_angle, token_data
         
     def get_autonomous_action_old_prompt(self, 
                               categories, 

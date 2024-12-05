@@ -8,15 +8,14 @@ You are adjusting parameters for the bite acquisition primitive in a robot-assis
 Input Details:
 Preference: {%s}
 Items remaining:{%s}
-Portions remaining (corresponding to items remaining list): {%s}
 Efficiency: {%s}
-Bite History: {%s}. A list of previous bites and their parameters in the format [<food_item>, <bite_size>, <distance_to_mouth>, <exit_angle>], with the last element being the most recent.
+Bite History: {%s}. A list of previous bites and their parameters in the format [<bite>, <bite_size>, <bite_position>], with the last element being the most recent.
 
 Instructions:
 1. Summarize the user’s preference.
 2. Decide Parameters:
 - For bite_size, use cues like "smaller" or "larger" and prior values from the bite history. Default to 5.0 if no specific preference is stated.
-- For next_food_item, determine what the next bite to feed. Make sure to include the previous food_item in your strategy for choosing the next_food_item.
+- For next_food_item, determine what the next bite to feed.
 - For distance_to_mouth, use preference cues like "closer" or "further" and prior values from the bite history. Default to 7.5 if no preference applies.
 - For exit_angle, look for cues like "higher," "lower," or "tilt," using bite history if needed. Default to 90.0 if no preference applies.
 
@@ -26,8 +25,8 @@ Summary: <Brief explanation of the user’s preference>
 Strategy: <Reasoning for the chosen values>
 Next bite size: <Reason for bite_size choice>
 Next bite size as float: <Chosen value as a float>
-Next food item: <Reason for next_food_item choice>
-Next food item as string: <Chosen next_food_item as a string, Make sure you enclose the word with '' eg. 'chicken'>
+Next food item: <Reason for bite_position choice>
+Next food item as string: <Chosen position as a string>
 Next distance to mouth: <Reason for distance_to_mouth choice>
 Next distance to mouth as float: <Chosen value as a float>
 Next exit angle: <Reason for exit_angle choice>

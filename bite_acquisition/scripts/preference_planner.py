@@ -315,7 +315,7 @@ class PreferencePlanner:
 
         return next_bite, bite_size, distance_to_mouth, exit_angle, token_usage
 
-    def plan_no_decomposer(self, items, portions, efficiencies, preference, history, mode='ours'):
+    def plan_no_decomposer(self, items, portions, efficiencies, preference, history, preference_idx, mode='ours'):
 
         if mode == 'ours':
             print("Reading prompts from prompts/ours_new.txt")
@@ -326,8 +326,8 @@ class PreferencePlanner:
             with open('prompts/preference_only.txt', 'r') as f:
                 prompt = f.read()
 
-        elif mode == 'motion_primitive':
-            with open('prompts/prompt_no_decomposition.txt', 'r') as f:
+        elif mode == 'no_decomposer':
+            with open('prompts/ICORR_prompts_v2/no_decomposer.txt', 'r') as f:
                 prompt = f.read()
 
         efficiency_sentence = str(efficiencies)
@@ -349,12 +349,14 @@ class PreferencePlanner:
                 exit(1)
             prompt = prompt%(str(items), portions_sentence, efficiency_sentence, preference, str(dips), str(history))
 
-        elif mode == 'motion_primitive':
+        elif mode == 'no_decomposer':
             if type(portions_sentence) != str or type(efficiency_sentence) != str or type(preference) != str:
                 print("ERROR: type of arguments to plan() is not correct")
                 exit(1)
 
-            prompt = prompt%(str(items), portions_sentence, efficiency_sentence, preference, str(history))
+            prompt = prompt%(preference, str(items), portions_sentence, efficiency_sentence, str(history))
+            print(f"=== PROMPT ===")
+            print(prompt)
 
         else:
             prompt = prompt%(str(items), portions_sentence, preference, str(history))
@@ -362,14 +364,27 @@ class PreferencePlanner:
         response, token_data = self.gpt_interface.chat_with_openai(prompt)
         response = response.strip()
         print(f"RESPONSE:\n{response}")
-        intermediate_response = response.split('Next bite as list:')[1].strip()
+        intermediate_response = response.split('Next bite size as float:')[1].strip()
         feeding_parameters = intermediate_response.split('\n')
-        next_bites = ast.literal_eval(feeding_parameters[0])
-        bite_size = ast.literal_eval(feeding_parameters[2].split('Next bite size as float:')[1].strip())
-        distance_to_mouth = ast.literal_eval(feeding_parameters[4].split('Next distance to mouth as float:')[1].strip())
-        exit_angle = ast.literal_eval(feeding_parameters[6].split('Next exit angle as float:')[1].strip())
+        bite_size = ast.literal_eval(feeding_parameters[0].strip())
+        for param in feeding_parameters:
+            if 'Next food item as string:' in param:
+                next_bite = ast.literal_eval(param.split('Next food item as string:')[1].strip())
+            elif 'Next distance to mouth as float:' in param:
+                distance_to_mouth = ast.literal_eval(param.split('Next distance to mouth as float:')[1].strip())
+            elif 'Next exit angle as float:' in param:
+                exit_angle = ast.literal_eval(param.split('Next exit angle as float:')[1].strip())
+        # bite_size = ast.literal_eval(feeding_parameters[2].split('Next bite size as float:')[1].strip())
+        # distance_to_mouth = ast.literal_eval(feeding_parameters[4].split('Next distance to mouth as float:')[1].strip())
+        # exit_angle = ast.literal_eval(feeding_parameters[6].split('Next exit angle as float:')[1].strip())
+
+        # Append responses and parameters to a file
+        with open(f'feeding_bot_output/icorr_outputs/no_decomposer_output_test/decomposer_output_idx_{preference_idx}.txt', 'a') as f:
+            f.write(f"=== HISTORY ===\n{history}\n")
+            f.write(f"=== RESPONSE ===\n{response}\n")
+            f.write(f"=== PARAMETERS ===\nNEXT BITE: {next_bite}\nBITE SIZE: {bite_size}\nDISTANCE TO MOUTH: {distance_to_mouth}\nEXIT ANGLE: {exit_angle}\nPORTION SIZES: {portions}\n")
                 
-        return next_bites, bite_size, distance_to_mouth, exit_angle, token_data
+        return next_bite, bite_size, distance_to_mouth, exit_angle, token_data
 
     def interactive_test(self, mode):
         items = ast.literal_eval(input('Enter a list of items: '))

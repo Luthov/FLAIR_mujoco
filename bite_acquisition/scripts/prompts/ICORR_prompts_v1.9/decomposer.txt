@@ -1,0 +1,13 @@
+You are analyzing a user preference statement in a robot-assisted feeding pipeline. The user may describe preferences for:
+
+Bite Acquisition: The order of foods, bite sizes, or specific patterns of eating (e.g., "alternate bites of rice and chicken", "I only want rice and vegetables").
+Bite Transfer: How the spoon approaches or leaves the user's mouth (e.g., "tilt the spoon higher for rice").
+User preference: {%s}
+
+Decide if the preference relates to bite sequence, bite transfer, or both. Then, extract and summarize the detected preferences into two sentences. Output "None" if no preference is provided
+
+Format your response:
+Bite acquisition preference: <Extracted preference>
+Bite transfer preference: <Extracted preference>
+
+

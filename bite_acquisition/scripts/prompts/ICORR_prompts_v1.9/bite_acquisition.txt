@@ -13,13 +13,13 @@ Instructions:
 1. Summarize the user’s preference.
 2. Decide Parameters:
 - For bite_size, use cues like "smaller" or "larger" and prior values from the bite history. Default to 5.0 if no specific preference is stated.
-- For next_food_item, determine the next bite to feed. Make sure to include the previous food_item in your strategy for choosing the next_food_item.
+- For next_food_item, determine what the next bite to feed.
 
 Format Your Response:
 Summary: <Brief explanation of the user’s preference>
-Strategy: <Reasoning for the chosen values.>
+Strategy: <Reasoning for the chosen values>
 Next bite size: <Reason for bite_size choice>
 Next bite size as float: <Chosen value as a float>
-Next food item: <Reason for next_food_item choice>
-Next food item as string: <Chosen next_food_item as a string, Make sure you enclose the word with '' eg. 'chicken'>
+Next food item: <Reason for bite_position choice>
+Next food item as string: <Chosen position as a string>
 Ensure the response ends with "Next food item as string:" followed by the chosen value. Always suggest a value. Do NOT add any more line breaks in your response than what is specified above
