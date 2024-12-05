@@ -46,9 +46,17 @@ class PreferencePlanner:
     def __init__(self):
         self.gpt_interface = GPTInterface()
 
-        self.decomposer_prompt_file = 'preference_decomposer.txt'
-        self.bite_sequencing_prompt_file = 'bite_sequencing.txt'
-        self.transfer_parameter_prompt_file = 'transfer_parameters.txt'
+        self.v1_prompts = False
+        self.v2_prompts = True
+
+        if self.v1_prompts:
+            self.decomposer_prompt_file = 'ICORR_prompts_v1/decomposer.txt'
+            self.bite_sequencing_prompt_file = 'ICORR_prompts_v1/bite_acquisition.txt'
+            self.transfer_parameter_prompt_file = 'ICORR_prompts_v1/bite_transfer.txt'
+        elif self.v2_prompts:
+            self.decomposer_prompt_file = 'ICORR_prompts_v2/decomposer.txt'
+            self.bite_sequencing_prompt_file = 'ICORR_prompts_v2/bite_acquisition.txt'
+            self.transfer_parameter_prompt_file = 'ICORR_prompts_v2/bite_transfer.txt'
 
     def parse_preferences(self, preference):
 
@@ -60,13 +68,23 @@ class PreferencePlanner:
         print(f"USER PREFERENCE: {preference}")
 
         response, decomposer_tokens = self.gpt_interface.chat_with_openai(prompt)
-        # print(f"=== PREFERENCE_PARSER_RESPONSE ===")
-        # print(response)
-        intermediate_response = response.split('Bite sequence preference:')[1].strip()
-        preferences = intermediate_response.split('\n')
-        # print(f"INTERMEDIATE PREFERENCES: {preferences}")
-        bite_preference = preferences[0]
-        transfer_preference = preferences[2].split('Bite transfer preference: ')[1].strip()
+        print(f"=== PREFERENCE_PARSER_RESPONSE ===")
+        print(response)
+
+        if self.v1_prompts:
+            intermediate_response = response.split('Bite sequence preference:')[1].strip()
+            preferences = intermediate_response.split('\n')
+            # print(f"INTERMEDIATE PREFERENCES: {preferences}")
+            bite_preference = preferences[0]
+            transfer_preference = preferences[2].split('Bite transfer preference: ')[1].strip()
+
+        elif self.v2_prompts:
+            intermediate_response = response.split('Bite acquisition preference:')[1].strip()
+            preferences = intermediate_response.split('\n')
+            bite_preference = preferences[0]
+            for pref in preferences:
+                if 'Bite transfer preference:' in pref:
+                    transfer_preference = pref.split('Bite transfer preference: ')[1].strip() # preferences[1].split('Bite transfer preference: ')[1].strip()
         
         return bite_preference, transfer_preference, decomposer_tokens
         
@@ -215,28 +233,62 @@ class PreferencePlanner:
         print('==== HISTORY ===')
         print(history)
         
-        bite_sequencing_prompt = bite_sequencing_prompt%(str(items), portions_sentence, efficiency_sentence, bite_preference, str(bite_sequencing_history))
+        if self.v1_prompts:
+            bite_sequencing_prompt = bite_sequencing_prompt%(str(items), portions_sentence, efficiency_sentence, bite_preference, str(bite_sequencing_history))
 
-        bite_sequencing_response, bite_sequencing_tokens = self.gpt_interface.chat_with_openai(bite_sequencing_prompt)
-        bite_sequencing_response = bite_sequencing_response.strip()
-        print("\n=== BITE SEQUENCING RESPONSE ===")
-        print(f"BITE PREFERENCE:, {bite_preference}\n")
-        print(bite_sequencing_response)
-        bite_response = bite_sequencing_response.split('Next bite as list:')[1].strip()
-        bite_parameters = bite_response.split('\n')
-        next_bite = ast.literal_eval(bite_parameters[0])
-        bite_size = ast.literal_eval(bite_parameters[2].split('Next bite size as float:')[1].strip())
+            bite_sequencing_response, bite_sequencing_tokens = self.gpt_interface.chat_with_openai(bite_sequencing_prompt)
+            bite_sequencing_response = bite_sequencing_response.strip()
+            print("\n=== BITE SEQUENCING RESPONSE ===")
+            print(f"BITE PREFERENCE: {bite_preference}\n")
+            print(bite_sequencing_response)
+            bite_response = bite_sequencing_response.split('Next bite as list:')[1].strip()
+            bite_parameters = bite_response.split('\n')
+            next_bite = ast.literal_eval(bite_parameters[0])
+            bite_size = ast.literal_eval(bite_parameters[2].split('Next bite size as float:')[1].strip())
 
-        transfer_params_prompt = transfer_params_prompt%(transfer_preference, next_bite[0], str(transfer_param_history))
-        transfer_parameter_response, transfer_param_tokens = self.gpt_interface.chat_with_openai(transfer_params_prompt)
-        transfer_parameter_response = transfer_parameter_response.strip()
-        print("\n=== TRANSFER PARAMS RESPONSE ===")
-        print(f"TRANSFER PREFERENCE: {transfer_preference}\n")
-        print(transfer_parameter_response)
-        transfer_response = transfer_parameter_response.split('Next distance to mouth as float:')[1].strip()
-        transfer_parameters = transfer_response.split('\n')
-        distance_to_mouth = ast.literal_eval(transfer_parameters[0])
-        exit_angle = ast.literal_eval(transfer_parameters[2].split('Next exit angle as float:')[1].strip())
+            transfer_params_prompt = transfer_params_prompt%(transfer_preference, next_bite[0], str(transfer_param_history))
+            transfer_parameter_response, transfer_param_tokens = self.gpt_interface.chat_with_openai(transfer_params_prompt)
+            transfer_parameter_response = transfer_parameter_response.strip()
+            print("\n=== TRANSFER PARAMSparam.split('Next food item as string:')[1].strip() RESPONSE ===")
+            print(f"TRANSFER PREFERENCE: {transfer_preference}\n")
+            print(transfer_parameter_response)
+            transfer_response = transfer_parameter_response.split('Next distance to mouth as float:')[1].strip()
+            transfer_parameters = transfer_response.split('\n')
+            distance_to_mouth = ast.literal_eval(transfer_parameters[0])
+            exit_angle = ast.literal_eval(transfer_parameters[2].split('Next exit angle as float:')[1].strip())
+
+        if self.v2_prompts:
+            bite_sequencing_prompt = bite_sequencing_prompt%(bite_preference, str(items), portions_sentence, efficiency_sentence, str(bite_sequencing_history))
+
+            bite_sequencing_response, bite_sequencing_tokens = self.gpt_interface.chat_with_openai(bite_sequencing_prompt)
+            bite_sequencing_response = bite_sequencing_response.strip()
+            print("\n=== BITE SEQUENCING RESPONSE ===")
+            print(f"BITE PREFERENCE: {bite_preference}\n")
+            print(bite_sequencing_response)
+            bite_response = bite_sequencing_response.split('Next bite size as float:')[1].strip()
+            bite_parameters = bite_response.split('\n')
+            # print(f"BITE PARAMETERS: {bite_parameters}")
+            bite_size = ast.literal_eval(bite_parameters[0])
+            for param in bite_parameters:
+                if 'Next food item as string:' in param:
+                    next_bite = param.split('Next food item as string:')[1].strip()
+            # next_bite = ast.literal_eval(bite_parameters[2]).split('Next food item as string:')[1].strip()
+
+            transfer_params_prompt = transfer_params_prompt%(transfer_preference, next_bite, str(transfer_param_history))
+
+            transfer_parameter_response, transfer_param_tokens = self.gpt_interface.chat_with_openai(transfer_params_prompt)
+            transfer_parameter_response = transfer_parameter_response.strip()
+            print("\n=== TRANSFER PARAMS RESPONSE ===")
+            print(f"TRANSFER PREFERENCE: {transfer_preference}\n")
+            print(transfer_parameter_response)
+            transfer_response = transfer_parameter_response.split('Next distance to mouth as float:')[1].strip()
+            transfer_parameters = transfer_response.split('\n')
+            # print(f"TRANSFER PARAMETERS: {transfer_parameters}")
+            distance_to_mouth = ast.literal_eval(transfer_parameters[0])
+            for param in transfer_parameters:
+                if 'Next exit angle as float:' in param:
+                    exit_angle = ast.literal_eval(param.split('Next exit angle as float:')[1].strip())
+            # exit_angle = ast.literal_eval(transfer_parameters[2].split('Next exit angle as float:')[1].strip())
 
         print("\n=== PARAMETERS ===")
         print("NEXT BITE:", next_bite)
@@ -250,6 +302,14 @@ class PreferencePlanner:
         token_usage['bite_sequencing_tokens'] = bite_sequencing_tokens
         token_usage['transfer_param_tokens'] = transfer_param_tokens
 
+        # Append responses and parameters to a file
+        with open('output.txt', 'a') as f:
+            f.write(f"=== HISTORY ===\n{history}\n")
+            f.write(f"=== BITE PREFERENCE ===\n{bite_preference}\n")
+            f.write(f"=== BITE SEQUENCING RESPONSE ===\n{bite_sequencing_response}\n")
+            f.write(f"=== TRANSFER PREFERENCE ===\n{transfer_preference}\n")
+            f.write(f"=== TRANSFER PARAMS RESPONSE ===\n{transfer_parameter_response}\n")
+            f.write(f"=== PARAMETERS ===\nNEXT BITE: {next_bite}\nBITE SIZE: {bite_size}\nDISTANCE TO MOUTH: {distance_to_mouth}\nEXIT ANGLE: {exit_angle}\n")
         print("\n=== TOKENS ===")
         print(token_usage)
 

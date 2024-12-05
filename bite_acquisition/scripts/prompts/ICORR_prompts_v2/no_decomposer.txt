@@ -1,0 +1,34 @@
+You are adjusting parameters for the bite acquisition primitive in a robot-assisted feeding pipeline. There are four adjustable parameters:
+1. bite_size: Choose a value between 1.0 (smallest bite) and 10.0 (largest bite), default is 5.0.
+2. next_food_item: Determine the next food item to feed based on the user's preference and sequence.
+3. distance_to_mouth: Choose a value between 5.0 (closer) and 10.0 (further), default is 7.5.
+4. exit_angle: Choose a value between 80.0 (lower tilt) and 120.0 (higher tilt), default is 90.0.
+
+
+Input Details:
+Preference: {%s}
+Items remaining:{%s}
+Efficiency: {%s}
+Bite History: {%s}. A list of previous bites and their parameters in the format [<bite>, <bite_size>, <bite_position>], with the last element being the most recent.
+
+Instructions:
+1. Summarize the user’s preference.
+2. Decide Parameters:
+- For bite_size, use cues like "smaller" or "larger" and prior values from the bite history. Default to 5.0 if no specific preference is stated.
+- For next_food_item, determine what the next bite to feed.
+- For distance_to_mouth, use preference cues like "closer" or "further" and prior values from the bite history. Default to 7.5 if no preference applies.
+- For exit_angle, look for cues like "higher," "lower," or "tilt," using bite history if needed. Default to 90.0 if no preference applies.
+
+
+Format Your Response:
+Summary: <Brief explanation of the user’s preference>
+Strategy: <Reasoning for the chosen values>
+Next bite size: <Reason for bite_size choice>
+Next bite size as float: <Chosen value as a float>
+Next food item: <Reason for bite_position choice>
+Next food item as string: <Chosen position as a string>
+Next distance to mouth: <Reason for distance_to_mouth choice>
+Next distance to mouth as float: <Chosen value as a float>
+Next exit angle: <Reason for exit_angle choice>
+Next exit angle as float: <Chosen value as a float>
+Ensure the response ends with "Next exit angle as float: followed by the value". Always suggest a value.

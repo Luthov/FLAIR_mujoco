@@ -1,0 +1,25 @@
+You are adjusting parameters for the bite acquisition primitive in a robot-assisted feeding pipeline. There are two adjustable parameters:
+1. bite_size: Choose a value between 1.0 (smallest bite) and 10.0 (largest bite), default is 5.0.
+2. next_food_item: Determine the next food item to feed based on the user's preference and sequence.
+
+Input Details:
+Preference: {%s}
+Items remaining:{%s}
+Portions remaining (corresponding to items remaining list): {%s}
+Efficiency: {%s}
+Bite History: {%s}. A list of previous bites and their parameters in the format [<food_item>, <bite_size>], with the last element being the most recent.
+
+Instructions:
+1. Summarize the user’s preference.
+2. Decide Parameters:
+- For bite_size, use cues like "smaller" or "larger" and prior values from the bite history. Default to 5.0 if no specific preference is stated.
+- For next_food_item, determine what the next bite to feed.
+
+Format Your Response:
+Summary: <Brief explanation of the user’s preference>
+Strategy: <Reasoning for the chosen values>
+Next bite size: <Reason for bite_size choice>
+Next bite size as float: <Chosen value as a float>
+Next food item: <Reason for bite_position choice>
+Next food item as string: <Chosen position as a string>
+Ensure the response ends with "Next food item as string:" followed by the chosen value. Always suggest a value. Do NOT add any more line breaks in your response than what is specified above

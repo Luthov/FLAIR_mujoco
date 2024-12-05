@@ -1416,9 +1416,9 @@ class BiteAcquisitionInference:
         print('non_dip_labels', non_dip_labels)
         print('Next actions', next_actions)
 
-        if len(next_bite) == 1 and next_bite[0] in labels:
-            print(non_dip_labels, next_bite[0])
-            idx = non_dip_labels.index(next_bite[0])
+        if next_bite in labels:
+            print(non_dip_labels, next_bite)
+            idx = non_dip_labels.index(next_bite)
             print(f"IDX: {idx}")
             return next_actions[idx], bite_size, distance_to_mouth, exit_angle, token_data
         else: 
