@@ -61,8 +61,8 @@ class FeedingBot:
         self.preference_interrupt = False
 
         # Choose to use decomposer or not
-        self.decompose = False
-
+        self.decompose = True
+        self.old_prompt = False
     def clear_plate(self):
 
         food_items = [
@@ -99,9 +99,41 @@ class FeedingBot:
             
             "I’d like to start with turkey and gravy, followed by creamy sweet potatoes, and finish with a light portion of mixed vegetables. Serve turkey in large portions, sweet potatoes in moderate servings, and mixed vegetables in small bites. Position the spoon at a medium range for sweet potatoes and tilt it gently upward for vegetables."
         ]  
+
+        user_preferences_hospital = [
+            "I want to eat all the mashed potatoes first, then have a bite of turkey, and finish with some green beans.",
+            "I like to alternate between bites of rice and grilled chicken, saving the steamed carrots for last.",
+            "I want to eat soup first, followed by bread, and end with small portions of salad.",
+            "Serve me alternating bites of turkey and stuffing, with a nibble of cranberry sauce occasionally.",
+            "I want to eat rice and steamed broccoli together, followed by grilled fish, and end with a taste of pudding.",
+            "I like to start with oatmeal, then move to scrambled eggs, and finish with a bite of toast.",
+            "I want a spoonful of soup first, then a small piece of chicken, and finally a few peas.",
+            "Serve me bread rolls first, then mashed potatoes, and end with a small slice of meatloaf.",
+            "I enjoy alternating between spoonfuls of rice and steamed vegetables, with an occasional bite of baked fish.",
+            "I want to eat turkey and gravy first, followed by sweet potatoes, and finish with a small portion of mixed vegetables."
+        ]
+
+        bite_preferences_hospital = [
+            "I want larger bites of meat and smaller bites of vegetables.",
+            "Provide smaller bites of carrots, larger pieces of chicken, and medium scoops of rice.",
+            "I prefer big chunks of turkey, medium-sized bites of stuffing, and very tiny portions of cranberry sauce.",
+            "Serve me mashed potatoes in generous portions, chicken in moderate bites, and peas in small spoonfuls.",
+            "I want big bites of rice, small bites of steamed broccoli, and moderate bites of grilled fish.",
+            "I like oatmeal in medium spoonfuls, scrambled eggs in larger portions, and toast in small, crisp pieces.",
+            "Serve soup in big, warm spoonfuls, chicken in moderate bites, and vegetables in small, manageable portions.",
+            "I’d like bread rolls served whole, mashed potatoes in large scoops, and meatloaf in thin slices.",
+            "I prefer rice in medium-sized servings, steamed vegetables in small portions, and baked fish in larger pieces.",
+            "I want sweet potatoes in generous servings, turkey in moderate portions, and mixed vegetables in smaller bites."
+        ]
     
         preference_idx = 1
-        user_preference = user_preferences[preference_idx]
+        if not self.old_prompt:
+            user_preference = user_preferences[preference_idx]
+        else:
+            user_preference = user_preferences_hospital[preference_idx]
+            bite_preference = bite_preferences_hospital[preference_idx]
+            transfer_preference = "Hold the spoon slightly farther away for rice and tilt it downward for chicken."
+
         self.items = [food_items[preference_idx]]
 
         self.inference_server.FOOD_CLASSES = self.items
@@ -177,7 +209,7 @@ class FeedingBot:
             print("--------------------")
             print("Labels:", item_labels)
             print("Categories:", categories)
-            print("Portions:", self.item_portions)
+            print("Portions:", self.item_portions)        
             print("--------------------\n")
 
             category_list = []
@@ -206,6 +238,19 @@ class FeedingBot:
                     labels_list, 
                     per_food_portions, 
                     user_preference, 
+                    bite_history, 
+                    continue_food_label, 
+                    log_path
+                    )
+            elif self.old_prompt:
+                print("USING OLD PROMPT")
+                food, bite_size, distance_to_mouth, exit_angle = self.inference_server.get_autonomous_action_old_prompt(
+                    category_list, 
+                    labels_list, 
+                    per_food_portions, 
+                    user_preference, 
+                    bite_preference, 
+                    transfer_preference,
                     bite_history, 
                     continue_food_label, 
                     log_path
@@ -269,7 +314,9 @@ class FeedingBot:
                     break
             
             bite_history.append([labels_list[food_id], bite_size, distance_to_mouth, exit_angle])
-            token_history.append(token_data)
+            
+            if not self.old_prompt:
+                token_history.append(token_data)
             if success:
                 actions_remaining -= 1
 

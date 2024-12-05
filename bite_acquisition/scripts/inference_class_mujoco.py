@@ -1231,6 +1231,105 @@ class BiteAcquisitionInference:
         else: 
             return None, None
         
+    def get_autonomous_action_old_prompt(self, 
+                              categories, 
+                              labels, 
+                              portions, 
+                              preference, 
+                              bite_preference, 
+                              transfer_preference, 
+                              history, 
+                              continue_food_label = None, 
+                              log_path = None):
+
+        if continue_food_label is not None:
+            food_to_consider = [i for i in range(len(labels)) if labels[i] == continue_food_label]
+        else:
+            food_to_consider = range(len(categories))
+
+        next_actions = []
+        dip_actions = []
+        efficiency_scores = []        
+
+        print('Food to consider: ', food_to_consider)
+        print(f"catgories: {categories}\n")
+
+        for idx in food_to_consider:
+
+            if categories[idx] == 'semisolid':                
+                action, scooping_point, filling_push_start, filling_push_end = self.get_scoop_action_mujoco(labels[idx])
+
+                if action == 'Acquire':
+                    efficiency_scores.append(1)
+                    next_actions.append((idx, 'Scoop', {'scooping_point': scooping_point}))
+
+                else:
+                    efficiency_scores.append(2)
+                    next_actions.append((idx, 'Push', {'start':filling_push_start, 'end':filling_push_end}))
+
+            elif categories[idx] in ['meat/seafood', 'vegetable', 'fruit', 'brownie']:
+                action, scooping_point, filling_push_start, filling_push_end = self.get_scoop_action_mujoco(labels[idx])
+                efficiency_scores.append(1)
+                next_actions.append((idx, 'Scoop', {'scooping_point': scooping_point}))
+        
+        print('Length of next actions: ', len(next_actions))
+        
+        print('Candidate actions: ', next_actions)
+
+        if self.mode == 'efficiency':
+            return next_actions[np.argmin(efficiency_scores)], None
+        
+        # round efficiency scores to nearest integer
+        efficiency_scores = [round(score) for score in efficiency_scores]
+
+        # take reciprocal of efficiency scores and multiply with LCM
+        print('Efficiency scores before reciprocal: ', efficiency_scores)
+        efficiency_scores = np.array([1/score for score in efficiency_scores]) * int(np.lcm.reduce(efficiency_scores))
+        efficiency_scores = efficiency_scores.astype(int).tolist()
+
+        non_dip_labels = []
+        non_dip_portions_rounded = []
+        for idx in range(len(labels)):
+            non_dip_labels.append(labels[idx])
+            non_dip_portions_rounded.append(round(portions[idx]))
+
+        if continue_food_label is not None:
+
+            next_bite = [continue_food_label]
+        else:
+
+            print('Non dip labels: ', non_dip_labels)
+            print('Efficiency scores: ', efficiency_scores)
+            print('Bite portions: ', non_dip_portions_rounded)
+            print('Preference: ', preference)
+            print('Bite preference: ', bite_preference)
+
+            k = input("Press [n] to exit or otherwise I will query bite sequencing planner...\n\n")
+            if k == 'n':
+                return None, None
+
+            next_bite, bite_size, distance_to_mouth, exit_angle = self.preference_planner.plan_motion_primitives(
+                non_dip_labels, 
+                non_dip_portions_rounded, 
+                efficiency_scores, 
+                preference, 
+                bite_preference, 
+                transfer_preference,
+                history,
+                mode=self.mode)
+        
+        print('Next bite', next_bite)
+        print(f'Next bite size: {bite_size}')
+        print('non_dip_labels', non_dip_labels)
+        print('Next actions', next_actions)
+
+        if len(next_bite) == 1 and next_bite[0] in labels:
+            print(non_dip_labels, next_bite[0])
+            idx = non_dip_labels.index(next_bite[0])
+            return next_actions[idx], bite_size, distance_to_mouth, exit_angle
+        else: 
+            return None, None
+        
     def get_autonomous_action_decomposer(self, 
                               categories, 
                               labels, 
