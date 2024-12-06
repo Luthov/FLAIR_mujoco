@@ -1,0 +1,285 @@
+=== HISTORY ===
+[]
+=== RESPONSE ===
+Summary: The user prefers to start feeding with egg, then alternates between chicken and broccoli, with specific handling preferences for bread (tilt the spoon upward) and broccoli (keep it farther). 
+
+Strategy: The next food item should be egg as it is the starting preference and assuming this is the start of the feeding session with all portions remaining. Since there is no previous bite history or specific preference mentioned for the egg regarding bite size, speed of acquisition, distance to mouth, exit angle, or speed of transfer, default values will be used except for specific preferences mentioned like tilting the spoon upward for bread, which does not apply here.
+
+Next food item: Given the user's preference to begin with egg and alternation thereafter, and considering it's the start (no previous bites), the first item should indeed be egg.
+Next food item as string: 'egg'
+Next bite size: No specific preference mentioned for egg or prior history; thus, the default bite size value is used.
+Next bite size as float: 5.0
+Next speed of acquisition: No specific preference mentioned for speed, and without prior history, the default speed of acquisition is chosen.
+Next speed of acquisition as float: 5.0
+Next distance to mouth: Since there's no mention of egg needing a specific distance and no prior history, the default distance to mouth is selected.
+Next distance to mouth as float: 7.5
+Next exit angle: No specific tilt preference mentioned for egg, and no prior history to base adjustments on, so default exit angle is maintained.
+Next exit angle as float: 90.0
+Next speed of transfer: No specific preference mentioned for egg regarding the speed of transfer, hence the default value is chosen.
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: egg
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['egg', 5.0, 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user prefers to start feeding with an egg, then alternate between chicken and broccoli. For bread, the spoon should be tilted upward, and for broccoli, the spoon should be kept farther from the mouth. No specific preferences are noted for bite sizes, speed of acquisition, or speed of transfer, so default values from the last bite or explicit guidelines should be used.
+
+Strategy: Since the last food item was an egg, and the user prefers alternating between chicken and broccoli after starting with an egg, the next food item will be chicken. The default values will be used for bite size, speed of acquisition, and speed of transfer since no specific preferences were provided. For broccoli, the spoon needs to be farther, but since the next item is chicken, no adjustment is needed based on the food type preference. However, since no specific preference was mentioned for chicken regarding distance to mouth or exit angle, default or historical values will be used.
+
+Next food item: The last food item was an egg, and following the user's preference to alternate, chicken is the next logical choice considering the available portions.
+Next food item as string: 'chicken'
+Next bite size: No specific preference was stated for chicken; thus, the default last value of 5.0 will be maintained.
+Next bite size as float: 5.0
+Next speed of acquisition: No specific preference for speed of acquisition was mentioned; thus, the last used value of 5.0 is chosen as the default.
+Next speed of acquisition as float: 5.0
+Next distance to mouth: No specific preference for chicken regarding the distance to mouth was provided. The last value used and default is 7.5, which will be used again.
+Next distance to mouth as float: 7.5
+Next exit angle: Since there's no specific instruction for chicken regarding tilt and considering the preference for bread which doesn't apply here, the default or last historical value of 90.0 is chosen.
+Next exit angle as float: 90.0
+Next speed of transfer: Without specific instructions on the speed of transfer, the last used value of 5.0 is maintained as it meets the default expectation.
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['egg', 5.0, 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user's preference indicates starting with an egg, then alternating between chicken and broccoli for feeding. There is a specific request for adjusting the spoon's tilt upwards for bread (not applicable in this selection) and keeping it farther for broccoli, indicating a preference for modifying the feeding approach based on the food type.
+
+Strategy: Since the last food item provided was chicken, and given the alternating preference stated, the next food item should be broccoli, as both egg and chicken have already been served and there are portions remaining of broccoli. Since there's a specific mention to keep the spoon farther for broccoli, the distance to mouth parameter will be adjusted accordingly. No specific preferences are stated for bite size, speed of acquisition, or speed of transfer, so the defaults will be used except for the exit angle which may be adjusted to accommodate keeping the spoon "farther" for broccoli, although no specific tilt preference is indicated for broccoli directly. 
+
+Next food item: The user's preference indicates a rotation that starts with egg and alternates between chicken and broccoli. Since egg and chicken have already been served, broccoli is next in rotation.  
+Next food item as string: 'broccoli'  
+Next bite size: No specific preference for bite size was mentioned for broccoli; thus, the default will be maintained.  
+Next bite size as float: 5.0  
+Next speed of acquisition: No preference indicated, so the default value is used.  
+Next speed of acquisition as float: 5.0  
+Next distance to mouth: The preference specifies keeping the spoon "farther for broccoli." Given the scale allows for a range, an adjustment towards the "further" end is appropriate, but since the user does not specify exactly how much farther, a moderate increase will be considered.  
+Next distance to mouth as float: 8.5  
+Next exit angle: No specific angle is stated for broccoli; the default is applied as no other cues are given.  
+Next exit angle as float: 90.0  
+Next speed of transfer: The user did not express a preference for this parameter in relation to broccoli, so the default is used.  
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: broccoli
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 8.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['egg', 5.0, 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user's preference starts with egg, then alternates between chicken and broccoli for subsequent bites. For bread, not mentioned in the remaining items but included in preferences, the spoon should tilt upward, and for broccoli, the spoon should be kept farther away from the mouth. No specific preferences were provided regarding bite size, speed of acquisition, or speed of transfer, suggesting defaulting to historical or default values unless stated otherwise.
+
+Strategy: Since the last item fed was broccoli, according to the alternating preference between chicken and broccoli after starting with egg, the next food item should be chicken. The bite size, speed of acquisition, and speed of transfer will default to their historical values or 5.0 when not specifically mentioned. For broccoli, the preference is to keep the spoon farther, but for chicken, there's no such preference, so we'll default to the historical value for distance to mouth and exit angle.
+
+Next food item: The last food item was broccoli, and given the user's preference to alternate between chicken and broccoli after starting with egg, the next item should be chicken.
+Next food item as string: 'chicken'
+Next bite size: No specific preference for chicken's bite size was mentioned; thus, we default to the historical value of 5.0.
+Next bite size as float: 5.0
+Next speed of acquisition: There's no preference indicating a need to diverge from the historical speed; therefore, it remains at the default speed.
+Next speed of acquisition as float: 5.0
+Next distance to mouth: For chicken, there was no preference indicating it should be closer or further; thus, we refer back to its last known value or default, which was 7.5.
+Next distance to mouth as float: 7.5
+Next exit angle: There's no specific requirement for chicken regarding the spoon's tilt, so we will use the standard exit angle used previously.
+Next exit angle as float: 90.0
+Next speed of transfer: There's no indication that chicken should be transferred at a different speed from the default or historical value.
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['egg', 5.0, 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user prefers to begin feeding with an egg, then alternate between chicken and broccoli, suggesting a pattern in their food preferences. Additionally, there is a specific instruction to tilt the spoon upward for bread (although bread is not currently in the sequence of foods) and keep it farther for broccoli, indicating a preference for adjusting the feeding approach based on the food type.
+
+Strategy: Given the previous bite was chicken, following the user's preference for alternation and considering the portions remaining, the next food item should be broccoli. Since there's a specific mention to keep the spoon farther for broccoli, we'll adjust the distance to mouth accordingly. There are no explicit preferences for bite size, speed of acquisition, exit angle (besides bread), and speed of transfer, so we will use default values or infer from the user’s past choices where applicable.
+
+Next food item: The last food item was chicken, and considering the user's preference for alternation and the fact that egg was fed first and then alternation began between chicken and broccoli with chicken just fed, broccoli is the next logical choice based on the remaining portions as well.
+Next food item as string: 'broccoli'
+Next bite size: No specific preference for broccoli mentioned, so the default of 5.0 or the last value used for broccoli will be considered. Since broccoli was previously fed with a bite size of 5.0, we will continue with this.
+Next bite size as float: 5.0
+Next speed of acquisition: Again, no specific preference for broccoli is mentioned regarding speed, and the last recorded speed for broccoli was 5.0, so we'll maintain this speed.
+Next speed of acquisition as float: 5.0
+Next distance to mouth: For broccoli, the specific preference to keep it farther is noted. The last distance used for broccoli was 8.5, reflecting this preference. We'll use the same distance to adhere to this preference.
+Next distance to mouth as float: 8.5
+Next exit angle: The user's preference mentions tilting upward for bread, but there's no specific instruction for broccoli. The default used for broccoli previously was 90.0, which we'll continue with, as it aligns with the standard approach.
+Next exit angle as float: 90.0
+Next speed of transfer: No specific preference regarding the speed of transfer for broccoli, and the previous speed used for broccoli was 5.0, so we will stick with this consistent value.
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: broccoli
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 8.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 1, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['egg', 5.0, 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user prefers starting with egg, then alternating between chicken and broccoli for subsequent bites. For bread (not currently in the remaining items but mentioned for preferences), an upward tilt (higher exit angle) is preferred and for broccoli, keeping the spoon farther is preferred. 
+
+Strategy: Since the sequence involves alternating between chicken and broccoli after starting with egg and considering the portions and bite history, the next food item will be egg to maintain the sequence and because there's still a portion remaining. Following the user's specific preferences on tilt and distance, we will adjust parameters for broccoli when it's served next, based on past history for a guide on other preferences not explicitly stated.
+
+Next food item: Given the preference for starting with egg and then alternating between chicken and broccoli, and considering the last food item was broccoli and there's still one portion of egg left, egg is the logical choice to continue the sequence correctly.
+Next food item as string: 'egg'
+Next bite size: No specific preference is stated for bite size; thus, the default or prior value will be used, sticking to the most recent value to maintain consistency.
+Next bite size as float: 5.0
+Next speed of acquisition: No specific preference is stated; the prior value from bite history will be maintained for consistency.
+Next speed of acquisition as float: 5.0
+Next distance to mouth: No specific preference for egg regarding the distance to mouth; thus, the default or most recently used value for egg will be used.
+Next distance to mouth as float: 7.5
+Next exit angle: No specific preference for egg regarding exit angle is specified; the historical or default value will be utilized.
+Next exit angle as float: 90.0
+Next speed of transfer: No specific preference is indicated; hence, the previous or default speed will be applied to ensure consistency.
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: egg
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 1, 1]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['egg', 5.0, 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['egg', 5.0, 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user prefers to start with an egg and then alternate between chicken and broccoli. For bread, the preference is to tilt the spoon upward, and for broccoli, the preference is to keep it farther away from the mouth.
+
+Strategy: Given the bite history and preferences, the next item chosen should follow the pattern observed, alternating between the types of food after starting with an egg, considering what has most recently been fed and what remains. Based on the last item fed ("egg"), the next item should be chicken as the pattern suggests alternating and all items have equal portions remaining. Bite size remains default as no specific preferences have been indicated. Given no speed preference is mentioned, both speed of acquisition and transfer will default to their respective historical values. Distance to mouth is based on the food item's specific preferences ("farther for broccoli"), but since the next item is chicken, it will default to the historical norm for chicken. Exit angle remains default except for specified items; since chicken doesn't have a specific preference, it follows the default or historical norm.
+
+Next food item: Following from egg, the pattern and user preference indicate that chicken should be next, as it alternates with broccoli and is the next in the sequence.
+Next food item as string: 'chicken'
+Next bite size: No specific preference dictates a change from the default or historical norm, keeping it consistent.
+Next bite size as float: 5.0
+Next speed of acquisition: With no specific speed preference stated, we adhere to the default and what has been previously used for chicken.
+Next speed of acquisition as float: 5.0
+Next distance to mouth: Since the next item is chicken and there's no specific preference to make it closer or farther, we'll use the default that has been used for chicken previously.
+Next distance to mouth as float: 7.5
+Next exit angle: With no specific preference for chicken on tilting, we adhere to the standard default or historical norm used.
+Next exit angle as float: 90.0
+Next speed of transfer: Without a mentioned preference on transfer speed for chicken, it remains at the default and historically consistent speed.
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['egg', 5.0, 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['egg', 5.0, 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user's preference involves starting with egg, then alternating between chicken and broccoli. There is also a specific request to tilt the spoon upward for bread (although bread is not listed in the remaining items, this preference for tilt may be considered for other items if applicable) and to keep the spoon farther away for broccoli.
+
+Strategy: Given the bite history and the user's preference for alternating between chicken and broccoli after starting with egg, and considering the portions remaining for each item, the next food item will be chosen based on the alternation pattern and remaining portions. Considering previous parameter values, adjustments will be made to fulfill the specificity of the user's preference for distance and tilt where mentioned.
+
+Next food item: Since the pattern has been to alternate between chicken and broccoli, and the last item fed was chicken, the next item should be broccoli, especially as each item has one portion remaining, adhering to the preference pattern and available portions.
+
+Next food item as string: 'broccoli'
+
+Next bite size: No specific preference was stated other than the default or history information, so the default value will be used.
+
+Next bite size as float: 5.0
+
+Next speed of acquisition: No specific cue was provided for this parameter, so the default value from prior history will be used.
+
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: Since the preference mentioned keeping the spoon farther for broccoli, we will use the previously adjusted distance for broccoli.
+
+Next distance to mouth as float: 8.5
+
+Next exit angle: There is no specific preference for broccoli regarding the tilt (exit angle), and since bread, which requires upward tilt, is not in the remaining items or preferences specific to broccoli, we'll use the default.
+
+Next exit angle as float: 90.0
+
+Next speed of transfer: There was no specific preference stated for how quickly or slowly to transfer the food to the mouth beyond what has been previously used, so we'll stick with the historical default.
+
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: broccoli
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 8.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['egg', 5.0, 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['egg', 5.0, 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user prefers to start with an egg, then alternate between chicken and broccoli for subsequent bites. Additionally, the spoon should be tilted upward for bread (though bread is not mentioned in the remaining items or bite history) and kept farther when serving broccoli. There are no explicit preferences for bite size, speed of acquisition, or speed of transfer indicated, so defaults will be applied unless previous data or specific preferences suggest otherwise.
+
+Strategy: Since the last food item served was broccoli, and the user prefers alternation between chicken and broccoli with egg starting off the sequence when available (all items have exactly one portion remaining, making all equally valid for selection based on remaining quantity alone), the next item should be chicken to maintain the alternation pattern. Default values for bite size, speed of acquisition, and speed of transfer will be employed in the absence of specific instructions. The distance to mouth for broccoli was adjusted to 8.5 in the history, suggesting a preference for keeping it farther, but since the next item is chicken, the default distance will be used. The exit angle is typically kept standard unless a specific preference is indicated (such as tilting for bread), so the default will be applied.
+
+Next food item: The last item served was broccoli; according to the alternation preference and considering all items have a remaining portion, chicken is selected to maintain the alternation and because it's the next in the sequence post-broccoli.
+Next food item as string: 'chicken'
+Next bite size: There is no specified preference for changing bite sizes among the items, so the default is used.
+Next bite size as float: 5.0
+Next speed of acquisition: There's no specific user preference indicating a need to adjust from the default acquisition speed.
+Next speed of acquisition as float: 5.0
+Next distance to mouth: Chicken, unlike broccoli, has no specific distance preference stated, so we revert to the default.
+Next distance to mouth as float: 7.5
+Next exit angle: Without specific instructions to tilt differently for chicken, the default exit angle will be applied.
+Next exit angle as float: 90.0
+Next speed of transfer: Speed of transfer preferences are not mentioned; hence, the default speed is maintained for consistency.
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['egg', 5.0, 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['egg', 5.0, 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user prefers to start with an egg, then alternates between chicken and broccoli. They also prefer a higher spoon tilt for bread (not relevant in the remaining items) and a greater distance to the mouth for broccoli. These preferences will influence the adjustments made to the robot-assisted feeding pipeline parameters.
+
+Strategy: Since the last fed item was chicken, and based on the alternating preference between chicken and broccoli, along with the remaining portions indicating chicken is out and only egg and broccoli are left, the next item should be what is available and adheres to the pattern as much as possible, which is broccoli. Given the specific preference for broccoli to be served farther, adjustments to distance to mouth will be made accordingly. No specific preferences were mentioned for bite size, speed of acquisition, or speed of transfer, so the default or history-based values will be used. There's a specific instruction for greater distance for broccoli, this will be adhered to. The exit angle has no specific requirement for broccoli, so it will remain at the default unless there's an indication broccoli was handled differently, which it was in the history.
+
+Next food item: Based on the alternating preference and the remaining portions, while also considering that chicken (the last fed item) has no remaining portions, the next item should be broccoli as egg has already been started with, and the last bite was chicken.
+Next food item as string: 'broccoli'
+Next bite size: There's no specific preference stated for broccoli's bite size, and considering uniformity in past servings, the default value is optimal.
+Next bite size as float: 5.0
+Next speed of acquisition: Without specific instruction, relying on history where all foods were acquired at a standard rate seems appropriate.
+Next speed of acquisition as float: 5.0
+Next distance to mouth: Given the preference for broccoli to be kept farther, aligning with the previous customization for broccoli would be ideal.
+Next distance to mouth as float: 8.5
+Next exit angle: No unique preference is noted for broccoli or any pattern that could alter the standard exit angle, hence sticking with the default informed by history.
+Next exit angle as float: 90.0
+Next speed of transfer: In absence of a clear preference and to maintain consistency, the default speed as previously recorded is suitable.
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: broccoli
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 8.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 0, 1]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== FINAL HISTORY ===
+[['egg', 5.0, 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['egg', 5.0, 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0], ['chicken', 5.0, 5.0, 7.5, 90.0, 5.0], ['broccoli', 5.0, 5.0, 8.5, 90.0, 5.0]]
+=== FINAL TOKEN HISTORY ===
+[[362, 864, 1226], [455, 891, 1346], [443, 920, 1363], [437, 949, 1386], [516, 978, 1494], [386, 1007, 1393], [446, 1035, 1481], [415, 1064, 1479], [468, 1093, 1561], [480, 1122, 1602]]

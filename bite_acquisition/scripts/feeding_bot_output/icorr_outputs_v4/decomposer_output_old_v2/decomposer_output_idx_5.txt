@@ -1,0 +1,308 @@
+=== HISTORY ===
+[]
+=== BITE PREFERENCE ===
+Feed all the chicken first, then the rice with smaller bites.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to be fed chicken first, followed by rice with smaller bites, indicating a priority order and a size preference for the bites of the different food items.
+
+Strategy: Given the preference, the next food item should be chicken, as it is the first choice and there are still portions of it remaining. After all the chicken has been fed, the next priority would be rice, with the additional instruction to make those bites smaller than the default size. There's no preference indicated for peas, so they should be fed last, adhering to the order of precedence as much as possible.
+
+Next food item: Since 'chicken' is the first preference and there are portions remaining of it, it is the logical choice to feed next.
+Next food item as string: 'chicken'
+Next bite size: There's no specific bite size mentioned for chicken, so we'll default to the standard bite size.
+Next bite size as float: 5.0
+=== TRANSFER PREFERENCE ===
+Be careful not to tilt the spoon too much.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers not to tilt the spoon too much when taking a bite.
+Strategy: The user's preference indicates a concern with the spoon's tilt, which relates to the exit_angle setting. There's no specific preference mentioned for distance_to_mouth, so it will remain at the default. The concern with tilt advises a more conservative (lower) exit_angle to ensure careful spoon handling, especially for chicken, which can be more prone to falling off the spoon.
+Next distance to mouth: No preference indicated, keeping default value.
+Next distance to mouth as float: 7.5
+Next exit angle: Preference to not tilt the spoon too much suggests reducing the exit_angle from the default, aiming for a lower tilt to secure the food better.
+Next exit angle as float: 85.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 85.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['chicken', 5.0, 7.5, 85.0]]
+=== BITE PREFERENCE ===
+Feed me all the chicken first, then the rice. Use smaller bites.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to have all the chicken fed to them first, followed by the rice, and requests smaller bites compared to the default size.
+
+Strategy: Since the preference is to feed all the chicken first, and considering the chicken has portions remaining, it will be selected next. The preference for "smaller bites" suggests adjusting the bite size lower than the default or the previous bite size.
+
+Next food item: Since the preference specifies feeding all the chicken first and there are chicken portions remaining (2 portions remaining for chicken, 2 for rice, and 2 for peas), the chicken will be chosen as the next food item.
+
+Next food item as string: 'chicken'
+
+Next bite size: Given the preference for "smaller bites" and observing the previous bite size was 5.0, it makes sense to choose a smaller value to align with the user's request. The precise value isn't specified, but a notable decrease from 5.0 is appropriate.
+
+Next bite size as float: 3.0
+=== TRANSFER PREFERENCE ===
+Be careful not to tilt the spoon too much.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers not to tilt the spoon too much, indicating a preference for a lower exit angle.
+Strategy: Given the user's preference for minimal tilt and the bite history showing a previous exit angle of 85.0, the strategy is to maintain or slightly adjust the exit angle based on this preference. There's no mention of a preference for distance to mouth, so it will remain at the last used value.
+Next distance to mouth: No specific preference mentioned; maintaining previous value.
+Next distance to mouth as float: 7.5
+Next exit angle: User prefers minimal tilt; using previous exit angle as guide, slightly adjusting within the lower end of the range.
+Next exit angle as float: 85.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 3.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 85.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['chicken', 5.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0]]
+=== BITE PREFERENCE ===
+Feed all the chicken first, then the rice with smaller bites.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user wants all the chicken to be fed first, followed by the rice, and the rice should be served in smaller bites than usual. 
+
+Strategy: Given the current portions remaining for each item and the user's preference, we should focus on feeding chicken first until it has been fully consumed, then proceed with rice in smaller bites. Since the portions remaining indicate there's still chicken left, the choice should be chicken, respecting the user's ordering preference.
+
+Next food item: Since there is 1 portion of chicken remaining and the user's preference is to feed all the chicken first, the next food item to be fed should be chicken to align with their preference. 
+
+Next food item as string: 'chicken'
+
+Next bite size: The previous bites of chicken were 5.0 and 3.0. However, since there's no specific instruction on changing the bite size for chicken, we'll default to the last known preference for chicken, which is 3.0, demonstrating an adjustment based on recent user feedback rather than the default of 5.0.
+
+Next bite size as float: 3.0
+=== TRANSFER PREFERENCE ===
+Be careful not to tilt the spoon too much.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers to avoid tilting the spoon too much during the bite transfer.
+Strategy: Since the preference is to be careful with tilting, it is important to adjust the exit_angle to ensure it is not too high, which can create a risk of spillage or dropping food. The bite history shows a pattern of choosing an exit angle slightly lower than the default, which aligns with the user's preference. The distance to mouth has remained consistent and will be kept the same because the preference does not suggest a need for adjustment.
+Next distance to mouth: Since there is no specific preference to adjust the distance and the history shows a consistent value, it will remain unchanged.
+Next distance to mouth as float: 7.5
+Next exit angle: To minimize tilting as per the user's preference and align with the historical pattern, the exit angle should be kept at a similar, slightly lowered angle.
+Next exit angle as float: 85.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 3.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 85.0
+PORTION SIZES: [1, 2, 2]
+=== HISTORY ===
+[['chicken', 5.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0]]
+=== BITE PREFERENCE ===
+Feed all the chicken first, then the rice. Use smaller bites.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers all the chicken to be fed first, followed by the rice, with an emphasis on smaller bites.
+
+Strategy: Given the preference for feeding order and bite size, the first priority is to complete feeding chicken before moving on to rice. Given the portions remaining, and preference for smaller bites, the choice of next food item and bite size should reflect this.
+
+Next food item: Since there's still a portion of chicken remaining and the preference is to feed all the chicken first, the next food item should be chicken. The portions remaining are {chicken: 1, rice: 2, peas: 2}, matching with the items remaining and indicating that chicken is still available to be served.
+
+Next food item as string: 'chicken'
+
+Next bite size: The preference states to use smaller bites. The bite history shows a recent trend towards smaller bites with sizes of 3.0. To align with the preference for smaller bites, we will continue with this trend.
+
+Next bite size as float: 3.0
+=== TRANSFER PREFERENCE ===
+Be careful not to tilt the spoon too much.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers not to tilt the spoon too much, indicating a preference for a lower angle when transferring the bite to the mouth.
+Strategy: Based on the user’s preference for a lower tilt, the exit angle should be adjusted closer to the lower end of the provided range. Given that the bite history consistently shows an exit angle of 85.0, it demonstrates that this angle was likely chosen to accommodate the user's preference. There is no specific preference indicated for the distance to the mouth, so it will remain at the default setting since all previous bites were at this distance as well.
+Next distance to mouth: No specific preference was indicated for adjusting the distance to the mouth; thus, it remains at the default value consistent with the bite history.
+Next distance to mouth as float: 7.5
+Next exit angle: The user’s preference to not tilt the spoon too much suggests keeping the exit angle on the lower side. Since the past bites have successfully used an exit angle of 85.0 and considering the user's caution against too much tilt, the exit angle will remain the same.
+Next exit angle as float: 85.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 3.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 85.0
+PORTION SIZES: [1, 2, 2]
+=== HISTORY ===
+[['chicken', 5.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0]]
+=== BITE PREFERENCE ===
+Feed all the chicken first, then the rice. Use smaller bites.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to have all the chicken finished before moving on to rice and prefers smaller bite sizes over larger ones.
+
+Strategy: Based on the preferences and portions remaining, the next food item must follow the order of consuming all of one type before starting with another. As there are no more portions of chicken left (0 portions remaining) and rice is next in the preference list with 2 portions remaining, the next food item to feed should be rice. For the bite size, since the preference is towards smaller bites and looking at the bite history where the sizes have generally been around or below the default 5.0, and particularly the latest ones being 3.0, we should choose a smaller bite size in alignment with these preferences.
+
+Next food item: As chicken is fully consumed and following the user's preference to then feed rice, and considering there are portions of rice left, rice is the next choice.
+Next food item as string: 'rice'
+Next bite size: Based on the user's preference for smaller bite sizes and the history of previous bites being smaller with the most recent at 3.0, we will continue with this size to maintain consistency.
+Next bite size as float: 3.0
+=== TRANSFER PREFERENCE ===
+Be careful not to tilt the spoon too much.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers not to tilt the spoon too much.
+Strategy: Considering the user’s preference for less tilt, we will aim for a lower exit angle than the default but align it closely with past successful bites. Since the preference does not mention altering the distance to the mouth, that will remain at the default.
+Next distance to mouth: No specific preference indicated; defaulting to past successful value.
+Next distance to mouth as float: 7.5
+Next exit angle: Preference indicates a caution against too much tilt, suggesting a slightly lower angle than the default might be ideal, considering the consistent history of 85.0.
+Next exit angle as float: 85.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 3.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 85.0
+PORTION SIZES: [0, 2, 2]
+=== HISTORY ===
+[['chicken', 5.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0]]
+=== BITE PREFERENCE ===
+Feed all the chicken first, then the rice using smaller bites.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to have all the chicken items fed to them first before moving on to rice and wants the bites of rice to be smaller.
+
+Strategy: The preference dictates feeding order and bite size. Since all chicken portions have been consumed (Portions remaining: [0, 2, 2] with 'Items remaining': ['chicken', 'rice', 'peas']), the next priority is rice. The user's preference for smaller bites for rice will guide the bite size choice.
+
+Next food item: Given the portions remaining and the user's preference, rice is the next logical choice for feeding as chicken has been completely consumed and peas are not mentioned in the preference. 
+
+Next food item as string: 'rice'
+
+Next bite size: The user specified smaller bites for rice, and the most recent bite size for rice was 3.0, which aligns with this preference. This suggests continuing with a bite size of 3.0.
+
+Next bite size as float: 3.0
+=== TRANSFER PREFERENCE ===
+Be careful not to tilt the spoon too much.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user's preference is to avoid tilting the spoon too much when transferring food to the mouth.
+Strategy: Since there is a specific mention to be cautious with the tilt, the exit angle needs to be adjusted accordingly. The preference does not mention any change regarding the distance to the mouth; therefore, it will remain at its default or previous value based on the bite history which consistently used 7.5. Considering the history and preference to avoid too much tilt, choosing an exit angle closer to the lower end within the preferred range will potentially satisfy the user's precaution with the tilt while transferring rice, which may require a less aggressive angle compared to more cohesive foods to prevent spillage.
+Next distance to mouth: No preference indicating a change was mentioned; therefore, it remains at the historical consistent use of 7.5.
+Next distance to mouth as float: 7.5
+Next exit angle: The user prefers not to tilt the spoon too much, and the history shows a consistent exit angle of 85.0 for both chicken and rice, which aligns with being cautious with the tilt. Maintaining this angle for rice again seems appropriate.
+Next exit angle as float: 85.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 3.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 85.0
+PORTION SIZES: [0, 2, 2]
+=== HISTORY ===
+[['chicken', 5.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0]]
+=== BITE PREFERENCE ===
+Feed all the chicken first, then the rice with smaller bites.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to have all the chicken served first, followed by the rice, and preferring smaller bites for the rice. 
+
+Strategy: Since all chicken portions have been consumed (with 0 portions remaining for chicken), the next food item according to the user preference is rice. The portions remaining for each food item are chicken (0), rice (1), peas (2), aligning with the initial order of 'Items remaining'. The last food item eaten was rice, and considering the preference for smaller bites with rice, we will continue with rice and choose a smaller bite size.
+
+Next food item: Rice is the next item to feed, following the user's preference order and considering the portions remaining. 
+
+Next food item as string: 'rice'
+
+Next bite size: As the last few bites of rice were served at a 3.0 size, and the preference mentions smaller bites for rice, we will maintain this bite size that was previously selected to adhere to the user's desire for smaller bites for rice.
+
+Next bite size as float: 3.0
+=== TRANSFER PREFERENCE ===
+Be careful not to tilt the spoon too much.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers not to tilt the spoon too much, suggesting a preference for a lower exit angle to ensure food does not spill.
+Strategy: Considering the preference to not tilt the spoon too much, and observing that previous exit angles for both chicken and rice have consistently been 85.0, which is already lower than the default 90.0, it would be appropriate to maintain this exit angle. The distance to mouth has consistently been 7.5 for both types of food, showing no explicit preference for changing this parameter.
+Next distance to mouth: Since there is no specific preference indicating a change in distance to mouth and past distances have all been 7.5, it is appropriate to keep it unchanged.
+Next distance to mouth as float: 7.5
+Next exit angle: Given the preference for careful tilting and since previous exit angles were set at 85.0 to possibly prevent spillage, it is appropriate to continue with this exit angle.
+Next exit angle as float: 85.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 3.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 85.0
+PORTION SIZES: [0, 1, 2]
+=== HISTORY ===
+[['chicken', 5.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0]]
+=== BITE PREFERENCE ===
+Feed me all the chicken first, then the rice. Use smaller bites.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to have all the chicken fed first, followed by the rice, with bites being smaller than the default size.
+
+Strategy: Given the preference and portions remaining, the priority is to feed chicken, then rice, while peas have no mention in the preference and can be considered last or ignored based on the user's direct preferences. However, since portions remaining indicate there's no chicken left (0), but there is still rice (1) and peas (2), rice is the sensible option to feed next, honoring the user's sequence of preference. For bite size, the user prefers smaller bites. Looking at the previous bite sizes, especially for rice, which were set at 3.0, this size aligns with the user's preference for smaller bites and should therefore be used again.
+
+Next food item: Since there are no chicken portions left and the next preference is for rice, which has a portion remaining, rice should be the next food item fed to the user.
+
+Next food item as string: 'rice'
+
+Next bite size: Based on the user's preference for smaller bites and the bite history showcasing a trend towards 3.0 being acceptable for rice, the bite size will be set to 3.0 to maintain consistency with the user's preference for smaller bites.
+
+Next bite size as float: 3.0
+=== TRANSFER PREFERENCE ===
+Be careful not to tilt the spoon too much.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers careful handling of the spoon to prevent excessive tilting that could spill the contents.
+Strategy: Given the preference to avoid too much tilt and the pattern of prior bite exit angles maintained consistently at 85.0 degrees, it appears the preference is towards a slightly lower tilt than the default. No specific preference was mentioned regarding the distance to the mouth, so maintaining the previous setting makes sense.
+Next distance to mouth: Since there's no expressed preference to adjust the distance and the previous distance of 7.5 has been consistently used, it remains unchanged.
+Next distance to mouth as float: 7.5
+Next exit angle: The user's concern with tilting too much indicates a preference for a lower tilt angle. As the previous bites all used an exit angle of 85.0, which is lower than the default but still in the given range, this exit angle will be used again.
+Next exit angle as float: 85.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 3.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 85.0
+PORTION SIZES: [0, 1, 2]
+=== HISTORY ===
+[['chicken', 5.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0]]
+=== BITE PREFERENCE ===
+Feed all the chicken first, then the rice with smaller bite sizes.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to have all the chicken fed to them first, followed by rice, and prefers smaller bite sizes for the rice.
+
+Strategy: According to the user's preference and given that all chicken has been consumed (as indicated by the absence of chicken in portions remaining and the bite history), the focus should shift to rice. However, since there is no rice remaining either (0 portions left), the only option that aligns with the user's remaining preferences and the available food is peas. The user's preference towards bite size specifically mentions smaller bites for rice, but since peas are the only option left, we'll adapt this preference towards the peas, considering a context of adapting preferences to remaining food.
+
+Next food item: Given the portions remaining, peas are the only food item not fully consumed (portions remaining are [0, 0, 2] for ['chicken', 'rice', 'peas'] respectively), thus making peas the next logical choice for feeding.
+
+Next food item as string: 'peas'
+
+Next bite size: Considering the user's preference for smaller bite sizes, which was specifically mentioned for rice but will be adapted for peas in this context, and observing the history of bite sizes, particularly noticing the trend towards smaller bite sizes (3.0) when feeding rice, it is reasonable to choose a smaller bite size for peas. This aligns with the likely intention behind the original preference.
+
+Next bite size as float: 3.0
+=== TRANSFER PREFERENCE ===
+Be careful not to tilt the spoon too much.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers not to tilt the spoon too much while eating.
+Strategy: Since the preference indicates care with the tilt of the spoon but does not mention distance, the distance_to_mouth will remain at the default. The exit_angle history shows a consistent choice lower than the default, likely indicating a preference aligning with the instruction to avoid excessive tilting.
+Next distance to mouth: No preference indicated; default value is suitable.
+Next distance to mouth as float: 7.5
+Next exit angle: Preference to not tilt too much suggests using a lower exit angle, aligning with the history of previous bites.
+Next exit angle as float: 85.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 3.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 85.0
+PORTION SIZES: [0, 0, 2]
+=== HISTORY ===
+[['chicken', 5.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['peas', 3.0, 7.5, 85.0]]
+=== BITE PREFERENCE ===
+Feed me all the chicken first, then the rice using smaller bites.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to eat all the chicken first, followed by the rice, and wants smaller bites for the rice.
+
+Strategy: Since the user’s preference includes feeding all chicken first then the rice, we prioritize based on this sequence. According to the portions remaining, as provided, chicken is already finished (0 portions remaining), and rice is the next item but with 0 portions remaining too, leaving only peas with portions left. Therefore, even though peas were not mentioned in the preferences for sequence, they are the only remaining option for feeding. The preference for smaller bites when eating rice could also apply to peas, given no specific bite size preference was mentioned for peas, we can infer a smaller bite may be preferred overall after chicken.
+
+Next food item: Since only 'peas' have portions remaining (2), and both 'chicken' and 'rice' are already finished (0 portions remaining), 'peas' is the chosen food item despite not being explicitly prioritized in the preference.
+
+Next food item as string: 'peas'
+
+Next bite size: The user’s preference was specified for smaller bites for the rice, and given no other specific preference was outlined for other food items, a smaller bite size is chosen for 'peas' to align with the user's past preference for a smaller bite.
+
+Next bite size as float: 3.0
+=== TRANSFER PREFERENCE ===
+Be careful not to tilt the spoon too much.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers not to tilt the spoon too much, indicating a preference for a lower exit angle to avoid spillage.
+Strategy: Given the user's preference for a minimal tilt and considering the consistent exit angle for previous bites, it seems appropriate to maintain a similar low angle to ensure comfort and avoid spillage, especially with peas, which may easily roll off.
+Next distance to mouth: The preference does not explicitly mention a need to adjust the distance to the mouth, so we'll keep it at the default value used in the history, matching prior bites for consistency.
+Next distance to mouth as float: 7.5
+Next exit angle: Since the user prefers not to tilt the spoon too much and the history shows a trend of using an 85.0 angle, which is lower than the default but has appeared to work well, including for peas previously, we will maintain this angle to meet the user's preferences.
+Next exit angle as float: 85.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 3.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 85.0
+PORTION SIZES: [0, 0, 2]
+=== FINAL HISTORY ===
+[['chicken', 5.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['chicken', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['rice', 3.0, 7.5, 85.0], ['peas', 3.0, 7.5, 85.0], ['peas', 3.0, 7.5, 85.0]]
+=== FINAL TOKEN HISTORY ===
+[{'decomposer_tokens': [33, 227, 260], 'bite_sequencing_tokens': [194, 627, 821], 'transfer_param_tokens': [161, 389, 550]}, {'decomposer_tokens': [35, 227, 262], 'bite_sequencing_tokens': [208, 637, 845], 'transfer_param_tokens': [147, 402, 549]}, {'decomposer_tokens': [33, 227, 260], 'bite_sequencing_tokens': [228, 644, 872], 'transfer_param_tokens': [194, 416, 610]}, {'decomposer_tokens': [34, 227, 261], 'bite_sequencing_tokens': [210, 654, 864], 'transfer_param_tokens': [233, 430, 663]}, {'decomposer_tokens': [34, 227, 261], 'bite_sequencing_tokens': [246, 663, 909], 'transfer_param_tokens': [138, 443, 581]}, {'decomposer_tokens': [33, 227, 260], 'bite_sequencing_tokens': [203, 670, 873], 'transfer_param_tokens': [243, 456, 699]}, {'decomposer_tokens': [33, 227, 260], 'bite_sequencing_tokens': [215, 678, 893], 'transfer_param_tokens': [206, 469, 675]}, {'decomposer_tokens': [35, 227, 262], 'bite_sequencing_tokens': [271, 688, 959], 'transfer_param_tokens': [195, 482, 677]}, {'decomposer_tokens': [34, 227, 261], 'bite_sequencing_tokens': [297, 695, 992], 'transfer_param_tokens': [135, 496, 631]}, {'decomposer_tokens': [34, 227, 261], 'bite_sequencing_tokens': [275, 704, 979], 'transfer_param_tokens': [197, 510, 707]}]

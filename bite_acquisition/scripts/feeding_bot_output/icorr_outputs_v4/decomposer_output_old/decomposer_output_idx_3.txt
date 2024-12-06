@@ -1,0 +1,331 @@
+=== HISTORY ===
+[]
+=== BITE PREFERENCE ===
+Start with the vegetables, then the meat. Keep the bites small.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to start feeding with vegetables before moving on to meat and desires smaller bite sizes.
+
+Strategy: Since the preference clearly states to start with vegetables, the next item should be a vegetable. Among the remaining items, both spinach and peas qualify as vegetables. Given no specific order between vegetables, and both having equal portions remaining, spinach will be selected as the next food item as it is first on the list. For the bite size, though the default is 5.0, the user's preference for smaller bites directs adjusting this parameter to a smaller value than the default.
+
+Next food item: Since spinach is a vegetable and considering the user's preference to start with vegetables followed by meat, and the portions remaining are 2 (indicating it has not been fully consumed), spinach is the logical choice for the next food item to ensure adherence to user preferences and avoid selection based on previous bites.
+
+Next food item as string: 'spinach'
+
+Next bite size: The user's preference to keep the bites small guides the decision to choose a smaller value than the default. The default is 5.0, so selecting a value on the smaller side respects the user's preference. 
+
+Next bite size as float: 1.0
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not provided a specific preference for distance to mouth or exit angle for their spoonfuls of food.
+Strategy: Since the user has not indicated any preference or historical preferences to guide adjustments, I will use the default values for both parameters.
+Next distance to mouth: No specific preference has been indicated, and there's no history of adjustments, so the default value of 7.5 will be used.
+Next distance to mouth as float: 7.5
+Next exit angle: Without a stated preference or historical data suggesting a need to deviate, the default exit angle of 90.0 degrees is selected.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: spinach
+BITE SIZE: 1.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['spinach', 1.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Start with the vegetables, then the meat. Keep the bites small.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to start with vegetables before moving on to meat, and they wish for the bites to be kept small. 
+
+Strategy: Since the user has a preference for starting with vegetables, we'll focus on serving the remaining vegetable items before moving to meat, adhering to their sequence. Given the portions remaining and the bite history, which shows a preference for smaller bites, we will select the next vegetable and adjust the bite size accordingly.
+
+Next food item: Considering the user's preference to start with vegetables and that 'spinach' has already been consumed but still has portions remaining, the next item should be another vegetable. Since 'peas' are the only other vegetable option left and 'spinach' still needs to be finished, we should continue with 'spinach' to adhere to the consume-all-of-one-item-before-moving-to-the-next rule implied by the user's preference.
+
+Next food item as string: 'spinach'
+
+Next bite size: The user prefers to "Keep the bites small." Given the bite history included a bite size of 1.0 for 'spinach', and to respect the user's continued preference for small bites, we shall maintain this bite size. 
+
+Next bite size as float: 1.0
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user's preference is not explicitly mentioned; therefore, we have to rely on standard or default settings for both parameters based on the previous bite data provided.
+Strategy: Since there is no expressed preference and only one data point in the bite history which aligns with the default values, it is sensible to maintain these defaults for the next spoonful of food.
+Next distance to mouth: As there are no preferences or feedback indicating a need for adjustment from the previous settings, the default value will be maintained.
+Next distance to mouth as float: 7.5
+Next exit angle: Without specific feedback or indicated preference on tilt, it is reasonable to keep the exit angle at the default setting.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: spinach
+BITE SIZE: 1.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['spinach', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Start with the vegetables, then the meat. Keep the bites small.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to start with vegetables before moving on to meat and desires for the bites to be small.
+
+Strategy: Given the preference for vegetables first, we prioritize finishing the remaining vegetables before offering any meat. Since spinach has been completely consumed as indicated by the bite history and the provided portions, peas are the next vegetable to prioritize (based on the available 'Items remaining'). The bite history also shows a preference for smaller bites, specifically 1.0, which we will continue to follow to honor the user's request for small bites.
+
+Next food item: Since spinach has been fully consumed (based on the bite history and the given portions), and the user's preference is to start with vegetables, the next logical choice is peas, which still have portions remaining.
+
+Next food item as string: 'peas'
+
+Next bite size: The user's preference for small bites and the previous bite sizes both being 1.0 guide the decision to maintain this size to ensure consistency and adherence to user preference.
+
+Next bite size as float: 1.0
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has no explicit stated preference for distance to mouth or exit angle based on the input provided. The history of bites consumed so far included only spinach, with both bites using the default values for distance to mouth (7.5) and exit angle (90.0).
+Strategy: Given there are no explicitly stated preferences and the bite history shows consistent use of default values, the next bite parameters will remain at the defaults to ensure consistency with the user's experiences so far. This should provide a familiar and presumably satisfactory experience given the lack of feedback indicating a desire for adjustment.
+Next distance to mouth: There is no stated preference indicating a need to adjust the default distance, and previous bites were successful at the default value.
+Next distance to mouth as float: 7.5
+Next exit angle: No preference or feedback has been given that suggests changing the default exit angle; previous bites have used the default successfully.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 1.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 2]
+=== HISTORY ===
+[['spinach', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Start with the vegetables, then the meat, and keep the bites small.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to start with vegetables before proceeding to meat, and wishes for the bites to be kept small.
+
+Strategy: Given the user's preference for starting with vegetables and considering the portions remaining and the preference for small bites, the strategy is to follow the user's preferred order of food items and select a small bite size. Since 'spinach' and 'peas' are the vegetables mentioned and 'spinach' has already been partially consumed, the focus should be on finishing the vegetables before moving to the meat ('beef'). 'Peas' should be the next food item as 'spinach' has no portions left, according to the bite history and portions remaining. The bite size preference has been clearly stated as small, which has been reflected in the bite history with sizes of 1.0.
+
+Next food item: Since 'spinach' has been consumed according to preference and portions remaining for 'peas' still exist, the next choice is 'peas' to comply with the preference of finishing vegetables first. Current portions remaining are: 'spinach': 0 (fully consumed, not stated in the portions remaining but inferred from the bite history), 'beef': 2, 'peas': 2. The last food item given was 'peas', aligning with the strategy to finish all vegetables before moving to meat.
+
+Next food item as string: 'peas'
+
+Next bite size: The preference suggests keeping the bites small, and the previous bite sizes were all at 1.0, suggesting a continuation of this size to adhere to user preference.
+
+Next bite size as float: 1.0
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user's preference is not explicitly stated, but we can infer from the bite history that there is a consistency in the parameters used for both spinach and peas, which suggests a comfort with the default settings.
+Strategy: Since the user has not expressed any specific preference for adjustments and has previously been served food with the default parameters (7.5 for distance_to_mouth and 90.0 for exit_angle), it is reasonable to continue with these defaults. The consistency in previously successful feedings suggests these parameters work well for the user.
+Next distance to mouth: No preference has been indicated, and the history shows consistent use of the default 7.5, indicating satisfaction with this distance.
+Next distance to mouth as float: 7.5
+Next exit angle: Again, no preference is indicated, and the history demonstrates a contentment with the default setting of 90.0 for the exit angle.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 1.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 2]
+=== HISTORY ===
+[['spinach', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Start with the vegetables, then the meat and keep the bites small.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to start with vegetables, followed by meat, while keeping the bites small.
+
+Strategy: As per the user's preference and the portions remaining, the strategy focuses on completing the vegetable servings before moving onto the meat. Given the preference to keep bites small and the bite history showcasing a trend of choosing small bite sizes, a bite size suggestion will align with previously observed preferences.
+
+Next food item: Given the preference to start with vegetables, and considering 'spinach' has already been consumed (based on portions remaining and bite history), the next vegetable available is 'peas', which still has 1 portion remaining. Since 'beef' is a meat item, it will be prioritized last according to the user's preference.
+
+Next food item as string: 'peas'
+
+Next bite size: The preference indicates keeping the bites small, and the bite history shows a trend of choosing bite sizes of 1.0, which aligns with the user's preference for small bites. Therefore, maintaining this bite size is logical for consistency with user preference and previous behavior.
+
+Next bite size as float: 1.0
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not expressed any explicit preference for adjustments in the distance_to_mouth or the exit_angle for the delivery of food based on the provided history. All previous bites have used default settings.
+
+Strategy: Since there are no indicated preferences for either distance_to_mouth or exit_angle, and the bite history shows consistency in using the default parameters for both spinach and peas, we will stick with these default settings for the next serving of peas. This approach ensures consistency with the previous servings and assumes that the default settings have been satisfactory in the absence of any feedback to adjust them.
+
+Next distance to mouth: As there is no preference indicating a need to adjust the distance_to_mouth and the previous entries have consistently used the default value, we will maintain this setting.
+Next distance to mouth as float: 7.5
+Next exit angle: Given no preference for adjusting the exit_angle and a history of using the default setting, we will continue with this value to maintain consistency.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 1.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 1]
+=== HISTORY ===
+[['spinach', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Start with the vegetables, then the meat. Keep the bites small.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user's preference instructs starting with vegetables before moving on to meat, and to keep the bites small.
+
+Strategy: Following the preference for ordering, we should prioritize vegetables over meat. Given the bite history's trend of small bite sizes and the explicit preference for small bites, we will continue with a small bite size.
+
+Next food item: Since all spinach and peas have been consumed (based on the history and portions indicating peas are fully consumed), and prioritizing vegetables is no longer possible, the next choice is beef, which is the only remaining food that fits the order of preference (vegetables then meat) and still has portions remaining.
+
+Next food item as string: 'beef'
+
+Next bite size: The preference for small bites directs us to select a bite size on the smaller end of the spectrum. Seeing that all prior bites recorded were 1.0 and to adhere to the user’s desire for small bites, the bite size should remain small.
+
+Next bite size as float: 1.0
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not specified a direct preference for either distance to mouth or exit angle. Their bite history shows consistent parameters across different types of food, suggesting comfort or satisfaction with these settings.
+
+Strategy: Since no specific preferences were mentioned, and the bite history does not indicate a trend towards adjusting parameters for different types of food, we will maintain the default values. This approach assumes that the user's comfort with the previous settings will apply to the next bite of food, which is beef.
+
+Next distance to mouth: The bite history shows a consistent distance to mouth of 7.5 for all previous bites, suggesting this distance has been satisfactory. Given no expressed preference for adjustment, we will maintain this distance.
+Next distance to mouth as float: 7.5
+
+Next exit angle: All previous bites have had an exit angle of 90.0, which implies that this angle works well for the user across different foods. Without any preference indicating a desire for adjustment, we will keep this setting as well.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: beef
+BITE SIZE: 1.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 1]
+=== HISTORY ===
+[['spinach', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['beef', 1.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Start with the vegetables, then the meat. Keep the bites small.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to start with vegetables before moving on to meat, and desires smaller bites of the food.
+
+Strategy: Based on the user's preference for vegetables before meat, and considering the remaining portions, spinach should be the next food item since it is the only vegetable left with portions remaining. The user's preference for smaller bites will guide the choice of bite size.
+
+Next food item: Given the user's preference to start with vegetables and considering the portions remaining, 'spinach' is chosen because there's still 1 portion left of it according to the 'Portions remaining' {'spinach': 1, 'beef': 2, 'peas': 1}. Since 'peas' have already been finished (following the list of items and their remaining portions correctly as peas are not listed in the remaining portions indicating they are fully consumed), it is appropriate to continue with 'spinach' to adhere to the preference of eating vegetables first.
+
+Next food item as string: 'spinach'
+
+Next bite size: The preference states "Keep the bites small," and the bite history shows previous bite sizes were all 1.0, which is the smallest size available. Following this directive and previous actions ensures adherence to the user's wishes.
+
+Next bite size as float: 1.0
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has no explicitly stated preference; thus, preferences need to be inferred from previous bite parameters, which have consistently been set at the default values (7.5 for distance_to_mouth and 90.0 for exit_angle) across different food types.
+
+Strategy: Given the lack of explicit preference and the consistent use of default parameters for various food types (spinach, peas, beef), it is reasonable to continue using these default settings for the next bite of spinach. This approach ensures consistency with previous successful bites and maintains a neutral position in the absence of express preferences.
+
+Next distance to mouth: No specific preference is indicated towards moving the spoon "closer" or "further" from the mouth. Previous parameters have always been set at the default 7.5, indicating a satisfactory distance for the user.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Similarly, no preference has been expressed for adjusting the "tilt" angle higher or lower. Past bites consistently used a 90.0 angle, which suggests this angle is well-suited for the user across different food types.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: spinach
+BITE SIZE: 1.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 1]
+=== HISTORY ===
+[['spinach', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['beef', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Start with the vegetables, then the meat. Keep the bites small.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to start with vegetables before moving onto meat, and desires the bite sizes to be kept small.
+
+Strategy: Since the user's preference is to start with vegetables and then move onto meat, and considering the portions remaining for each food item, we implement this preference sequence. Additionally, the preference stipulates small bite sizes, which we'll adhere to by examining the bite history for guidance on the user's definition of "small."
+
+Next food item: Given the portions remaining {[1, 2, 1]} for the items {['spinach', 'beef', 'peas']}, and considering that all food preference orders and portion sizes, the next food item should be 'spinach' because it is a vegetable, aligning with the preference to eat vegetables first, and there is a portion of it remaining. The previous food item fed, according to the bite history, was 'spinach', continuing this pattern meets the user's preference efficiently.
+
+Next food item as string: 'spinach'
+
+Next bite size: The user's preference for keeping the bites small is noted, and the bite history reflects a consistent choice of 1.0 as the bite size. Since there is no instruction to deviate from this established preference, and to maintain consistency with the user's comfort and satisfaction, we choose the small bite size of 1.0 again.
+
+Next bite size as float: 1.0
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has shown no explicit preference for adjustment in parameters for distance to mouth or exit angle, sticking to the default values for all previous bites irrespective of the type of food.
+
+Strategy: Since the user has consistently used the default parameters for both distance to mouth and exit angle without any given preference to adjust these parameters, it is most appropriate to continue using these default settings for the next bite of spinach.
+
+Next distance to mouth: There is no indicated preference for changing the distance to mouth, and the user has used the default value of 7.5 for all previous bites. Therefore, maintaining this default setting for consistency makes the most sense.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Similarly, the exit angle has consistently been set to the default value of 90.0 for all types of food, indicating the user is comfortable with this angle. Without any expressed desire to adjust this parameter, it is reasonable to continue using this default value.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: spinach
+BITE SIZE: 1.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 1]
+=== HISTORY ===
+[['spinach', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['beef', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Start with the vegetables, then the meat, and keep the bites small.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user's preference is to start feeding with vegetables, proceed to meat, and maintain small bite sizes throughout feeding.
+
+Strategy: Based on the user's preference to begin with vegetables and then move to meat while keeping bites small, and considering the portions remaining, the strategy will focus on finishing the remaining vegetable portions first. Given the current portions remaining, which are spinach [0 portions left], beef [2 portions left], and peas [1 portion left], the next food item to feed should be peas because it's the only vegetable left with portions remaining. Since the preference specifies keeping bites small and previous bites were all of size 1.0, we will continue with this bite size to comply with the user's preference for small bites.
+
+Next food item: The next food item chosen is 'peas' because it is the only vegetable left with portions remaining. This aligns with the user's preference to start with vegetables before moving to meat.
+Next food item as string: 'peas'
+Next bite size: Considering the user's preference for small bites and the history of bites, all of which were size 1.0, the next bite size will remain small to comply with the stated preference.
+Next bite size as float: 1.0
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user’s preferences, based on the bite history, do not indicate a clear deviation from the default settings of 7.5 for distance_to_mouth and 90.0 for exit_angle. All previous bites, regardless of the food type, have utilized these default values.
+
+Strategy: Given the consistent use of default settings for both distance_to_mouth and exit_angle across various food types in the bite history, it is reasonable to conclude that these values meet the user’s needs or that the user has not expressed a preference for adjustments.
+
+Next distance to mouth: Since there is no evidence in the bite history of a preference for altering the distance_to_mouth, and no specific preference was stated for the upcoming bite of peas, the default value of 7.5 is retained.
+Next distance to mouth as float: 7.5
+
+Next exit angle: Similarly, the exit_angle has always been set at the default of 90.0 for different types of food, including peas, without indication of a preference for change. Thus, it remains unchanged.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 1.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 2, 1]
+=== HISTORY ===
+[['spinach', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['beef', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Start with the vegetables, then the meat and keep the bites small.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers to start with vegetables, followed by meat, while keeping the bite sizes small.
+
+Strategy: Based on the preferences and portions remaining, the priority is to feed vegetables before meat. Since 'spinach' and 'peas' portions are at 0, and 'beef' is the only food item with remaining portions (2), the next food item must be 'beef'. Considering the user's preference for small bite sizes and the historical bite sizes all being 1.0, we will continue with this trend.
+
+Next food item: Given that all vegetables have been consumed and only 'beef' has portions remaining, we select 'beef' as the next food item to comply with the user's preference sequence and availability.
+Next food item as string: 'beef'
+Next bite size: The preference suggests keeping the bites small, which aligns with the historical bite sizes of 1.0. Therefore, we will continue with a small bite size.
+Next bite size as float: 1.0
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user has not specified any direct preference in their input, but their bite history shows consistency in both distance_to_mouth and exit_angle settings for various types of food, including beef, spinach, and peas. All previous settings have been at the default values of 7.5 for distance_to_mouth and 90.0 for exit_angle.
+
+Strategy: Since there is no explicit preference indicated and previous parameters have been consistent across different bites, it is logical to maintain the default settings. This approach should cater to the user's comfort and familiarity with the device's operation, assuming the lack of specified preference implies satisfaction with previous experiences.
+
+Next distance to mouth: No preference was indicated, and the bite history shows a consistent use of 7.5 which is the default distance. Thus, there is no compelling reason to adjust this parameter away from what has been previously utilized.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Similarly, with no explicit preference for the exit angle and a historical consistency at 90.0 degrees, it makes sense to continue with this default value. It ensures a balanced approach to delivering bites, considering the user's repetitive selection of this angle in the past.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: beef
+BITE SIZE: 1.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 2, 0]
+=== FINAL HISTORY ===
+[['spinach', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['beef', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0], ['spinach', 1.0, 7.5, 90.0], ['peas', 1.0, 7.5, 90.0], ['beef', 1.0, 7.5, 90.0]]
+=== FINAL TOKEN HISTORY ===
+[{'decomposer_tokens': [25, 216, 241], 'bite_sequencing_tokens': [250, 589, 839], 'transfer_param_tokens': [138, 380, 518]}, {'decomposer_tokens': [25, 216, 241], 'bite_sequencing_tokens': [252, 597, 849], 'transfer_param_tokens': [150, 393, 543]}, {'decomposer_tokens': [25, 216, 241], 'bite_sequencing_tokens': [212, 606, 818], 'transfer_param_tokens': [195, 407, 602]}, {'decomposer_tokens': [26, 216, 242], 'bite_sequencing_tokens': [332, 616, 948], 'transfer_param_tokens': [194, 421, 615]}, {'decomposer_tokens': [25, 216, 241], 'bite_sequencing_tokens': [227, 624, 851], 'transfer_param_tokens': [207, 435, 642]}, {'decomposer_tokens': [25, 216, 241], 'bite_sequencing_tokens': [204, 633, 837], 'transfer_param_tokens': [213, 449, 662]}, {'decomposer_tokens': [25, 216, 241], 'bite_sequencing_tokens': [263, 642, 905], 'transfer_param_tokens': [238, 463, 701]}, {'decomposer_tokens': [25, 216, 241], 'bite_sequencing_tokens': [288, 651, 939], 'transfer_param_tokens': [208, 477, 685]}, {'decomposer_tokens': [26, 216, 242], 'bite_sequencing_tokens': [253, 661, 914], 'transfer_param_tokens': [225, 491, 716]}, {'decomposer_tokens': [25, 216, 241], 'bite_sequencing_tokens': [210, 669, 879], 'transfer_param_tokens': [256, 505, 761]}]

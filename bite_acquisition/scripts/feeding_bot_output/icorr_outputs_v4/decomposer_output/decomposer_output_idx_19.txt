@@ -1,0 +1,360 @@
+=== HISTORY ===
+[]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has not specified any preference for the order in which to eat the food items or for the size of the bites.
+
+Food Items Left: There are three food items left on the plate: rice, chicken, and peas, each with 2 portions remaining.
+
+Strategy: Given the lack of specific preferences, the strategy will be to equally distribute the feeding across the available food items to ensure a balanced meal. Without a defined order or history to influence the decision, we'll select the next food item in a round-robin fashion or sequentially as listed.
+
+Next food item: Since there is no previous food item mentioned (because the bite history is empty) and no stated preference, we can start with the first item listed among the available food items. This approach maintains simplicity and fairness among the items in the absence of further guidance.
+
+Next food item as string: 'rice'
+
+Next bite size: No specific preference for bite size has been stated; therefore, we will default to the middle value to accommodate a standard bite size that should be acceptable in most cases.
+
+Next bite size as float: 5.0
+=== TRANSFER PREFERENCE ===
+Prefers the spoon to be closer during the feeding process.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers the spoon to be closer during the feeding process, implying a preference for a shorter distance between the spoon and their mouth than might typically be set.
+
+Strategy: Given the user's preference for closer spoon feeding, the adjustment will focus on reducing the distance_to_mouth parameter within the given range (5.0 to 10.0). Because the preference explicitly mentions a desire for closeness, the default should be overridden to accommodate this. The exit_angle, on the other hand, has no stated preference, so it will remain at the default value to ensure a comfortable feeding position and efficient delivery of the next bite, which is rice. Rice doesn't typically require a specific exit angle adjustment due to its texture and consistency, affirming the default setting as appropriate.
+
+Next distance to mouth: The user prefers the spoon to be closer, indicating a requirement for a value on the lower end of the spectrum. Given the range, selecting a significantly closer distance compared to the default 7.5 should enhance user comfort and meet their preference.
+
+Next distance to mouth as float: 5.5
+
+Next exit angle: No specific preference for the exit angle has been articulated, so it is prudent to adhere to the default value. The absence of a user-stated preference or any history suggesting an optimal angle for previous bites points toward maintaining the standard practice for a balanced and neutral feeding approach.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['rice', 5.0, 5.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has not specified any particular preference for the order in which the food should be fed, nor have they specified a preference for the bite size.
+
+Food Items Left: There are three food items left on the plate: rice, chicken, and peas, each with 2 portions remaining.
+
+Strategy: Since no specific preference is given, the high-level strategy will be to maintain a balanced and varied diet by alternating between the food items. Considering the previous bite was rice, we aim to offer variety by choosing a different food item next.
+
+Next food item: Given the last bite was rice, and aiming for variety in the diet, the next logical choice is either chicken or peas to ensure the user enjoys a mix of tastes and nutrients. Since no specific preference is stated and both have the same portions remaining and efficiency, the choice between chicken and peas can be arbitrary or follow a pattern of alternating types (e.g., protein after a carb). Let's select chicken to maintain a good balance of nutrients, considering it's a source of protein and we had carbohydrates previously.
+
+Next food item as string: 'chicken'
+
+Next bite size: Since there's no specific preference mentioned for altering the bite size and considering the last bite size was the default value of 5.0, it's sensible to maintain this size for consistency and lack of instruction to do otherwise.
+
+Next bite size as float: 5.0
+=== TRANSFER PREFERENCE ===
+Prefer the spoon to be closer.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers the spoon to be closer to their mouth when receiving food.
+
+Strategy: Given the user's preference for the spoon to be closer, combined with the history showing a previous bite at 5.5 distance, we'll target a similar value for the next spoonful of chicken to accommodate their comfort. Since there's no explicit preference for the exit_angle, we will maintain it at the default or historical value if relevant.
+
+Next distance to mouth: The user's preference is for the spoon to be closer, and the most recent bite was served at a distance of 5.5, which falls within the preferred closer range. We will continue to use a value that aligns with this preference to ensure consistency and comfort for the user.
+
+Next distance to mouth as float: 5.5
+
+Next exit angle: There is no specific preference noted for the exit angle, and since the most recent and only history available shows an exit angle of 90.0, which is also the default, we will stick with this value. It seems to be an agreeable angle for eating without any adjustments requested or suggested by previous choices or preferences.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0]]
+=== BITE PREFERENCE ===
+No preference in the sequence.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has no specific preference in the sequence of the food items to be fed. 
+
+Food Items Left: There are three food items left on the plate: rice, chicken, and peas, each with 2 portions remaining.
+
+Strategy: Since no specific preference is given for the sequence of food items, and considering efficiency and previous bite history, the strategy will involve selecting the next food item based on maintaining variety and ensuring an equitable distribution of food types. 
+
+Next food item: Given the lack of preference and aiming to maintain variety, since the last food item fed was 'chicken', the next logical choice is 'peas', as it has not yet been fed and this ensures variety in the meal. 
+
+Next food item as string: 'peas'
+
+Next bite size: No specific preference towards the bite size has been expressed. Therefore, following the default value from previous interactions seems appropriate, which is 5.0.
+
+Next bite size as float: 5.0
+=== TRANSFER PREFERENCE ===
+Prefer the spoon to be closer.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers the spoon to be closer to their mouth when taking a bite.
+
+Strategy: Since the user has expressed a preference for the spoon to be closer, this will directly influence the distance_to_mouth parameter, ensuring a closer approach consistent with past preferences shown in the bite history. The exit_angle will default to previous values since there is no explicit preference for adjusting the tilt.
+
+Next distance to mouth: Given the user's preference for a closer spoon and considering the historical values of 5.5 for rice and chicken, it's reasonable to choose a value in this range for peas to maintain consistency and adhere to the user's preference.
+
+Next distance to mouth as float: 5.5
+
+Next exit angle: There is no specific preference indicated for adjusting the tilt (exit_angle) of the spoon. Thus, referencing the bite history where a 90.0-degree angle was used for both rice and chicken, it is sensible to maintain this angle for peas as well, ensuring a comfortable and consistent bite experience.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has not specified any preference for the order in which food items are to be fed.
+Food Items Left: There are three food items left on the plate: 'rice', 'chicken', and 'peas', each with 2 portions remaining.
+Strategy: Without a specified preference, the strategy will involve rotating through the food items, taking into account what was last fed to maintain variety. Since the last food item fed was 'peas', the next food item should be something other than 'peas' to ensure a varied diet within a meal.
+Next food item: Considering the last food item was 'peas', the next logical choice would be either 'rice' or 'chicken' to keep a variety in the meal. Between 'rice' and 'chicken', it does not make a difference which one to choose next as both have the same portions remaining and no preference has been stated. Thus, choosing 'rice' for variety and to follow the previously established sequence.
+Next food item as string: 'rice'
+Next bite size: As there is no specific preference provided for bite size and the previous bites were all 5.0, maintaining consistency with a default value of 5.0 is logical.
+Next bite size as float: 5.0
+=== TRANSFER PREFERENCE ===
+The user prefers the spoon to be closer to them.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers the spoon to be closer to their mouth.
+
+Strategy: Since the user has a preference for the spoon to be closer, the distance_to_mouth will be adjusted according to this preference and previous successful parameters. However, there is no specified preference for the exit angle adjustment, suggesting that we should maintain the default or previously successful exit angle settings.
+
+Next distance to mouth: Based on the user's preference for "closer" and previous bites, all of which used a distance of 5.5, it is appropriate to continue with this value to ensure comfort and satisfaction.
+
+Next distance to mouth as float: 5.5
+
+Next exit angle: Since there's no specified preference towards the exit angle and given the successful use of a 90.0 angle in previous bites, we will continue using this setting believing it suits various types of food without any issues reported.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0], ['rice', 5.0, 5.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has not expressed any specific preference.
+
+Food Items Left: The plate contains 'rice', 'chicken', and 'peas', with portions remaining as 1, 2, and 2 respectively.
+
+Strategy: Given the absence of a specific user preference, the strategy will focus on maintaining variety in the feeding sequence. The last item fed was 'rice'. To maintain variety, the next food item selected should be different from the last, and consideration should be given to items with sufficient portions remaining.
+
+Next food item: Since 'rice' was the last food item fed and considering the strategy of alternating food items to maintain variety, 'chicken' or 'peas' would be suitable choices. Both have equal portions remaining. However, as 'rice' was served last and both 'chicken' and 'peas' have not been served more recently than the other, selecting either is reasonable. Given no specific order is provided, choosing 'chicken' to maintain a balance in the variety of the meal types (protein and vegetable) is reasonable.
+
+Next food item as string: 'chicken'
+
+Next bite size: There has been no expressed preference for changing the bite size. Considering consistency and the lack of direction to alter the bite size, the default of 5.0 is chosen.
+
+Next bite size as float: 5.0
+=== TRANSFER PREFERENCE ===
+The user prefers the spoon to be closer to them.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers the spoon to be closer to them.
+
+Strategy: Based on the user's preference for the spoon to be closer and the consistent previous distance_to_mouth values of 5.5 in their bite history, the next distance_to_mouth will be chosen to reflect this preference. The exit angle has consistently been 90.0 for different types of bites (rice, chicken, peas) in the bite history, suggesting the user has no specific preference beyond the default for the exit angle. Therefore, the exit angle will remain at the default of 90.0.
+
+Next distance to mouth: The user has a clear preference for the spoon to be closer, and historical data shows a repeated choice of 5.5, indicating that this distance is preferable and suited to the user's needs. Therefore, the same value is chosen to maintain consistency and adherence to user comfort and preference.
+
+Next distance to mouth as float: 5.5
+
+Next exit angle: Since no explicit preference has been stated or implied regarding the exit angle, and considering the historical data shows a consistent use of the default exit angle at 90.0 for various bites, it is logical to keep the exit angle unchanged at 90.0 to meet the likely comfort and usability expectations of the user.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 2]
+=== HISTORY ===
+[['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0], ['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has not specified any preference for the order of food items or bite size. Therefore, all food items can be considered equally and the default bite size should be used unless otherwise indicated.
+
+Food Items Left: There are three food items left on the plate: rice, chicken, and peas. The portions remaining correspond respectively, with there being 1 portion of rice, 1 portion of chicken, and 2 portions of peas left.
+
+Strategy: Given the lack of preference and the equal efficiency for all food types, the previous bite history will guide the selection in order to maintain a variety in the feeding sequence. Since 'chicken' was the last food item fed, the strategy will be to not repeat that immediately and instead select a different food item, also considering the portions left to ensure every type of food is offered equally throughout the meal.
+
+Next food item: Given the strategy above and noting the remaining portions, 'peas' is the logical next choice. It has more portions remaining than the other items, and it wasn't the last item fed. This will also ensure a balanced approach to consuming all available food types without repeating the last item.
+
+Next food item as string: 'peas'
+
+Next bite size: Since there's no specified preference for bite size being larger or smaller and considering the default value has been working well as indicated by no adjustments in previous bites, the default bite size of 5.0 will be continued.
+
+Next bite size as float: 5.0
+=== TRANSFER PREFERENCE ===
+Prefer the spoon to be closer during feeding.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers the spoon to be closer during feeding, a preference shown by the previously selected distance_to_mouth values for different types of food, all being closer than the default.
+
+Strategy: Given the user's preference for the spoon to be closer and the consistency in previously chosen values for different foods, the approach will involve selecting a distance_to_mouth that aligns with these preferences and prior successful feedings. The exit_angle will remain unchanged from the default, as no specific preference has been indicated for it.
+
+Next distance to mouth: The user has consistently preferred a closer distance_to_mouth at 5.5 for all types of food, including peas in the past. Thus, to respect this preference, the same value will be chosen for the next spoonful of peas.
+
+Next distance to mouth as float: 5.5
+
+Next exit angle: Since there's no specific preference mentioned for adjusting the exit angle and considering all previous bites maintained an exit angle at 90.0, the default value will be maintained for consistency and to align with past successful feedings.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 2]
+=== HISTORY ===
+[['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0], ['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has not specified any preference for the order or size of food to be consumed.
+Food Items Left: There are three types of food items left on the plate: rice, chicken, and peas, each with one portion remaining.
+Strategy: Since no specific preference is indicated, and all items have equal portions and efficiency, the strategy will be to continue the rotation of food items as has been done in the previous bites to maintain variety.
+Next food item: The most recent food item consumed is 'peas', following the established rotation, the next food item should be 'rice'.
+Next food item as string: 'rice'
+Next bite size: There is no specified preference concerning the size of the bites. The previous bites for all food items were 5.0, which will remain as the default choice.
+Next bite size as float: 5.0
+=== TRANSFER PREFERENCE ===
+The user prefers the spoon to be closer to them.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers the spoon to be closer to their mouth when taking a bite.
+
+Strategy: Given the user's preference for the spoon to be closer, and the consistent choice of 5.5 for distance to mouth in their bite history, I will select a distance that aligns with these preferences and past actions. As there is no stated preference towards the exit angle, and considering the consistent past choice of 90.0 degrees, I will maintain this value for the exit angle.
+
+Next distance to mouth: The user's preference for "closer" and the historical data showing a preference for a 5.5 distance indicate that maintaining this value meets the user's needs and preferences.
+
+Next distance to mouth as float: 5.5
+
+Next exit angle: There is no expressed preference for the exit angle, and past actions consistently show a choice of 90.0 degrees. Therefore, maintaining this value respects the user’s unstated but inferred preference.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+=== HISTORY ===
+[['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0], ['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0], ['rice', 5.0, 5.5, 90.0]]
+=== BITE PREFERENCE ===
+None
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has not specified any preference for the sequence of food items to be fed or the bite size.
+Food Items Left: There are equal portions left of rice, chicken, and peas, each having one portion remaining.
+Strategy: Without a specific preference indicated, the strategy revolves around alternating the food items to ensure variety and matching previous feeding patterns if possible. The last food item fed was rice, indicating a pattern of rotation among the available food items.
+Next food item: Since rice was the last food item, and the pattern suggests alternating among the available items, the next logical choice based on maintaining variety would be chicken, as it follows rice in the historical pattern observed.
+Next food item as string: 'chicken'
+Next bite size: With no specified preference towards bite size and considering that all previous bites were of size 5.0, it is logical to continue with this default value to maintain consistency.
+Next bite size as float: 5.0
+=== TRANSFER PREFERENCE ===
+The user prefers the spoon to be closer to them.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers the spoon to be closer to them.
+
+Strategy: Considering the user's preference for the spoon to be closer and the consistent distance_to_mouth value in the bite history, the next parameters will reflect these insights. No preference was indicated that would adjust the exit angle; thus, it will remain at the default.
+
+Next distance to mouth: The user has expressed a preference for the spoon to be closer, and the bite history consistently shows a distance_to_mouth value of 5.5, which aligns with this preference. Therefore, it is appropriate to maintain this distance for consistency and to adhere to the user's comfort and preference.
+
+Next distance to mouth as float: 5.5
+
+Next exit angle: There is no explicit preference towards adjusting the exit angle. The exit angle has been consistently 90.0 degrees in the bite history without any noted issues. To maintain consistency and in the absence of a specific preference to adjust this setting, the exit angle will remain at the default value.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+=== HISTORY ===
+[['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0], ['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0], ['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0]]
+=== BITE PREFERENCE ===
+No preference in the sequence.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has no preference in the sequence of foods to be fed. 
+
+Food Items Left: The remaining food items on the plate are rice, chicken, and peas, with each having one portion left. 
+
+Strategy: Since there’s no specific sequence preference and given that all items have equal portions and efficiency rates, the next food item will be chosen based on the previous bite to ensure variety. 
+
+Next food item: The last food item fed was chicken, so the next item should either be rice or peas to maintain a varied diet and not repeat the same food consecutively. Given no preference stated, and aiming for variety, peas or rice could be the next choice. Since we are alternating and 'rice' was fed before 'chicken' in the last cycle, let's continue the pattern for variety and select 'peas'. 
+
+Next food item as string: 'peas'
+
+Next bite size: No specific preference has been stated for bite size, so we will default to the previous consistent size of 5.0.
+
+Next bite size as float: 5.0
+=== TRANSFER PREFERENCE ===
+Prefers the spoon to be closer.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers the spoon to be closer to their mouth when taking a bite.
+
+Strategy: Given the user's preference for the spoon to be closer and the consistent choice of 5.5 for distance_to_mouth in the bite history, the same distance will be maintained. For the exit_angle, no specific preference has been expressed, so the default of 90.0, which aligns with previous choices, will be continued.
+
+Next distance to mouth: Based on the user's preference for closer proximity and the consistent past choice of 5.5.
+
+Next distance to mouth as float: 5.5
+
+Next exit angle: No specific preference for exit angle adjustment has been expressed, so maintaining the previously preferred and used value of 90.0.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: peas
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+=== HISTORY ===
+[['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0], ['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0], ['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0]]
+=== BITE PREFERENCE ===
+No preference in the sequence.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user has no preference in the sequence of the food items to be fed. This means any food item can be selected without particular order.
+Food Items Left: There are portions of rice, chicken, and peas remaining on the plate, each with an equivalent portion left.
+Strategy: Given there is no preference in the sequence of food items, my strategy will revolve around rotating through the food items in the order they appear in the bite history, to ensure an equal and varied feeding experience.
+Next food item: The most recent food item fed was 'peas', following the sequence in the bite history, the next food item should logically be 'rice', as it appears next in the rotation sequence.
+Next food item as string: 'rice'
+Next bite size: No specific preference has been indicated, and the historical bite size has consistently been 5.0. Therefore, I will maintain this bite size.
+Next bite size as float: 5.0
+=== TRANSFER PREFERENCE ===
+Prefers the spoon to be closer.
+=== TRANSFER PARAMS RESPONSE ===
+Summary: The user prefers the spoon to be closer to their mouth than the default setting for distance to mouth but has no stated preference regarding the exit angle.
+
+Strategy: Since the user prefers the spoon to be closer and all of the previous bites have utilized a distance_to_mouth of 5.5, which is within the specified closer range of 5.0 to 10.0, it's clear that this preference should be maintained. There is no mention of a preference for exit angle, and all previous bites have utilized an exit angle of 90.0. Therefore, no change is needed or suggested for the exit angle based on the preferences and history provided.
+
+Next distance to mouth: The user prefers the spoon closer, and previous bites were all at a distance of 5.5, closer to the minimum allowed. This consistency supports the user's preference effectively.
+
+Next distance to mouth as float: 5.5
+
+Next exit angle: No specific preference for the exit angle was mentioned, and all previous bites were at an angle of 90.0, which is the default setting. This default seems to satisfy the user's needs adequately, so we will maintain it.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+=== FINAL HISTORY ===
+[['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0], ['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0], ['rice', 5.0, 5.5, 90.0], ['chicken', 5.0, 5.5, 90.0], ['peas', 5.0, 5.5, 90.0], ['rice', 5.0, 5.5, 90.0]]
+=== FINAL TOKEN HISTORY ===
+[{'decomposer_tokens': [24, 221, 245], 'bite_sequencing_tokens': [224, 565, 789], 'transfer_param_tokens': [291, 375, 666]}, {'decomposer_tokens': [19, 221, 240], 'bite_sequencing_tokens': [284, 572, 856], 'transfer_param_tokens': [242, 384, 626]}, {'decomposer_tokens': [23, 221, 244], 'bite_sequencing_tokens': [199, 586, 785], 'transfer_param_tokens': [216, 398, 614]}, {'decomposer_tokens': [23, 221, 244], 'bite_sequencing_tokens': [260, 590, 850], 'transfer_param_tokens': [189, 414, 603]}, {'decomposer_tokens': [23, 221, 244], 'bite_sequencing_tokens': [275, 598, 873], 'transfer_param_tokens': [270, 428, 698]}, {'decomposer_tokens': [21, 221, 242], 'bite_sequencing_tokens': [302, 607, 909], 'transfer_param_tokens': [228, 441, 669]}, {'decomposer_tokens': [23, 221, 244], 'bite_sequencing_tokens': [175, 616, 791], 'transfer_param_tokens': [205, 455, 660]}, {'decomposer_tokens': [23, 221, 244], 'bite_sequencing_tokens': [194, 624, 818], 'transfer_param_tokens': [215, 469, 684]}, {'decomposer_tokens': [24, 221, 245], 'bite_sequencing_tokens': [221, 638, 859], 'transfer_param_tokens': [165, 480, 645]}, {'decomposer_tokens': [24, 221, 245], 'bite_sequencing_tokens': [194, 647, 841], 'transfer_param_tokens': [249, 493, 742]}]
