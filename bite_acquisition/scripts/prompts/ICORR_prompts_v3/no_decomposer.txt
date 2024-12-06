@@ -1,0 +1,41 @@
+You are adjusting parameters for the bite acquisition primitive in a robot-assisted feeding pipeline. There are four adjustable parameters:
+1. next_food_item: Determine the next food item to feed.
+2. bite_size: Choose a value between 1.0 (smallest bite) and 10.0 (largest bite), default is 5.0.
+4. speed_of_acquisition: Choose a value between 1.0 (slowest speed) and 10.0 (fastest speed), default is 5.0.
+5. distance_to_mouth: Choose a value between 5.0 (closer) and 10.0 (further), default is 7.5.
+6. exit_angle: Choose a value between 80.0 (lower tilt) and 120.0 (higher tilt), default is 90.0.
+7. speed_of_transfer: Choose a value between 1.0 (slowest speed) and 10.0 (fastest speed), default is 5.0.
+
+Input Details:
+Preference: {%s}
+Items remaining:{%s}
+Portions remaining (corresponding to items remaining list): {%s}
+Efficiency: {%s}
+Bite History: {%s}. A list of previous bites and their parameters in the format [<food_item>, <bite_size>, <speed_of_acquisition>, <distance_to_mouth>, <exit_angle>, <speed_of_transfer>], with the last element being the most recent.
+
+Instructions:
+1. Summarize the user’s preference.
+2. Decide Parameters:
+- For next_food_item, determine the next bite to feed based on the user's preference and remaining portions. Make sure when you suggest a food item that still has portions remaining. Make sure to also include the previous food_item in your strategy for choosing the next_food_item.
+- For bite_size, use cues like "smaller" or "larger" and prior values from the bite history. Default to 5.0 if no specific preference is stated.
+- For speed_of_acquisition, look for cues like "faster" or "slower" and utilise the prior values from the bite history. Default to 5.0 if no specific preference is stated.
+- For distance_to_mouth, use preference cues like "closer" or "further" and prior values from the bite history. Default to 7.5 if no preference applies.
+- For exit_angle, look for cues like "higher," "lower," or "tilt," using bite history if needed. Default to 90.0 if no preference applies.
+- For speed_of_transfer, look for cues like "faster" or "slower" and utilise the prior values from the bite history. Default to 5.0 if no specific preference is stated.
+
+Format Your Response:
+Summary: <Brief explanation of the user’s preference>
+Strategy: <Reasoning for the chosen values>
+Next food item: <Reason for next_food_item choice>
+Next food item as string: <Chosen next_food_item as a string, Make sure you enclose the word with '' eg. 'chicken'>
+Next bite size: <Reason for bite_size choice>
+Next bite size as float: <Chosen value as a float>
+Next speed of acquisition: <Reason for speed_of_acquisition choice>
+Next speed of acquisition as float: <Chosen value as a float. Do NOT add comments>
+Next distance to mouth: <Reason for distance_to_mouth choice>
+Next distance to mouth as float: <Chosen value as a float>
+Next exit angle: <Reason for exit_angle choice>
+Next exit angle as float: <Chosen value as a float>
+Next speed of transfer: <Reason for speed_of_transfer choice>
+Next speed of transfer as float: <Chosen value as a float. Do NOT add comments>
+Ensure the response ends with "Next speed of transfer as float:", followed by the value. Always suggest a value.

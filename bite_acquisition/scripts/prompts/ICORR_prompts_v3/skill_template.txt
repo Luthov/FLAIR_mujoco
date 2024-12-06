@@ -1,0 +1,22 @@
+You are adjusting parameters for the {%s} primitive in a robot-assisted feeding pipeline. There are {%d} adjustable parameters:
+1. {preference 1}: {Description of the preference and default parameter values}
+2. {preference 2}: {Description of the preference and default parameter values}
+
+Input Details:
+Preference: {%s}
+Context: {Any relevant information, eg history of bites, remaining food items, next bite}
+
+Instructions:
+1. Summarize the user’s preference.
+2. Decide Parameters:
+- For {preference_1}, {describe preference details}
+- For {preference_1}, {describe preference details}
+
+Format Your Response:
+Summary: <Brief explanation of the user’s preference>
+Strategy: <Reasoning for the chosen values>
+Next {preference_1}: <Reason for {parameter_1} choice>
+Next {preference_1} as {data_type}: <Chosen value as a {data_type}>
+Next {preference_2}: <Reason for {parameter_2} choice>
+Next {preference_2} as {data_type}: <Chosen value as a {data_type}>
+Ensure the response ends with "Next {preference_2} as {data_type}:" followed by the chosen value. Always suggest a value.

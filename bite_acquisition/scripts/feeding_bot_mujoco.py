@@ -127,7 +127,7 @@ class FeedingBot:
             "I want sweet potatoes in generous servings, turkey in moderate portions, and mixed vegetables in smaller bites."
         ]
     
-        test_preferences = [
+        test_preferences_old = [
             "I want to eat the vegetables first, then the chicken, and save the rice for last.",
             "Start with a big piece of fish, followed by a small portion of salad.",
             "Serve me alternating bites of chicken and broccoli, with smaller bites of chicken",
@@ -152,7 +152,70 @@ class FeedingBot:
             "I want to eat the chicken first. Tilt the spoon higher when feeding me."
             ]
         
-        test_food_items = [
+        preferences = [
+            "I want to eat the vegetables first, then the chicken, and save the rice for last.",
+            "Start with a big piece of fish, followed by a small portion of salad.",
+            "Serve me alternating bites of chicken and broccoli, with smaller bites of chicken",
+            "I’d like rice served first, followed by vegetables.",
+            "Finish the rice and meat first, then the soup.",
+            "I prefer having smaller bites for rice but bigger bites for others",
+            "I have no preference",
+            "I want larger bites, and don't feed me any rice",
+            "Serve me rice and chicken, with some vege in between",
+            "Feed me potatoes last",
+
+            "Keep the spoon close to my mouth when offering rice and make sure to scoop the rice slowly.",
+            "Tilt the spoon slightly upward when feeding me soup and gently scoop the soup to prevent spillage.",
+            "Hold the spoon farther away when offering meat and move a little slower when transferring the meat to my mouth.",
+            "Position the spoon closer to my mouth.",
+            "Tilt the spoon gently downward when serving vegetables.",
+
+            "I’d like to start with soup and then move to rice. Feed closer for soup.",
+            "Begin with mashed potatoes and finish with turkey. Move the spoon closer to me",
+            "Serve alternating bites of rice and chicken. Hold the spoon farther for rice.",
+            "Start with a medium bite of salad. Keep the spoon tilted higher for soup.",
+            "I want to eat the chicken first. Tilt the spoon higher when feeding me."
+            ]
+        
+        complex_preferences = [
+            "I want to start with mashed potatoes and then move to chicken. Keep the spoon closer for mashed potatoes and tilt it downward for chicken.",
+            "Begin with soup, followed by rice and vegetables. Feed the soup close to my mouth to prevent spilling.",
+            "Serve alternating bites of rice and fish, saving vegetables for the end. Keep the spoon close to me.",
+            "Start with small bites of salad, then move to larger bites of pasta. Tilt the spoon downward for salad and keep it farther for pasta.",
+            "I’d like to eat chicken first, then rice, and finish with broccoli. Keep the spoon steady and level for rice and tilt it slightly upward for broccoli.",
+            "Serve me mashed potatoes first, followed by turkey. Carefully scoop the mashed potatoes and tilt the spoon gently upward for turkey.",
+            "Begin with small bites of soup, then alternate between rice and vegetables. Tilt the spoon upward for soup and transfer the vegetables with care to avoid spills.",
+            "I want fish first, followed by small bites of salad. Hold the spoon at a closer range for fish and tilt it downward for salad.",
+            "Start with medium bites of rice, followed by vegetables. I prefer the spoon to be further away from me, and bring the vegetables at a slower speed to avoid any mess.",
+            "Begin with egg, then alternate between chicken and broccoli. Tilt the spoon upward for bread and keep it farther for broccoli.",
+            "Serve the meat first, followed by rice. Keep the spoon close for meat and move the rice more gradually to prevent dropping any grains.",
+            "Start with scrambled eggs, then meat. I prefer smaller bites.",
+            "I only eat meat and vegetables, do not give me any rice. Move the food into my mouth during transfer.",
+            "Do not feed me the meat, I want alternate bites always. Move the spoon close to me and do not tilt it.",
+            "Begin with a medium bite of chicken, then rice. Tilt the spoon downward and keep it close for rice."
+            ]
+
+
+        complex_food_items = [
+            ["mashed potatoes", "chicken", "peas"],
+            ["soup", "rice", "carrots"],
+            ["rice", "fish", "broccoli"],
+            ["salad", "pasta", "potatoes"],
+            ["chicken", "rice", "broccoli"],
+            ["mashed potatoes", "turkey", "gravy"],
+            ["soup", "rice", "carrots"],
+            ["fish", "salad", "potatoes"],
+            ["rice", "carrots", "peas"],
+            ["egg", "chicken", "broccoli"],
+            ["beef", "rice", "soup"],
+            ["scrambled eggs", "beef", "toast"],
+            ["beef", "carrots", "peas"],
+            ["potatoes", "carrots", "peas"],
+            ["chicken", "rice", "carrots"]
+        ]
+
+        
+        food_items = [
             ["carrots", "chicken", "rice"],
             ["fish", "salad", "mashed potatoes"],
             ["chicken", "broccoli", "mashed potatoes"],
@@ -177,15 +240,15 @@ class FeedingBot:
             ["chicken", "rice", "carrots"]
         ]
 
-        for preference_idx in range(15, len(test_preferences)):
+        for preference_idx in range(6, 11): # len(preferences)):
             if not self.old_prompt:
-                user_preference = test_preferences[preference_idx]
+                user_preference = complex_preferences[preference_idx]
             else:
                 user_preference = user_preferences_hospital[preference_idx]
                 bite_preference = bite_preferences_hospital[preference_idx]
                 transfer_preference = "Hold the spoon slightly farther away for rice and tilt it downward for chicken."
 
-            self.items = [test_food_items[preference_idx]]
+            self.items = [complex_food_items[preference_idx]]
             self.item_portions = [2.0, 2.0, 2.0]
 
             self.inference_server.FOOD_CLASSES = self.items
@@ -284,7 +347,7 @@ class FeedingBot:
                 
                 if self.decompose:
                     print("USING DECOMPOSER")
-                    food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action_decomposer(
+                    food, bite_size, speed_of_acquisition, distance_to_mouth, exit_angle, speed_of_transfer, token_data = self.inference_server.get_autonomous_action_decomposer(
                         category_list, 
                         labels_list, 
                         per_food_portions, 
@@ -309,7 +372,7 @@ class FeedingBot:
                         )
                 else:
                     print("USING NON DECOMPOSER")
-                    food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action_no_decomposer(
+                    food, bite_size, speed_of_acquisition, distance_to_mouth, exit_angle, speed_of_transfer, token_data = self.inference_server.get_autonomous_action_no_decomposer(
                     category_list, 
                     labels_list, 
                     per_food_portions, 
@@ -367,45 +430,36 @@ class FeedingBot:
                         # self.item_portions[idx] -= round(0.5 + (bite_size - -1.0) * (1.0 - 0.5) / (1.0 - -1.0), 2)
                         break
                 
-                bite_history.append([labels_list[food_id], bite_size, distance_to_mouth, exit_angle])
+                bite_history.append([labels_list[food_id], bite_size, speed_of_acquisition, distance_to_mouth, exit_angle, speed_of_transfer])
                 
                 if not self.old_prompt:
                     token_history.append(token_data)
                 if success:
                     actions_remaining -= 1
 
-                with open('history.txt', 'w') as f:
-                    f.write(str(bite_history))
-
                 with open('token_history.txt', 'w') as f:
                     f.write(str(token_history))
 
-                # k = input('Exit?')
-                # if k == 'y':
-                #     exit(1)
                 print("=== ACTIONS REMAINING ===")
                 print(actions_remaining)
                 print("=== ACTIONS REMAINING ===\n")
 
                 if actions_remaining == 0:
-
-                    with open(f'feeding_bot_output/icorr_outputs/decomposer_output_test/decomposer_output_idx_{preference_idx}.txt', 'a') as f:
-                        f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
-                        f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
-                    with open(f'feeding_bot_output/icorr_outputs/decomposer_output_test/histories_idx_{preference_idx}.txt', 'a') as f:
-                        f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
-                        f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
+                    if self.decompose:
+                        with open(f'feeding_bot_output/icorr_outputs_v3/decomposer_output/decomposer_output_idx_{preference_idx}.txt', 'a') as f:
+                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
+                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
+                        with open(f'feeding_bot_output/icorr_outputs_v3/decomposer_output/histories_idx_{preference_idx}.txt', 'a') as f:
+                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
+                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
+                    else:
+                        with open(f'feeding_bot_output/icorr_outputs_v3/no_decomposer_output/no_decomposer_output_idx_{preference_idx}.txt', 'a') as f:
+                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
+                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
+                        with open(f'feeding_bot_output/icorr_outputs_v3/no_decomposer_output/histories_idx_{preference_idx}.txt', 'a') as f:
+                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
+                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
                     bite_history = []
-                # k = input('Continue to transfer? Remember to start horizontal spoon.')
-                # while k not in ['y', 'n']:
-                #     k = input('Continue to transfer? Remember to start horizontal spoon.')
-                # if k == 'y':
-                #     self.skill_library.transfer_skill(self.transfer_pose)
-                #     k = input('Continue to acquisition? Remember to shutdown horizontal spoon.')
-                #     while k not in ['y', 'n']:
-                #         k = input('Continue to acquisition? Remember to shutdown horizontal spoon.\n')
-                #     if k == 'n':
-                #         exit(1)
 
 if __name__ == "__main__":
 

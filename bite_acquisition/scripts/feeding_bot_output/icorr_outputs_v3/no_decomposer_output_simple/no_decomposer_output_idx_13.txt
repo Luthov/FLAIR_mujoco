@@ -1,0 +1,356 @@
+=== HISTORY ===
+[]
+=== RESPONSE ===
+Summary: The user prefers the spoon to be positioned closer to their mouth during feeding.
+
+Strategy: Given the user's preference for the spoon to be closer to their mouth, the distance_to_mouth parameter will be adjusted to a smaller value. No specific preferences were provided for the other parameters, so the default values or reasoned choices based on the type of food will be used.
+
+Next food item: Since there's no information about a previous food item and no preference has been expressed for the type of food, the choice of the next food item will be based on ensuring variety and utilizing all available portions. Therefore, any of the remaining items with available portions will be selected. Given no explicit preference and to ensure a balanced submission, we might start with 'yogurt', considering its smooth texture which could complement the requested closer proximity to the mouth.
+
+Next food item as string: 'yogurt'
+
+Next bite size: Without specific instructions for bite size and no history to rely on, the default of 5.0 will be used, assuming it's appropriate for a range of food textures.
+
+Next bite size as float: 5.0
+
+Next speed of acquisition: No specific preference means the default value of 5.0 is chosen, assuming it provides a moderate speed suitable for a variety of foods.
+
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: Since the user prefers the spoon to be closer to their mouth, the value will be adjusted to reflect this. While the default is 7.5, choosing a smaller value within the specified range better aligns with the user preference. A value closer to 5.0 will be chosen to accommodate this request.
+
+Next distance to mouth as float: 5.0
+
+Next exit angle: No specific preference means the default value of 90.0 is chosen, assuming it offers a balanced approach suitable for various food consistencies.
+
+Next exit angle as float: 90.0
+
+Next speed of transfer: With no specific preference and no prior data to inform this decision, the default of 5.0 will be maintained, ensuring a steady transfer rate that should be generally acceptable.
+
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: yogurt
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user prefers the spoon to be positioned closer to their mouth when being fed.
+
+Strategy: Based on the user's preference for positioning the spoon closer to their mouth, the distance to mouth parameter will be adjusted to be closer than the default value. Since there are remaining portions of yogurt, fruit, and oatmeal, and the last food item fed was yogurt, the next food item will be chosen based on rotation to ensure variety. No specific preferences were provided for bite size, speed of acquisition, exit angle, or speed of transfer, so default values or values from bite history will be used as cues for these parameters.
+
+Next food item: Since yogurt was the last item fed, and there seems to be a pattern of varying the food items without specific preferences toward any, the next food item would be the one following yogurt in the list to ensure variety.
+Next food item as string: 'fruit'
+
+Next bite size: No specific preference was indicated for bite size, and the last bite size was the default value of 5.0. Hence, the same value will be retained.
+Next bite size as float: 5.0
+
+Next speed of acquisition: No specific preference for speed of acquisition was stated, and the last value was at the default. This value will thus be maintained.
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: The user prefers the spoon to be closer to their mouth. The default is 7.5, but since the preference is for a closer position, this suggests adjusting the parameter to be lower than the default or the previously used value within the allowed range.
+Next distance to mouth as float: 5.0
+
+Next exit angle: No preference was expressed regarding the exit angle. Therefore, the default value or the last used value from the bite history will be applied.
+Next exit angle as float: 90.0
+
+Next speed of transfer: There was no specific preference stated for the speed of transfer, so the default or the last used value will be utilized.
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: fruit
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user prefers the spoon to be positioned closer to their mouth during feeding.
+
+Strategy: Considering the user's preference for proximity and looking at the bite history to maintain consistency in unmentioned parameters, while also ensuring a variety in the food items selected from the remaining portions.
+
+Next food item: Since the last food item was oatmeal and there are still portions of all items, we select 'fruit' next to ensure a balanced rotation among all food categories. This also aligns with the goal of providing variety in the diet, assuming no specific dietary preference was mentioned.
+
+Next food item as string: 'fruit'
+
+Next bite size: No specific preference mentioned, so we default to the previous value which is consistent at 5.0, ensuring the user is comfortable with the bite size.
+
+Next bite size as float: 5.0
+
+Next speed of acquisition: No specific preference mentioned for speed either, defaulting to the previous value to ensure a consistent and comfortable eating pace at 5.0.
+
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: The user's specific preference was for the spoon to be closer to their mouth, so we adjust this value lower than the default towards the minimum, improving their comfort without drastically altering the established parameters.
+
+Next distance to mouth as float: 5.0
+
+Next exit angle: No specific preference is mentioned for tilt, so we remain consistent with the previous parameters where the exit angle was kept at 90.0 degrees, ensuring a neutral and safe spoon exit strategy.
+
+Next exit angle as float: 90.0
+
+Next speed of transfer: No specific preference is mentioned for the transfer speed; hence, the value is kept consistent with the previous ones at 5.0 to ensure a comfortable eating pace for the user.
+
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: fruit
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user prefers the spoon to be positioned closer to their mouth during feeding.
+
+Strategy: Considering the user's preference for positioning the spoon closer to their mouth, the distance to mouth parameter should be adjusted to reflect this preference. The next food item should rotate in the order that respects the sequence of consumption stated in the bite history, ensuring variety. No specific preferences for bite size, speed of acquisition, exit angle, and speed of transfer were mentioned, so these will default to previous or default values where applicable.
+
+Next food item: Since the last item fed was 'fruit', and the items are being rotated in the order they were previously fed, the next food item should logically cycle back to 'yogurt', as it's the start of the sequence noted in the bite history and all items still have portions remaining.
+
+Next food item as string: 'yogurt'
+
+Next bite size: There is no specific preference stated for bite size, so the default of the previous value noted for 'yogurt', which was 5.0, will be used.
+
+Next bite size as float: 5.0
+
+Next speed of acquisition: No specific preference for acquisition speed was mentioned, so the default previous speed of 5.0 for 'yogurt' will be used.
+
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: Given the user's preference to position the spoon closer to their mouth, adjusting this parameter to a value lower than the default 7.5 is essential. Given the range allows for a closer setting at 5.0, this value will be selected to best meet the user's preference.
+
+Next distance to mouth as float: 5.0
+
+Next exit angle: No specific preference for the exit angle was mentioned, so the default value used previously, 90.0, will be applied.
+
+Next exit angle as float: 90.0
+
+Next speed of transfer: Since there's no particular preference stated for the speed of transfer, we'll use the previous value of 5.0.
+
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: yogurt
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user’s preference is to have the spoon positioned closer to their mouth.
+
+Strategy: Since the user prefers the spoon closer to their mouth, the value for distance_to_mouth will be adjusted to a lower value within its range, considering their last distance was the default 7.5 with no complaints, but preference now indicates a desire for closer. The next food item choice will consider what was recently fed ('yogurt') and the remaining portions of each item. Given the cycling through previous items for variety and the remaining portions, 'fruit', having more than one portion left and not being the most recent item, seems the next logical choice. The bite_size, speed_of_acquisition, exit_angle, and speed_of_transfer will default to their previous values since no specific preference was stated, assuming the user was satisfied with these parameters.
+
+Next food item: Choosing 'fruit' as it is not the most recent item fed and has portions remaining, adhering to variety and availability.
+Next food item as string: 'fruit'
+Next bite size: Since no specific preference for size change was mentioned and considering the default worked well, sticking with it.
+Next bite size as float: 5.0
+Next speed of acquisition: No preference stated for changing speed; the default seems to have been satisfactory.
+Next speed of acquisition as float: 5.0
+Next distance to mouth: Given the user’s preference for positioning the spoon closer, selecting a value closer to the minimum allowed.
+Next distance to mouth as float: 5.0
+Next exit angle: No specific preference was stated; assuming the default angle is suitable.
+Next exit angle as float: 90.0
+Next speed of transfer: Assuming the default speed is suitable as no change was preferred.
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: fruit
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user's preference focuses on positioning the spoon closer to their mouth.
+
+Strategy: Based on the user's preference for having the spoon positioned closer to their mouth, the distance to mouth parameter will be adjusted closer than the default. Since there was no specific preference stated for bite size, speed of acquisition, exit angle, or speed of transfer, we will default to the values previously used in the bite history or the default values where applicable. The selection of the next food item will consider both the remaining portions and variety, aiming to offer a balanced rotation of the available items.
+
+Next food item: Since all items have been fed recently and 'oatmeal' still has 2 portions remaining while others have only 1, it logically follows that 'oatmeal' should be the next choice to ensure all items are equally consumed.
+Next food item as string: 'oatmeal'
+Next bite size: Since no specific preference for bite size is stated, and the user seemed content with previous sizes, we'll stick with the historical norm.
+Next bite size as float: 5.0
+Next speed of acquisition: No specific preference was stated, so we default to the historical norm.
+Next speed of acquisition as float: 5.0
+Next distance to mouth: The user specifically requested the spoon to be positioned closer to their mouth. Adjusting this parameter closer than the default or historical norm.
+Next distance to mouth as float: 5.0
+Next exit angle: No specific preference for exit angle was indicated, so we default to the standard used previously.
+Next exit angle as float: 90.0
+Next speed of transfer: There is no specific preference mentioned, reverting to the historical average.
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: oatmeal
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user’s preference indicates a wish for the spoon to be positioned closer to their mouth during feeding.
+
+Strategy: Given the user's explicit preference for positioning the spoon closer to their mouth, the distance to mouth parameter will be adjusted accordingly. For choosing the next food item, since each item has been consumed in the past with one portion of each remaining, a balanced approach considering variety and rotation of items should be used. The recent bite history suggests not altering the default values of bite size, speed of acquisition, exit angle, and speed of transfer unless specified by the user, which in this case, isn't, except for the mentioned preference affecting the distance to the spoon.
+
+Next food item: The most recent food offered was 'oatmeal', so to ensure variety and to cycle through the items evenly, 'yogurt' should be the next item as it appears earlier in the bite history and all items have equal portions remaining.
+
+Next food item as string: 'yogurt'
+
+Next bite size: No specific preference indicated, so we default to maintaining the bite size similar to the bites in the history.
+
+Next bite size as float: 5.0
+
+Next speed of acquisition: No preference indicated towards adjusting the acquisition speed, thus keeping it as observed in the history.
+
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: Given the user’s explicit preference for bringing the spoon closer to their mouth, we adjust this parameter to the lower end of its range.
+
+Next distance to mouth as float: 5.0
+
+Next exit angle: No specific preference was mentioned regarding the exit angle, so the default value seen in the bite history is maintained.
+
+Next exit angle as float: 90.0
+
+Next speed of transfer: Since no explicit preference was indicated regarding the speed of transfer, it remains as observed in the bite history.
+
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: yogurt
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0], ['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user's preference is to have the spoon positioned closer to their mouth during feeding.
+
+Strategy: Since the user prefers the spoon to be closer, the distance_to_mouth parameter should be adjusted to reflect this preference. No specific preferences are mentioned for the other parameters, so the defaults or the values from the bite history will be used, ensuring a balanced approach based on what has been previously served and the need to alternate the food items to provide variety and address all remaining portions.
+
+Next food item: The last food item served was 'yogurt'. To ensure variety and considering all items have the same portions remaining and efficiency, the next food item should be different from 'yogurt' and one that hasn't been served immediately before. Given the rotation in the bite history, it would be reasonable to follow the pattern and choose 'fruit' next, as 'yogurt' was the most recent and 'oatmeal' was served just before 'fruit' last appeared.
+
+Next food item as string: 'fruit'
+
+Next bite size: There's no specific preference stated for bite size, and looking at the bite history, the value has consistently been 5.0, which seems suitable for a balanced approach. Thus, we'll maintain this as the bite size.
+
+Next bite size as float: 5.0
+
+Next speed of acquisition: There's no preference mentioned regarding the speed of acquisition, and the historical values have all been 5.0. Without any cues to adjust this, we'll stick with the established value of 5.0.
+
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: The user expressed a preference for the spoon to be closer to their mouth. Although the default is 7.5, adjusting it closer is in line with their request. Since the exact preference isn't stated, an ideal closer but comfortable distance might be at the lower end, such as 5.0, considering the default and the user's need for closeness.
+
+Next distance to mouth as float: 5.0
+
+Next exit angle: There's no specific preference for the exit angle, and the historical values show a consistent 90.0. Without any directed preference, this angle will remain unchanged, as it likely represents a neutral position that has worked well in the past.
+
+Next exit angle as float: 90.0
+
+Next speed of transfer: No specific preference has been indicated towards the speed of transfer, and past values have all been 5.0. Consistency in this parameter seems to have been satisfactory, so it will be kept at this mid-range value.
+
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: fruit
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0], ['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user prefers the spoon to be positioned closer to their mouth.
+
+Strategy: To align with the user's preference for positioning the spoon closer to the mouth, the distance to mouth parameter will be adjusted from the default. Additionally, the next food item will be decided based on rotation and portions remaining, ensuring no food item preference is ignored. Since there's no specific mention of bite size, speed of acquisition, exit angle, or speed of transfer preferences, these will default to previously used values or the system's default when no history indicates a user preference.
+
+Next food item: The most recent food item eaten was 'fruit', and the portions remaining indicate that all items still have portions left. Following the pattern of not repeating the last item immediately and ensuring a varied diet, the next item should be 'yogurt', as it's the first in the list not recently consumed.
+
+Next food item as string: 'yogurt'
+
+Next bite size: There's no specific preference indicated towards bite size. However, to maintain consistency and satisfaction, we'll use the default value, reflecting the assumed comfortable size for the user based on bite history.
+
+Next bite size as float: 5.0
+
+Next speed of acquisition: No specific preference is mentioned for acquisition speed, so we'll default to the previously established speed, assuming it meets the user's satisfaction.
+
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: Since the user's preference is to have the spoon positioned closer to their mouth, we adjust this parameter below the default value of 7.5, using the lower end of the scale.
+
+Next distance to mouth as float: 5.0
+
+Next exit angle: No specific preference for the exit angle has been mentioned. Given the default has been satisfactory in previous bites, we will continue with this.
+
+Next exit angle as float: 90.0
+
+Next speed of transfer: There are no specific remarks on the speed of transfer; thus, the chosen value reflects the default used in previous feeds, assuming it aligns with the user's comfort.
+
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: yogurt
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== HISTORY ===
+[['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0], ['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0]]
+=== RESPONSE ===
+Summary: The user prefers the spoon to be positioned closer to their mouth during feeding.
+
+Strategy: Given the user's clear preference for positioning the spoon closer to their mouth and the lack of specific demands regarding bite size, speed of acquisition, exit angle, and speed of transfer, the parameters are adjusted primarily to address the user's comfort and safety based on their expressed preference and the patterns observed in their bite history.
+
+Next food item: Considering the portions remaining and the sequence of previously fed items, while ensuring a variety of tastes and nutritional intake, the choice is made to offer the item that has portions left and considering the last item fed. Given that 'fruit' is the last item fed, the remaining items with portions left are 'fruit' and 'oatmeal', and to maintain a variety, the next choice will be 'oatmeal'.
+
+Next food item as string: 'oatmeal'
+
+Next bite size: No specific preference about the bite size was expressed. Observing the bite history, the default value of 5.0 has been consistently suited, so it will be maintained.
+
+Next bite size as float: 5.0
+
+Next speed of acquisition: No specific preference about the speed of acquisition was expressed. The bite history indicates that the default speed (5.0) has been working well, hence it will be retained.
+
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: The user specified a preference for positioning the spoon closer to their mouth. Therefore, adjusting the default distance to a closer setting within the given range indicates a reduction from the default value. The closest value in the adjustable range is 5.0, which should accommodate the user's preference.
+
+Next distance to mouth as float: 5.0
+
+Next exit angle: No specific preference regarding the exit angle has been expressed. Given the standard use and acceptance of a 90.0° exit angle in the bite history, this default setting will be maintained to ensure consistency.
+
+Next exit angle as float: 90.0
+
+Next speed of transfer: Similar to the speed of acquisition, no specific preference about the speed of transfer was stated. The bite history suggests that the default (5.0) is satisfactory, so we will continue with this setting.
+
+Next speed of transfer as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: oatmeal
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 5.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 1, 1]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 5.0
+=== FINAL HISTORY ===
+[['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0], ['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['fruit', 5.0, 5.0, 5.0, 90.0, 5.0], ['yogurt', 5.0, 5.0, 5.0, 90.0, 5.0], ['oatmeal', 5.0, 5.0, 5.0, 90.0, 5.0]]
+=== FINAL TOKEN HISTORY ===
+[[449, 849, 1298], [423, 875, 1298], [375, 908, 1283], [429, 936, 1365], [368, 966, 1334], [358, 994, 1352], [389, 1024, 1413], [544, 1054, 1598], [432, 1082, 1514], [470, 1112, 1582]]

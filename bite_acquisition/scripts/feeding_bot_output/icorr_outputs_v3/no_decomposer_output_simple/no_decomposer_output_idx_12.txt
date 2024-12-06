@@ -1,0 +1,339 @@
+=== HISTORY ===
+[]
+=== RESPONSE ===
+Summary: The user prefers the spoon to be held farther away when offering meat and desires a slower movement when transferring the meat to their mouth.
+
+Strategy: Considering there are no previous bites to inform our choices and the user’s specific preferences regarding meat, we proceed as follows. The preference for holding the spoon farther away and moving slower when transferring food to the mouth particularly applies to meat. This indicates a need for adjustments in distance to mouth and speed of transfer for the next bite involving meat.
+
+Next food item: Given there are equal portions of all items and the user's specific preference toward meat, we'll start with 'beef' to address and implement their preference right away, ensuring a tailored experience.
+
+Next food item as string: 'beef'
+
+Next bite size: Since no specific preference toward bite size was conveyed and we have no bite history, we default to the preset value.
+
+Next bite size as float: 5.0
+
+Next speed of acquisition: No specific preference or previous data to suggest a deviation from the default, so we continue with the standard setting.
+
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: The user prefers the spoon to be held farther when offering meat. Adjusting this to ensure comfort and preference alignment, especially given the explicit mention regarding meat.
+
+Next distance to mouth as float: 10.0
+
+Next exit angle: No specific preference mentioned for exit angle, and without prior data to guide this decision, we adhere to the default value.
+
+Next exit angle as float: 90.0
+
+Next speed of transfer: The user requests a slower movement when transferring the meat to their mouth, indicating a preference for lower speed to enhance comfort and safety.
+
+Next speed of transfer as float: 4.0
+=== PARAMETERS ===
+NEXT BITE: beef
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 10.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 4.0
+=== HISTORY ===
+[['beef', 5.0, 5.0, 10.0, 90.0, 4.0]]
+=== RESPONSE ===
+Summary: The user prefers the spoon to be held farther away and the transfer of meat to their mouth to be slower.
+
+Strategy: Considering the user's preference for meat to be served from a farther distance and transferred slower, coupled with the prior bite history indicating a specific handling of beef, the adjustments are targeted to honor these preferences while also considering the need for variety and balance in diet.
+
+Next food item: Since 'beef' was the last served item and considering the need for variety, the next food item should ideally be either 'potatoes' or 'carrots'. Given the user's preference impacts meat feeding specifically, and both remaining portions have equal priority, choosing 'potatoes' as the next item can offer a balance and ensure all food types are rotated properly.
+
+Next food item as string: 'potatoes'
+
+Next bite size: Since there were no specific preferences indicated for bite size and considering the default value with the previous history, maintaining the default is a sensible choice in absence of further guidance.
+
+Next bite size as float: 5.0
+
+Next speed of acquisition: No specific preference for speed of acquisition was mentioned, and the previous bite history doesn't suggest a deviation from the default setting is needed for 'potatoes'.
+
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: Although the preference mentions holding the spoon farther away for meat, since 'potatoes' are being served next and no specific distance preference was indicated for non-meat items, it's appropriate to stick to the default setting here as well.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: There were no specific preferences regarding the exit angle. The previous history used the default setting, so it will be maintained.
+
+Next exit angle as float: 90.0
+
+Next speed of transfer: The user's preference was to move slower when transferring meat. Although 'potatoes' don’t necessarily require slowness as meat does, taking into account a general preference for a gentler transfer might improve the user experience. The prior history for beef showed a reduction in speed, so a slight decrease for 'potatoes' seems reasonable to align with preferences displayed towards careful handling.
+
+Next speed of transfer as float: 4.0
+=== PARAMETERS ===
+NEXT BITE: potatoes
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 4.0
+=== HISTORY ===
+[['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.0]]
+=== RESPONSE ===
+Summary: The user prefers that the robot holds the spoon farther away when offering meat and moves a little slower when transferring the meat to the mouth.
+
+Strategy: Given the user's preference for a farther distance when being fed meat and a slower speed during the transfer of meat to the mouth, the next food item will be chosen based on the pattern of alternating between types of food from the bite history, along with the adjustment of parameters to meet the specific requests.
+
+Next food item: The last food item fed was "potatoes," following a pattern of alternating between the types of food, and considering the preference for handling meat differently, the next logical choice, to ensure variety and adherence to preferences, is "carrots" since "beef" was the meat mentioned in the preference, and it seems appropriate to rotate through the available options to evenly distribute consumption.
+Next food item as string: 'carrots'
+
+Next bite size: There's no specific preference stated for bite size; hence, we will default to the previous value used for vegetables to maintain consistency.
+Next bite size as float: 5.0
+
+Next speed of acquisition: There's no specific preference outlined for the speed of acquisition, so we will default to the previous value used to maintain consistency with the user's comfort.
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: Although the preference specifies a farther distance for meat, we'll utilize the standard distance since "carrots" are not meat, maintaining comfort and safety.
+Next distance to mouth as float: 7.5
+
+Next exit angle: There's no specific preference mentioned regarding exit angle. To ensure comfort and efficiency per the user's habits, we'll maintain the default value as used previously.
+Next exit angle as float: 90.0
+
+Next speed of transfer: The user prefers a slightly slower speed when transferring meat. However, since "carrots" is not meat, and no other preference is stated, we default to the previously used value for non-meat items to ensure consistency.
+Next speed of transfer as float: 4.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 4.0
+=== HISTORY ===
+[['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.0], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0]]
+=== RESPONSE ===
+Summary: The user prefers to have the spoon held farther away when being fed meat and appreciates a slower transfer speed for such food items to their mouth.
+
+Strategy: Given the user's preference for meat to be held farther and transferred slower, along with the alternate food item scheduling based on the last one fed, the priority is to pick the next food item not recently fed, adjust parameters for distance and transfer speed specifically for meat, and maintain default or historical values for other parameters unless specified.
+
+Next food item: Since the last food item fed was carrots and considering a rotation to offer variety, the next logical choice is beef, also aligning with the preference for specific handling of meat.
+Next food item as string: 'beef'
+
+Next bite size: No specific preference for bite size was mentioned for beef. The previous value for beef was 5.0, which aligns with the default, suggesting that was an appropriate size.
+Next bite size as float: 5.0
+
+Next speed of acquisition: There's no direct preference related to the speed of acquisition for beef, so we will use the default backed by historical preference which was also 5.0.
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: The user has specified a preference for holding the spoon farther away when offering meat. Previously, beef was served with the distance at 10.0, acknowledging the user's preference.
+Next distance to mouth as float: 10.0
+
+Next exit angle: No specific preference mentioned for exit angle modification for beef or in general. The previous instance also used the default 90.0, so we will continue with that.
+Next exit angle as float: 90.0
+
+Next speed of transfer: For beef, the user prefers a slower transfer to their mouth. Previously, beef was transferred at a speed of 4.0; this value is below the default and aligns with the preference for a slower transfer specifically for meat.
+Next speed of transfer as float: 4.0
+=== PARAMETERS ===
+NEXT BITE: beef
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 10.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 4.0
+=== HISTORY ===
+[['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.0], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0]]
+=== RESPONSE ===
+Summary: The user prefers to have the spoon hold farther away when offered meat and prefers a slower movement when the spoon transfers the meat to their mouth.
+
+Strategy: Given the user's preferences for holding the spoon farther and moving slower during the transfer of meat, adjustments should be made to reflect these desires. Looking at the portions remaining and the bite history, the next food item should continue the sequence by offering variety and considering what was served last.
+
+Next food item: The last food item served was 'beef', and since 'beef' portions are all served (based on the bite history and portions remaining indication), the next logical choice based on variety would be a food item not recently served but also considering the sequence of what is left, leading to 'potatoes' as 'carrots' were served before the most recent 'beef'.
+
+Next food item as string: 'potatoes'
+
+Next bite size: Since there are no specific preferences towards bite size for 'potatoes' and the default has worked well previously, we will keep it at the default value.
+
+Next bite size as float: 5.0
+
+Next speed of acquisition: There is no specific preference towards acquisition speed, and the default speed has been previously acceptable, so it should remain at the default value.
+
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: Since the preference specifies the spoon to be held farther away when offering meat and 'potatoes' are not meat, we can use the default distance to mouth adjusting from the last meat serving, as it's not explicitly stated for non-meat items.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Without specific instructions to adjust the exit angle and the previous settings seeming satisfactory, the exit angle can remain at the default value.
+
+Next exit angle as float: 90.0
+
+Next speed of transfer: The user preference clearly states a desire for slower transfer when dealing with meat. Since 'potatoes' are not meat, we would typically revert to the default speed. However, providing a slightly customized experience by reducing the speed slightly to ensure comfort, but not as slow as with meat since it's not specified, seems prudent.
+
+Next speed of transfer as float: 4.5
+=== PARAMETERS ===
+NEXT BITE: potatoes
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 2, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 4.5
+=== HISTORY ===
+[['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.0], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.5]]
+=== RESPONSE ===
+Summary: The user prefers to have the spoon held farther away when being fed meat and prefers the food to be transferred to their mouth more slowly.
+
+Strategy: Based on the user's preferences and previous bites, adjustments will be made primarily for the meat (beef) related parameters such as distance to mouth and speed of transfer. Other parameters will generally follow the user's historical preferences unless specific preferences are noted.
+
+Next food item: Given the portions remaining and the sequence in the bite history, alternating the food items to ensure a variety in the diet and considering that beef has been recently fed twice, and 'potatoes' was the last fed, the next logical choice based on remaining portions would be 'carrots' to also ensure all items are fed equally.
+
+Next food item as string: 'carrots'
+
+Next bite size: No specific preference for bite size adjustment was mentioned. Given that carrots were previously fed with a default size of 5.0, we will maintain this size.
+
+Next bite size as float: 5.0
+
+Next speed of acquisition: No specific preference for speed of acquisition was indicated. The default and historical value of 5.0 will be used, reflecting an average speed for both comfort and efficiency.
+
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: Although the user preference regarding distance is for meat, keeping consistent distances for all food types could ensure comfort. Given no specific instruction for non-meat items, we'll use the previous standard for carrots, which was 7.5.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: No specific preference was provided for exit angle adjustments. Reflecting on the historical values, which didn't vary, we maintain the default setting for consistency.
+
+Next exit angle as float: 90.0
+
+Next speed of transfer: Although the user preference to move a little slower when transferring meat to their mouth was mentioned, since the next food item is 'carrots', we will utilize the historical speed for carrots. Seeing that there was a slight increase in speed for potatoes to 4.5 lastly, but maintaining a cautious approach, we will keep the last carrot speed of transfer which was 4.0, respecting the user's general preference for slower movements.
+
+Next speed of transfer as float: 4.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 2]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 4.0
+=== HISTORY ===
+[['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.0], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.5], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0]]
+=== RESPONSE ===
+Summary: The user prefers the spoon to be held farther away when offering meat and for the transfer of meat to their mouth to be slower.
+
+Strategy: Considering the user's preference for meat to be offered from a further distance and transferred slower, alongside maintaining a balance in serving the remaining items, and utilizing the bite history to inform adjustments in parameters.
+
+Next food item: The last item served was carrots, and since the user has a specific preference for handling meat differently, we choose 'beef' next to adhere to preferences and ensure all items are served evenly.
+Next food item as string: 'beef'
+Next bite size: The user has not expressed a preference for bite size deviation from the default or based on the food type, so we will maintain the previous size used for 'beef' considering it meets user satisfaction.
+Next bite size as float: 5.0
+Next speed of acquisition: There's no specific preference related to the speed of acquiring food from the plate, so we'll use the default value that has been used previously for 'beef.'
+Next speed of acquisition as float: 5.0
+Next distance to mouth: Since the user prefers the spoon to be held further away when offering meat, we will use the same distance that was used the last two times 'beef' was served.
+Next distance to mouth as float: 10.0
+Next exit angle: No specific preference was mentioned regarding the exit angle. Given this, and based on previous successful feedings, we will retain the angle used in previous 'beef' feedings.
+Next exit angle as float: 90.0
+Next speed of transfer: Given the user's preference for slower transfers of meat to the mouth, we will slightly reduce the speed of transfer compared to the default and align it with the last values used for 'beef,' which was modified presumably for user comfort.
+Next speed of transfer as float: 4.0
+=== PARAMETERS ===
+NEXT BITE: beef
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 10.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 4.0
+=== HISTORY ===
+[['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.0], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.5], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0]]
+=== RESPONSE ===
+Summary: The user prefers to have the spoon held further away when being served meat and desires a slower speed when the meat is transferred to their mouth.
+
+Strategy: Based on the user’s preference for how meat is served and transferred, along with observations from the bite history and available portions, adjustments will be made specifically for meat. Portions available for each food item indicate it's time for another meat serving, as the pattern of serving appears to alternate among the available food items, and each has been served an equal number of times. The distance to mouth will be adjusted to be further away, and the speed of transfer will be slightly slower for meat, in line with the user's preference.
+
+Next food item: The last food item served was carrots, and considering the user's preferences and the alternating pattern of food serving, the next logical item to serve, ensuring a balanced rotation, would be 'beef', which also aligns with the portions remaining.
+
+Next food item as string: 'beef'
+
+Next bite size: The bite size has consistently been 5.0 for each serving of beef. There's no specific user preference indicating a need to adjust the bite size, so it remains unchanged.
+
+Next bite size as float: 5.0
+
+Next speed of acquisition: No specific preference has been indicated for the speed of acquisition regarding beef, and previous values have been consistent at 5.0. Therefore, it remains untouched.
+
+Next speed of acquisition as float: 5.0
+
+Next distance to mouth: The user's preference states to hold the spoon farther away when offering meat. Previous instances for beef have been at a distance of 10.0, aligning perfectly with the user’s preference.
+
+Next distance to mouth as float: 10.0
+
+Next exit angle: There’s no specific user preference towards the exit angle, and prior instances of serving beef have consistently used an exit angle of 90.0, which will therefore remain the default.
+
+Next exit angle as float: 90.0
+
+Next speed of transfer: Based on the user’s preference for a slightly slower transfer when it comes to meat, and observing the last speed of transfer for beef was at 4.0, which is already slower than the default, it seems appropriate to maintain this adaptation.
+
+Next speed of transfer as float: 4.0
+=== PARAMETERS ===
+NEXT BITE: beef
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 10.0
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 1, 1]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 4.0
+=== HISTORY ===
+[['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.0], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.5], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0]]
+=== RESPONSE ===
+Summary: The user prefers the spoon to be held farther away when offering meat and prefers a slower movement when transferring the meat to their mouth.
+
+Strategy: Since the only food item with portions remaining is 'potatoes', and considering the user's preference for a slower speed of transfer for meat – though it doesn't directly influence the choice here – it reflects a general preference for careful feeding. While there's no direct mention of preferences for potatoes, applying a careful approach similar to that for meat seems reasonable. Bite size will default to 5.0 as there was no specific preference indicated. For speed of acquisition, a default value of 5.0 will be used since no specific preference was indicated. Distance to mouth will be the default of 7.5 since there's no preference stated for non-meat items, but considering the last meat parameter, we'll use a consistent approach with a general preference for cautious handling. Exit angle will default to 90.0 in the absence of specific preferences. Speed of transfer will be adjusted slightly slower reflecting the user’s preference during the meat transfer, suggesting this might be a general preference for a slower, more careful transfer.
+
+Next food item: Since 'potatoes' is the only remaining food item with portions left, and considering past selections, it's the logical choice for the next bite.
+Next food item as string: 'potatoes'
+Next bite size: Default to 5.0 in the absence of specific preferences and to match past choices for consistency.
+Next bite size as float: 5.0
+Next speed of acquisition: Defaulted to 5.0, balanced approach without specific instructions otherwise.
+Next speed of acquisition as float: 5.0
+Next distance to mouth: Defaulted to 7.5, maintaining a neutral position similar to past non-meat servings.
+Next distance to mouth as float: 7.5
+Next exit angle: Default to 90.0 as there were no specific indications for a change, maintaining a standard approach.
+Next exit angle as float: 90.0
+Next speed of transfer: Slightly slower to reflect a careful transfer preference. Although the latest speed of transfer for meat was 4.0, a slightly slower approach will be taken for consistency with past preferences.
+Next speed of transfer as float: 4.0
+=== PARAMETERS ===
+NEXT BITE: potatoes
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 1, 1]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 4.0
+=== HISTORY ===
+[['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.0], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.5], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.0]]
+=== RESPONSE ===
+Summary: The user prefers to have the spoon held farther away when offering meat and to move the spoon a little slower when transferring meat to their mouth.
+
+Strategy: Given the user's preferences and the remaining items, choosing the next food item involves identifying one with remaining portions and respecting the prioritization based on user preferences for distance and speed especially related to meat. Since 'beef' has no more portions remaining, and based on the user’s preference for slower speed of transfer for meat which does not apply anymore, the selection between 'potatoes' and 'carrots' will be based on what was most recently fed. Given that 'potatoes' were fed most recently, 'carrots' should be the next item to maintain variety. The parameters for bite size, speed of acquisition, distance to mouth, exit angle, and speed of transfer are adjusted based on general preferences where specified, and defaulting to the robotic system's default or historical values where no preference is mentioned.
+
+Next food item: 'carrots' is chosen to maintain variety and because it's one of the remaining food items with portions left.
+Next food item as string: 'carrots'
+Next bite size: No specific preference for bite size was mentioned, so defaulting to the common value from the bite history which is 5.0.
+Next bite size as float: 5.0
+Next speed of acquisition: No specific preference mentioned, sticking to the common value from history which is 5.0.
+Next speed of acquisition as float: 5.0
+Next distance to mouth: No specific preference mentioned for non-meat items, thus using the default of 7.5 as it suits both meat and non-meat products well and matches previous entries.
+Next distance to mouth as float: 7.5
+Next exit angle: Preference does not mention exit angle specifically, so we'll use the default and historical standard of 90.0.
+Next exit angle as float: 90.0
+Next speed of transfer: Although the preference mentions moving slower for meat, since 'carrots' are being served and no other speed preference is given, we'll use a value that matches previous carrot entries which is 4.0, respecting the user's comfort and previously established patterns.
+Next speed of transfer as float: 4.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 1, 1]
+SPEED OF ACQUISITION: 5.0
+SPEED OF TRANSFER: 4.0
+=== FINAL HISTORY ===
+[['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.0], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.5], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['beef', 5.0, 5.0, 10.0, 90.0, 4.0], ['potatoes', 5.0, 5.0, 7.5, 90.0, 4.0], ['carrots', 5.0, 5.0, 7.5, 90.0, 4.0]]
+=== FINAL TOKEN HISTORY ===
+[[356, 861, 1217], [456, 889, 1345], [423, 918, 1341], [411, 947, 1358], [457, 976, 1433], [472, 1005, 1477], [393, 1034, 1427], [472, 1063, 1535], [471, 1092, 1563], [469, 1121, 1590]]

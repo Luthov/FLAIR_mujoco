@@ -17,9 +17,9 @@ if not os.path.exists(csv_file_path):
 data_to_append = []
 
 # Collect data for each preference index
-for preference_idx in range(20):
-    no_decomposer_file_path = f'no_decomposer_output/histories_idx_{preference_idx}.txt'
-    decomposer_file_path = f'decomposer_output/histories_idx_{preference_idx}.txt'
+for preference_idx in range(10, 14):
+    no_decomposer_file_path = f'icorr_outputs_v3/no_decomposer_output_simple/histories_idx_{preference_idx}.txt'
+    decomposer_file_path = f'icorr_outputs_v3/decomposer_output_simple/histories_idx_{preference_idx}.txt'
 
     with open(no_decomposer_file_path, 'r') as f:
         output = f.read()
