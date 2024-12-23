@@ -25,7 +25,7 @@ icorr_preferences = [
     "I have no preference in the sequence, but I prefer the spoon to be closer to me."
 ]
 
-csv_file_path = 'flair_vs_ours_last_one_pls.csv'
+csv_file_path = 'flair_vs_ours_17_rerun.csv'
 
 # Initialize the CSV file with headers if it doesn't exist
 if not os.path.exists(csv_file_path):

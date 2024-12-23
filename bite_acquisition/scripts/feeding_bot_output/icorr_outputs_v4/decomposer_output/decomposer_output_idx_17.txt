@@ -1,189 +1,187 @@
 === HISTORY ===
 []
 === BITE PREFERENCE ===
+Only vegetables are to be selected, and the user prefers small bites.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers only vegetables and wants the bites to be small.
+
+Food Items Left: There are three food items left on the plate: beef, rice, and cabbage, each with two portions remaining.
+
+Strategy: Given the user's preference for vegetables, the choice is straightforward. Among the remaining food items, only cabbage qualifies as a vegetable. Thus, the selection process will prioritize the user's dietary preferences, focusing on vegetable items and ignoring non-vegetable items, regardless of the efficiency or portions remaining for those non-preferred types of food.
+
+Next food item: Since cabbage is the only vegetable on the list, and considering the user's preference for vegetables only, cabbage is the selected item for the next food. There are portions remaining for cabbage, aligning with the requirement to only suggest food items that still have portions left. 
+
+Next food item as string: 'cabbage'
+
+Next bite size: The user prefers small bites. Although the default bite size is 5.0, adjusting the bite size lower aligns with the stated preference for smaller bites. Since the preference specifically mentions a desire for small bites, a value smaller than the default is selected to accommodate this request. 
+
+Next bite size as float: 2.0
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: Since the user has not provided any specific preferences and there is no bite history available, default settings will be used to determine the parameters for serving the next bite of cabbage.
+
+Strategy: In the absence of express preferences or historical data to suggest adjustments, the default parameter values will be maintained for both distance to mouth and exit angle. This approach ensures a standard delivery method that can serve as a baseline for future adjustments based on user feedback or explicit preferences.
+
+Next distance to mouth: Since there is no stated preference or historical data indicating the user's liking for a closer or further distance, the default distance is chosen to ensure comfort and manageability of the bite.
+Next distance to mouth as float: 7.5
+
+Next exit angle: Without any indication of a preference for a higher or lower tilt and in the absence of prior bite data suggesting a more suitable exit angle, the default exit angle is retained to facilitate a straightforward and neutral spoon feeding position.
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: cabbage
+BITE SIZE: 2.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['cabbage', 2.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
+Only want vegetables in small bites.
+=== BITE SEQUENCING RESPONSE ===
+Summary: The user prefers only vegetables and wants them in small bites.
+
+Food Items Left: The plate currently has beef, rice, and cabbage, with 2 portions of each remaining.
+
+Strategy: Prioritizing the user's preference for vegetables in small bites, we will focus on the vegetable option available, ignoring non-vegetable food items. Since cabbage is the only vegetable mentioned and aligns with the user's preferences, it will be prioritized.
+
+Next food item: Since cabbage is the only vegetable available and matches the user's preference for vegetables, and it still has portions remaining, it is the logical choice. The previous bite also included cabbage, indicating the user's ongoing preference for this item.
+Next food item as string: 'cabbage'
+
+Next bite size: Given the user's specific request for small bites and the history showing a previous cabbage bite size of 2.0, which aligns with the smaller bite preference, we will continue with this size.
+Next bite size as float: 2.0
+=== TRANSFER PREFERENCE ===
+None
+=== TRANSFER PARAMS RESPONSE ===
+Summary: Since there is no explicitly stated preference for the next bite, user preference will need to be deduced from the history and available instructions. Given there's only one historical entry with the default parameters used, no clear preference can be concluded.
+
+Strategy: Given the absence of direct user preference and based on the single historical entry for cabbage with default parameters (7.5 for distance to mouth and 90.0 for exit angle), the strategy will be to repeat these default parameters. This approach assumes that in the absence of feedback, the previous settings were satisfactory. However, if feedback were given, adjustments would be considered to enhance the eating experience according to the user's likes or dislikes.
+
+Next distance to mouth: There are no indications of a preference towards a closer or further distance. Therefore, adhering to the default value is the chosen approach, in line with the previous successful bite.
+
+Next distance to mouth as float: 7.5
+
+Next exit angle: Without specific feedback on the desire for a higher or lower tilt, it is prudent to stay with the default exit angle, which presumably provided a satisfactory bite previously.
+
+Next exit angle as float: 90.0
+=== PARAMETERS ===
+NEXT BITE: cabbage
+BITE SIZE: 2.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 2, 2]
+=== HISTORY ===
+[['cabbage', 2.0, 7.5, 90.0], ['cabbage', 2.0, 7.5, 90.0]]
+=== BITE PREFERENCE ===
 The user only wants vegetables and prefers small bites.
 === BITE SEQUENCING RESPONSE ===
-Summary: The user prefers only vegetables and desires small bites.
+Summary: The user prefers to eat only vegetables and likes to have them in small bites.
 
-Food Items Left: There are three food items left on the plate: beef, potatoes, and cabbage, each with two portions remaining.
+Food Items Left: There are three types of food items remaining on the plate: beef (2 portions), rice (2 portions), and cabbage (1 portion).
 
-Strategy: Since the user's preference is for vegetables only, the strategy will filter out non-vegetable items (beef) and prioritize vegetables. Among the vegetables, since there is no specific order mentioned, any vegetable available will be considered. Given the preference for small bites, the bite size will be adjusted to be smaller than the default.
+Strategy: The strategy involves prioritizing the user's preferences for vegetables over other types of food and considering the size of the bites they prefer. Since the user has already been fed cabbage and appreciates small bites, I will focus on selecting the vegetable option available, respecting both the preference for type and bite size.
 
-Next food item: Based on the preference for only vegetables, the next food item should be one of the vegetable options available. Between 'potatoes' and 'cabbage', as there is no specific preference order provided, we will select 'cabbage' as it's a common vegetable choice in diets preferring vegetables.
+Next food item: As cabbage is the only vegetable left and there's still a portion remaining, and aligning with the user’s preference for vegetables, the next food item to be served should be cabbage. This choice is straightforward since it is the only option that fits within the specified preference for vegetables.
+
 Next food item as string: 'cabbage'
 
-Next bite size: Since the user prefers small bites, the bite size will be adjusted to be smaller than the default value of 5.0, adhering to their preference.
-Next bite size as float: 1.0
+Next bite size: Since the preference advises for small bites and previous servings of cabbage were in the size of 2.0, which aligns with the user’s preference and there's no indication that this was unsatisfactory, maintaining this bite size is logical to ensure consistency and adherence to the user's preference.
+
+Next bite size as float: 2.0
 === TRANSFER PREFERENCE ===
 None
 === TRANSFER PARAMS RESPONSE ===
-Summary: Since there's no stated preference from the user and no bite history to refer to, we must default to the initial settings provided.
+Summary: The user has not expressed a specific preference for the distance to mouth or the exit angle based on the information provided.
 
-Strategy: The strategy will be to stick to the default parameters due to the absence of specific user preferences and prior bite data. This is to ensure a balanced starting point that can be adjusted in future bites based on user feedback.
+Strategy: Since there are no specific preference cues provided, and the bite history shows consistent values for both distance to mouth and exit angle across the two samples of eating cabbage, the strategy is to stick with these previously used parameters. This approach aims to maintain a consistent experience for the user, assuming the lack of feedback on previous bites suggests satisfaction with those settings.
 
-Next distance to mouth: No specific preference or prior history is available to suggest changing the default value, so we'll maintain it.
+Next distance to mouth: There is no expressed preference to adjust the distance to mouth, and the history shows repeated use of 7.5. Hence, it seems appropriate to continue with this value, assuming it has been satisfactory.
 
 Next distance to mouth as float: 7.5
 
-Next exit angle: Without any preference indication or bite history to suggest a tilt adjustment, we'll keep the default angle.
+Next exit angle: With no direction to change the exit angle and a history of it being set at 90.0, it makes sense to keep this angle. This consistency might suggest that the current setup is comfortable for the user or has otherwise met their needs.
 
 Next exit angle as float: 90.0
 === PARAMETERS ===
 NEXT BITE: cabbage
-BITE SIZE: 1.0
-DISTANCE TO MOUTH: 7.5
-EXIT ANGLE: 90.0
-PORTION SIZES: [2, 2, 2]
-=== HISTORY ===
-[['cabbage', 1.0, 7.5, 90.0]]
-=== BITE PREFERENCE ===
-Only vegetables are to be fed in small bites.
-=== BITE SEQUENCING RESPONSE ===
-Summary: The user prefers only vegetables to be fed in small bites.
-
-Food Items Left: There are portions remaining of beef, potatoes, and cabbage, each with 2 servings left.
-
-Strategy: Since the preference indicates a special consideration for vegetables, prioritizing them over other types of food and ensuring they are served in small bites is crucial. Vegetables should be selected first, complying with the preference for smaller bite sizes. Given the list of remaining items, both potatoes and cabbage are vegetables, but since cabbage has already been selected previously in a small bite, it would continue with this pattern to ensure a variety.
-
-Next food item: Given the preference for vegetables to be in small bites and the fact that cabbage has already been chosen previously, it makes sense to continue with cabbage to respect the user's preference and the established pattern.
-Next food item as string: 'cabbage'
-Next bite size: The user's preference states that only vegetables are to be fed in small bites. Since cabbage has previously been served in a small bite of size 1.0, it is logical to continue with this bite size to comply with the user’s preference.
-Next bite size as float: 1.0
-=== TRANSFER PREFERENCE ===
-None
-=== TRANSFER PARAMS RESPONSE ===
-Summary: The user has not expressed any specific preferences either for the distance to the mouth or the exit angle for their bites. The only data available is from the previous consumption of cabbage, where standard parameters were used (7.5 for distance to mouth and 90.0 for exit angle).
-
-Strategy: Since no preferences have been communicated and there’s only one data point with default settings, it suggests the user was likely satisfied with those settings, or at least did not provide feedback to indicate a need for adjustment. Therefore, maintaining the same parameters seems to be a safe and reasonable approach.
-
-Next distance to mouth: The preference or feedback from the user regarding the distance to mouth for the next bite is not available. The last bite used a distance of 7.5, which is the default value and falls in the middle of the adjustable range. Without any indication that the user was dissatisfied or desired a change, repeating this distance seems appropriate.
-
-Next distance to mouth as float: 7.5
-
-Next exit angle: Similarly, there is no expressed preference about the exit angle. The previous bite also used the standard angle of 90.0 degrees. This angle is directly in the middle of the possible range, suggesting a neutral position that is neither particularly high nor low. In the absence of a specific request for adjustment, it is logical to use this angle again.
-
-Next exit angle as float: 90.0
-=== PARAMETERS ===
-NEXT BITE: cabbage
-BITE SIZE: 1.0
-DISTANCE TO MOUTH: 7.5
-EXIT ANGLE: 90.0
-PORTION SIZES: [2, 2, 2]
-=== HISTORY ===
-[['cabbage', 1.0, 7.5, 90.0], ['cabbage', 1.0, 7.5, 90.0]]
-=== BITE PREFERENCE ===
-The user wants only vegetables in small bites.
-=== BITE SEQUENCING RESPONSE ===
-Summary: The user prefers to eat only vegetables in small bites.
-
-Food Items Left: The plate still has portions of beef, potatoes, and cabbage left, with 2 portions each for beef and potatoes, and 1 portion for cabbage.
-
-Strategy: Given the user's preference for only vegetables in small bites, the selection process will prioritize vegetables over other food types and choose the smallest possible bite size within the range provided.
-
-Next food item: Since the user's preference is for vegetables, and cabbage is the only vegetable left on the plate with portions remaining, cabbage should be the next food item chosen. This choice also respects the historical pattern of feeding, showing a preference for small bites of vegetables, specifically cabbage.
-
-Next food item as string: 'cabbage'
-
-Next bite size: The user prefers small bites, and the bite history shows that previous bites of cabbage were sized at 1.0, which is the smallest possible size. Therefore, the bite size will continue as 1.0 to match the user's preference.
-
-Next bite size as float: 1.0
-=== TRANSFER PREFERENCE ===
-The user wants to be fed in small bites.
-=== TRANSFER PARAMS RESPONSE ===
-Summary: The user prefers to be fed in small bites. This preference suggests adjustments may be needed to the parameters to accommodate small, manageable bite sizes for the user.
-
-Strategy: Since the preference is for small bites, adjustments to "distance_to_mouth" and "exit_angle" must enhance the delivery of smaller amounts of food per spoonful. Smaller bites could be facilitated by slightly adjusting the exit angle to ensure a gentler release of the food, potentially requiring a bit less tilt (a lower angle) to reduce the amount deposited in each bite.
-
-Next distance to mouth: The preference specified does not directly suggest a change in the distance to the mouth. Since the user prefers smaller bites but no specific direction is given for closer or further distance adjustments, we will maintain the default value, as it has been previously used without feedback indicating a need for change.
-
-Next distance to mouth as float: 7.5
-
-Next exit angle: While the user's preference for small bites does not directly comment on the tilt or exit angle, adjusting for smaller, more controlled bites may be achieved by slightly decreasing the angle. This would technically allow for a more precise delivery of smaller bite sizes, given that a lower exit angle might reduce the speed and thus the quantity of food leaving the spoon. However, there's no explicit instruction to decrease the tilt; we thus default to the historical preference unless aiming for a minor adjustment to better meet the "small bites" preference could be considered prudent without explicit direction. Given this, a minor adjustment from 90.0 to slightly lower could be experimented with, but without explicit preference in past instructions, maintaining the angle aligns with user history.
-
-Next exit angle as float: 90.0
-=== PARAMETERS ===
-NEXT BITE: cabbage
-BITE SIZE: 1.0
+BITE SIZE: 2.0
 DISTANCE TO MOUTH: 7.5
 EXIT ANGLE: 90.0
 PORTION SIZES: [2, 2, 1]
 === HISTORY ===
-[['cabbage', 1.0, 7.5, 90.0], ['cabbage', 1.0, 7.5, 90.0], ['cabbage', 1.0, 7.5, 90.0]]
+[['cabbage', 2.0, 7.5, 90.0], ['cabbage', 2.0, 7.5, 90.0], ['cabbage', 2.0, 7.5, 90.0]]
 === BITE PREFERENCE ===
-The user wants only vegetables in small bites.
+Only wants vegetables and to be fed in small bites.
 === BITE SEQUENCING RESPONSE ===
-Summary: The user wants only vegetables to be fed to them, and they prefer these in small bites.
+Summary: The user has a preference for only eating vegetables and desires to be fed in small bites.
 
-Food Items Left: There are portions left for beef, potatoes, and cabbage. Specifically, 2 portions of beef, 2 portions of potatoes, and 1 portion of cabbage.
+Food Items Left: There are three food items remaining: beef, rice, and cabbage with portions remaining as 2, 2, and 1 respectively.
 
-Strategy: Since the user prefers only vegetables and desires them in small bites, the strategy will prioritize feeding the remaining vegetable(s) before considering any other type of food. Considering the user's past bites were all cabbage with a bite size of 1.0, we will continue with this preference.
+Strategy: Since the user only wants vegetables and prefers them in small bites, the strategy will be to prioritize feeding the vegetable item left on the plate. The user's recent bites indicate a previous focus on cabbage, which aligns with their vegetable preference, and thus this will guide the food item selection. We will also consider the portion sizes left to ensure the choice aligns with the remaining inventory.
 
-Next food item: Since cabbage is the only vegetable left and aligns with the user's preference, and there is still a portion left, it will be chosen as the next food item.
-
+Next food item: Given the user's preference for only vegetables, the only remaining vegetable is cabbage. Since cabbage still has a portion remaining, it is the sensible option.
 Next food item as string: 'cabbage'
-
-Next bite size: The user prefers small bites, and the bite history exclusively shows bites of size 1.0. Consistency with this preference directs the choice of bite size to be the same.
-
-Next bite size as float: 1.0
+Next bite size: The user prefers to be fed in small bites and the bite history suggests that a size of 2.0 has previously been chosen. To align with this preference for small bites, the same value will be selected.
+Next bite size as float: 2.0
 === TRANSFER PREFERENCE ===
 None
 === TRANSFER PARAMS RESPONSE ===
-Summary: The user has not expressed a specific preference for the distance to the mouth or the exit angle for consuming cabbage. Instead, the bite history shows consistent values for both parameters across all past cabbage servings.
+Summary: The user has no explicitly stated preference for either the distance to mouth or the exit angle for spoon-feeding, based on the given history.
 
-Strategy: Given the lack of expressed preference and the consistency in past consumption parameters, the decision is to maintain the default values observed in the history. This approach assumes that the user's satisfaction with these settings, as indicated by the lack of variation in past bites, suggests these values are comfortable or preferable for cabbage consumption.
+Strategy: Without explicit preferences or indications from the user that the default settings were unsatisfactory or could be improved upon, the most prudent course of action is to maintain the parameters that have been consistently used. This assumes that the lack of change request or feedback following previous bites suggests the user found the settings satisfactory or at least acceptable.
 
-Next distance to mouth: Since the user has shown a pattern of keeping the distance to mouth consistent at 7.5, and without any specific feedback indicating a desire for change, the same distance will be used again. This choice is based on the assumption that repeating previous comfortable or satisfactory settings is the most appropriate action in the absence of new instructions.
+Next distance to mouth: Given no expressed preference or feedback indicating a desire for adjustment, and in following the principle of maintaining the status quo in the absence of directives to the contrary, the distance to mouth will remain unchanged. This maintains consistency with the bite history.
 
 Next distance to mouth as float: 7.5
 
-Next exit angle: Similarly, the exit angle has remained fixed at 90.0 across all recorded bites. Without direct preference indications suggesting an adjustment is needed, maintaining this angle aligns with the user's apparent comfort and consistency with past usage.
+Next exit angle: Similarly, the exit angle will be kept at its previous setting, as there are no cues indicating a preference for adjusting the tilt of the spoon. This decision echoes the rationale for maintaining the current distance to mouth, prioritizing consistency in the user's experience.
 
 Next exit angle as float: 90.0
 === PARAMETERS ===
 NEXT BITE: cabbage
-BITE SIZE: 1.0
+BITE SIZE: 2.0
 DISTANCE TO MOUTH: 7.5
 EXIT ANGLE: 90.0
 PORTION SIZES: [2, 2, 1]
 === HISTORY ===
-[['cabbage', 1.0, 7.5, 90.0], ['cabbage', 1.0, 7.5, 90.0], ['cabbage', 1.0, 7.5, 90.0], ['cabbage', 1.0, 7.5, 90.0]]
+[['cabbage', 2.0, 7.5, 90.0], ['cabbage', 2.0, 7.5, 90.0], ['cabbage', 2.0, 7.5, 90.0], ['cabbage', 2.0, 7.5, 90.0]]
 === BITE PREFERENCE ===
-Only vegetables should be selected, and the user prefers to be fed in small bites.
+The user prefers only vegetables in small bites.
 === BITE SEQUENCING RESPONSE ===
-Summary: The user prefers only vegetables to be selected for their meal and desires to be fed in small bites.
+Summary: The user prefers only vegetables in small bites.
 
-Food Items Left: On the plate, there are beef and potatoes, each with 2 portions remaining, and cabbage with 0 portions left.
+Food Items Left: On the plate, there are 'beef' and 'rice' left with 2 portions each, while 'cabbage', which is a vegetable, has no portions remaining.
 
-Strategy: Considering the user prefers vegetables and to be fed in small bites, and given the current available items and their portions, we prioritize vegetables. However, since the only vegetable mentioned (cabbage) has no portions left, we'll have to assess the remaining items against the user's preferences. 
+Strategy: Considering the user's preference for vegetables and small bites, the strategy should prioritize any remaining vegetables. Since there are no vegetables left with portions remaining, we must carefully consider the preference to ensure a user’s satisfaction even if it might mean not offering a bite.
 
-Next food item: Given the user's stated preference for only vegetables, and with all portions of cabbage (the only vegetable) already consumed, there are no remaining food items that fit the user's dietary preference. Therefore, we opt not to suggest a food item that contradicts the user's preferences.
+Next food item: Since 'cabbage' is the preferred vegetable, but it has no portions left, and the user does not prefer beef or rice, the logical choice here, respecting the user's preferences, is not to offer any other food item. This decision prioritizes the user's dietary preference for vegetables over the other available food options.
 
 Next food item as string: ''
 
-Next bite size: The user's preference outlines a desire for small bites. Even though no food item is to be selected, the last record of bite size adhering to the preference was 1.0, indicating a preference for the smallest possible bite size as per the user's choice.
+Next bite size: The user prefers small bites, and the history indicates that prior bites of 'cabbage' were taken at a size of 2.0. Although no food item will be offered in this instance, maintaining a record of the preferred bite size could ensure consistency for future reference. However, as we are not suggesting a bite here, the adjustment to bite size is not applicable.
 
-Next bite size as float: 1.0
+Next bite size as float: 2.0
 === TRANSFER PREFERENCE ===
 None
 === TRANSFER PARAMS RESPONSE ===
-Summary: There is no expressed preference provided in the input, so the user's specific preference for the next bite cannot be determined directly from the information given.
+Summary: The user has not expressed a specific preference for the distance to mouth or the exit angle based on the provided input details.
 
-Strategy: Since there is no explicit preference mentioned and the bite history shows repeated use of 7.5 for distance_to_mouth and 90.0 for exit angle for eating cabbage, we will continue with these default parameters. These values seem to indicate a consistent preference or convenience for the user as they have not been adjusted between bites. 
+Strategy: Given the lack of explicit preference and the consistent historical data of using a distance_to_mouth of 7.5 and an exit_angle of 90.0 for cabbage, we will adhere to these settings for the next bite. The consistency in previous bites suggests these settings are satisfactory, or at the very least, acceptable for consuming cabbage.
 
-Next distance to mouth: There is no expressed preference to adjust the distance_to_mouth from the historical default of 7.5, so it will remain unchanged. Consistency in the parameters used in previous bites suggests that this distance is suitable or preferred for the user's needs.
+Next distance to mouth: Since there is no expressed preference and all previous bites have maintained a distance_to_mouth of 7.5, we will continue with this default value to ensure consistency and presumed user satisfaction.
 
 Next distance to mouth as float: 7.5
 
-Next exit angle: Similarly, there is no preference indicating a need to adjust the exit_angle from the default of 90.0 used in previous bites. Without any indication to alter this parameter, maintaining the same exit angle seems to be the best course of action.
+Next exit angle: With no specific preference indicated and a consistent exit_angle of 90.0 used for previous cabbage bites, we will keep the exit_angle at 90.0. This consistency aligns with a neutral tilt level that is likely suitable for the user.
 
 Next exit angle as float: 90.0
 === PARAMETERS ===
 NEXT BITE: 
-BITE SIZE: 1.0
+BITE SIZE: 2.0
 DISTANCE TO MOUTH: 7.5
 EXIT ANGLE: 90.0
 PORTION SIZES: [2, 2, 0]
 === FINAL HISTORY ===
-[['cabbage', 1.0, 7.5, 90.0], ['cabbage', 1.0, 7.5, 90.0], ['cabbage', 1.0, 7.5, 90.0], ['cabbage', 1.0, 7.5, 90.0]]
+[['cabbage', 2.0, 7.5, 90.0], ['cabbage', 2.0, 7.5, 90.0], ['cabbage', 2.0, 7.5, 90.0], ['cabbage', 2.0, 7.5, 90.0]]
 === FINAL TOKEN HISTORY ===
-[{'decomposer_tokens': [21, 213, 234], 'bite_sequencing_tokens': [227, 575, 802], 'transfer_param_tokens': [145, 365, 510]}, {'decomposer_tokens': [21, 213, 234], 'bite_sequencing_tokens': [239, 583, 822], 'transfer_param_tokens': [286, 378, 664]}, {'decomposer_tokens': [29, 213, 242], 'bite_sequencing_tokens': [216, 591, 807], 'transfer_param_tokens': [345, 401, 746]}, {'decomposer_tokens': [20, 213, 233], 'bite_sequencing_tokens': [215, 600, 815], 'transfer_param_tokens': [245, 406, 651]}]
+[{'decomposer_tokens': [25, 213, 238], 'bite_sequencing_tokens': [250, 578, 828], 'transfer_param_tokens': [201, 365, 566]}, {'decomposer_tokens': [18, 213, 231], 'bite_sequencing_tokens': [205, 579, 784], 'transfer_param_tokens': [236, 378, 614]}, {'decomposer_tokens': [21, 213, 234], 'bite_sequencing_tokens': [255, 591, 846], 'transfer_param_tokens': [217, 392, 609]}, {'decomposer_tokens': [22, 213, 235], 'bite_sequencing_tokens': [232, 601, 833], 'transfer_param_tokens': [225, 406, 631]}]

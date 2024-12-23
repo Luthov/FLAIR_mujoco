@@ -59,10 +59,17 @@ class FeedingBot:
 
         self.execute = False
         self.preference_interrupt = False
+        self.exit = True
 
         # Choose to use decomposer or not
-        self.decompose = True
-        self.old_prompt = False
+        self.mode = 'no_decomposer'
+        self.decomposer_output_directory = 'feeding_bot_output/test_outputs/decomposer_output/'
+        self.no_decomposer_output_directory = 'feeding_bot_output/test_outputs/flair_output/'
+
+        if self.mode == 'decomposer':
+            self.output_directory = self.decomposer_output_directory
+        elif self.mode == 'no_decomposer':
+            self.output_directory = self.no_decomposer_output_directory
 
     def clear_plate(self):
 
@@ -106,18 +113,14 @@ class FeedingBot:
             ["spinach", "rice", "beef"],
             ["chicken", "rice", "peas"],
             ["rice", "chicken", "spinach"],
-            ["beef", "potatoes", "cabbage"],
+            ["beef", "rice", "cabbage"],
             ["carrots", "chicken", "rice"],
             ["rice", "chicken", "peas"]
         ]
 
-        for preference_idx in [18, 19]: # range(len(icorr_preferences)):
-            if not self.old_prompt:
-                user_preference = icorr_preferences[preference_idx]
-            else:
-                user_preference = user_preferences_hospital[preference_idx]
-                bite_preference = bite_preferences_hospital[preference_idx]
-                transfer_preference = "Hold the spoon slightly farther away for rice and tilt it downward for chicken."
+        for preference_idx in range(len(icorr_preferences)):
+
+            user_preference = icorr_preferences[preference_idx]
 
             self.items = [icorr_food_items[preference_idx]]
             self.item_portions = [2.0, 2.0, 2.0]
@@ -183,12 +186,6 @@ class FeedingBot:
 
                 categories = self.inference_server.categorize_items(item_labels, sim=True) 
 
-                # print("--------------------")
-                # print("Labels:", item_labels)
-                # print("Categories:", categories)
-                # print("Portions:", self.item_portions)        
-                # print("--------------------\n")
-
                 category_list = []
                 labels_list = []
                 per_food_portions = []
@@ -208,128 +205,78 @@ class FeedingBot:
                 print("Per Food Portions:", per_food_portions)
                 print("--------------------\n")
                 
-                if self.decompose:
-                    print("USING DECOMPOSER")
-                    food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action_decomposer(
-                        category_list, 
-                        labels_list, 
-                        per_food_portions, 
-                        user_preference, 
-                        bite_history, 
-                        preference_idx,
-                        continue_food_label, 
-                        log_path
-                        )
-                elif self.old_prompt:
-                    preference_idx,
-                    print("USING OLD PROMPT")
-                    food, bite_size, distance_to_mouth, exit_angle = self.inference_server.get_autonomous_action_old_prompt(
-                        category_list, 
-                        labels_list, 
-                        per_food_portions, 
-                        user_preference, 
-                        bite_preference, 
-                        transfer_preference,
-                        bite_history, 
-                        continue_food_label, 
-                        log_path
-                        )
-                else:
-                    print("USING NON DECOMPOSER")
-                    food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action_no_decomposer(
+                food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action(
                     category_list, 
                     labels_list, 
                     per_food_portions, 
                     user_preference, 
                     bite_history, 
                     preference_idx,
+                    self.mode,
+                    self.output_directory,
                     continue_food_label, 
                     log_path
                     )
                 
-                if food is None:
-                    if self.decompose:
-                        with open(f'feeding_bot_output/icorr_outputs_v4/decomposer_output/decomposer_output_idx_{preference_idx}.txt', 'a') as f:
-                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
-                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
-                        with open(f'feeding_bot_output/icorr_outputs_v4/decomposer_output/histories_idx_{preference_idx}.txt', 'a') as f:
-                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
-                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
-                    else:
-                        with open(f'feeding_bot_output/icorr_outputs_v4/flair_output/flair_output_idx_{preference_idx}.txt', 'a') as f:
-                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
-                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
-                        with open(f'feeding_bot_output/icorr_outputs_v4/flair_output/histories_idx_{preference_idx}.txt', 'a') as f:
-                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
-                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
-                    break
-                
-                # print("\n--------------------")
-                # print(f"food: {food}")
-                # print(f"bite: {labels_list[food[0]]}")
-                # print(f"bite_size: {bite_size}")
-                # print(f"distance_to_mouth: {distance_to_mouth}")
-                # print(f"entry_angle: {exit_angle}")
-                # print("--------------------\n")
+                if food is not None:
+
+                    food_id = food[0]
+                    action_type = food[1]
+                    metadata = food[2]
+
+                    if self.execute:
                     
-                # print("--------------------")
-                # print(f"food_id: {food[0]} \naction_type: {food[1]} \nmetadata: {food[2]}")
-                # print("--------------------\n")
+                        if action_type == 'Scoop':
+                            scooping_point = metadata['scooping_point']
+                            action = self.skill_library.scooping_skill_mujoco(keypoints = scooping_point, bite_size = bite_size)
 
-                food_id = food[0]
-                action_type = food[1]
-                metadata = food[2]
+                        elif action_type == 'Push':
+                            continue_food_label = labels_list[food_id]
+                            start, end = metadata['start'], metadata['end']
+                            input('Continue pushing skill?')
+                            action = self.skill_library.pushing_skill_mujoco(keypoints = [start, end])
 
-                if self.execute:
-                
-                    if action_type == 'Scoop':
-                        scooping_point = metadata['scooping_point']
-                        action = self.skill_library.scooping_skill_mujoco(keypoints = scooping_point, bite_size = bite_size)
+                        elif action_type == 'Cut':
+                            continue_food_label = labels_list[food_id]
+                            cut_point = metadata['point']
+                            cut_angle = metadata['cut_angle']
+                            action = self.skill_library.cutting_skill_mujoco(keypoint = cut_point, cutting_angle = cut_angle)            
 
-                    elif action_type == 'Push':
-                        continue_food_label = labels_list[food_id]
-                        start, end = metadata['start'], metadata['end']
-                        input('Continue pushing skill?')
-                        action = self.skill_library.pushing_skill_mujoco(keypoints = [start, end])
+                        if action_type == 'Scoop': # Terminal actions
+                            continue_food_label = None
+                            bite_history.append((labels_list[food_id], bite_size))
 
-                    elif action_type == 'Cut':
-                        continue_food_label = labels_list[food_id]
-                        cut_point = metadata['point']
-                        cut_angle = metadata['cut_angle']
-                        action = self.skill_library.cutting_skill_mujoco(keypoint = cut_point, cutting_angle = cut_angle)            
+                    for idx in range(len(clean_item_labels)):
+                        if clean_item_labels[food_id] == clean_item_labels[idx]:
+                            self.item_portions[idx] -= 0.45
+                            # self.item_portions[idx] -= round(0.5 + (bite_size - -1.0) * (1.0 - 0.5) / (1.0 - -1.0), 2)
+                            break
+                    
+                    bite_history.append([labels_list[food_id], bite_size, distance_to_mouth, exit_angle])
+                    
+                    if success:
+                        actions_remaining -= 1
 
-                    if action_type == 'Scoop': # Terminal actions
-                        continue_food_label = None
-                        bite_history.append((labels_list[food_id], bite_size))
+                if actions_remaining == 0 or (food is None):
+                    if self.mode == 'decomposer':
+                        with open(self.output_directory + f'decomposer_output_idx_{preference_idx}.txt', 'a') as f:
+                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
+                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
+                    elif self.mode == 'no_decomposer':
+                        with open(self.output_directory + f'flair_output_idx_{preference_idx}.txt', 'a') as f:
+                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
+                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
 
-                for idx in range(len(clean_item_labels)):
-                    if clean_item_labels[food_id] == clean_item_labels[idx]:
-                        self.item_portions[idx] -= 0.45
-                        # self.item_portions[idx] -= round(0.5 + (bite_size - -1.0) * (1.0 - 0.5) / (1.0 - -1.0), 2)
+                    with open(self.output_directory + f'histories_idx_{preference_idx}.txt', 'a') as f:
+                        f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
+                        f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
+
+                    if food is None:
                         break
-                
-                bite_history.append([labels_list[food_id], bite_size, distance_to_mouth, exit_angle])
-                
-                if not self.old_prompt:
-                    token_history.append(token_data)
-                if success:
-                    actions_remaining -= 1
-
-                if actions_remaining == 0:
-                    if self.decompose:
-                        with open(f'feeding_bot_output/icorr_outputs_v4/decomposer_output/decomposer_output_idx_{preference_idx}.txt', 'a') as f:
-                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
-                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
-                        with open(f'feeding_bot_output/icorr_outputs_v4/decomposer_output/histories_idx_{preference_idx}.txt', 'a') as f:
-                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
-                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
-                    else:
-                        with open(f'feeding_bot_output/icorr_outputs_v4/flair_output/flair_output_idx_{preference_idx}.txt', 'a') as f:
-                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
-                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
-                        with open(f'feeding_bot_output/icorr_outputs_v4/flair_output/histories_idx_{preference_idx}.txt', 'a') as f:
-                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
-                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
+                if self.exit:
+                    e = input("EXIT?")
+                    if e in ['y', 'Y']:
+                        exit(1)    
 
 if __name__ == "__main__":
 
