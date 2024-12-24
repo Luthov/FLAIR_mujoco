@@ -59,17 +59,19 @@ class FeedingBot:
 
         self.execute = False
         self.preference_interrupt = False
-        self.exit = True
+        self.exit = False
 
         # Choose to use decomposer or not
         self.mode = 'no_decomposer'
         self.decomposer_output_directory = 'feeding_bot_output/test_outputs/decomposer_output/'
-        self.no_decomposer_output_directory = 'feeding_bot_output/test_outputs/flair_output/'
+        self.no_decomposer_output_directory = 'feeding_bot_output/flair_tests/flair_output_v6/'
 
         if self.mode == 'decomposer':
             self.output_directory = self.decomposer_output_directory
+            print('=== USING DECOMPOSER PROMPT ===')
         elif self.mode == 'no_decomposer':
             self.output_directory = self.no_decomposer_output_directory
+            print('=== USING NON DECOMPOSER PROMPT ===')
 
     def clear_plate(self):
 
@@ -118,7 +120,7 @@ class FeedingBot:
             ["rice", "chicken", "peas"]
         ]
 
-        for preference_idx in range(len(icorr_preferences)):
+        for preference_idx in [0, 1]:# range(len(icorr_preferences)):
 
             user_preference = icorr_preferences[preference_idx]
 

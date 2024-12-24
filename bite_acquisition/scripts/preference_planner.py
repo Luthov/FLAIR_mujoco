@@ -11,8 +11,6 @@ import json
 from openai import OpenAI
 import ast
 
-#model='gpt-4-1106-preview',
-
 class GPTInterface:
     def __init__(self):
         self.api_key =  os.environ.get('OPENAI_API_KEY')
@@ -34,7 +32,6 @@ class GPTInterface:
         chatbot_response = response.choices[0].message.content
 
         chatbot_usage = response.usage
-        # [completion_tokens, prompt_tokens, total_tokens]
         tokens = [chatbot_usage.completion_tokens, chatbot_usage.prompt_tokens, chatbot_usage.total_tokens]
 
         return chatbot_response.strip(), tokens
@@ -47,10 +44,10 @@ class PreferencePlanner:
         self.bite_sequencing_prompt_file = 'ICORR_prompts_v4/decomposer_prompts/bite_acquisition_flair.txt'
         self.transfer_parameter_prompt_file = 'ICORR_prompts_v4/decomposer_prompts/bite_transfer.txt'
 
-        self.no_decomposer_prompt_file = 'ICORR_prompts_v4/flair_one_preference.txt'
+        self.no_decomposer_prompt_file = 'flair_testing/flair_v6.txt'
         
         self.flair_prompt = True
-        self.debug = False
+        self.debug = True
 
     def parse_preferences(self, preference):
 
@@ -200,6 +197,8 @@ class PreferencePlanner:
             response = response.strip()
 
             if self.debug:
+                print(f"=== PROMPT ===")
+                print(prompt)
                 print(f"RESPONSE:\n{response}")
 
             if self.flair_prompt:
@@ -212,6 +211,7 @@ class PreferencePlanner:
 
             if next_bite == []:
                 print("NO BITES MAKE SENSE")
+                return [], None, None, None, None
             else:
                 next_bite = next_bite[0]
 

@@ -440,8 +440,8 @@ class BiteAcquisitionInference:
 
         print(non_dip_labels, next_bite)
     
-        if next_bite != [] or next_bite != '':
+        if next_bite == [] or next_bite == '':
+            return  None, None, None, None, None
+        else:
             idx = non_dip_labels.index(next_bite)
             return next_actions[idx], bite_size, distance_to_mouth, exit_angle, token_data
-        else:
-            return  None, None, None, None, None
