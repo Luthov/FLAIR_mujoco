@@ -44,10 +44,10 @@ class PreferencePlanner:
         self.bite_sequencing_prompt_file = 'ICORR_prompts_v4/decomposer_prompts/bite_acquisition_flair.txt'
         self.transfer_parameter_prompt_file = 'ICORR_prompts_v4/decomposer_prompts/bite_transfer.txt'
 
-        self.no_decomposer_prompt_file = 'flair_testing/flair_v6.txt'
+        self.no_decomposer_prompt_file = 'flair_testing/flair_v8.txt'
         
         self.flair_prompt = True
-        self.debug = True
+        self.debug = False
 
     def parse_preferences(self, preference):
 

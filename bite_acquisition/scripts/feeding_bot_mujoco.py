@@ -32,13 +32,6 @@ class FeedingBot:
         self.log_file = "log/"
         files = os.listdir(self.log_file)
 
-        # if not os.path.exists('history.txt'):
-        #     self.log_count = 1
-        #     self.bite_history = []
-        # else:
-        #     with open('history.txt', 'r') as f:
-        #         self.bite_history = ast.literal_eval(f.read().strip())
-        #         self.log_count = len(self.bite_history)+1
         self.bite_history = []
         self.log_count = 1
 
@@ -64,7 +57,7 @@ class FeedingBot:
         # Choose to use decomposer or not
         self.mode = 'no_decomposer'
         self.decomposer_output_directory = 'feeding_bot_output/test_outputs/decomposer_output/'
-        self.no_decomposer_output_directory = 'feeding_bot_output/flair_tests/flair_output_v6/'
+        self.no_decomposer_output_directory = 'feeding_bot_output/flair_tests/flair_output_v8/'
 
         if self.mode == 'decomposer':
             self.output_directory = self.decomposer_output_directory
@@ -120,7 +113,7 @@ class FeedingBot:
             ["rice", "chicken", "peas"]
         ]
 
-        for preference_idx in [0, 1]:# range(len(icorr_preferences)):
+        for preference_idx in range(len(icorr_preferences)):
 
             user_preference = icorr_preferences[preference_idx]
 
@@ -275,6 +268,7 @@ class FeedingBot:
 
                     if food is None:
                         break
+
                 if self.exit:
                     e = input("EXIT?")
                     if e in ['y', 'Y']:
