@@ -25,7 +25,7 @@ class GPTInterface:
                     'content': prompt
                   }
         response = self.client.chat.completions.create(
-                   model='gpt-4-0125-preview',
+                   model='gpt-4o-2024-08-06', # 'gpt-4-turbo-2024-04-09', # 'gpt-4-0125-preview',
                    messages=[message]
                   )
         # print(response)
@@ -44,7 +44,7 @@ class PreferencePlanner:
         self.bite_sequencing_prompt_file = 'ICORR_prompts_v4/decomposer_prompts/bite_acquisition_flair.txt'
         self.transfer_parameter_prompt_file = 'ICORR_prompts_v4/decomposer_prompts/bite_transfer.txt'
 
-        self.no_decomposer_prompt_file = 'flair_testing/flair_v8.txt'
+        self.no_decomposer_prompt_file = 'flair_testing/flair_v9.txt'
         
         self.flair_prompt = True
         self.debug = False

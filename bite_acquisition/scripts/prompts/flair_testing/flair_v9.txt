@@ -1,0 +1,38 @@
+You are feeding me a plate of food.
+Items remaining: %s
+Portions remaining (corresponding to items remaining list): %s 
+Preference: %s
+---
+Given this information, you will decide the following parameters:
+1. The next bite
+2. bite_size: Choose a value between 1.0 (smallest bite) and 10.0 (largest bite), default is 5.0.
+3. distance_to_mouth: Choose a value between 5.0 (closer) and 10.0 (further), default is 7.5.
+4. exit_angle: Choose a value between 80.0 (lower tilt) and 120.0 (higher tilt), default is 90.0.
+
+1) First, summarize what food items are remaining on the plate with corresponding portions. Make sure that your summarization matches with the 'Items remaining', 'Portions remaining' provided at the beginning.
+2) Then, I want you to state the latest bite that was fed.
+3) Next, summarize your high-level strategy for choosing the next bite.
+4) Next, choose an item from 'Items available' to feed next based on the answers you gave for 1) and 2) as well as the following decision criteria.
+   Decision Criteria:
+    - Prioritize my preference above all else. If I have a strong preference for a particular ordering of foods, you should obey that as best as possible. If the preference specifies 'Feed me X and then Y', perceive it as me asking you to feed all of X before you feed any of Y.
+    - "Alternating between X and Y" means you can start with either X or Y, unless otherwise specified.
+    - In the past, I have eaten the following bites with their respective bite sizes: %s. The items in the list are lists where the first element is the bite, the second element is bite size and the last two are the bite transfer parameters eg. [<bite>, <bite_size>, <distance_to_mouth>, <exit_angle>]. The first item of this list is the first bite I had, the second item is the second bite, and so on. The last element is the most recent bite that I just had. Use this to inform what you feed me next and how much. Note that bites taken so far are past bites and thus do not affect the specified items or portions remaining on the plate.
+    - If there is no sensible option to choose you may opt to not feed a bite by choosing [].
+5) Next, determine a bite size to feed me, use cues like "smaller" or "larger" and prior values from the bite history. Default to 5.0 if no specific preference is stated. ONLY change bite_size if the preference says so.
+6) Next, determine the distance_to_mouth parameter, use preference cues like "closer" or "further" and prior values from the bite history. Default to 7.5 if no preference applies. ONLY change distance_to_mouth if the preference says so.
+7) Next, determine the exit_angle parameter, look for cues like "higher," "lower," or "tilt," using bite history if needed. Default to 90.0 if no preference applies. ONLY change exit_angle if the preference says so.
+---
+Format your response as follows, be concise but thorough. Do NOT change the wording of anything in the output unless it is something you need to change:
+Food Items Left: <Sentence describing what food items are left on the plate; ensure that this matches with the 'Items remaining' provided at the beginning>
+Previous bites fed: <Sentence describing the latest food item that was fed>
+Strategy: <Sentence describing your high-level strategy>
+Next bite: <Phrase describing the next bite you plan to feed>
+Next bite as list: ['item1'] # Or []
+Next bite size: <Phrase describing the bite size you plan to choose>
+Next bite size as float: <bite size chosen as float. Do NOT write comments here>
+Next distance to mouth: <Phrase describing the distance to mouth value you plan to choose>
+Next distance to mouth as float: <distance to mouth chosen as float. Do NOT write comments here>
+Next exit angle: <Phrase describing the exit_angle value you plan to choose>
+Next exit angle as float: <exit angle chosen as floating point number. Do NOT write comments here>
+---
+Output your response here. Ensure that the last line begins with 'Next exit angle as float:'.

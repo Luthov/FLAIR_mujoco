@@ -57,7 +57,7 @@ class FeedingBot:
         # Choose to use decomposer or not
         self.mode = 'no_decomposer'
         self.decomposer_output_directory = 'feeding_bot_output/test_outputs/decomposer_output/'
-        self.no_decomposer_output_directory = 'feeding_bot_output/flair_tests/flair_output_v8/'
+        self.no_decomposer_output_directory = 'feeding_bot_output/flair_tests/flair_output_v9/'
 
         if self.mode == 'decomposer':
             self.output_directory = self.decomposer_output_directory
@@ -139,8 +139,8 @@ class FeedingBot:
                 print(preference_idx)
                 print(f"=== ACTIONS REMAINING ===")
                 print(actions_remaining)
-                print(f"=== HISTORY ===")
-                print(bite_history)
+                # print(f"=== HISTORY ===")
+                # print(bite_history)
                 print(f"=== USER PREFERENCE ===")
                 print(user_preference)
 
