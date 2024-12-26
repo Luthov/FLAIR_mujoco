@@ -25,7 +25,8 @@ icorr_preferences = [
     "I have no preference in the sequence, but I prefer the spoon to be closer to me."
 ]
 
-csv_file_path = 'old_flair_vs_new_flair_4o.csv'
+# csv_file_path = 'flair_v1_vs_flair_v9_4o-2024-08-06_(rerun).csv'
+csv_file_path = 'gpt-4-0125-preview_vs_gpt-4o-2024-08-06_flair_v9.csv'
 
 # Initialize the CSV file with headers if it doesn't exist
 if not os.path.exists(csv_file_path):
@@ -33,17 +34,19 @@ if not os.path.exists(csv_file_path):
         csvwriter = csv.writer(csvfile)
         headers = []
         for preference_idx in range(20):
-            headers.append(f'{preference_idx} - Old')
-            headers.append(f'{preference_idx} - New')
+            # headers.append(f'{preference_idx} - Old')
+            # headers.append(f'{preference_idx} - New')
+            headers.append(f'{preference_idx} - gpt-4')
+            headers.append(f'{preference_idx} - gpt-4o')
         csvwriter.writerow(headers)
 
 data_to_append = []
 
 # Collect data for each preference index
 for preference_idx in range(20):
-    no_decomposer_file_path = f'icorr_outputs_v4/flair_output/histories_idx_{preference_idx}.txt'
-    # decomposer_file_path = f'icorr_outputs_v4/decomposer_output/histories_idx_{preference_idx}.txt'
-    decomposer_file_path = f'flair_tests/flair_output_v9_4o_all_index/histories_idx_{preference_idx}.txt'
+    # no_decomposer_file_path = f'icorr_outputs_v4/flair_output/histories_idx_{preference_idx}.txt'
+    no_decomposer_file_path = f'flair_tests/flair_output_v9_gpt-4-0125-preview/histories_idx_{preference_idx}.txt'
+    decomposer_file_path = f'flair_tests/flair_output_v9/histories_idx_{preference_idx}.txt'
 
     with open(no_decomposer_file_path, 'r') as f:
         output = f.read()
