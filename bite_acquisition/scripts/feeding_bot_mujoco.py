@@ -57,7 +57,7 @@ class FeedingBot:
         # Choose to use decomposer or not
         self.mode = 'no_decomposer'
         self.decomposer_output_directory = 'feeding_bot_output/test_outputs/decomposer_output/'
-        self.no_decomposer_output_directory = 'feeding_bot_output/flair_tests/flair_output_v9/'
+        self.no_decomposer_output_directory = 'feeding_bot_output/tests/'
 
         if self.mode == 'decomposer':
             self.output_directory = self.decomposer_output_directory
@@ -88,7 +88,8 @@ class FeedingBot:
             "Feed me rice first, then alternate between chicken and vegetables. Keep the spoon tilted slightly upwards.",
             "I only want vegetables. Feed me in small bites..",
             "Start with a bite of vegetables, then alternate between chicken and rice.",
-            "I have no preference in the sequence, but I prefer the spoon to be closer to me."
+            # "I have no preference in the sequence, but I prefer the spoon to be closer to me."
+            "I want all the rice first, then alternate between chicken and vegetables. Give me larger bites of chicken. Also feed me slower."
         ]
         icorr_food_items = [
             ["rice", "chicken", "carrots"],
@@ -113,7 +114,7 @@ class FeedingBot:
             ["rice", "chicken", "peas"]
         ]
 
-        for preference_idx in range(len(icorr_preferences)):
+        for preference_idx in [19]: # range(len(icorr_preferences)):
 
             user_preference = icorr_preferences[preference_idx]
 
@@ -200,7 +201,7 @@ class FeedingBot:
                 print("Per Food Portions:", per_food_portions)
                 print("--------------------\n")
                 
-                food, bite_size, distance_to_mouth, exit_angle, token_data = self.inference_server.get_autonomous_action(
+                food, bite_size, distance_to_mouth, exit_angle, transfer_speed, token_data = self.inference_server.get_autonomous_action(
                     category_list, 
                     labels_list, 
                     per_food_portions, 
@@ -247,7 +248,7 @@ class FeedingBot:
                             # self.item_portions[idx] -= round(0.5 + (bite_size - -1.0) * (1.0 - 0.5) / (1.0 - -1.0), 2)
                             break
                     
-                    bite_history.append([labels_list[food_id], bite_size, distance_to_mouth, exit_angle])
+                    bite_history.append([labels_list[food_id], bite_size, distance_to_mouth, exit_angle, transfer_speed])
                     
                     if success:
                         actions_remaining -= 1

@@ -427,7 +427,7 @@ class BiteAcquisitionInference:
 
         print("=== CALLING PLANNER ===")
 
-        next_bite, bite_size, distance_to_mouth, exit_angle, token_data = self.preference_planner.plan(
+        next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed, token_data = self.preference_planner.plan(
             non_dip_labels, 
             non_dip_portions_rounded, 
             efficiency_scores, 
@@ -441,7 +441,7 @@ class BiteAcquisitionInference:
         print(non_dip_labels, next_bite)
     
         if next_bite == [] or next_bite == '':
-            return  None, None, None, None, None
+            return  None, None, None, None, None, None
         else:
             idx = non_dip_labels.index(next_bite)
-            return next_actions[idx], bite_size, distance_to_mouth, exit_angle, token_data
+            return next_actions[idx], bite_size, distance_to_mouth, exit_angle, transfer_speed, token_data

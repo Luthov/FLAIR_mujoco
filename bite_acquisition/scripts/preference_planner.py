@@ -25,7 +25,7 @@ class GPTInterface:
                     'content': prompt
                   }
         response = self.client.chat.completions.create(
-                   model='gpt-4-0125-preview', # 'gpt-4-turbo-2024-04-09',  'gpt-4o-2024-08-06',
+                   model='o1-mini-2024-09-12', # 'gpt-4-0125-preview', # 'gpt-4-turbo-2024-04-09',  'gpt-4o-2024-08-06',
                    messages=[message]
                   )
         # print(response)
@@ -44,10 +44,11 @@ class PreferencePlanner:
         self.bite_sequencing_prompt_file = 'ICORR_prompts_v4/decomposer_prompts/bite_acquisition_flair.txt'
         self.transfer_parameter_prompt_file = 'ICORR_prompts_v4/decomposer_prompts/bite_transfer.txt'
 
-        self.no_decomposer_prompt_file = 'flair_testing/flair_v9.txt'
-        
+        # self.no_decomposer_prompt_file = 'flair_testing/flair_v9.txt'
+        self.no_decomposer_prompt_file = 'ours.txt'
+
         self.flair_prompt = True
-        self.debug = False
+        self.debug = True
 
     def parse_preferences(self, preference):
 
@@ -211,7 +212,7 @@ class PreferencePlanner:
 
             if next_bite == []:
                 print("NO BITES MAKE SENSE")
-                return [], None, None, None, None
+                return [], None, None, None, None, None
             else:
                 next_bite = next_bite[0]
 
@@ -222,12 +223,15 @@ class PreferencePlanner:
                     distance_to_mouth = ast.literal_eval(param.split('Next distance to mouth as float:')[1].strip())
                 elif 'Next exit angle as float:' in param:
                     exit_angle = ast.literal_eval(param.split('Next exit angle as float:')[1].strip())
+                elif 'Next transfer speed as float:' in param:
+                    transfer_speed = ast.literal_eval(param.split('Next transfer speed as float:')[1].strip())
 
             print(f"=== PARAMETERS ===")
             print(f"NEXT BITE: {next_bite}")
             print(f"BITE SIZE: {bite_size}")
             print(f"DISTANCE TO MOUTH: {distance_to_mouth}")
             print(f"EXIT ANGLE: {exit_angle}")
+            print(f"TRANSFER SPEED: {transfer_speed}")
 
             # Append responses and parameters to a file
             with open(output_directory + f'flair_output_idx_{preference_idx}.txt', 'a') as f:
@@ -239,8 +243,9 @@ class PreferencePlanner:
                 f.write(f"DISTANCE TO MOUTH: {distance_to_mouth}\n")
                 f.write(f"EXIT ANGLE: {exit_angle}\n")
                 f.write(f"PORTION SIZES: {portions}\n")
+                f.write(f"TRANSFER SPEED: {transfer_speed}\n")
                     
-            return next_bite, bite_size, distance_to_mouth, exit_angle, token_data
+            return next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed, token_data
     
     def interactive_test(self, mode):
         items = ast.literal_eval(input('Enter a list of items: '))
