@@ -89,7 +89,10 @@ class FeedingBot:
             "I only want vegetables. Feed me in small bites..",
             "Start with a bite of vegetables, then alternate between chicken and rice.",
             # "I have no preference in the sequence, but I prefer the spoon to be closer to me."
-            "I want all the rice first, then alternate between chicken and vegetables. Give me larger bites of chicken. Also feed me slower."
+            # "I want all the rice first, then alternate between chicken and vegetables. Give me larger bites of chicken. Also feed me slower."
+            "我先要吃完所有的饭，然后鸡肉和蔬菜交替喂。鸡肉要大口一点，可以吗？还有，喂慢一点。"
+            # "I want all the rice first, then chicken and veg alternate, ah. Chicken bigger bite, okay? And feed slower, can?"
+            # "I want all the rice first, then chicken and veg alternate, ah. Chicken I want bigger bite and can you also please feed slower for everything"
         ]
         icorr_food_items = [
             ["rice", "chicken", "carrots"],
@@ -117,8 +120,10 @@ class FeedingBot:
         for preference_idx in [19]: # range(len(icorr_preferences)):
 
             user_preference = icorr_preferences[preference_idx]
+            # user_preference = "I want to eat the vegies first then only I want "
 
             self.items = [icorr_food_items[preference_idx]]
+            # self.items = [['potatoes', 'chicken', 'carrots']]
             self.item_portions = [2.0, 2.0, 2.0]
 
             self.inference_server.FOOD_CLASSES = self.items
@@ -147,30 +152,24 @@ class FeedingBot:
 
                 if self.preference_interrupt:
                     # Get user preferences
-                    print(f"CURRENT USER PREFERENCE: {user_preference}")
+                    print("=== CURRENT USER PREFERENCE ===")
+                    print(user_preference)
                     new_user_preference = input("Do you want to update your preference? Otherwise input [n] or Enter to continue\n")
                     if new_user_preference not in ['n', '']:
                         user_preference = new_user_preference
-                        print(f"NEW USER PREFERENCE: {user_preference}\n")
+                        print("=== NEW USER PREFERENCE ===")
+                        print(user_preference)
+                        with open(self.output_directory + f'flair_output_idx_{preference_idx}.txt', 'a') as f:
+                            f.write(f"=== NEW USER PREFERENCE ===\n{user_preference}\n")
 
-                    print(f"CURRENT BITE PREFERENCE: {bite_preference}")
-                    new_bite_preference = input("Do you want to update your bite size? Otherwise input [n] or Enter to continue\n")
-                    if new_bite_preference not in ['n', '']:
-                        bite_preference = new_bite_preference
-                        print(f"NEW BITE PREFERENCE: {bite_preference}\n")
-                    
-                    print(f"CURRENT DISTANCE TO MOUTH PREFERENCE: {distance_to_mouth_preference}")
-                    new_distance_to_mouth_preference = input("Do you want to update your distance to mouth preference? Otherwise input [n] or Enter to continue\n")
-                    if new_distance_to_mouth_preference not in ['n', '']:
-                        distance_to_mouth_preference = new_distance_to_mouth_preference
-                        print(f"NEW DISTANCE TO MOUTH PREFERENCE: {distance_to_mouth_preference}\n")
-                        
-                    print(f"CURRENT EXIT ANGLE PREFERENCE: {exit_angle_preference}")
-                    new_exit_angle_preference = input("Do you want to update your exit angle preference? Otherwise input [n] or Enter to continue\n")
-                    if new_exit_angle_preference not in ['n', '']:
-                        exit_angle_preference = new_exit_angle_preference
-                        print(f"NEW EXIT ANGLE PREFERENCE: {exit_angle_preference}\n")
-                    
+                # if actions_remaining < 5:
+                #     # user_preference = "I want all the rice first, then alternate between chicken and vegetables. Give me smaller bites of chicken. Also feed me slower."
+                #     user_preference = "I want smaller bites of chicken now"
+                #     print("=== NEW USER PREFERENCE ===")
+                #     print(user_preference)
+                #     with open(self.output_directory + f'flair_output_idx_{preference_idx}.txt', 'a') as f:
+                #         f.write(f"=== NEW USER PREFERENCE ===\n{user_preference}\n")
+
                 log_path = self.log_file + str(self.log_count)
                 self.log_count += 1
 
@@ -254,18 +253,10 @@ class FeedingBot:
                         actions_remaining -= 1
 
                 if actions_remaining == 0 or (food is None):
-                    if self.mode == 'decomposer':
-                        with open(self.output_directory + f'decomposer_output_idx_{preference_idx}.txt', 'a') as f:
-                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
-                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
-                    elif self.mode == 'no_decomposer':
-                        with open(self.output_directory + f'flair_output_idx_{preference_idx}.txt', 'a') as f:
-                            f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
-                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
-
                     with open(self.output_directory + f'histories_idx_{preference_idx}.txt', 'a') as f:
                         f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
                         f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
+                        f.write(f"=== USER PREFERENCE ===\n{user_preference}\n")
 
                     if food is None:
                         break

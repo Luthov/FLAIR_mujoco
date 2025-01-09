@@ -25,7 +25,7 @@ class GPTInterface:
                     'content': prompt
                   }
         response = self.client.chat.completions.create(
-                   model='o1-mini-2024-09-12', # 'gpt-4-0125-preview', # 'gpt-4-turbo-2024-04-09',  'gpt-4o-2024-08-06',
+                   model='gpt-4-turbo-2024-04-09', # 'gpt-4-0125-preview', # 'gpt-4-turbo-2024-04-09', 
                    messages=[message]
                   )
         # print(response)
@@ -48,7 +48,7 @@ class PreferencePlanner:
         self.no_decomposer_prompt_file = 'ours.txt'
 
         self.flair_prompt = True
-        self.debug = True
+        self.debug = False
 
     def parse_preferences(self, preference):
 
@@ -224,6 +224,7 @@ class PreferencePlanner:
                 elif 'Next exit angle as float:' in param:
                     exit_angle = ast.literal_eval(param.split('Next exit angle as float:')[1].strip())
                 elif 'Next transfer speed as float:' in param:
+                    print(param)
                     transfer_speed = ast.literal_eval(param.split('Next transfer speed as float:')[1].strip())
 
             print(f"=== PARAMETERS ===")
