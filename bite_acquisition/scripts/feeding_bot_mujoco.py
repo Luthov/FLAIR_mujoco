@@ -12,6 +12,7 @@ from geometry_msgs.msg import PoseStamped
 
 from skill_library_mujoco import SkillLibrary
 from inference_class_mujoco import BiteAcquisitionInference
+from speech_to_text.live_captions import get_user_preference
 
 HOME_ORIENTATION = Rotation.from_quat([1/math.sqrt(2), 1/math.sqrt(2), 0, 0]).as_matrix()
 DEFAULT_FORCE_THRESHOLD = [30.0, 30.0, 30.0, 30.0, 30.0, 30.0]
@@ -53,6 +54,7 @@ class FeedingBot:
         self.execute = False
         self.preference_interrupt = False
         self.exit = False
+        self.speech_to_text = True
 
         # Choose to use decomposer or not
         self.mode = 'no_decomposer'
@@ -119,7 +121,10 @@ class FeedingBot:
 
         for preference_idx in [19]: # range(len(icorr_preferences)):
 
-            user_preference = icorr_preferences[preference_idx]
+            if self.speech_to_text:
+                user_preference = get_user_preference()
+            else:
+                user_preference = icorr_preferences[preference_idx]
             # user_preference = "I want to eat the vegies first then only I want "
 
             self.items = [icorr_food_items[preference_idx]]
