@@ -12,7 +12,7 @@ from geometry_msgs.msg import PoseStamped
 
 from skill_library_mujoco import SkillLibrary
 from inference_class_mujoco import BiteAcquisitionInference
-from speech_to_text.live_captions import get_user_preference
+from speech_to_text.speech_to_text import get_user_preference
 
 HOME_ORIENTATION = Rotation.from_quat([1/math.sqrt(2), 1/math.sqrt(2), 0, 0]).as_matrix()
 DEFAULT_FORCE_THRESHOLD = [30.0, 30.0, 30.0, 30.0, 30.0, 30.0]
