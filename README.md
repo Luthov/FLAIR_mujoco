@@ -63,6 +63,28 @@ Follow these steps to set up and control the feeding utensil using the Dynamixel
    ```
    rostopic pub -1 /cmd_wrist_joint_angles wrist_driver_interfaces/SimpleJointAngleCommand '{q0: 0.0, q1: 0.0}'
    ```
+### Speech-to-text module setup
+```
+conda activate mjrl
+pip install useful-moonshine-onnx@git+https://git@github.com/usefulsensors/moonshine.git#subdirectory=moonshine-onnx
+pip install tokenizers==0.20.3
+```
+
+```
+pip install numba
+pip install -r speech_to_text/src/speech_to_text/moonshine/demo/moonshine-onnx/requirements.txt
+```
+> NOTE: Make sure to clone submodules recursively
+
+#### Ubuntu: Install PortAudio
+
+Ubuntu needs PortAudio for the `sounddevice` package to run. The latest version (19.6.0-1.2build3 as of writing) is suitable.
+
+```shell
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y portaudio19-dev
+```
 
 ## Running FLAIR
 
