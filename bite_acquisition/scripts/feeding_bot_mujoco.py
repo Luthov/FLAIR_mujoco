@@ -12,7 +12,7 @@ from geometry_msgs.msg import PoseStamped
 
 from skill_library_mujoco import SkillLibrary
 from inference_class_mujoco import BiteAcquisitionInference
-from speech_to_text.speech_to_text import get_user_preference
+# from speech_to_text.speech_to_text import get_user_preference
 
 HOME_ORIENTATION = Rotation.from_quat([1/math.sqrt(2), 1/math.sqrt(2), 0, 0]).as_matrix()
 DEFAULT_FORCE_THRESHOLD = [30.0, 30.0, 30.0, 30.0, 30.0, 30.0]
@@ -54,12 +54,13 @@ class FeedingBot:
         self.execute = False
         self.preference_interrupt = False
         self.exit = False
-        self.speech_to_text = True
+        self.speech_to_text = False
+        self.modified = True
 
         # Choose to use decomposer or not
         self.mode = 'no_decomposer'
-        self.decomposer_output_directory = 'feeding_bot_output/test_outputs/decomposer_output/'
-        self.no_decomposer_output_directory = 'feeding_bot_output/tests/'
+        self.decomposer_output_directory = 'feeding_bot_output/interview_output/'
+        self.no_decomposer_output_directory = 'feeding_bot_output/interview_yi_heng/modified/'
 
         if self.mode == 'decomposer':
             self.output_directory = self.decomposer_output_directory
@@ -119,17 +120,88 @@ class FeedingBot:
             ["rice", "chicken", "peas"]
         ]
 
-        for preference_idx in [19]: # range(len(icorr_preferences)):
+        # hau_wen_interview_preferences = ["alternate between rice and other food.",
+        #                          "alternate between rice and other food. leave some chicken at the end of meal",
+        #                          "alternate between rice and other food.",
+        #                          "alternate between rice and other food. finish cucumber early leave more meat at the end",
+        #                          "alternate between mashed potatoes and other food. leave more steak at the end",
+        #                          "alternate between rice and other foods. leave more beef at the end",
+        #                          "alternate between mashed potatoes and other food.",
+        #                          "alternate between salmon and other food.",
+        #                          "alternate between rice and other food. dont have to finish all the cabbage",
+        #                          "alternate between rice and other food. leave more chicken at the end."]
+        
+        yi_heng_interview_preferences = [
+            "I'd like to have some fish first, then some rice. After that, the egg and green beans. Please repeat that sequence",
+            "I'd like to have some chicken first, then some rice. After that, the egg and green beans. Please repeat that sequence",
+            "I'd like to have some chicken first, then some rice. After that, the egg and cucumber. Please repeat that sequence",
+            "I'd like to have some chicken first, then some rice and finally some cucumber. Please repeat that sequence",
+            "I'd like some steak first, then the mashed potatoes, then the beans and carrots. Please repeat that sequence",
+            "I'd like to have beef first, followed by the broccoli and finally the rice. Please repeat that sequence",
+            "I'd like to have the meatballs first, then the mashed potatoes and finally the green beans. Please repeat the sequence.",
+            "I'll have the salmon, then the broccoli and mashed potatoes. Please repeat the sequence",
+            "I'll have the pork cutlet, followed by the rice and cabbage. Please repeat the sequence",
+            "I'll have the chicken, followed by rice and then, mixed vegetables. Please repeat the sequence"
+            ]
+        modified_interview_preferences = [
+            "I'd like to be first fed fish, then rice, then egg and finally green beans in that order",
+            "",
+            "I'd like to be fed chicken first, followed by rice, egg and cucumber in that order",
+            "I'd like to be fed chicken first, then rice and finally cucumber in that order",
+            "",
+            "I'd like to have beef first, then broccoli, then rice in that order",
+            "",
+            "I'd like to have some salmon, then broccoli and then mashed potatoes in that order",
+            "I'd like to have some pork cutlet, then rice and cabbage in that order",
+            "I'd like to have some chicken first, then rice and then vegetables"
+        ]
+
+        interview_preferences = [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
+
+        interview_food_items = [
+            ["rice", "fish", "egg", "green beans"],
+            ["rice", "chicken", "egg", "green beans"],
+            ["rice", "chicken", "egg", "cucumber"],
+            ["rice", "chicken", "cucumber"],
+            ["mashed potatoes", "steak", "green beans", "carrots"],
+            ["rice", "beef", "broccoli"],
+            ["mashed potatoes", "meatballs", "green beans"],
+            ["mashed potatoes", "salmon", "broccoli"],
+            ["rice", "pork cutlet", "cabbage"],
+            ["rice", "chicken", "mixed vegetables"]
+            ]
+        for preference_idx in [1]: # range(len(interview_preferences)): # range(len(icorr_preferences)):
 
             if self.speech_to_text:
                 user_preference = get_user_preference()
             else:
-                user_preference = icorr_preferences[preference_idx]
-            # user_preference = "I want to eat the vegies first then only I want "
+                user_preference = interview_preferences[preference_idx]
+                if self.modified:
+                    user_preference = yi_heng_interview_preferences[preference_idx]
+                if user_preference == "":
+                    continue
 
-            self.items = [icorr_food_items[preference_idx]]
-            # self.items = [['potatoes', 'chicken', 'carrots']]
-            self.item_portions = [2.0, 2.0, 2.0]
+            self.items = [interview_food_items[preference_idx]]
+            
+            if len(self.items[0]) == 3:
+                self.item_portions = [2.0] * len(self.items[0])
+                actions_remaining = 9
+            else:
+                self.item_portions = [2.0] * len(self.items[0])
+                actions_remaining = 12
+            
+            bite_portion = 0.6
 
             self.inference_server.FOOD_CLASSES = self.items
 
@@ -141,7 +213,7 @@ class FeedingBot:
             # Continue food
             continue_food_label = None
 
-            actions_remaining = 10
+            # actions_remaining = 10
             success = True
             
             while actions_remaining:
@@ -150,8 +222,6 @@ class FeedingBot:
                 print(preference_idx)
                 print(f"=== ACTIONS REMAINING ===")
                 print(actions_remaining)
-                # print(f"=== HISTORY ===")
-                # print(bite_history)
                 print(f"=== USER PREFERENCE ===")
                 print(user_preference)
 
@@ -167,14 +237,6 @@ class FeedingBot:
                         with open(self.output_directory + f'flair_output_idx_{preference_idx}.txt', 'a') as f:
                             f.write(f"=== NEW USER PREFERENCE ===\n{user_preference}\n")
 
-                # if actions_remaining < 5:
-                #     # user_preference = "I want all the rice first, then alternate between chicken and vegetables. Give me smaller bites of chicken. Also feed me slower."
-                #     user_preference = "I want smaller bites of chicken now"
-                #     print("=== NEW USER PREFERENCE ===")
-                #     print(user_preference)
-                #     with open(self.output_directory + f'flair_output_idx_{preference_idx}.txt', 'a') as f:
-                #         f.write(f"=== NEW USER PREFERENCE ===\n{user_preference}\n")
-
                 log_path = self.log_file + str(self.log_count)
                 self.log_count += 1
 
@@ -184,7 +246,7 @@ class FeedingBot:
                 
                 clean_item_labels = self.items[0] 
 
-                categories = self.inference_server.categorize_items(item_labels, sim=True) 
+                categories = self.inference_server.categorize_items(item_labels, sim=False) 
 
                 category_list = []
                 labels_list = []
@@ -248,7 +310,7 @@ class FeedingBot:
 
                     for idx in range(len(clean_item_labels)):
                         if clean_item_labels[food_id] == clean_item_labels[idx]:
-                            self.item_portions[idx] -= 0.45
+                            self.item_portions[idx] -= bite_portion
                             # self.item_portions[idx] -= round(0.5 + (bite_size - -1.0) * (1.0 - 0.5) / (1.0 - -1.0), 2)
                             break
                     

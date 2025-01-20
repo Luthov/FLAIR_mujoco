@@ -166,4 +166,4 @@ def get_user_preference():
                     start_time = time.time()
 
 if __name__ == "__main__":
-    user_preference = get_user_preference()
+        user_preference = get_user_preference()
