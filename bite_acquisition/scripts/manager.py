@@ -44,6 +44,7 @@ class FeedingManager():
         self.bite_history = []
         self.token_history = []
 
+        # TODO: Need to convert these to cart coordinates
         self.acq_pose = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
         self.transfer_pose = np.radians([0.0, -65.0, -25.0, 0.0, 0.0, -90.0])
         self.perception_pose = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
@@ -60,17 +61,22 @@ class FeedingManager():
         # Service clients
         self.get_scooping_points_client = rospy.ServiceProxy('get_scooping_points', GetScoopingPoints)
         self.get_scooping_points_client.wait_for_service()
+        rospy.loginfo("Scooping server started")
 
         self.get_feeding_params_client = rospy.ServiceProxy('get_feeding_parameters', GetParam)
         self.get_feeding_params_client.wait_for_service()
+        rospy.loginfo("Feeding parameters server started")
 
         # Action clients
         self.transfer_client = actionlib.SimpleActionClient('start_signal', StartActionAction)
         self.transfer_client.wait_for_server()
+        rospy.loginfo("Bite transfer server started")
 
         # TODO: Need to change Action server name and msg when J-Anne ready
         self.execute_scooping_client = actionlib.SimpleActionClient('execute_scooping', ExecuteScoopingAction)
         self.execute_scooping_client.wait_for_server()
+        rospy.loginfo("Execute scooping server started")
+
                          
     def move_to_pose(self, pose, wait=True):   
         """
@@ -149,22 +155,18 @@ class FeedingManager():
         return resp_scooping_points
 
     def feed(self):
-
-        # actions_remaining = 10
-        success = True
         
         while self.actions_remaining:
+
+            print(f"=== ACTIONS REMAINING ===")
+            print(self.actions_remaining)
 
             self.move_to_perception_pose()
 
             scooping_points, bounding_boxes = self.get_scooping_points() # Sorted in order of left to right
 
-            # Getting feeding parameters
-            print(f"=== ACTIONS REMAINING ===")
-            print(self.actions_remaining)
-
-            log_path = self.log_file + str(self.log_count)
-            self.log_count += 1
+            # log_path = self.log_file + str(self.log_count)
+            # self.log_count += 1
 
             # Hard coded for mujoco
             food_item_labels = [[f"{food} {random.uniform(0.5, 1.0):.2f}" for food in items] for items in self.items]
@@ -195,7 +197,9 @@ class FeedingManager():
 
             food_portion_rounded = [round(portion) for portion in per_food_portions]
             
-            next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed, user_preference = self.get_feeding_params(self.bite_history, food_portion_rounded)
+            next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed, user_preference = self.get_feeding_params(
+                self.bite_history, 
+                food_portion_rounded)
 
             if next_bite is []:
                 break
@@ -206,7 +210,7 @@ class FeedingManager():
                     bowl_bbox = bounding_boxes[idx]
                     break
 
-            # TODO: Need to make sure args are correct
+            # TODO: Need to make sure args are correct when J-Anne is finished
             self.move_to_acq_pose()
             acquisition_success = self.execute_scooping(point_to_be_scooped, bowl_bbox, bite_size)
 
@@ -231,13 +235,14 @@ class FeedingManager():
                 self.move_to_perception_pose()
                 continue
 
+            # Maybe want to publish history so that pref server can sub and update history
             self.bite_history.append([next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed])
 
-            if (self.actions_remaining == 0) or (next_bite is []):
-                with open(self.output_directory + f'results.txt', 'a') as f:
-                    f.write(f"=== FINAL HISTORY ===\n{self.bite_history}\n")
-                    f.write(f"=== FINAL TOKEN HISTORY ===\n{self.token_history}\n")
-                    f.write(f"=== USER PREFERENCE ===\n{user_preference}\n")
+            # if (self.actions_remaining == 0) or (next_bite is []):
+            #     with open(self.output_directory + f'results.txt', 'a') as f:
+            #         f.write(f"=== FINAL HISTORY ===\n{self.bite_history}\n")
+            #         f.write(f"=== FINAL TOKEN HISTORY ===\n{self.token_history}\n")
+            #         f.write(f"=== USER PREFERENCE ===\n{user_preference}\n")
 
 if __name__ == "__main__":
     rospy.init_node("feeding_manager")
