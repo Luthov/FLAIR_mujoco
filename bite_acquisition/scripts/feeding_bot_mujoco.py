@@ -49,7 +49,7 @@ class FeedingBot:
 
     def clear_plate(self):
         
-        for preference_idx in [0]: # range(len(interview_preferences)): # range(len(icorr_preferences)):
+        for preference_idx in [4, 6, 7]: # range(2, len(interview_preferences)): # range(len(icorr_preferences)):
 
             if self.speech_to_text:
                 user_preference = get_user_preference()
@@ -63,11 +63,11 @@ class FeedingBot:
             self.items = [interview_food_items[preference_idx]]
             food_items = self.items[0]
             
-            if len(food_items[0]) == 3:
-                self.item_portions = [2.0] * len(food_items[0])
+            if len(food_items) == 3:
+                self.item_portions = [2.0] * len(food_items)
                 actions_remaining = 9
             else:
-                self.item_portions = [2.0] * len(food_items[0])
+                self.item_portions = [2.0] * len(food_items)
                 actions_remaining = 12
 
             # Bite history
@@ -114,6 +114,16 @@ class FeedingBot:
                 self.output_directory
                 )
 
+                actions_remaining -= 1
+                    
+                for idx in range(len(food_items)):
+                    if food_items[idx] == next_bite:
+                        self.item_portions[idx] -= self.bite_portion
+                        self.item_portions[idx] = round(self.item_portions[idx], 2)
+                        break
+                    
+                bite_history.append([next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed])
+
                 if actions_remaining == 0 or (next_bite == ''):
                     print('NO BITES MAKE SENSE')
                     with open(self.output_directory + f'histories_idx_{preference_idx}.txt', 'a') as f:
@@ -121,15 +131,6 @@ class FeedingBot:
                         f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
                         f.write(f"=== USER PREFERENCE ===\n{user_preference}\n")
                         break
-                    
-                for idx in range(len(food_items)):
-                    if food_items[idx] == next_bite:
-                        self.item_portions[idx] -= self.bite_portion
-                        break
-                    
-                bite_history.append([next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed])
-                
-                actions_remaining -= 1
 
                 if self.exit:
                     e = input("EXIT?")

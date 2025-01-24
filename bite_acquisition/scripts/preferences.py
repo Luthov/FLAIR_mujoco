@@ -97,6 +97,7 @@ icorr_food_items = [
     ["rice", "chicken", "peas"]
 ]
 
+# Interview preferences
 interview_food_items = [
     ["rice", "fish", "egg", "green beans"],
     ["rice", "chicken", "egg", "green beans"],
@@ -148,20 +149,20 @@ yi_heng_modified_interview_preferences = [
 ]
 
 interview_preferences = [
-    "Don't feed me the same thing twice in a row",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
+    "I would like to be fed with rice and the other foods in an alternating. The other foods can be any order but avoid repeating the foods. If there is no more rice, then feed me the vegetables first then the, egg and finally the meat. If there is only rice left, then scoop it until i say stop",
+    "I would like to be fed with rice and the other foods in an alternating. The other foods can be any order but avoid repeating the foods. If there is no more rice, then feed me the vegetables first then the, egg and finally the meat. If there is only rice left, then scoop it until i say stop",
+    "I would like to be fed with rice and the other foods in an alternating. The other foods can be any order but avoid repeating the foods. If there is no more rice, then feed me the vegetables first then the, egg and finally the meat. If there is only rice left, then scoop it until i say stop",
+    "I would like to be fed with rice and the other foods in an alternating. The other foods can be any order but avoid repeating the foods. If there is no more rice, then feed me the vegetables first then the, egg and finally the meat. If there is only rice left, then scoop it until i say stop",
+    "I'd like to start with the steak. Then please alternate between all the other food on the plate. Ensure that I finish the green beans and carrots first, followed by the mash potatoes because I'd like my last few bites to be the steak. Serve the bite after the steak slowly as i want to savour the meat. ",
+    "I would like to be fed with rice and the other foods in an alternating. The other foods can be any order but avoid repeating the foods. If there is no more rice please ensure that my last bite is the beef. If there is only rice left, then scoop it until i say stop",
+    "serve me one meatball first. Then alternate between the mashed potatoes and the green beans unless i ask for a meat ball. After each meatball bite, allow me more time before the next bite. ",
+    "Please portion the salmon such that my last bite is of the salmon. I would like to finish the broccoli and mash potatoes quickly. However, I can't take too much mash potatoes too quickly so alternate it with other foods. Serve me salmon only when I call for it or if there is no more of the other food.  ",
+    "I would like to finish the cabbage quickly. I am ok with not finishing the rice. Only serve me the rice if you are to serve me pork cutlet in the next bit but not cabbage on the next bite. please ration the port cutlet so that I am left with a lot of pork cutlet at the end without any cabbage. ",
+    "Please serve the teriyaki chicken in small portions while the rest in normal portions. Ensure that a bite of rice will not follow another bite of rice, instead alternate between the mixed vegetables and teriyaki chicken. Save at least one bite of teriyaki chicken at the end. Ensure I finish all the food unless I ask for all the teriyaki chicken or ask you to stop. "
 ]
 
 modified_interview_preferences = [
-    "",
+    "Please alternate rice with the other foods in any order. However, if the green beans, egg or fish is given in the bite before the rice, then do not repeat it.",
     "",
     "",
     "",

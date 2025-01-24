@@ -48,7 +48,7 @@ class PreferencePlanner:
         self.no_decomposer_prompt_file = 'ours.txt'
 
         self.flair_prompt = True
-        self.debug = True
+        self.debug = False
 
     def parse_preferences(self, preference):
 
