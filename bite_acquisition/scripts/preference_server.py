@@ -16,7 +16,7 @@ class PreferenceServer():
         self.efficiency_scores = [1, 1, 1]
         self.history = []
         self.mode = 'no_decomposer'
-        self.output_directory = '/home/luthov/school/fyp/feeding_ws/src/feeding/task_planner/FLAIR_mujoco/bite_acquisition/scripts/feeding_bot_output/'
+        self.output_directory = '/home/luthov/school/fyp/feeding_ws/src/feeding/task_planner/FLAIR_mujoco/bite_acquisition/scripts/feeding_bot_output/real_arm_testing/'
 
         self.preference_planner = PreferencePlanner()
 
