@@ -18,7 +18,7 @@ Given this information, you will decide the following parameters:
     - Prioritize my preference above all else. If I have a strong preference for a particular ordering of foods, you should obey that as best as possible. If the preference specifies 'Feed me X and then Y', perceive it as me asking you to feed all of X before you feed any of Y.
     - "Alternating between X and Y" means you can start with either X or Y, unless otherwise specified.
     - In the past, I have eaten the following bites with their respective bite sizes: %s. The items in the list are lists where the first element is the bite, the second element is bite size and the last three are the bite transfer parameters eg. [<bite>, <bite_size>, <distance_to_mouth>, <exit_angle>, <transfer_speed>]. The first item of this list is the first bite I had, the second item is the second bite, and so on. The last element is the most recent bite that I just had. Use this to inform what you feed me next and how much. Note that bites taken so far are past bites and thus do not affect the specified items or portions remaining on the plate.
-    - If there is no sensible option to choose you may opt to not feed a bite by choosing [].
+    - If there is no sensible option to choose you may opt to not feed a bite by choosing ''.
 5) Next, determine a bite size to feed me, use cues like "smaller", or "larger", and prior values from the bite history. Default to 5.0 if no specific preference is stated. ONLY change bite_size if the preference says so.
 6) Next, determine the distance_to_mouth parameter, use preference cues like "closer", or "further", and prior values from the bite history. Default to 7.5 if no preference applies. Do NOT use preference cues which correspond to the speed of feeding. ONLY change distance_to_mouth if the preference says so.
 7) Next, determine the exit_angle parameter, look for cues like "higher", "lower", or "tilt", using bite history if needed. Default to 90.0 if no preference applies. ONLY change exit_angle if the preference says so.
@@ -31,7 +31,7 @@ Food Items Left: <Sentence describing what food items are left on the plate; ens
 Previous bites fed: <Sentence describing the latest food item that was fed>
 Strategy: <Sentence describing your high-level strategy>
 Next bite: <Phrase describing the next bite you plan to feed>
-Next bite as list: ['item1'] # Or []
+Next bite as string: 'item1' # Or ''
 Next bite size: <Phrase describing the bite size you plan to choose>
 Next bite size as float: <bite size chosen as float. Do NOT write comments here>
 Next distance to mouth: <Phrase describing the distance to mouth value you plan to choose>

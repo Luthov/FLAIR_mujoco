@@ -48,7 +48,7 @@ class PreferencePlanner:
         self.no_decomposer_prompt_file = 'ours.txt'
 
         self.flair_prompt = True
-        self.debug = False
+        self.debug = True
 
     def parse_preferences(self, preference):
 
@@ -203,7 +203,7 @@ class PreferencePlanner:
                 print(f"RESPONSE:\n{response}")
 
             if self.flair_prompt:
-                intermediate_response = response.split('Next bite as list:')[1].strip()
+                intermediate_response = response.split('Next bite as string:')[1].strip()
             else:
                 intermediate_response = response.split('Next food item as string:')[1].strip()
 
@@ -214,7 +214,7 @@ class PreferencePlanner:
                 print("NO BITES MAKE SENSE")
                 return [], None, None, None, None, None
             else:
-                next_bite = next_bite[0]
+                next_bite = next_bite
 
             for param in feeding_parameters:
                 if 'Next bite size as float:' in param:

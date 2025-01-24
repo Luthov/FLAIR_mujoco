@@ -47,3 +47,128 @@ bite_preferences_hospital = [
     "Serve the soup in big hearty spoonfuls, but keep the bread roll in small bite-sized pieces.",
     "I want small spoonfuls of oatmeal, large chunks of scrambled eggs, and fruit salad in tiny bites for a fresh finish."
 ]
+
+icorr_preferences = [
+    "Feed me all the rice first, then alternate between chicken and vegetables",
+    "I want alternate bites of chicken and rice. I prefer to be fed larger bites and for the spoon to be further away from me.",
+    "I only want meat. Tilt the spoon slightly when feeding me. Feed me with larger bites", # Rerun idx 2
+    "Start with the vegetables, then the meat. Keep the bites small.",
+    "Alternate between rice and vegetables, but do not feed me chicken. Keep the spoon far from my mouth.", # Rerun idx 4
+    "Feed me all the chicken first, then the rice. Use smaller bites and be careful not to tilt the spoon too much.",
+    "I prefer alternate bites of rice, chicken and vegetables. Do not repeat any bites. Feed me evenly without tilting the spoon.",
+    "Give me two bites of meat first, then alternate between vegetables and rice. Make sure to tilt the spoon a little higher", # Rerun idx 7
+    "I want all the vegetables first, followed by alternating bites of chicken and rice. Keep the bites medium-sized and keep the spoon far from me.",
+    "Avoid the vegetables and give me only rice and chicken. Keep the bites small and tilt the spoon slightly.",
+    "Start with the chicken, then the vegetables, and end with the rice. Keep the spoon close to me.",
+    "Feed me only the rice, one spoonful at a time. Keep the bites large.",
+    "Alternate between rice, chicken, and vegetables. Keep the spoon at a distance and use small bites.",
+    "I want one bite of chicken followed by two bites of rice. Feed me with tilted spoonfuls.", # Rerun idx 13
+    "Feed me vegetables first, then alternate rice and meat. Use small bites and tilt the spoon slightly. Also keep the spoon close to me.",
+    "Give me larger bites of chicken, followed by smaller bites of rice. Feed me with a tilt in the spoon and do not come too close to me.", # Rerun idx 15
+    "Feed me rice first, then alternate between chicken and vegetables. Keep the spoon tilted slightly upwards.",
+    "I only want vegetables. Feed me in small bites..",
+    "Start with a bite of vegetables, then alternate between chicken and rice.",
+    # "I have no preference in the sequence, but I prefer the spoon to be closer to me."
+    # "I want all the rice first, then alternate between chicken and vegetables. Give me larger bites of chicken. Also feed me slower."
+    "我先要吃完所有的饭，然后鸡肉和蔬菜交替喂。鸡肉要大口一点，可以吗？还有，喂慢一点。"
+    # "I want all the rice first, then chicken and veg alternate, ah. Chicken bigger bite, okay? And feed slower, can?"
+    # "I want all the rice first, then chicken and veg alternate, ah. Chicken I want bigger bite and can you also please feed slower for everything"
+]
+icorr_food_items = [
+    ["rice", "chicken", "carrots"],
+    ["chicken", "rice", "peas"],
+    ["beef", "potatoes", "salad"],
+    ["spinach", "beef", "peas"],
+    ["rice", "spinach", "broccoli"],
+    ["chicken", "rice", "peas"],
+    ["rice", "chicken", "carrots"],
+    ["beef", "spinach", "rice"],
+    ["carrots", "chicken", "rice"],
+    ["rice", "chicken", "peas"],
+    ["chicken", "spinach", "rice"],
+    ["rice", "peas", "corn"],
+    ["rice", "chicken", "carrots"],
+    ["chicken", "rice", "peas"],
+    ["spinach", "rice", "beef"],
+    ["chicken", "rice", "peas"],
+    ["rice", "chicken", "spinach"],
+    ["beef", "rice", "cabbage"],
+    ["carrots", "chicken", "rice"],
+    ["rice", "chicken", "peas"]
+]
+
+interview_food_items = [
+    ["rice", "fish", "egg", "green beans"],
+    ["rice", "chicken", "egg", "green beans"],
+    ["rice", "chicken", "egg", "cucumber"],
+    ["rice", "chicken", "cucumber"],
+    ["mashed potatoes", "steak", "green beans", "carrots"],
+    ["rice", "beef", "broccoli"],
+    ["mashed potatoes", "meatballs", "green beans"],
+    ["mashed potatoes", "salmon", "broccoli"],
+    ["rice", "pork cutlet", "cabbage"],
+    ["rice", "chicken", "mixed vegetables"]
+    ]
+
+hau_wen_interview_preferences = ["alternate between rice and other food.",
+                         "alternate between rice and other food. leave some chicken at the end of meal",
+                         "alternate between rice and other food.",
+                         "alternate between rice and other food. finish cucumber early leave more meat at the end",
+                         "alternate between mashed potatoes and other food. leave more steak at the end",
+                         "alternate between rice and other foods. leave more beef at the end",
+                         "alternate between mashed potatoes and other food.",
+                         "alternate between salmon and other food.",
+                         "alternate between rice and other food. dont have to finish all the cabbage",
+                         "alternate between rice and other food. leave more chicken at the end."]
+
+yi_heng_interview_preferences = [
+    "I'd like to have some fish first, then some rice. After that, the egg and green beans. Please repeat that sequence",
+    "I'd like to have some chicken first, then some rice. After that, the egg and green beans. Please repeat that sequence",
+    "I'd like to have some chicken first, then some rice. After that, the egg and cucumber. Please repeat that sequence",
+    "I'd like to have some chicken first, then some rice and finally some cucumber. Please repeat that sequence",
+    "I'd like some steak first, then the mashed potatoes, then the beans and carrots. Please repeat that sequence",
+    "I'd like to have beef first, followed by the broccoli and finally the rice. Please repeat that sequence",
+    "I'd like to have the meatballs first, then the mashed potatoes and finally the green beans. Please repeat the sequence.",
+    "I'll have the salmon, then the broccoli and mashed potatoes. Please repeat the sequence",
+    "I'll have the pork cutlet, followed by the rice and cabbage. Please repeat the sequence",
+    "I'll have the chicken, followed by rice and then, mixed vegetables. Please repeat the sequence"
+    ]
+
+yi_heng_modified_interview_preferences = [
+    "I'd like to be first fed fish, then rice, then egg and finally green beans in that order",
+    "",
+    "I'd like to be fed chicken first, followed by rice, egg and cucumber in that order",
+    "I'd like to be fed chicken first, then rice and finally cucumber in that order",
+    "",
+    "I'd like to have beef first, then broccoli, then rice in that order",
+    "",
+    "I'd like to have some salmon, then broccoli and then mashed potatoes in that order",
+    "I'd like to have some pork cutlet, then rice and cabbage in that order",
+    "I'd like to have some chicken first, then rice and then vegetables"
+]
+
+interview_preferences = [
+    "Don't feed me the same thing twice in a row",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+]
+
+modified_interview_preferences = [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+]

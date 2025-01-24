@@ -6,7 +6,6 @@ from xarm.wrapper import XArmAPI
 import rospy
 import actionlib
 
-from inference_class_mujoco import BiteAcquisitionInference
 from geometry_msgs.msg import PoseStamped
 from feeding_msgs.srv import GetFeedingParam, GetFeedingParamRequest
 from feeding_msgs.srv import GetScoopingPoint, GetScoopingPointRequest
@@ -48,8 +47,6 @@ class FeedingManager():
         self.acq_pose = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
         self.transfer_pose = np.radians([0.0, -65.0, -25.0, 0.0, 0.0, -90.0])
         self.perception_pose = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
-
-        self.inference_server = BiteAcquisitionInference(mode='motion_primitive')
     
         # Initialize the xArm API
         self.arm = XArmAPI(port="192.168.1.201", is_radian=True)
@@ -212,14 +209,14 @@ class FeedingManager():
         exit_angle = resp_feeding_params.exit_angle
         transfer_speed = resp_feeding_params.transfer_speed
         user_preference = resp_feeding_params.user_preference
-        # rospy.loginfo("=== FEEDING PARAMETERS ===")
-        # rospy.loginfo(f"Next bite: {next_bite}")
-        # rospy.loginfo(f"Bite size: {bite_size}")
-        # rospy.loginfo(f"Distance to mouth: {distance_to_mouth}")
-        # rospy.loginfo(f"Exit angle: {exit_angle}")
-        # rospy.loginfo(f"Transfer speed: {transfer_speed}")
-        # rospy.loginfo(f"User preference: {user_preference}")
-        rospy.logwarn(f"HISTORY: {self.bite_history}")
+        rospy.loginfo("=== FEEDING PARAMETERS ===")
+        rospy.loginfo(f"Next bite: {next_bite}")
+        rospy.loginfo(f"Bite size: {bite_size}")
+        rospy.loginfo(f"Distance to mouth: {distance_to_mouth}")
+        rospy.loginfo(f"Exit angle: {exit_angle}")
+        rospy.loginfo(f"Transfer speed: {transfer_speed}")
+        rospy.loginfo(f"User preference: {user_preference}")
+        # rospy.logwarn(f"HISTORY: {self.bite_history}")
 
         return next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed, user_preference
 
@@ -257,7 +254,7 @@ class FeedingManager():
                 self.bite_history, 
                 food_portion_rounded)
 
-            if next_bite is []:
+            if next_bite == '':
                 break
             
             input("Press ENTER to get scooping points")
