@@ -10,8 +10,8 @@ from inference_class_mujoco import BiteAcquisitionInference
 from geometry_msgs.msg import PoseStamped
 from feeding_msgs.srv import GetFeedingParam, GetFeedingParamRequest
 from feeding_msgs.srv import GetScoopingPoint, GetScoopingPointRequest
-from feeding_msgs.msg import ScoopAction, ScoopGoal, ScoopResult, ScoopFeedback
-from feeding_msgs.msg import BiteTransferAction, BiteTransferActionGoal, BiteTransferActionFeedback, BiteTransferActionResult
+from feeding_msgs.msg import ScoopAction, ScoopGoal
+from feeding_msgs.msg import BiteTransferAction, BiteTransferActionGoal
 
 """
 Feeding Sequence:
@@ -70,7 +70,7 @@ class FeedingManager():
         rospy.loginfo("Connected to feeding parameters server")
 
         # Action clients
-        self.transfer_client = actionlib.SimpleActionClient('start_signal', StartActionAction)
+        self.transfer_client = actionlib.SimpleActionClient('start_signal', BiteTransferAction)
         rospy.loginfo("Waiting for bite transfer server")
         self.transfer_client.wait_for_server()
         rospy.loginfo("Bite transfer server started")
