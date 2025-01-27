@@ -38,7 +38,7 @@ class FeedingBot:
         # Choose to use decomposer or not
         self.mode = 'no_decomposer'
         self.decomposer_output_directory = 'feeding_bot_output/interview_output/'
-        self.no_decomposer_output_directory = 'feeding_bot_output/interview_ben/'
+        self.no_decomposer_output_directory = 'feeding_bot_output/interview_outputs/interview_aaradh/'
 
         if self.mode == 'decomposer':
             self.output_directory = self.decomposer_output_directory
@@ -49,7 +49,7 @@ class FeedingBot:
 
     def clear_plate(self):
         
-        for preference_idx in [4, 6, 7]: # range(2, len(interview_preferences)): # range(len(icorr_preferences)):
+        for preference_idx in range(4, len(interview_preferences)): # range(len(icorr_preferences)):
 
             if self.speech_to_text:
                 user_preference = get_user_preference()
@@ -125,7 +125,6 @@ class FeedingBot:
                 bite_history.append([next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed])
 
                 if actions_remaining == 0 or (next_bite == ''):
-                    print('NO BITES MAKE SENSE')
                     with open(self.output_directory + f'histories_idx_{preference_idx}.txt', 'a') as f:
                         f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
                         f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")

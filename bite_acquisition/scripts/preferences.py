@@ -148,7 +148,7 @@ yi_heng_modified_interview_preferences = [
     "I'd like to have some chicken first, then rice and then vegetables"
 ]
 
-interview_preferences = [
+ben_interview_preferences = [
     "I would like to be fed with rice and the other foods in an alternating. The other foods can be any order but avoid repeating the foods. If there is no more rice, then feed me the vegetables first then the, egg and finally the meat. If there is only rice left, then scoop it until i say stop",
     "I would like to be fed with rice and the other foods in an alternating. The other foods can be any order but avoid repeating the foods. If there is no more rice, then feed me the vegetables first then the, egg and finally the meat. If there is only rice left, then scoop it until i say stop",
     "I would like to be fed with rice and the other foods in an alternating. The other foods can be any order but avoid repeating the foods. If there is no more rice, then feed me the vegetables first then the, egg and finally the meat. If there is only rice left, then scoop it until i say stop",
@@ -161,8 +161,47 @@ interview_preferences = [
     "Please serve the teriyaki chicken in small portions while the rest in normal portions. Ensure that a bite of rice will not follow another bite of rice, instead alternate between the mixed vegetables and teriyaki chicken. Save at least one bite of teriyaki chicken at the end. Ensure I finish all the food unless I ask for all the teriyaki chicken or ask you to stop. "
 ]
 
-modified_interview_preferences = [
+ben_modified_interview_preferences = [
     "Please alternate rice with the other foods in any order. However, if the green beans, egg or fish is given in the bite before the rice, then do not repeat it.",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+]
+
+interview_preferences = [
+    "Give me mostly rice but also alternate between deep fried fish and green beans. Keep the tomato egg for the end. Give me enough time between bites so that I can chew properly.",
+    "Start with only giving the fried chicken then mostly rice but also alternate between egg and green beans. ",
+    "First only eggs then alternate between rice and fried chicken (more rice). Keep the cucumbers for the end.",
+    "Alternate equally between rice, chicken and cucumber. ",
+    "Start with just the steaks first, one piece at a time, but I will only bite half a piece at a time. So, the same piece should be given twice. Once steak is done, mashes potatoes. Then, finally alternate between green beans and carrots.",
+    "Alternate between all (70% rice, 20% beef, 10% broccoli)",
+    "Give me the meatballs first then alternate between green beans and mashed potatoes.",
+    "Give me the salmon first then mashed potatoes then broccoli.",
+    "Alternate between rice and pork cutlet (mostly rice) then at the end I want cabbage.",
+    "Give me the teriyaki chicken first with rice (mostly teriyaki chicken) then once those are done, mixed vegetables."
+]
+
+# interview_preferences = [
+#     "",
+#     "",
+#     "",
+#     "",
+#     "",
+#     "",
+#     "",
+#     "",
+#     "",
+#     ""
+# ]
+
+modified_interview_preferences = [
+    "",
     "",
     "",
     "",
