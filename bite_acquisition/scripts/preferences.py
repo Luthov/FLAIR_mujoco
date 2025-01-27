@@ -174,7 +174,7 @@ ben_modified_interview_preferences = [
     ""
 ]
 
-interview_preferences = [
+aaradh_interview_preferences = [
     "Give me mostly rice but also alternate between deep fried fish and green beans. Keep the tomato egg for the end. Give me enough time between bites so that I can chew properly.",
     "Start with only giving the fried chicken then mostly rice but also alternate between egg and green beans. ",
     "First only eggs then alternate between rice and fried chicken (more rice). Keep the cucumbers for the end.",
@@ -200,12 +200,25 @@ interview_preferences = [
 #     ""
 # ]
 
+interview_preferences = [
+    "i dont want to eat any vege, and i only want to eat fish after i taste the rice.",
+    "i dont like vege, just give me the rest.",
+    "i want to finish the chicken first and eat the egg later with the rice, and i dont want to eat vege.",
+    "give me the cucumber last, just feed me the rice and chicken randomly first.",
+    "Feed me the steak, potato and vegetables in that order and repeat it. When feeding me vegetables please choose randomly.",
+    "just give me everything randomly.",
+    "just dont feed me the green bean.",
+    "i dont like broccoli, but i like the potato. just feed me half of the potato and the whole of the fish.",
+    "i dont want to eat the cabbage just give me the meat and the rice alternately.",
+    "just feed me half of the vege alternately with the rest."
+]
+
 modified_interview_preferences = [
     "",
+    "i dont like vege, just give me the rest. but don't feed me the same thing in a row",
     "",
     "",
-    "",
-    "",
+    "Feed me steak, potato and a vegetable that you randomly choose. Repeat that order.",
     "",
     "",
     "",

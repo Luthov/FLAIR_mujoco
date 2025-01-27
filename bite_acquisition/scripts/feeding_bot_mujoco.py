@@ -1,16 +1,4 @@
-# import numpy as np
-# from scipy.spatial.transform import Rotation
-# import math
-# import os
-# import random
-
-# import rospy
-
-# from geometry_msgs.msg import PoseStamped
-
-# from skill_library_mujoco import SkillLibrary
-# from inference_class_mujoco import BiteAcquisitionInference
-from speech_to_text.speech_to_text import get_user_preference
+# from speech_to_text.speech_to_text import get_user_preference
 from preference_planner import PreferencePlanner
 
 from preferences import interview_preferences, interview_food_items, modified_interview_preferences
@@ -30,7 +18,7 @@ class FeedingBot:
         self.preference_interrupt = False
         self.exit = False
         self.speech_to_text = False
-        self.modified = False
+        self.modified = True
 
         self.bite_portion = 0.6
         self.efficiency_scores = [1, 1, 1]
@@ -38,7 +26,7 @@ class FeedingBot:
         # Choose to use decomposer or not
         self.mode = 'no_decomposer'
         self.decomposer_output_directory = 'feeding_bot_output/interview_output/'
-        self.no_decomposer_output_directory = 'feeding_bot_output/interview_outputs/interview_aaradh/'
+        self.no_decomposer_output_directory = 'feeding_bot_output/interview_outputs/interview_janssen/modified/'
 
         if self.mode == 'decomposer':
             self.output_directory = self.decomposer_output_directory
@@ -49,7 +37,7 @@ class FeedingBot:
 
     def clear_plate(self):
         
-        for preference_idx in range(4, len(interview_preferences)): # range(len(icorr_preferences)):
+        for preference_idx in range(len(interview_preferences)): # range(len(icorr_preferences)):
 
             if self.speech_to_text:
                 user_preference = get_user_preference()
