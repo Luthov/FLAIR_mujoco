@@ -122,7 +122,7 @@ hau_wen_interview_preferences = ["alternate between rice and other food.",
                          "alternate between rice and other food. dont have to finish all the cabbage",
                          "alternate between rice and other food. leave more chicken at the end."]
 
-yi_heng_interview_preferences = [
+interview_preferences = [
     "I'd like to have some fish first, then some rice. After that, the egg and green beans. Please repeat that sequence",
     "I'd like to have some chicken first, then some rice. After that, the egg and green beans. Please repeat that sequence",
     "I'd like to have some chicken first, then some rice. After that, the egg and cucumber. Please repeat that sequence",
@@ -135,11 +135,12 @@ yi_heng_interview_preferences = [
     "I'll have the chicken, followed by rice and then, mixed vegetables. Please repeat the sequence"
     ]
 
-yi_heng_modified_interview_preferences = [
+modified_interview_preferences = [
     "I'd like to be first fed fish, then rice, then egg and finally green beans in that order",
     "",
     "I'd like to be fed chicken first, followed by rice, egg and cucumber in that order",
-    "I'd like to be fed chicken first, then rice and finally cucumber in that order",
+    # "I'd like to be fed chicken first, then rice and finally cucumber in that order",
+    "I want to alternate between the foods in the order of chicken, rice then cucumber.",
     "",
     "I'd like to have beef first, then broccoli, then rice in that order",
     "",
@@ -200,28 +201,28 @@ aaradh_interview_preferences = [
 #     ""
 # ]
 
-interview_preferences = [
-    "i dont want to eat any vege, and i only want to eat fish after i taste the rice.",
-    "i dont like vege, just give me the rest.",
-    "i want to finish the chicken first and eat the egg later with the rice, and i dont want to eat vege.",
-    "give me the cucumber last, just feed me the rice and chicken randomly first.",
-    "Feed me the steak, potato and vegetables in that order and repeat it. When feeding me vegetables please choose randomly.",
-    "just give me everything randomly.",
-    "just dont feed me the green bean.",
-    "i dont like broccoli, but i like the potato. just feed me half of the potato and the whole of the fish.",
-    "i dont want to eat the cabbage just give me the meat and the rice alternately.",
-    "just feed me half of the vege alternately with the rest."
-]
+# interview_preferences = [
+#     "i dont want to eat any vege, and i only want to eat fish after i taste the rice.",
+#     "i dont like vege, just give me the rest.",
+#     "i want to finish the chicken first and eat the egg later with the rice, and i dont want to eat vege.",
+#     "give me the cucumber last, just feed me the rice and chicken randomly first.",
+#     "Feed me the steak, potato and vegetables in that order and repeat it. When feeding me vegetables please choose randomly.",
+#     "just give me everything randomly.",
+#     "just dont feed me the green bean.",
+#     "i dont like broccoli, but i like the potato. just feed me half of the potato and the whole of the fish.",
+#     "i dont want to eat the cabbage just give me the meat and the rice alternately.",
+#     "just feed me half of the vege alternately with the rest."
+# ]
 
-modified_interview_preferences = [
-    "",
-    "i dont like vege, just give me the rest. but don't feed me the same thing in a row",
-    "",
-    "",
-    "Feed me steak, potato and a vegetable that you randomly choose. Repeat that order.",
-    "",
-    "",
-    "",
-    "",
-    ""
-]
+# modified_interview_preferences = [
+#     "",
+#     "i dont like vege, just give me the rest. but don't feed me the same thing in a row",
+#     "",
+#     "",
+#     "Feed me steak, potato and a vegetable that you randomly choose. Repeat that order.",
+#     "",
+#     "",
+#     "",
+#     "",
+#     ""
+# ]

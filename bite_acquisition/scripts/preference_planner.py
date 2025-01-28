@@ -25,7 +25,7 @@ class GPTInterface:
                     'content': prompt
                   }
         response = self.client.chat.completions.create(
-                   model='gpt-4-turbo-2024-04-09', # 'gpt-4-0125-preview', # 'gpt-4-turbo-2024-04-09', 
+                   model='gpt-4-turbo-2024-04-09', # 'gpt-4o-2024-08-06', # 'gpt-4-0125-preview', 
                    messages=[message]
                   )
         # print(response)
@@ -40,9 +40,9 @@ class PreferencePlanner:
     def __init__(self):
         self.gpt_interface = GPTInterface()
 
-        self.decomposer_prompt_file = 'ICORR_prompts_v4/decomposer_prompts/decomposer.txt'
-        self.bite_sequencing_prompt_file = 'ICORR_prompts_v4/decomposer_prompts/bite_acquisition_flair.txt'
-        self.transfer_parameter_prompt_file = 'ICORR_prompts_v4/decomposer_prompts/bite_transfer.txt'
+        self.decomposer_prompt_file = 'decomposer_prompts/decomposer.txt'
+        self.bite_sequencing_prompt_file = 'decomposer_prompts/bite_acquisition_flair.txt'
+        self.transfer_parameter_prompt_file = 'decomposer_prompts/bite_transfer.txt'
 
         # self.no_decomposer_prompt_file = 'flair_testing/flair_v9.txt'
         self.no_decomposer_prompt_file = 'ours.txt'
@@ -50,28 +50,31 @@ class PreferencePlanner:
         self.flair_prompt = True
         self.debug = False
 
+        self.parsed = False
+
     def parse_preferences(self, preference):
+        
+        if not self.parsed:
+            with open('prompts/' + self.decomposer_prompt_file, 'r') as f:
+                prompt = f.read()
 
-        with open('prompts/' + self.decomposer_prompt_file, 'r') as f:
-            prompt = f.read()
+            prompt = prompt%(preference)
 
-        prompt = prompt%(preference)
+            response, decomposer_tokens = self.gpt_interface.chat_with_openai(prompt)
 
-        response, decomposer_tokens = self.gpt_interface.chat_with_openai(prompt)
+            intermediate_response = response.split('Bite acquisition preference:')[1].strip()
+            preferences = intermediate_response.split('\n')
+            bite_preference = preferences[0]
+            for pref in preferences:
+                if 'Bite transfer preference:' in pref:
+                    transfer_preference = pref.split('Bite transfer preference: ')[1].strip()
 
-        intermediate_response = response.split('Bite acquisition preference:')[1].strip()
-        preferences = intermediate_response.split('\n')
-        bite_preference = preferences[0]
-        for pref in preferences:
-            if 'Bite transfer preference:' in pref:
-                transfer_preference = pref.split('Bite transfer preference: ')[1].strip()
-
-        print(f"=== USER PREFERENCE ===")
-        print(preference)
-        print(f"=== BITE PREFERENCE ===")
-        print(bite_preference)
-        print(f"=== TRANSFER PREFERENCE ===")
-        print(transfer_preference)
+            print(f"=== USER PREFERENCE ===")
+            print(preference)
+            print(f"=== BITE PREFERENCE ===")
+            print(bite_preference)
+            print(f"=== TRANSFER PREFERENCE ===")
+            print(transfer_preference)
         
         return bite_preference, transfer_preference, decomposer_tokens
     
@@ -86,16 +89,17 @@ class PreferencePlanner:
              output_directory):
 
         portions_sentence = str(portions)
-        efficiency_sentence = str(efficiencies)
         print('\n==== ITEMS / PORTIONS REMAINING ===')
         print(f"{items} / {portions_sentence}")
-        print('==== HISTORY ===')
-        print(history)
+        # print('==== HISTORY ===')
+        # print(history)
     
         if mode == 'decomposer':
 
             # Extracting bite preference and transfer preference
-            bite_preference, transfer_preference, decomposer_tokens = self.parse_preferences(preference)
+            if not self.parsed:
+                self.bite_preference, self.transfer_preference, decomposer_tokens = self.parse_preferences(preference)
+                self.parsed = True
 
             # Reading prompts
             with open('prompts/' + self.bite_sequencing_prompt_file, 'r') as f:
@@ -109,10 +113,9 @@ class PreferencePlanner:
             transfer_param_history = [[item[0]] + item[2:] for item in history]
 
             bite_sequencing_prompt = bite_sequencing_prompt%(
-                bite_preference, 
+                self.bite_preference, 
                 str(items), 
                 portions_sentence, 
-                efficiency_sentence, 
                 str(bite_sequencing_history)
                 )
 
@@ -127,7 +130,7 @@ class PreferencePlanner:
                     bite_size = ast.literal_eval(param.split('Next bite size as float:')[1].strip())
 
             transfer_params_prompt = transfer_params_prompt%(
-                transfer_preference, 
+                self.transfer_preference, 
                 next_bite, 
                 str(transfer_param_history)
                 )
@@ -141,18 +144,20 @@ class PreferencePlanner:
             for param in transfer_parameters:
                 if 'Next exit angle as float:' in param:
                     exit_angle = ast.literal_eval(param.split('Next exit angle as float:')[1].strip())
+                if 'Next transfer speed as float' in param:
+                    transfer_speed = ast.literal_eval(param.split('Next transfer speed as float: ')[1].strip())
 
             if self.debug:
                 print(f"=== BITE SEQUENCING PROMPT ===")
                 print(bite_sequencing_prompt)
                 print("\n=== BITE SEQUENCING RESPONSE ===")
-                print(f"BITE PREFERENCE: {bite_preference}\n")
+                print(f"BITE PREFERENCE: {self.bite_preference}\n")
                 print(bite_sequencing_response)
 
                 print(f"=== TRANSFER PARAMS PROMPT ===")
                 print(transfer_params_prompt)
                 print("\n=== TRANSFER PARAMS RESPONSE ===")
-                print(f"TRANSFER PREFERENCE: {transfer_preference}\n")
+                print(f"TRANSFER PREFERENCE: {self.transfer_preference}\n")
                 print(transfer_parameter_response)
 
             print("\n=== PARAMETERS ===")
@@ -160,28 +165,30 @@ class PreferencePlanner:
             print("BITE SIZE:", bite_size)
             print("DISTANCE TO MOUTH:", distance_to_mouth)
             print("EXIT ANGLE:", exit_angle)
+            print("TRANSFER SPEED", transfer_speed)
 
             # Arranging tokens
             token_usage = {}
-            token_usage['decomposer_tokens'] = decomposer_tokens
+            # token_usage['decomposer_tokens'] = decomposer_tokens
             token_usage['bite_sequencing_tokens'] = bite_sequencing_tokens
             token_usage['transfer_param_tokens'] = transfer_param_tokens
 
             # Append responses and parameters to a file
             with open(output_directory + f'decomposer_output_idx_{preference_idx}.txt', 'a') as f:
                 f.write(f"=== HISTORY ===\n{history}\n")
-                f.write(f"=== BITE PREFERENCE ===\n{bite_preference}\n")
+                f.write(f"=== BITE PREFERENCE ===\n{self.bite_preference}\n")
                 f.write(f"=== BITE SEQUENCING RESPONSE ===\n{bite_sequencing_response}\n")
-                f.write(f"=== TRANSFER PREFERENCE ===\n{transfer_preference}\n")
+                f.write(f"=== TRANSFER PREFERENCE ===\n{self.transfer_preference}\n")
                 f.write(f"=== TRANSFER PARAMS RESPONSE ===\n{transfer_parameter_response}\n")
                 f.write(f"=== PARAMETERS ===\n")
                 f.write(f"NEXT BITE: {next_bite}\n")
                 f.write(f"BITE SIZE: {bite_size}\n")
                 f.write(f"DISTANCE TO MOUTH: {distance_to_mouth}\n")
                 f.write(f"EXIT ANGLE: {exit_angle}\n")
+                f.write(f"TRANSFER SPEED: {transfer_speed}\n")
                 f.write(f"PORTION SIZES: {portions}\n")
 
-            return next_bite, bite_size, distance_to_mouth, exit_angle, token_usage   
+            return next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed, token_usage   
 
         if mode == 'no_decomposer':
             with open('prompts/' + self.no_decomposer_prompt_file, 'r') as f:

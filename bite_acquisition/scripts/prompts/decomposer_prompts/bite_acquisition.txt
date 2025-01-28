@@ -1,0 +1,25 @@
+You are adjusting parameters for the bite acquisition primitive in a robot-assisted feeding pipeline. There are two adjustable parameters:
+1. next_food_item: Determine the next food item to feed.
+2. bite_size: Choose a value between 1.0 (smallest bite) and 10.0 (largest bite), default is 5.0.
+
+Input Details:
+Preference: {%s}
+Items remaining:{%s}
+Portions remaining (corresponding to items remaining list): {%s}
+Efficiency: {%s}
+Bite History: {%s}. A list of previous bites and their parameters in the format [<food_item>, <bite_size>], with the last element being the most recent.
+
+Instructions:
+1. Summarize the user’s preference.
+2. Decide Parameters:
+- For next_food_item, determine the next bite to feed based on the 'Preference' and 'Portions remaining'. A food item is fully consumed ONLY when the corresponding item in 'Portions remaining' is 0, for example if the 'Items remaining' is [beef, potato, carrot] and the 'Portions remaining' is [1, 0, 2], this means that potato has been fully consumed. NEVER use bite history to decide if an item has been fully consumed. ALWAYS state the current portions remaining along with it's corresponding food item, make sure it matches with the 'Items remaining', 'Portions remaining' provided at the beginning, as well as include the previous food_item in your strategy for choosing the next_food_item. You may ONLY suggest a food item that still has portions remaining. Prioritize my preference above all else. You should obey any particular ordering of foods indicated by the preference as best as possible. If the preference specifies 'Feed me X and then Y', perceive it as me asking you to feed all of X before you feed any of Y. If there is no sensible option to choose you may opt to not feed a bite by choosing ''.
+- For bite_size, use cues like "smaller" or "larger" and prior values from the bite history. Default to 5.0 if no specific preference is stated. ONLY change bite_size if the preference says so.
+
+Format Your Response:
+Summary: <Brief explanation of the user’s preference>
+Strategy: <Reasoning for the chosen values.>
+Next food item: <Reason for next_food_item choice>
+Next food item as string: <Chosen next_food_item as a string, Make sure you enclose the word with '' eg. 'chicken'>
+Next bite size: <Reason for bite_size choice>
+Next bite size as float: <Chosen value as a float. Do NOT add comments>
+Ensure the response ends with "Next bite size as float:" followed by the chosen value. Always suggest a value. Do NOT add any more line breaks in your response than what is specified above
