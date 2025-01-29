@@ -122,7 +122,7 @@ hau_wen_interview_preferences = ["alternate between rice and other food.",
                          "alternate between rice and other food. dont have to finish all the cabbage",
                          "alternate between rice and other food. leave more chicken at the end."]
 
-interview_preferences = [
+yi_heng_interview_preferences = [
     "I'd like to have some fish first, then some rice. After that, the egg and green beans. Please repeat that sequence",
     "I'd like to have some chicken first, then some rice. After that, the egg and green beans. Please repeat that sequence",
     "I'd like to have some chicken first, then some rice. After that, the egg and cucumber. Please repeat that sequence",
@@ -135,7 +135,7 @@ interview_preferences = [
     "I'll have the chicken, followed by rice and then, mixed vegetables. Please repeat the sequence"
     ]
 
-modified_interview_preferences = [
+yi_heng_modified_interview_preferences = [
     "I'd like to be first fed fish, then rice, then egg and finally green beans in that order",
     "",
     "I'd like to be fed chicken first, followed by rice, egg and cucumber in that order",
@@ -188,20 +188,20 @@ aaradh_interview_preferences = [
     "Give me the teriyaki chicken first with rice (mostly teriyaki chicken) then once those are done, mixed vegetables."
 ]
 
-# interview_preferences = [
-#     "",
-#     "",
-#     "",
-#     "",
-#     "",
-#     "",
-#     "",
-#     "",
-#     "",
-#     ""
-# ]
+# darren_interview_preferences = [
+#     "I want a mix of rice and another dish, however each dish should alternate between meat and veggies. I dislike fish so try your best not to feed me those items.",
+#     "I'll take every thing here, just portion it logically before feeding me, it should have a mix of rice and another dish.",
+#     "I'll eat all the food here so give me a well portioned bite for each dish.",
+#     "I'll eat all the rice and chicken and lastly give me the cucumbers",
+#     "Give me all the stake and intermittenly give me some mash and veg.",
+#     "Give me a good mixture of the dishes for each spoon.",
+#     "Give me all the mash and meatball ignore the green beans.",
+#     "give me the salmon first, I'll take the mashed potatoes and broccoli later.",
+#     "give me all the pork cutlet and make sure it is a nice chunk of it, then get me some rice and cabbage and make sure to ask if I want the rice or cabbage occasionally.",
+#     "give me the chicken then the rice and finally the veggies"
+# ] 
 
-# interview_preferences = [
+# janssen_interview_preferences = [
 #     "i dont want to eat any vege, and i only want to eat fish after i taste the rice.",
 #     "i dont like vege, just give me the rest.",
 #     "i want to finish the chicken first and eat the egg later with the rice, and i dont want to eat vege.",
@@ -214,7 +214,7 @@ aaradh_interview_preferences = [
 #     "just feed me half of the vege alternately with the rest."
 # ]
 
-# modified_interview_preferences = [
+# janssen_modified_interview_preferences = [
 #     "",
 #     "i dont like vege, just give me the rest. but don't feed me the same thing in a row",
 #     "",
@@ -226,3 +226,29 @@ aaradh_interview_preferences = [
 #     "",
 #     ""
 # ]
+
+interview_preferences = [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+]
+
+modified_interview_preferences = [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+]
