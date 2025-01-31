@@ -188,51 +188,38 @@ aaradh_interview_preferences = [
     "Give me the teriyaki chicken first with rice (mostly teriyaki chicken) then once those are done, mixed vegetables."
 ]
 
-# darren_interview_preferences = [
-#     "I want a mix of rice and another dish, however each dish should alternate between meat and veggies. I dislike fish so try your best not to feed me those items.",
-#     "I'll take every thing here, just portion it logically before feeding me, it should have a mix of rice and another dish.",
-#     "I'll eat all the food here so give me a well portioned bite for each dish.",
-#     "I'll eat all the rice and chicken and lastly give me the cucumbers",
-#     "Give me all the stake and intermittenly give me some mash and veg.",
-#     "Give me a good mixture of the dishes for each spoon.",
-#     "Give me all the mash and meatball ignore the green beans.",
-#     "give me the salmon first, I'll take the mashed potatoes and broccoli later.",
-#     "give me all the pork cutlet and make sure it is a nice chunk of it, then get me some rice and cabbage and make sure to ask if I want the rice or cabbage occasionally.",
-#     "give me the chicken then the rice and finally the veggies"
-# ] 
+darren_interview_preferences = [
+    "I want a mix of rice and another dish, however each dish should alternate between meat and veggies. I dislike fish so try your best not to feed me those items.",
+    "I'll take every thing here, just portion it logically before feeding me, it should have a mix of rice and another dish.",
+    "I'll eat all the food here so give me a well portioned bite for each dish.",
+    "I'll eat all the rice and chicken and lastly give me the cucumbers",
+    "Give me all the stake and intermittenly give me some mash and veg.",
+    "Give me a good mixture of the dishes for each spoon.",
+    "Give me all the mash and meatball ignore the green beans.",
+    "give me the salmon first, I'll take the mashed potatoes and broccoli later.",
+    "give me all the pork cutlet and make sure it is a nice chunk of it, then get me some rice and cabbage and make sure to ask if I want the rice or cabbage occasionally.",
+    "give me the chicken then the rice and finally the veggies"
+] 
 
-# janssen_interview_preferences = [
-#     "i dont want to eat any vege, and i only want to eat fish after i taste the rice.",
-#     "i dont like vege, just give me the rest.",
-#     "i want to finish the chicken first and eat the egg later with the rice, and i dont want to eat vege.",
-#     "give me the cucumber last, just feed me the rice and chicken randomly first.",
-#     "Feed me the steak, potato and vegetables in that order and repeat it. When feeding me vegetables please choose randomly.",
-#     "just give me everything randomly.",
-#     "just dont feed me the green bean.",
-#     "i dont like broccoli, but i like the potato. just feed me half of the potato and the whole of the fish.",
-#     "i dont want to eat the cabbage just give me the meat and the rice alternately.",
-#     "just feed me half of the vege alternately with the rest."
-# ]
+janssen_interview_preferences = [
+    "i dont want to eat any vege, and i only want to eat fish after i taste the rice.",
+    "i dont like vege, just give me the rest.",
+    "i want to finish the chicken first and eat the egg later with the rice, and i dont want to eat vege.",
+    "give me the cucumber last, just feed me the rice and chicken randomly first.",
+    "Feed me the steak, potato and vegetables in that order and repeat it. When feeding me vegetables please choose randomly.",
+    "just give me everything randomly.",
+    "just dont feed me the green bean.",
+    "i dont like broccoli, but i like the potato. just feed me half of the potato and the whole of the fish.",
+    "i dont want to eat the cabbage just give me the meat and the rice alternately.",
+    "just feed me half of the vege alternately with the rest."
+]
 
-# janssen_modified_interview_preferences = [
-#     "",
-#     "i dont like vege, just give me the rest. but don't feed me the same thing in a row",
-#     "",
-#     "",
-#     "Feed me steak, potato and a vegetable that you randomly choose. Repeat that order.",
-#     "",
-#     "",
-#     "",
-#     "",
-#     ""
-# ]
-
-interview_preferences = [
+janssen_modified_interview_preferences = [
+    "",
+    "i dont like vege, just give me the rest. but don't feed me the same thing in a row",
     "",
     "",
-    "",
-    "",
-    "",
+    "Feed me steak, potato and a vegetable that you randomly choose. Repeat that order.",
     "",
     "",
     "",
@@ -240,15 +227,54 @@ interview_preferences = [
     ""
 ]
 
+matthew_interview_preferences = [
+    "Vegetables first, then rice then egg then fish please.",
+    "Vegetables first, then rice then egg then chicken please.",
+    "Rice first then egg then chicken.  Throw away the cucumbers.",
+    "Rice then one piece of chicken then alternate until we're done.",
+    "Green beans then potatoes then steak.",
+    "Broccoli then rice then beef.",
+    "Green beans first then potatoes then meatballs",
+    "Vege first then half of the potatoes then salmon",
+    "Vege first then a piece of pork, then rice.  We do that in that order until we done.",
+    "Vege first, half of the rice, then chicken"
+]
+
+jonathan_interview_preferences = [
+    "gimme all of the vege first since i hate it so much then randomly any one of the food left on the plate",
+    "i dont want to eat the green beans so feed me other than the green beans",
+    "feed me the rice and the chicken first but remember don't feed me the bone as well. then you can give me other stuff.",
+    "feed me the rice first after that the cucumber but walao i cant eat chicken right now.",
+    "can you put a huge amount of mashed potatoes to my mouth first after that the green beans cause i hate it the most after that the carrots cause i hate vegies then slowly put 1 at the time for the steak and remember feed me every 15mins since i want to savor it",
+    "why i got broccoli on my food lah. feed me anything beside the broccoli",
+    "not the beans ok. feed me other than beans",
+    "just put whatever you like to my mouth",
+    "here's the order some rice, then some pork cutlet, then some cabbage. Make a loop everytimes you try to feed me. if one of them empty remove that food then feed me with that order.",
+    "rice, teriyaki chicken, mixed vegetables randomly"
+]
+
+interview_preferences = [
+    "Give me the egg, then deep fried fish, and finally green beans with rice after each spoon of dish",
+    "Give egg, fried chicken, then green beans with a spoon of rice after each dish",
+    "Give egg, fried chicken, then cucumber with a spoon of rice after each dish",
+    "Give steamed chicken and afterwards cucumber with a spoon of rice after each dish",
+    "Give green beans, then carrots, then steak, and give me a spoon of mashed potatoes after each dish",
+    "Give beef then broccoli with a spoon of rice after each dish",
+    "Give meatballs then green beans with a spoon of mashed potatoes after each dish",
+    "Give salmon then broccoli with a spoon of mashed potatoes after each dish",
+    "Give pork cutlet then cabbage with a spoon of rice after each dish",
+    "Give teriyaki chicken then mixed vegetables with a spoon of rice after each dish"
+]
+
 modified_interview_preferences = [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
+    "give egg alternating with rice, then fish alternating with rice, and finally green beans alternating with rice",
+    "give egg alternating with rice, then chicken alternating with rice, and finally green beans alternating with rice",
+    "give egg alternating with rice, then chicken alternating with rice, and finally cucumber alternating with rice",
+    "give chicken alternating with rice, then cucumber alternating with rice",
+    "give green beans alternating with mashed potatoes, then carrots alternating with mashed potatoes, and finally steak alternating with mashed potatoes",
+    "give beef alternating with rice, then broccoli alternating with rice",
+    "give meatballs alternating with mashed potatoes, then green beans alternating with mashed potatoes",
+    "give salmon alternating with mashed potatoes, then broccoli alternating with mashed potatoes",
+    "give pork cutlet alternating with rice, then cabbage alternating with rice",
+    "give chicken alternating with rice, then mixed vegetables alternating with rice"
 ]
