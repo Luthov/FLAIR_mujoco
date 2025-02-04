@@ -122,7 +122,7 @@ hau_wen_interview_preferences = ["alternate between rice and other food.",
                          "alternate between rice and other food. dont have to finish all the cabbage",
                          "alternate between rice and other food. leave more chicken at the end."]
 
-yi_heng_interview_preferences = [
+interview_preferences = [
     "I'd like to have some fish first, then some rice. After that, the egg and green beans. Please repeat that sequence",
     "I'd like to have some chicken first, then some rice. After that, the egg and green beans. Please repeat that sequence",
     "I'd like to have some chicken first, then some rice. After that, the egg and cucumber. Please repeat that sequence",
@@ -135,8 +135,9 @@ yi_heng_interview_preferences = [
     "I'll have the chicken, followed by rice and then, mixed vegetables. Please repeat the sequence"
     ]
 
-yi_heng_modified_interview_preferences = [
-    "I'd like to be first fed fish, then rice, then egg and finally green beans in that order",
+modified_interview_preferences = [
+    # "I'd like to be first fed fish, then rice, then egg and finally green beans in that order",
+    "I want to alternate between the foods in the order of fish, rice, egg then green beans.",
     "",
     "I'd like to be fed chicken first, followed by rice, egg and cucumber in that order",
     # "I'd like to be fed chicken first, then rice and finally cucumber in that order",
@@ -253,7 +254,7 @@ jonathan_interview_preferences = [
     "rice, teriyaki chicken, mixed vegetables randomly"
 ]
 
-interview_preferences = [
+amirul_interview_preferences = [
     "Give me the egg, then deep fried fish, and finally green beans with rice after each spoon of dish",
     "Give egg, fried chicken, then green beans with a spoon of rice after each dish",
     "Give egg, fried chicken, then cucumber with a spoon of rice after each dish",
@@ -266,7 +267,7 @@ interview_preferences = [
     "Give teriyaki chicken then mixed vegetables with a spoon of rice after each dish"
 ]
 
-modified_interview_preferences = [
+amirul_modified_interview_preferences = [
     "give egg alternating with rice, then fish alternating with rice, and finally green beans alternating with rice",
     "give egg alternating with rice, then chicken alternating with rice, and finally green beans alternating with rice",
     "give egg alternating with rice, then chicken alternating with rice, and finally cucumber alternating with rice",

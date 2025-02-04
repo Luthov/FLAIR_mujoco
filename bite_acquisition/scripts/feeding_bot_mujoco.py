@@ -22,7 +22,7 @@ class FeedingBot:
         # Choose to use decomposer or not
         self.mode = 'no_decomposer'
         self.decomposer_output_directory = 'feeding_bot_output/interview_outputs/interview_yi_heng/decomposer_tests/'
-        self.no_decomposer_output_directory = 'feeding_bot_output/interview_outputs/interview_ethan/modified/'
+        self.no_decomposer_output_directory = 'feeding_bot_output/interview_outputs/interview_yi_heng/other_modelsq/'
 
         if self.mode == 'decomposer':
             self.output_directory = self.decomposer_output_directory
@@ -32,7 +32,7 @@ class FeedingBot:
             print('=== USING NON DECOMPOSER PROMPT ===')
 
         # self.preferences = range(len(interview_preferences))
-        self.preferences = [9]
+        self.preferences = [0]
  
     def clear_plate(self):
         
