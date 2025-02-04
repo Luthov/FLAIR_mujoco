@@ -254,7 +254,7 @@ jonathan_interview_preferences = [
     "rice, teriyaki chicken, mixed vegetables randomly"
 ]
 
-amirul_interview_preferences = [
+ethan_interview_preferences = [
     "Give me the egg, then deep fried fish, and finally green beans with rice after each spoon of dish",
     "Give egg, fried chicken, then green beans with a spoon of rice after each dish",
     "Give egg, fried chicken, then cucumber with a spoon of rice after each dish",
@@ -267,7 +267,7 @@ amirul_interview_preferences = [
     "Give teriyaki chicken then mixed vegetables with a spoon of rice after each dish"
 ]
 
-amirul_modified_interview_preferences = [
+ehtan_modified_interview_preferences = [
     "give egg alternating with rice, then fish alternating with rice, and finally green beans alternating with rice",
     "give egg alternating with rice, then chicken alternating with rice, and finally green beans alternating with rice",
     "give egg alternating with rice, then chicken alternating with rice, and finally cucumber alternating with rice",
@@ -278,4 +278,30 @@ amirul_modified_interview_preferences = [
     "give salmon alternating with mashed potatoes, then broccoli alternating with mashed potatoes",
     "give pork cutlet alternating with rice, then cabbage alternating with rice",
     "give chicken alternating with rice, then mixed vegetables alternating with rice"
+]
+
+modified_interview_preferences = [
+    "I want to alternate between the foods in the order of rice, egg then fish, no beans",
+    "I want to alternate between the foods in the order of rice, egg then chicken, no beans",
+    "I want to alternate between the foods in the order of rice, egg then chicken, cucumber last ",
+    "",
+    "carbs 1st, secondly I want to alternate between steak and carrots, green beans last",
+    "",
+    "I want to alternate between carbs and meatballs, green beans last",
+    "",
+    "",
+    ""
+] 
+
+interview_preferences = [
+    "carbs 1st, protein second, eggs before fish, no beans ",
+    "carbs 1st, protein second, eggs before chicken, no beans",
+    "carbs 1st, protein second, eggs before chicken, cucumber last",
+    "carbs 1st, chicken second, cucumber last",
+    "carbs 1st, steak second, alternating with carrots, green beans last",
+    "carbs 1st, beef second, broccoli last.",
+    "carbs 1st, meatballs second, green beans last",
+    "carbs 1st, salmon second, broccoli last",
+    "rice only",
+    "carbs 1st, teriyaki chicken second without the teriyaki, mixed veggie last"
 ]

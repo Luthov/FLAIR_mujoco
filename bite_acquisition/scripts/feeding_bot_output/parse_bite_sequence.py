@@ -1,7 +1,7 @@
 import ast
 
-for preference_idx in range(10):
-    history_file = f'interview_outputs/interview_ethan/modified/histories_idx_{preference_idx}.txt'
+for preference_idx in [0,1,2,4,6]:
+    history_file = f'interview_outputs/interview_amirul/modified/histories_idx_{preference_idx}.txt'
     try:
         with open(history_file, 'r') as file:
             test = file.read()
