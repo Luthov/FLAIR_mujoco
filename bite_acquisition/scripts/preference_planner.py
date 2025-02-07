@@ -25,7 +25,8 @@ class GPTInterface:
                     'content': prompt
                   }
         response = self.client.chat.completions.create(
-                   model='gpt-4-turbo-2024-04-09', # 'gpt-4o-2024-08-06', # 'gpt-4-0125-preview', 
+                #    model='gpt-4o-2024-08-06',
+                   model='gpt-4-turbo-2024-04-09', # 'gpt-4-0125-preview', 
                    messages=[message]
                   )
         # print(response)
@@ -45,9 +46,8 @@ class PreferencePlanner:
         self.transfer_parameter_prompt_file = 'decomposer_prompts/bite_transfer.txt'
 
         # self.no_decomposer_prompt_file = 'flair_testing/flair_v9.txt'
-        self.no_decomposer_prompt_file = 'improved_prompt_v2.txt'
+        self.no_decomposer_prompt_file = 'improved_prompt_v5.txt'
 
-        self.flair_prompt = True
         self.debug = True
 
         self.parsed = False
@@ -195,9 +195,9 @@ class PreferencePlanner:
     
             prompt = prompt%(
                 str(items), 
-                portions_sentence, 
-                preference, 
-                str(history)
+                portions_sentence,
+                str(history),
+                preference
                 )
 
             response, token_data = self.gpt_interface.chat_with_openai(prompt)
@@ -208,10 +208,7 @@ class PreferencePlanner:
                 print(prompt)
                 print(f"RESPONSE:\n{response}")
 
-            if self.flair_prompt:
-                intermediate_response = response.split('Next bite as string:')[1].strip()
-            else:
-                intermediate_response = response.split('Next food item as string:')[1].strip()
+            intermediate_response = response.split('Next bite as string:')[1].strip()
 
             feeding_parameters = intermediate_response.split('\n')
             next_bite = ast.literal_eval(feeding_parameters[0].strip())

@@ -254,7 +254,7 @@ jonathan_interview_preferences = [
     "rice, teriyaki chicken, mixed vegetables randomly"
 ]
 
-interview_preferences = [
+ethan_interview_preferences = [
     "Give me the egg, then deep fried fish, and finally green beans, with rice after each spoon of dish",
     "Give egg, fried chicken, then green beans, with a spoon of rice after each dish",
     "Give egg, fried chicken, then cucumber, with a spoon of rice after each dish",
@@ -267,7 +267,7 @@ interview_preferences = [
     "Give teriyaki chicken then mixed vegetables, with a spoon of rice after each dish"
 ]
 
-modified_interview_preferences = [
+ethan_modified_interview_preferences = [
     "give egg alternating with rice, then fish alternating with rice, and finally green beans alternating with rice",
     "give egg alternating with rice, then chicken alternating with rice, and finally green beans alternating with rice",
     "give egg alternating with rice, then chicken alternating with rice, and finally cucumber alternating with rice",

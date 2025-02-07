@@ -1,0 +1,43 @@
+You are feeding me a plate of food.
+Items remaining: %s
+Portions remaining (corresponding to items remaining list): %s 
+Bite History: %s. A list of previous bites and their parameters in the format [<bite>, <bite_size>, <distance_to_mouth>, <exit_angle>, <transfer_speed>], with the last element being the most recent.
+Preference: %s
+---
+Given this information, you will decide the following parameters:
+1. The next bite
+2. bite_size: Choose a value between 1.0 (smallest bite) and 10.0 (largest bite), DEFAULT is 5.0.
+3. distance_to_mouth: Choose a value between 5.0 (closer) and 10.0 (further), DEFAULT is 7.5.
+4. exit_angle: Choose a value between 80.0 (lower tilt) and 120.0 (higher tilt), DEFAULT is 90.0.
+5. transfer_speed: Choose a value between 1.0 (slower) and 10.0 (faster), DEFAULT is 5.0.
+
+1) First, summarize what food items are remaining on the plate with corresponding portions. Make sure that your summarization matches with the 'Items remaining', 'Portions remaining' provided at the beginning. Be detailed in your summary
+2) Then, I want you to state the latest bite that was fed.
+3) Next, summarize your reasoning for choosing the next bite. Make sure to include the previous bites fed into your reasoning.
+4) Next, choose an item from 'Items remaining' to feed next based on the answers you gave for 1), 2) and 3) as well as the following decision criteria.
+   Decision Criteria:
+    a) If my preference includes anything similar to the phrase, 'X after each bite of dish', always suggest X after every bite of other food. Note the words, 'food', 'foods', and 'dish' refer to all the food items on the plate except X. This takes PRECEDENCE over all others. If X is unavailable, plan the remaining bites based on my preference as best as possible.
+    b) "Alternating between X and Y" means you can start with either X or Y, unless otherwise specified.
+    Additional notes:
+        - Prioritize the above cases in the order of a) then b). Where a) has the highest priority.
+        - Note that bites taken so far are past bites and thus DO NOT AFFECT the specified items or portions remaining on the plate.
+        - You CANNOT suggest multiple food in one bite eg. 'X and Y'. You can only choose one food from the 'Items remaining'.
+        - If there is no sensible option to choose you may opt to not feed a bite by choosing ''.
+5) Next, determine a bite size to feed me, use cues like "smaller", or "larger", and prior values from the bite history. Default to 5.0 if no specific preference is stated. ONLY change bite_size if my preference says so.
+6) Next, determine the distance_to_mouth parameter, use preference cues like "closer", or "further", and prior values from the bite history. Default to 7.5 if no preference applies. Do NOT use preference cues which correspond to the speed of feeding. ONLY change distance_to_mouth if my preference says so.
+7) Next, determine the exit_angle parameter, look for cues like "higher", "lower", or "tilt", using bite history if needed. Default to 90.0 if no preference applies. ONLY change exit_angle if my preference says so.
+8) Next, determine the transfer_speed parameter, look for cues like "slower", or "faster", using bite history if needed. Default to 5.0 if no preference applies. ONLY change transfer_speed if my preference says so.
+    Things to note when choosing parameter values:
+        - Keep the values for the parameters consistent unless stated otherwise
+---
+Format your response as follows, be concise but thorough:
+Food Items Left: <Sentence describing what food items are left on the plate; ensure that this matches with the 'Items remaining' provided at the beginning>
+Previous bite fed: <Sentence describing the latest food item that was fed>
+Next bite reasoning: <Sentence describing the reasoning behind choosing the next bite. Include the previous bites fed into your reasoning.>
+Next bite as string: 'item1' # Or ''
+Next bite size as float: <bite size chosen as float. Do NOT write comments here>
+Next distance to mouth as float: <distance to mouth chosen as float. Do NOT write comments here>
+Next exit angle as float: <exit angle chosen as float. Do NOT write comments here>
+Next transfer speed as float: <transfer speed chosen as float. Do NOT write comments here>
+---
+Output your response here. Ensure that the last line begins with 'Next transfer speed as float:'.

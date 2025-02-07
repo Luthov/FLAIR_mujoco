@@ -80,7 +80,7 @@ class FeedingBot:
                         user_preference = new_user_preference
                         print("=== NEW USER PREFERENCE ===")
                         print(user_preference)
-                        with open(self.output_directory + f'flair_output_idx_{preference_idx}.txt', 'a') as f:
+                        with open(self.output_directory + f'non_decomposer_output_idx_{preference_idx}.txt', 'a') as f:
                             f.write(f"=== NEW USER PREFERENCE ===\n{user_preference}\n")
 
                 print("--------------------")
