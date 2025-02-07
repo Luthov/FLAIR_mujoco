@@ -254,20 +254,20 @@ jonathan_interview_preferences = [
     "rice, teriyaki chicken, mixed vegetables randomly"
 ]
 
-ethan_interview_preferences = [
-    "Give me the egg, then deep fried fish, and finally green beans with rice after each spoon of dish",
-    "Give egg, fried chicken, then green beans with a spoon of rice after each dish",
-    "Give egg, fried chicken, then cucumber with a spoon of rice after each dish",
-    "Give steamed chicken and afterwards cucumber with a spoon of rice after each dish",
+interview_preferences = [
+    "Give me the egg, then deep fried fish, and finally green beans, with rice after each spoon of dish",
+    "Give egg, fried chicken, then green beans, with a spoon of rice after each dish",
+    "Give egg, fried chicken, then cucumber, with a spoon of rice after each dish",
+    "Give steamed chicken and afterwards cucumber, with a spoon of rice after each dish",
     "Give green beans, then carrots, then steak, and give me a spoon of mashed potatoes after each dish",
-    "Give beef then broccoli with a spoon of rice after each dish",
-    "Give meatballs then green beans with a spoon of mashed potatoes after each dish",
-    "Give salmon then broccoli with a spoon of mashed potatoes after each dish",
-    "Give pork cutlet then cabbage with a spoon of rice after each dish",
-    "Give teriyaki chicken then mixed vegetables with a spoon of rice after each dish"
+    "Give beef then broccoli, with a spoon of rice after each dish",
+    "Give meatballs then green beans, with a spoon of mashed potatoes after each dish",
+    "Give salmon then broccoli, with a spoon of mashed potatoes after each dish",
+    "Give pork cutlet then cabbage, with a spoon of rice after each dish",
+    "Give teriyaki chicken then mixed vegetables, with a spoon of rice after each dish"
 ]
 
-ehtan_modified_interview_preferences = [
+modified_interview_preferences = [
     "give egg alternating with rice, then fish alternating with rice, and finally green beans alternating with rice",
     "give egg alternating with rice, then chicken alternating with rice, and finally green beans alternating with rice",
     "give egg alternating with rice, then chicken alternating with rice, and finally cucumber alternating with rice",
@@ -280,7 +280,7 @@ ehtan_modified_interview_preferences = [
     "give chicken alternating with rice, then mixed vegetables alternating with rice"
 ]
 
-modified_interview_preferences = [
+amirul_modified_interview_preferences = [
     "I want to alternate between the foods in the order of rice, egg then fish, no beans",
     "I want to alternate between the foods in the order of rice, egg then chicken, no beans",
     "I want to alternate between the foods in the order of rice, egg then chicken, cucumber last ",
@@ -293,7 +293,7 @@ modified_interview_preferences = [
     ""
 ] 
 
-interview_preferences = [
+amirul_interview_preferences = [
     "carbs 1st, protein second, eggs before fish, no beans ",
     "carbs 1st, protein second, eggs before chicken, no beans",
     "carbs 1st, protein second, eggs before chicken, cucumber last",

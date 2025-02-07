@@ -14,15 +14,15 @@ class FeedingBot:
         self.preference_interrupt = False
         self.exit = False
         self.speech_to_text = False
-        self.modified = True
+        self.modified = False
 
         self.bite_portion = 0.6
-        self.efficiency_scores = [1, 1, 1]
 
         # Choose to use decomposer or not
         self.mode = 'no_decomposer'
-        self.decomposer_output_directory = 'feeding_bot_output/interview_outputs/interview_yi_heng/decomposer_tests/'
-        self.no_decomposer_output_directory = 'feeding_bot_output/interview_outputs/interview_amirul/modified/'
+        # self.mode = 'decomposer'
+        self.decomposer_output_directory = 'feeding_bot_output/interview_outputs/prompt_improvements/decomposer_outputs/'
+        self.no_decomposer_output_directory = 'feeding_bot_output/interview_outputs/prompt_improvements/'
 
         if self.mode == 'decomposer':
             self.output_directory = self.decomposer_output_directory
@@ -31,8 +31,8 @@ class FeedingBot:
             self.output_directory = self.no_decomposer_output_directory
             print('=== USING NON DECOMPOSER PROMPT ===')
 
-        self.preferences = range(len(interview_preferences))
-        # self.preferences = [7]
+        # self.preferences = range(len(interview_preferences))
+        self.preferences = [0]
  
     def clear_plate(self):
         
@@ -93,7 +93,6 @@ class FeedingBot:
                 next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed, token_data = self.preference_planner.plan(
                     food_items, 
                     food_portion_rounded, 
-                    self.efficiency_scores, 
                     user_preference, 
                     bite_history,
                     preference_idx,

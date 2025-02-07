@@ -45,10 +45,10 @@ class PreferencePlanner:
         self.transfer_parameter_prompt_file = 'decomposer_prompts/bite_transfer.txt'
 
         # self.no_decomposer_prompt_file = 'flair_testing/flair_v9.txt'
-        self.no_decomposer_prompt_file = 'ours.txt'
+        self.no_decomposer_prompt_file = 'improved_prompt_v2.txt'
 
         self.flair_prompt = True
-        self.debug = False
+        self.debug = True
 
         self.parsed = False
 
@@ -81,7 +81,6 @@ class PreferencePlanner:
     def plan(self, 
              items, 
              portions, 
-             efficiencies, 
              preference, 
              history, 
              preference_idx, 
@@ -242,7 +241,7 @@ class PreferencePlanner:
             print(f"TRANSFER SPEED: {transfer_speed}")
 
             # Append responses and parameters to a file
-            with open(output_directory + f'flair_output_idx_{preference_idx}.txt', 'a') as f:
+            with open(output_directory + f'ethan_improved_idx_{preference_idx}.txt', 'a') as f:
                 f.write(f"=== HISTORY ===\n{history}\n")
                 f.write(f"=== RESPONSE ===\n{response}\n")
                 f.write(f"=== PARAMETERS ===\n")

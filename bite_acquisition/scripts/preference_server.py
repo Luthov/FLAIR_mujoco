@@ -13,7 +13,6 @@ class PreferenceServer():
         self.user_preference = None
         self.available_food_items = ['chicken', 'rice', 'broccoli']
         self.available_food_items_portions = [2, 2, 2]
-        self.efficiency_scores = [1, 1, 1]
         self.history = []
         self.mode = 'no_decomposer'
         self.output_directory = '/home/luthov/school/fyp/feeding_ws/src/feeding/task_planner/FLAIR_mujoco/bite_acquisition/scripts/feeding_bot_output/real_arm_testing/'
@@ -29,10 +28,11 @@ class PreferenceServer():
         
     def update_feeding_parameters(self):
 
+        # TODO: Need to do something about this such that it won't rerun when I call it again
+
         self.next_bite, self.bite_size, self.distance_to_mouth, self.exit_angle, self.transfer_speed, _ = self.preference_planner.plan(
             self.available_food_items, 
             self.available_food_items_portions, 
-            self.efficiency_scores, 
             self.user_preference, 
             self.history,
             0,
