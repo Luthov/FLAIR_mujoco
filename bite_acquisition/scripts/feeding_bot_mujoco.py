@@ -16,9 +16,10 @@ class FeedingBot:
         self.speech_to_text = False
         self.modified = False
 
-        self.bite_portion = 0.6
+        self.bite_portion = 1.0
 
-        self.participant_list = ['ethan', 'matthew', 'hauwen', 'jonathan']
+        # self.participant_list = ['ethan', 'matthew', 'hauwen', 'jonathan']
+        self.participant_list = ['matthew']
 
         # Choose to use decomposer or not
         self.mode = 'no_decomposer'
@@ -48,8 +49,7 @@ class FeedingBot:
                 interview_preferences = hau_wen_interview_preferences
             elif participant == 'jonathan':
                 interview_preferences = jonathan_interview_preferences
-
-            self.output_directory = f'feeding_bot_output/prompt_improvements/{participant}/'
+            self.output_directory = f'feeding_bot_output/prompt_improvements/{participant}/modify_portion/'
         
             for preference_idx in self.preferences: # range(len(icorr_preferences)):
 
@@ -66,10 +66,10 @@ class FeedingBot:
                 food_items = self.items[0]
                 
                 if len(food_items) == 3:
-                    self.item_portions = [2.0] * len(food_items)
+                    self.item_portions = [3.0] * len(food_items)
                     actions_remaining = 9
                 else:
-                    self.item_portions = [2.0] * len(food_items)
+                    self.item_portions = [3.0] * len(food_items)
                     actions_remaining = 12
 
                 # Bite history
