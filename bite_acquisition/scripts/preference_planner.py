@@ -48,7 +48,7 @@ class PreferencePlanner:
         # self.no_decomposer_prompt_file = 'flair_testing/flair_v9.txt'
         self.no_decomposer_prompt_file = 'improved_prompt_v5.txt'
 
-        self.debug = True
+        self.debug = False
 
         self.parsed = False
 
@@ -227,8 +227,11 @@ class PreferencePlanner:
                 elif 'Next exit angle as float:' in param:
                     exit_angle = ast.literal_eval(param.split('Next exit angle as float:')[1].strip())
                 elif 'Next transfer speed as float:' in param:
-                    print(param)
-                    transfer_speed = ast.literal_eval(param.split('Next transfer speed as float:')[1].strip())
+                    try:
+                        print(param)
+                        transfer_speed = ast.literal_eval(param.split('Next transfer speed as float:')[1].strip())
+                    except:
+                        transfer_speed = 5.0
 
             print(f"=== PARAMETERS ===")
             print(f"NEXT BITE: {next_bite}")
@@ -238,7 +241,7 @@ class PreferencePlanner:
             print(f"TRANSFER SPEED: {transfer_speed}")
 
             # Append responses and parameters to a file
-            with open(output_directory + f'ethan_improved_idx_{preference_idx}.txt', 'a') as f:
+            with open(output_directory + f'prompt_v5_idx_{preference_idx}.txt', 'a') as f:
                 f.write(f"=== HISTORY ===\n{history}\n")
                 f.write(f"=== RESPONSE ===\n{response}\n")
                 f.write(f"=== PARAMETERS ===\n")
