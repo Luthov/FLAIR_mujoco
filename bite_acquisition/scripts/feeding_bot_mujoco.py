@@ -1,7 +1,7 @@
 # from speech_to_text.speech_to_text import get_user_preference
 from preference_planner import PreferencePlanner
 
-from preferences import ethan_interview_preferences,matthew_interview_preferences, hau_wen_interview_preferences, jonathan_interview_preferences, yi_heng_interview_preferences, amirul_interview_preferences, janssen_interview_preferences, ben_interview_preferences, aaradh_interview_preferences, darren_interview_preferences, interview_food_items # , modified_interview_preferences
+from preferences import ethan_interview_preferences, matthew_interview_preferences, hau_wen_interview_preferences, jonathan_interview_preferences, yi_heng_interview_preferences, amirul_interview_preferences, janssen_interview_preferences, ben_interview_preferences, aaradh_interview_preferences, darren_interview_preferences, luke_preferences, interview_food_items # , modified_interview_preferences
 
 class FeedingBot:
     def __init__(self):
@@ -20,7 +20,8 @@ class FeedingBot:
 
         # self.participant_list = ['ethan', 'matthew', 'hauwen', 'jonathan']
         # self.participant_list = ['matthew', 'ethan', 'hauwen', 'jonathan']
-        self.participant_list = ['matthew', 'ethan', 'hauwen', 'jonathan', 'yiheng', 'amirul', 'janssen', 'ben', 'aaradh', 'darren']
+        # self.participant_list = ['ben', 'aaradh', 'darren']
+        self.participant_list = ['luke']
 
         # Choose to use decomposer or not
         self.mode = 'no_decomposer'
@@ -35,8 +36,8 @@ class FeedingBot:
             self.output_directory = self.no_decomposer_output_directory
             print('=== USING NON DECOMPOSER PROMPT ===')
 
-        self.preferences = range(len(ethan_interview_preferences))
-        # self.preferences = [8]
+        # self.preferences = range(len(ethan_interview_preferences))
+        self.preferences = [2]
 
     def clear_plate(self):
 
@@ -63,7 +64,9 @@ class FeedingBot:
             elif participant == 'darren':
                 interview_preferences = darren_interview_preferences
 
-            self.output_directory = f'feeding_bot_output/v6_outputs/{participant}/'
+            interview_preferences = luke_preferences
+
+            self.output_directory = f'feeding_bot_output/{participant}/'
         
             for preference_idx in self.preferences: # range(len(icorr_preferences)):
 

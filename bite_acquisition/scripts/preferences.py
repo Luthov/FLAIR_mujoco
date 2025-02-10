@@ -111,6 +111,21 @@ interview_food_items = [
     ["rice", "chicken", "mixed vegetables"]
     ]
 
+luke_preferences = [
+    "Please feed me all the green beans first. Then I want you to alternate between the foods in the order of rice, then fish, then egg. Give me smaller bites for rice and feed me slower for the fish to give me more time to chew.",
+    "Feed me all the grean beans first. Then I want to eat alternating bites of rice and chicken, after that is done I want to end with all the egg. Feed me slower for rice and with a higher tilt to prevent it from spilling.",
+    "I want you to alternate between the foods in the order of carbs, then protein, then the vege. Save all the eggs for last. I also want bigger bites of rice and smaller bites for chicken. Also keep the spoon a little further from my mouth when feeding me eggs.",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+]
+
+# NOTE: idx 2, it feeds me smaller bites of chicken
+
 hau_wen_interview_preferences = ["alternate between rice and other food.",
                          "alternate between rice and other food. leave some chicken at the end of meal",
                          "alternate between rice and other food.",
@@ -120,7 +135,8 @@ hau_wen_interview_preferences = ["alternate between rice and other food.",
                          "alternate between mashed potatoes and other food.",
                          "alternate between salmon and other food.",
                          "alternate between rice and other food. dont have to finish all the cabbage",
-                         "alternate between rice and other food. leave more chicken at the end."]
+                         "alternate between rice and other food. leave more chicken at the end."
+                         ]
 
 yi_heng_interview_preferences = [
     "I'd like to have some fish first, then some rice. After that, the egg and green beans. Please repeat that sequence",

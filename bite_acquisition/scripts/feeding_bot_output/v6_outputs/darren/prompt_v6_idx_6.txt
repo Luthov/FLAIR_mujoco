@@ -1,0 +1,129 @@
+=== HISTORY ===
+[]
+=== RESPONSE ===
+Previous bite fed: No previous bites have been fed as the Bite History is empty.
+Food Items Left: [('mashed potatoes', 3), ('meatballs', 3), ('green beans', 3)]
+Next bite reasoning: Following your preference to consume all the mashed potatoes and meatballs while ignoring the green beans, and according to decision criteria c) which dictates feeding all of one food before starting another, the next bite will be from the mashed potatoes.
+Next bite as string: 'mashed potatoes'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: mashed potatoes
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['mashed potatoes', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The last bite fed was mashed potatoes.
+Food Items Left: [('mashed potatoes', 2), ('meatballs', 3), ('green beans', 3)]
+Next bite reasoning: Based on the preference to "Give me all the mash and meatball ignore the green beans," the current approach is to prioritize finishing the mashed potatoes before moving on to the meatballs.
+Next bite as string: 'mashed potatoes'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: mashed potatoes
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 3, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was mashed potatoes.
+Food Items Left: [('mashed potatoes', 1), ('meatballs', 3), ('green beans', 3)]
+Next bite reasoning: According to your preferences which prioritize mashed potatoes and meatballs, ignoring green beans, the next logical choice is to finish the remaining mashed potatoes.
+Next bite as string: 'mashed potatoes'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: mashed potatoes
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 3, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed is mashed potatoes.
+Food Items Left: [('mashed potatoes', 0), ('meatballs', 3), ('green beans', 3)]
+Next bite reasoning: Based on your preference to ignore green beans and feed all the mash and meatball, and considering that all mashed potatoes are finished, the next logical choice should be meatballs according to your preference directive of 'Feed me X and then Y', meaning all of one food item before moving to the next.
+Next bite as string: 'meatballs'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: meatballs
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 3, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['meatballs', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was meatballs, given in the setting typical parameters of bite size, distance to the mouth, exit angle, and transfer speed.
+
+Food Items Left: [('mashed potatoes', 0), ('meatballs', 2), ('green beans', 3)]
+
+Next bite reasoning: Given the preference to consume all the mashed potatoes and meatballs and ignore the green beans, the next food choice should naturally be another portion of meatballs since all the mashed potatoes portions are finished and there are still portions of meatballs available.
+
+Next bite as string: 'meatballs'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: meatballs
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 2, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['meatballs', 5.0, 7.5, 90.0, 5.0], ['meatballs', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The last food item fed was meatballs.
+Food Items Left: [('mashed potatoes', 0), ('meatballs', 1), ('green beans', 3)]
+Next bite reasoning: Given your preference to consume all meatballs and mashed potatoes while ignoring the green beans, and since mashed potatoes are finished, the next logical choice is to continue with the remaining meatballs.
+Next bite as string: 'meatballs'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: meatballs
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 1, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['meatballs', 5.0, 7.5, 90.0, 5.0], ['meatballs', 5.0, 7.5, 90.0, 5.0], ['meatballs', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was meatballs.
+Food Items Left: [('mashed potatoes', 0), ('meatballs', 0), ('green beans', 3)]
+Next bite reasoning: Given your preference to ignore green beans and focus on mashed potatoes and meatballs, and since both are finished, no further bites should be fed.
+Next bite as string: ''
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: 
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 0, 3]
+TRANSFER SPEED: 5.0
