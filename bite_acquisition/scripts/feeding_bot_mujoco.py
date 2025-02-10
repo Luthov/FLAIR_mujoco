@@ -1,7 +1,7 @@
 # from speech_to_text.speech_to_text import get_user_preference
 from preference_planner import PreferencePlanner
 
-from preferences import ethan_interview_preferences, matthew_interview_preferences, hau_wen_interview_preferences, jonathan_interview_preferences, interview_food_items # , modified_interview_preferences
+from preferences import ethan_interview_preferences,matthew_interview_preferences, hau_wen_interview_preferences, jonathan_interview_preferences, yi_heng_interview_preferences, amirul_interview_preferences, janssen_interview_preferences, ben_interview_preferences, aaradh_interview_preferences, darren_interview_preferences, interview_food_items # , modified_interview_preferences
 
 class FeedingBot:
     def __init__(self):
@@ -19,7 +19,8 @@ class FeedingBot:
         self.bite_portion = 1.0
 
         # self.participant_list = ['ethan', 'matthew', 'hauwen', 'jonathan']
-        self.participant_list = ['matthew']
+        # self.participant_list = ['matthew', 'ethan', 'hauwen', 'jonathan']
+        self.participant_list = ['matthew', 'ethan', 'hauwen', 'jonathan', 'yiheng', 'amirul', 'janssen', 'ben', 'aaradh', 'darren']
 
         # Choose to use decomposer or not
         self.mode = 'no_decomposer'
@@ -35,8 +36,8 @@ class FeedingBot:
             print('=== USING NON DECOMPOSER PROMPT ===')
 
         self.preferences = range(len(ethan_interview_preferences))
-        # self.preferences = [0]
- 
+        # self.preferences = [8]
+
     def clear_plate(self):
 
         for participant in self.participant_list:
@@ -49,7 +50,20 @@ class FeedingBot:
                 interview_preferences = hau_wen_interview_preferences
             elif participant == 'jonathan':
                 interview_preferences = jonathan_interview_preferences
-            self.output_directory = f'feeding_bot_output/prompt_improvements/{participant}/modify_portion/'
+            elif participant == 'yiheng':
+                interview_preferences = yi_heng_interview_preferences
+            elif participant == 'amirul':
+                interview_preferences = amirul_interview_preferences
+            elif participant == 'janssen':
+                interview_preferences = janssen_interview_preferences
+            elif participant == 'ben':
+                interview_preferences = ben_interview_preferences
+            elif participant == 'aaradh':
+                interview_preferences = aaradh_interview_preferences
+            elif participant == 'darren':
+                interview_preferences = darren_interview_preferences
+
+            self.output_directory = f'feeding_bot_output/v6_outputs/{participant}/'
         
             for preference_idx in self.preferences: # range(len(icorr_preferences)):
 
@@ -137,7 +151,7 @@ class FeedingBot:
                     if actions_remaining == 0 or (next_bite == ''):
                         with open(self.output_directory + f'histories_idx_{preference_idx}.txt', 'a') as f:
                             f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
-                            f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
+                            # f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
                             f.write(f"=== USER PREFERENCE ===\n{user_preference}\n")
                             break
 

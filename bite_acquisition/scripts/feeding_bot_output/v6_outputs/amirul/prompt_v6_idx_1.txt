@@ -1,0 +1,180 @@
+=== HISTORY ===
+[]
+=== RESPONSE ===
+Previous bite fed: No previous bites were fed as the Bite History is empty.
+Food Items Left: [('rice', 3), ('chicken', 3), ('egg', 3), ('green beans', 3)]
+Next bite reasoning: Since the preference is to eat carbs first and then protein, with a specific request for eggs before chicken and no green beans, the next logical choice is rice.
+Next bite as string: 'rice'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 3, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The last bite that was fed was rice.
+Food Items Left: [('rice', 2), ('chicken', 3), ('egg', 3), ('green beans', 3)]
+Next bite reasoning: Given your preference to first consume carbs and then proteins, with a specific order for proteins (eggs before chicken), and a directive to not eat green beans—after feeding rice, the next logical choice falls upon rice again, since we aim to continue with carbs before moving to proteins.
+Next bite as string: 'rice'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 3, 3, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed is rice.
+Food Items Left: [('rice', 1), ('chicken', 3), ('egg', 3), ('green beans', 3)]
+Next bite reasoning: Based on the preference for carbs first and then protein with a priority for eggs before chicken, and considering the portions left, the next item should be rice to finish the carbs, then continue to proteins.
+Next bite as string: 'rice'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 3, 3, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was rice.
+Food Items Left: [('rice', 0), ('chicken', 3), ('egg', 3), ('green beans', 3)]
+Next bite reasoning: Given the preference to prioritize carbs first, then protein with eggs before chicken, and no green beans, the next logical choice after finishing rice would be eggs, especially since both chicken and eggs have equal portions remaining but the preference specifies eggs before chicken.
+Next bite as string: 'egg'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: egg
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 3, 3, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The last item fed was an egg.
+Food Items Left: [('rice', 0), ('chicken', 3), ('egg', 2), ('green beans', 3)]
+Next bite reasoning: Based on the preference to have carbs first and protein second, with eggs preferred over chicken, and since no rice is left, the next choice should be egg followed by chicken because green beans are not preferred.
+Next bite as string: 'egg'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: egg
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 3, 2, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The last bite fed was an egg.
+Food Items Left: [('rice', 0), ('chicken', 3), ('egg', 1), ('green beans', 3)]
+Next bite reasoning: According to the preference to prioritize carbs first and then proteins, with eggs before chicken and no beans, the only logical choice left considering egg is the last bit of protein preferred over chicken and there is no rice left.
+Next bite as string: 'egg'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: egg
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 3, 1, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The most recent food item that was fed was an egg.
+Food Items Left: [('chicken', 3), ('egg', 0), ('green beans', 3)]
+Next bite reasoning: According to the preference which states 'carbs 1st, protein second, eggs before chicken, no beans', the eggs have already been maximized and exhausted, and rice is finished. The next available protein prioritized in the listed preferences that is available is chicken. Therefore, chicken will be the next bite.
+Next bite as string: 'chicken'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 3, 0, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was chicken.
+Food Items Left: [('rice', 0), ('chicken', 2), ('egg', 0), ('green beans', 3)]
+Next bite reasoning: Given your preference for carbs first, protein second with eggs before chicken, and no beans—next should be chicken since all eggs and carbs are depleted.
+Next bite as string: 'chicken'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 2, 0, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed is chicken.
+Food Items Left: [('rice', 0), ('chicken', 1), ('egg', 0), ('green beans', 3)]
+Next bite reasoning: According to your preference to eat carbs first and then protein, prioritizing eggs over chicken, and not eating beans, the only remaining option as per the current portions on the plate is chicken.
+Next bite as string: 'chicken'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 1, 0, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0], ['rice', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0], ['egg', 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 7.5, 90.0, 5.0], ['chicken', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was chicken.
+Food Items Left: [('rice', 0), ('chicken', 0), ('egg', 0), ('green beans', 3)]
+Next bite reasoning: Based on the given preference of eating carbs first, then protein, with a specific order of eggs before chicken, and a stipulation to avoid green beans, there is no suitable food item left that matches the preference criteria. Therefore, no bite is selected.
+Next bite as string: ''
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: 
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 0, 0, 3]
+TRANSFER SPEED: 5.0

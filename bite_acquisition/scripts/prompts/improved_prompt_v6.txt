@@ -13,12 +13,40 @@ Given this information, you will decide the following parameters:
 
 1) First, state the latest bite that was fed.
 2) Then, summarize what food items are remaining on the plate with corresponding portions in the form of a list containing tuples, [(cabbage, 3), (chicken, 3), (rice, 3), (egg, 3)]. Make sure that your summarization matches with the 'Items remaining', 'Portions remaining' provided at the beginning.
-3) Next, summarize your reasoning for choosing the next bite.
+3) Next, summarize your reasoning for choosing the next bite. include 1) in your reasoning.
 4) Next, choose an item from 'Items remaining' to feed next based on the answers you gave for 1), 2) and 3) as well as the following decision criteria.
    Decision Criteria:
-    a) If my preference includes anything similar to the phrase, 'X after each bite of dish', always suggest X after every bite of other food. Note the words, 'food', 'foods', and 'dish' refer to all the food items on the plate except X. This takes PRECEDENCE over all others. If X is unavailable, plan the remaining bites based on my preference as best as possible.
+    a) If my preference includes anything similar to the phrase, 'Give me Y, then Z, with X after each bite of dish', means you should first alternate Y with X, until Y is finished, BEFORE you alternate Z with X. Note the words, 'food', 'foods', and 'dish' refer to all the food items on the plate except X.
+        The following are examples of the above case:
+            Items remaining: [mashed potatoes, steak, salad]
+
+            Preference: 'Feed me steak, then salad, with a spoon of mashed potatoes after each dish.'
+            Expected output: ['steak', 'mashed potatoes', 'steak', 'mashed potatoes', 'steak', 'mashed potatoes', 'salad', 'salad', 'salad'].
+
+            Items remaining: [chicken, egg, cabbage, rice]
+
+            Preference: 'Give me cabbage, then chicken, then egg, with rice after each bite of dish.'
+            Expected output: ['cabbage', 'rice', 'cabbage', 'rice', 'cabbage', 'rice', 'chicken', 'egg', 'chicken', 'egg', 'chicken', 'egg'].
     b) "Alternating between X and Y" means you can start with either X or Y, unless otherwise specified.
-    c) If my preference specifies 'Feed me X and then Y', perceive it as me asking you to feed all of X before you feed any of Y. For example, if the plate contains [chicken, egg, cabbage, rice] and the preference is 'Give me cabbage, then rice, then chicken, then egg'. You should feed me ['cabbage', 'cabbage', 'cabbage', 'rice', 'rice', 'rice', 'chicken', 'chicken', 'chicken', 'egg', 'egg', 'egg'].
+        The following are examples of the above case:
+            Items remaining: [beef, broccoli, rice]
+
+            Preference: 'I want to start with the rice, then the beef, then the broccoli. Please repeat that order.'
+            Expected output: ['beef', 'broccoli', 'rice', 'beef', 'broccoli', 'rice', 'beef', 'broccoli', 'rice'].
+
+            Preference: 'Alternate equally between rice, beef and broccoli'
+            Expected output: ['rice', 'beef', 'broccoli', 'rice', 'beef', 'broccoli', 'rice', 'beef', 'broccoli'].
+    c) If my preference specifies 'Feed me X and then Y', perceive it as me asking you to feed all of X before you feed any of Y.
+        The following are examples of the above case:
+            Items remaining: [chicken, egg, cabbage, rice]
+
+            Preference: 'Give me cabbage, then rice, then chicken, then egg'
+            Expected output: ['cabbage', 'cabbage', 'cabbage', 'rice', 'rice', 'rice', 'chicken', 'chicken', 'chicken', 'egg', 'egg', 'egg'].
+
+            Items remaining: [beef, broccoli, rice]
+
+            Preference: 'Feed me the beef, then the broccoli, then the rice'
+            Expected output: ['beef', 'beef', 'beef', 'broccoli', 'broccoli', 'broccoli', 'rice', 'rice', 'rice'].
     Additional notes:
         - Prioritize the above cases in the order of a), b) then c). Where a) has the highest priority.
         - IMPORTANT NOTE, bites taken so far are past bites and thus are NOT related to the items or portions remaining on the plate. Refer to your summarization in 2) to check for portion sizes.

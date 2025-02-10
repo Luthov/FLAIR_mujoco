@@ -122,7 +122,7 @@ hau_wen_interview_preferences = ["alternate between rice and other food.",
                          "alternate between rice and other food. dont have to finish all the cabbage",
                          "alternate between rice and other food. leave more chicken at the end."]
 
-interview_preferences = [
+yi_heng_interview_preferences = [
     "I'd like to have some fish first, then some rice. After that, the egg and green beans. Please repeat that sequence",
     "I'd like to have some chicken first, then some rice. After that, the egg and green beans. Please repeat that sequence",
     "I'd like to have some chicken first, then some rice. After that, the egg and cucumber. Please repeat that sequence",
