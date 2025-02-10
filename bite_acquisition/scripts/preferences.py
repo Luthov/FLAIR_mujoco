@@ -115,27 +115,30 @@ luke_preferences = [
     "Please feed me all the green beans first. Then I want you to alternate between the foods in the order of rice, then fish, then egg. Give me smaller bites for rice and feed me slower for the fish to give me more time to chew.",
     "Feed me all the grean beans first. Then I want to eat alternating bites of rice and chicken, after that is done I want to end with all the egg. Feed me slower for rice and with a higher tilt to prevent it from spilling.",
     "I want you to alternate between the foods in the order of carbs, then protein, then the vege. Save all the eggs for last. I also want bigger bites of rice and smaller bites for chicken. Also keep the spoon a little further from my mouth when feeding me eggs.",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
+    "Feed me alternating bites of rice and chicken. I don't want any vege. I want bigger bites of rice and smaller bites for chicken. Also tilt the spoon lower for chicken.",
+    "Feed me all the carrots first, then the green beans and feed me fast for these two foods. Then I want alternating bites of mashed potatoes and steak. I want bigger bites of steak and mashed potatoes. Also keep the spoon a little further from my mouth when feeding me steak.",
+    "Please alternate between rice and the other foods on the plate. I'm not that hungry right now, so I want smaller bites and feed me slower.",
+    "I want to finish the mashed potatoes first, then feed me the meatballs, but I don't want to eat any of the vege. Give me bigger bites of mashed potatoes and feed me with a higher tilt for the vegies.",
+    "I want to finish all the broccoli first, then feed me alternating bites of the salmon and the mashed potatoes. Make sure you keep the spoon further from my mouth when feeding me the salmon and keep the bites large for everything.",
+    "Feed me all the cabbage first. Then feed me alternating bites of rice and pork cutlet. I want big bites of pork cutlet and even bigger bites for rice. Also feed me slower for the rice as well as keep the spoon tilted higher.",
+    "I don't want to eat any of the vegies. I want you to alternate between rice and chicken. I want smaller bites for everything and always feed me with a lower tilt."
 ]
 
-# NOTE: idx 2, it feeds me smaller bites of chicken
+interrupt_preferences = [
+    "",
+]
 
-hau_wen_interview_preferences = ["alternate between rice and other food.",
-                         "alternate between rice and other food. leave some chicken at the end of meal",
-                         "alternate between rice and other food.",
-                         "alternate between rice and other food. finish cucumber early leave more meat at the end",
-                         "alternate between mashed potatoes and other food. leave more steak at the end",
-                         "alternate between rice and other foods. leave more beef at the end",
-                         "alternate between mashed potatoes and other food.",
-                         "alternate between salmon and other food.",
-                         "alternate between rice and other food. dont have to finish all the cabbage",
-                         "alternate between rice and other food. leave more chicken at the end."
+hau_wen_interview_preferences = [
+    "alternate between rice and other food.",
+    "alternate between rice and other food. leave some chicken at the end of meal",
+    "alternate between rice and other food.",
+    "alternate between rice and other food. finish cucumber early leave more meat at the end",
+    "alternate between mashed potatoes and other food. leave more steak at the end",
+    "alternate between rice and other foods. leave more beef at the end",
+    "alternate between mashed potatoes and other food.",
+    "alternate between salmon and other food.",
+    "alternate between rice and other food. dont have to finish all the cabbage",
+    "alternate between rice and other food. leave more chicken at the end."
                          ]
 
 yi_heng_interview_preferences = [
