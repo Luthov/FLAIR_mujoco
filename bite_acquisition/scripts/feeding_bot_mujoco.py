@@ -37,7 +37,7 @@ class FeedingBot:
             print('=== USING NON DECOMPOSER PROMPT ===')
 
         # self.preferences = range(len(ethan_interview_preferences))
-        self.preferences = [2]
+        self.preferences = [6]
 
     def clear_plate(self):
 

@@ -8,7 +8,7 @@ Given this information, you will decide the following parameters:
 1. The next bite
 2. bite_size: Choose a value between 1.0 (smallest bite) and 10.0 (largest bite), DEFAULT is 5.0.
 3. distance_to_mouth: Choose a value between 5.0 (closer) and 10.0 (further), DEFAULT is 7.5.
-4. exit_angle: Choose a value between 80.0 (lower tilt) and 120.0 (higher tilt), DEFAULT is 90.0.
+4. exit_angle: Choose a value between 80.0 (lower tilt) and 110.0 (higher tilt), DEFAULT is 90.0.
 5. transfer_speed: Choose a value between 1.0 (slower) and 10.0 (faster), DEFAULT is 5.0.
 
 1) First, state the latest bite that was fed.
@@ -16,11 +16,11 @@ Given this information, you will decide the following parameters:
 3) Next, summarize your reasoning for choosing the next bite. include 1) in your reasoning.
 4) Next, choose an item from 'Items remaining' to feed next based on the answers you gave for 1), 2) and 3) as well as the following decision criteria.
    Decision Criteria:
-    a) If my preference includes anything similar to the phrase, 'Give me Y, then Z, with X after each bite of dish', means you should first alternate Y with X, until Y is finished, BEFORE you alternate Z with X. Note the words, 'food', 'foods', and 'dish' refer to all the food items on the plate except X.
+    a) If my preference includes anything similar to the phrase, 'Give me Y, then Z, with X after each bite of dish', means you should first alternate Y with X, until Y is FINISHED, BEFORE you alternate Z with X. Do NOT feed me Y after Z or Z after Y, UNLESS X is already finished. Note the words, 'food', 'foods', and 'dish' refer to all the food items on the plate except X.
         The following are examples of the above case:
             Items remaining: [mashed potatoes, steak, salad]
 
-            Preference: 'Feed me steak, then salad, with a spoon of mashed potatoes after each dish.'
+            Preference: 'Alternate between the mashed potatoes and the other food.'
             Expected output: ['steak', 'mashed potatoes', 'steak', 'mashed potatoes', 'steak', 'mashed potatoes', 'salad', 'salad', 'salad'].
 
             Items remaining: [chicken, egg, cabbage, rice]
@@ -52,12 +52,12 @@ Given this information, you will decide the following parameters:
         - IMPORTANT NOTE, bites taken so far are past bites and thus are NOT related to the items or portions remaining on the plate. Refer to your summarization in 2) to check for portion sizes.
         - You CANNOT suggest multiple food in one bite eg. 'X and Y'. You can only choose one food from the 'Items remaining'.
         - If there is no sensible option to choose you may opt to not feed a bite by choosing ''.
-5) Next, determine a bite size to feed me, use cues like "smaller", or "larger", and prior values from the bite history. Default to 5.0 if no specific preference is stated. ONLY change bite_size if my preference says so.
-6) Next, determine the distance_to_mouth parameter, use preference cues like "closer", or "further", and prior values from the bite history. Default to 7.5 if no preference applies. Do NOT use preference cues which correspond to the speed of feeding. ONLY change distance_to_mouth if my preference says so.
-7) Next, determine the exit_angle parameter, look for cues like "higher", "lower", or "tilt", using bite history if needed. Default to 90.0 if no preference applies. ONLY change exit_angle if my preference says so.
-8) Next, determine the transfer_speed parameter, look for cues like "slower", or "faster", using bite history if needed. Default to 5.0 if no preference applies. ONLY change transfer_speed if my preference says so.
+5) Next, determine a bite size to feed me, use cues like "smaller", or "larger", and prior values from the bite history. If a preference describes a significant change in bite_size, you should vary bite_size by magnitudes of 2.0. But if it describes a small change, vary bite_size by magnitudes of 1.0. Default to 5.0 if no specific preference is stated. ONLY change bite_size if my preference says so.
+6) Next, determine the distance_to_mouth parameter, use preference cues like "closer", or "further", and prior values from the bite history. If a preference describes a significant change in distance_to_mouth, you should vary distance_to_mouth by magnitudes of 1.0. But if it describes a small change, vary distance_to_mouth by magnitudes of 0.5. Do NOT use preference cues which correspond to the speed of feeding. Default to 7.5 if no preference applies. ONLY change distance_to_mouth if my preference says so.
+7) Next, determine the exit_angle parameter, look for cues like "higher", "lower", or "tilt", using bite history if needed. If my preference describes a significant change in transfer_speed, you should vary transfer_speed by magnitudes of 10.0. But if it describes a small change, vary transfer_speed by magnitudes of 5.0. Default to 90.0 if no preference applies. ONLY change exit_angle if my preference says so.
+8) Next, determine the transfer_speed parameter, look for cues like "slower", or "faster", using bite history if needed. If a preference describes a significant change in transfer_speed, you should vary transfer_speed by magnitudes of 2.0. But if it describes a small change, vary transfer_speed by magnitudes of 1.0. Default to 5.0 if no specific preference is stated. ONLY change transfer_speed if my preference says so.
     Things to note when choosing parameter values:
-        - Keep the values for the parameters consistent unless stated otherwise
+        - Keep the values for the parameters consistent with the values you suggested me in the past in the bite history.
 ---
 Format your response as follows, be thorough:
 Previous bite fed: <Sentence describing the latest food item that was fed>

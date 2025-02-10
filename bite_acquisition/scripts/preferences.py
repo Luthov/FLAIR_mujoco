@@ -118,7 +118,7 @@ luke_preferences = [
     "Feed me alternating bites of rice and chicken. I don't want any vege. I want bigger bites of rice and smaller bites for chicken. Also tilt the spoon lower for chicken.",
     "Feed me all the carrots first, then the green beans and feed me fast for these two foods. Then I want alternating bites of mashed potatoes and steak. I want bigger bites of steak and mashed potatoes. Also keep the spoon a little further from my mouth when feeding me steak.",
     "Please alternate between rice and the other foods on the plate. I'm not that hungry right now, so I want smaller bites and feed me slower.",
-    "I want to finish the mashed potatoes first, then feed me the meatballs, but I don't want to eat any of the vege. Give me bigger bites of mashed potatoes and feed me with a higher tilt for the vegies.",
+    "I want to finish the mashed potatoes first, then feed me the meatballs, but I don't want to eat any of the vege. Give me bigger bites of mashed potatoes and feed me with a higher tilt for the meatballs.",
     "I want to finish all the broccoli first, then feed me alternating bites of the salmon and the mashed potatoes. Make sure you keep the spoon further from my mouth when feeding me the salmon and keep the bites large for everything.",
     "Feed me all the cabbage first. Then feed me alternating bites of rice and pork cutlet. I want big bites of pork cutlet and even bigger bites for rice. Also feed me slower for the rice as well as keep the spoon tilted higher.",
     "I don't want to eat any of the vegies. I want you to alternate between rice and chicken. I want smaller bites for everything and always feed me with a lower tilt."
