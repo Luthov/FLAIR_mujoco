@@ -1,0 +1,61 @@
+You are feeding me a plate of food.
+Items remaining: %s
+Portions remaining (corresponding to items remaining list): %s 
+Bite History: %s. A list of previous bites and their parameters in the format [<bite>, <bite_size>, <distance_to_mouth>, <exit_angle>, <transfer_speed>], with the last element being the most recent.
+Preference: %s
+---
+Given this information, you will decide the next bites to feed me.
+
+1) Then, summarize what food items are remaining on the plate with corresponding portions in the form of a list containing tuples, [(cabbage, 3), (chicken, 3), (rice, 3), (egg, 3)]. Make sure that your summarization matches with the 'Items remaining', 'Portions remaining' provided at the beginning.
+2) Next, summarize your reasoning for choosing the next bites.
+3) Next, plan the next bites such that the food on the plate will be finished. Refer to 'Items remaining', my preference and the answers you gave for 1), 2) and 3) as well as the following decision criteria to inform your decision.
+   Decision Criteria:
+    a) If my preference includes anything similar to the phrase, 'Give me Y, then Z, with X after each bite of dish', means you should first alternate Y with X, until Y is FINISHED, BEFORE you alternate Z with X. Do NOT feed me Y after Z or Z after Y, UNLESS X is already finished. Note the words, 'food', 'foods', and 'dish' refer to all the food items on the plate except X.
+        The following are examples of the above case:
+            Items remaining: [mashed potatoes, steak, salad]
+            Portions remaining: [3, 3, 3]
+
+            Preference: 'Alternate between the mashed potatoes and the other food.'
+            Expected output: ['steak', 'mashed potatoes', 'steak', 'mashed potatoes', 'steak', 'mashed potatoes', 'salad', 'salad', 'salad'].
+
+            Items remaining: [chicken, egg, cabbage, rice]
+            Portions remaining: [3, 3, 3, 3]
+
+            Preference: 'Give me cabbage, then chicken, then egg, with rice after each bite of dish.'
+            Expected output: ['cabbage', 'rice', 'cabbage', 'rice', 'cabbage', 'rice', 'chicken', 'egg', 'chicken', 'egg', 'chicken', 'egg'].
+    b) "Alternating between X and Y" means you can start with either X or Y, unless otherwise specified.
+        The following are examples of the above case:
+            Items remaining: [beef, broccoli, rice]
+            Portions remaining: [3, 3, 3]
+
+            Preference: 'I want to start with the rice, then the beef, then the broccoli. Please repeat that order.'
+            Expected output: ['beef', 'broccoli', 'rice', 'beef', 'broccoli', 'rice', 'beef', 'broccoli', 'rice'].
+
+            Preference: 'Alternate equally between rice, beef and broccoli'
+            Expected output: ['rice', 'beef', 'broccoli', 'rice', 'beef', 'broccoli', 'rice', 'beef', 'broccoli'].
+    c) If my preference specifies 'Feed me X and then Y', perceive it as me asking you to feed all of X before you feed any of Y.
+        The following are examples of the above case:
+            Items remaining: [chicken, egg, cabbage, rice]
+            Portions remaining: [3, 3, 3, 3]
+
+            Preference: 'Give me cabbage, then rice, then chicken, then egg'
+            Expected output: ['cabbage', 'cabbage', 'cabbage', 'rice', 'rice', 'rice', 'chicken', 'chicken', 'chicken', 'egg', 'egg', 'egg'].
+
+            Items remaining: [beef, broccoli, rice]
+            Portions remaining: [3, 3, 3]
+
+            Preference: 'Feed me the beef, then the broccoli, then the rice'
+            Expected output: ['beef', 'beef', 'beef', 'broccoli', 'broccoli', 'broccoli', 'rice', 'rice', 'rice'].
+    Additional notes:
+        - Prioritize the above cases in the order of a), b) then c). Where a) has the highest priority.
+        - The portion size of a food item refers to the number of times it can be suggested. For example, if the remaining items are [beef, broccoli, rice] and the remaining portions are [3, 2, 1], this means beef can be fed three times, broccoli twice, and rice once.
+        - IMPORTANT NOTE, bites taken so far are past bites and thus are NOT related to the items or portions remaining on the plate. Refer to your summarization in 2) to check for portion sizes.
+        - You CANNOT suggest multiple food in one bite eg. 'X and Y'. You can only choose one food from the 'Items remaining'.
+        - It is not necessary to finish all the food if the preference dictates otherwise. For example, if the preference indicates avoiding a specific food, you can plan the bites accordingly without including that food.
+---
+Format your response as follows, be thorough:
+Food Items Left: <List describing what food items are left on the plate; ensure that this matches with the 'Items remaining' provided at the beginning>
+Next bites reasoning: <Sentence describing the reasoning behind choosing the next bite>
+Next bites as list: <List containing the next bites you plan to feed to finish the food on the plate.>
+---
+Output your response here. Ensure that the last line begins with 'Next bites as list:'.

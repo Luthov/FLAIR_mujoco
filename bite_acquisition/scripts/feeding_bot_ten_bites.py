@@ -12,7 +12,6 @@ class FeedingBot:
 
         self.execute = False
         self.preference_interrupt = True
-        self.exit = False
         self.speech_to_text = False
         self.modified = False
 
@@ -66,7 +65,7 @@ class FeedingBot:
 
             interview_preferences = luke_preferences
 
-            self.output_directory = f'feeding_bot_output/{participant}/interrupt_testing/'
+            self.output_directory = f'feeding_bot_output/{participant}/10_bite_testing/'
         
             for preference_idx in self.preferences: # range(len(icorr_preferences)):
 
@@ -97,6 +96,9 @@ class FeedingBot:
 
                 preference_change = True
                 not_changed = True
+                start = True
+
+                sequence_idx = 0
                 
                 while actions_remaining:
 
@@ -129,53 +131,48 @@ class FeedingBot:
                     print("Labels List:", food_items)
                     print("Per Food Portions:", self.item_portions)
                     print("--------------------")
-                    
+
                     food_portion_rounded = [round(portion) for portion in self.item_portions]
 
-                    next_food = self.preference_planner.plan(
-                        food_items, 
-                        food_portion_rounded, 
-                        user_preference, 
-                        bite_history,
-                        preference_change,
-                        preference_idx,
-                        self.mode,
-                        self.output_directory
+                    if start or preference_change:
+                        feeding_sequence = self.preference_planner.plan(
+                            food_items, 
+                            food_portion_rounded, 
+                            user_preference, 
+                            bite_history,
+                            preference_change,
+                            preference_idx,
+                            self.mode,
+                            self.output_directory
                         )
+                        start = False
                     
-                    if next_food != None:
-                        bite_history.append(next_food)
-                    else:
-                        print("PLANNER DIDN'T SUGGEST A FOOD")
-                    
-                    next_bite = next_food[0]
-                    preference_change = False
+                    next_bite = feeding_sequence[sequence_idx]
+                    next_food_item = next_bite[0]
 
-                    if next_bite == 'salon':
-                        next_bite = 'salmon'
+                    preference_change = False
 
                     actions_remaining -= 1
                         
                     for idx in range(len(food_items)):
-                        if food_items[idx] == next_bite:
+                        if food_items[idx] == next_food_item:
                             self.item_portions[idx] -= self.bite_portion
                             self.item_portions[idx] = round(self.item_portions[idx], 2)
                             break
+                    
+                    input('BITE SUCCESSFUL?')
+                    bite_history.append(next_bite)
+                    sequence_idx += 1
 
                     print('=== HISTORY ===')
                     print(bite_history)
 
-                    if actions_remaining == 0 or (next_food == None):
+                    if actions_remaining == 0 or (actions_remaining == len(feeding_sequence)):
                         with open(self.output_directory + f'histories_idx_{preference_idx}.txt', 'a') as f:
                             f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
                             # f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")
                             f.write(f"=== USER PREFERENCE ===\n{user_preference}\n")
                             break
-
-                    if self.exit:
-                        e = input("EXIT?")
-                        if e in ['y', 'Y']:
-                            exit(1)    
 
 if __name__ == "__main__":
     feeding_bot = FeedingBot()

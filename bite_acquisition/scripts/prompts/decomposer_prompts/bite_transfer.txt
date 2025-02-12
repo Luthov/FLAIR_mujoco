@@ -20,6 +20,7 @@ Instructions:
     - To determine the transfer_speed parameter, look for cues like "slower", or "faster", and refer to the values you suggested previously in 'Previous motion parameters'. If a preference describes a significant change in transfer_speed, you should vary transfer_speed by magnitudes of 2.0. But if it describes a small change, vary transfer_speed by magnitudes of 1.0. Default to 5.0 if no specific preference is stated. ONLY change transfer_speed if my preference says so.
         Additional notes:
             - If the 'Previous motion parameters' is None, you should only refer to my preference to suggest motion parameters. Otherwise, suggest parameters based on the 'Previous Motion Parameters' while also considering my preferences.
+            - Make sure to keep the values from the 'Previous motion parameters' if there is no indication in my preference to modify it.
             - Make sure that the values you suggest do NOT go above or below the parameter's respective ranges. In the case that this happens, suggest the minimum value.
 
 Format Your Response as follows, be thorough and DO NOT add any extra formating:

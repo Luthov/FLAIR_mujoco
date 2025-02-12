@@ -43,7 +43,7 @@ class PreferencePlanner:
         self.gpt_interface = GPTInterface()
 
         self.decomposer_prompt_file = 'decomposer_prompts/decomposer.txt'
-        self.bite_sequencing_prompt_file = 'decomposer_prompts/bite_acquisition_flair.txt'
+        self.bite_sequencing_prompt_file = 'decomposer_prompts/bite_acquisition_ten.txt'
         self.transfer_parameter_prompt_file = 'decomposer_prompts/bite_transfer.txt'
 
         # self.no_decomposer_prompt_file = 'flair_testing/flair_v9.txt'
@@ -51,9 +51,10 @@ class PreferencePlanner:
 
         self.debug = False
 
-        self.update_bite_preference = False
+        self.update_bite_sequence = False
         self.update_transfer_params = False
         self.current_motion_params = 'None'
+        # self.transfer_preference = 'None'
 
 
     def parse_preferences(self, preference):
@@ -67,7 +68,7 @@ class PreferencePlanner:
 
         intermediate_response = response.split('Feeding sequence preference: ')[1].strip()
         preferences = intermediate_response.split('\n')
-        bite_preference = preferences[0]
+        bite_preference = preferences[0].strip()
         for pref in preferences:
             if 'Motion parameters preference: ' in pref:
                 motion_parameter_preference = pref.split('Motion parameters preference: ')[1].strip()
@@ -81,9 +82,10 @@ class PreferencePlanner:
 
         if bite_preference != 'None':
             self.bite_preference = bite_preference
-            self.update_bite_preference = True
+            self.update_bite_sequence = True
 
         if motion_parameter_preference != 'None':
+            # self.previous_transfer_preference = self.transfer_preference
             self.transfer_preference = motion_parameter_preference
             self.update_transfer_params = True
         
@@ -109,26 +111,6 @@ class PreferencePlanner:
             if preference_change:
                 _ = self.parse_preferences(preference)
 
-            # Reading prompts
-            with open('prompts/' + self.bite_sequencing_prompt_file, 'r') as f:
-                bite_sequencing_prompt = f.read()
-
-            # Extracting bite sequencing history and transfer parameters history
-            bite_sequencing_history = [item[:1] for item in history]
-
-            bite_sequencing_prompt = bite_sequencing_prompt%(
-                str(items), 
-                portions_sentence,
-                str(bite_sequencing_history),
-                self.bite_preference
-                )
-            
-            print('=== CALLING FEEDING PLANNER ===')
-            bite_sequencing_response, _ = self.gpt_interface.chat_with_openai(bite_sequencing_prompt)
-
-            bite_sequencing_response = bite_sequencing_response.strip()
-            next_bite = ast.literal_eval(bite_sequencing_response.split('Next bite as string:')[1].strip())
-
             if self.update_transfer_params:
 
                 with open('prompts/' + self.transfer_parameter_prompt_file, 'r') as f:
@@ -140,17 +122,52 @@ class PreferencePlanner:
                     self.transfer_preference
                     )
 
+                print(f'PREVIOUS MOTION PARAMS: {self.current_motion_params}')
                 print('=== GETTING MOTION PARAMS ===')
                 transfer_parameter_response, _ = self.gpt_interface.chat_with_openai(transfer_params_prompt)
 
                 self.current_motion_params = ast.literal_eval(transfer_parameter_response.split('Motion parameters:')[1].strip())
+                print(f'CURRENT MOTION PARAMS: {self.current_motion_params}')
+
+                with open(output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
+                    f.write(f"=== CURRENT MOTION PARAMS ===\n{self.current_motion_params}\n")
+                    f.write(f"=== TRANSFER PARAMS RESPONSE ===\n{transfer_parameter_response}\n")
 
                 self.update_transfer_params = False
 
-            print(f'next_bite: {next_bite}')
-            for food in self.current_motion_params:
-                if food[0] == next_bite:
-                    next_food = food
+            if self.update_bite_sequence:
+                # Reading prompts
+                with open('prompts/' + self.bite_sequencing_prompt_file, 'r') as f:
+                    bite_sequencing_prompt = f.read()
+
+                # Extracting bite sequencing history and transfer parameters history
+                bite_sequencing_history = [item[:1] for item in history]
+
+                bite_sequencing_prompt = bite_sequencing_prompt%(
+                    str(items), 
+                    portions_sentence,
+                    str(bite_sequencing_history),
+                    self.bite_preference
+                    )
+                
+                print('=== CALLING FEEDING PLANNER ===')
+                bite_sequencing_response, _ = self.gpt_interface.chat_with_openai(bite_sequencing_prompt)
+                bite_sequencing_response = bite_sequencing_response.strip()
+                next_bites = ast.literal_eval(bite_sequencing_response.split('Next bites as list:')[1].strip())
+
+                print(f'next_bites: {next_bites}')
+
+                food_sequence = []
+                for bite in next_bites:
+                    for food in self.current_motion_params:
+                        if bite == food[0]:
+                            food_sequence.append(food)
+
+                with open(output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
+                    f.write(f"=== BITE SEQUENCING RESPONSE ===\n{bite_sequencing_response}\n")
+                    f.write(f"NEXT FOOD: {food_sequence}\n")
+
+                self.update_bite_sequence = False
 
             if self.debug:
                 print(f"=== BITE SEQUENCING PROMPT ===")
@@ -167,25 +184,15 @@ class PreferencePlanner:
 
             # TODO: Check if the values suggested are out of range. If it is modify the motion parameter list to have the max/min value.
 
-            # # Append responses and parameters to a file
-            with open(output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
-                f.write(f"=== HISTORY ===\n{history}\n")
-                f.write(f"=== CURRENT MOTION PARAMS ===\n{self.current_motion_params}\n")
-                if preference_change:
+            # Append responses and parameters to a file
+            if preference_change:
+                with open(output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
+                    f.write(f"=== HISTORY ===\n{history}\n")
                     f.write(f"=== USER PREFERENCE ===\n{preference}\n")
                     f.write(f"=== BITE PREFERENCE ===\n{self.bite_preference}\n")
                     f.write(f"=== TRANSFER PREFERENCE ===\n{self.transfer_preference}\n")
-                f.write(f"=== BITE SEQUENCING RESPONSE ===\n{bite_sequencing_response}\n")
-                try:
-                    f.write(f"=== TRANSFER PARAMS RESPONSE ===\n{transfer_parameter_response}\n")
-                except:
-                    pass
-                f.write(f"NEXT FOOD: {next_food}\n")
 
-            if next_bite != '':
-                return next_food
-            else:
-                return None
+            return food_sequence
 
         if mode == 'no_decomposer':
             with open('prompts/' + self.no_decomposer_prompt_file, 'r') as f:
