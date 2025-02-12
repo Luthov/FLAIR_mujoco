@@ -58,15 +58,21 @@ Given this information, you will decide the following parameters:
 8) Next, determine the transfer_speed parameter, look for cues like "slower", or "faster", using bite history if needed. If a preference describes a significant change in transfer_speed, you should vary transfer_speed by magnitudes of 2.0. But if it describes a small change, vary transfer_speed by magnitudes of 1.0. Default to 5.0 if no specific preference is stated. ONLY change transfer_speed if my preference says so.
     Things to note when choosing parameter values:
         - Keep the values for the parameters consistent with the values you suggested me in the past in the bite history.
+        - I want you to give your reasoning for all the parameters you suggest. Make sure you take into account the parameters you suggested in the past and include them in your reasoning.
+        - Do not infer from phrases such as, 'to prevent it from spilling'. Only suggest values based on the preference cues that are mentioned above.
 ---
 Format your response as follows, be thorough:
 Previous bite fed: <Sentence describing the latest food item that was fed>
 Food Items Left: <List describing what food items are left on the plate; ensure that this matches with the 'Items remaining' provided at the beginning>
-Next bite reasoning: <Sentence describing the reasoning behind choosing the next bite.>
+Next bite reasoning: <Sentence describing the reasoning behind choosing the next bite>
 Next bite as string: 'item1' # Or ''
+Next bite size reasoning <Sentence describing the reasoning behind choosing the bite size>
 Next bite size as float: <bite size chosen as float. Do NOT write comments here>
+Next distance to mouth reasoning <Sentence describing the reasoning behind choosing the distance to mouth>
 Next distance to mouth as float: <distance to mouth chosen as float. Do NOT write comments here>
+Next exit angle reasoning <Sentence describing the reasoning behind choosing the exit_angle>
 Next exit angle as float: <exit angle chosen as float. Do NOT write comments here>
+Next transfer speed reasoning <Sentence describing the reasoning behind choosing the transfer speed>
 Next transfer speed as float: <transfer speed chosen as float. Do NOT write comments here>
 ---
 Output your response here. Ensure that the last line begins with 'Next transfer speed as float:'.

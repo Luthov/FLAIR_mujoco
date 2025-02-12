@@ -1,7 +1,7 @@
 # from speech_to_text.speech_to_text import get_user_preference
 from preference_planner import PreferencePlanner
 
-from preferences import ethan_interview_preferences, matthew_interview_preferences, hau_wen_interview_preferences, jonathan_interview_preferences, yi_heng_interview_preferences, amirul_interview_preferences, janssen_interview_preferences, ben_interview_preferences, aaradh_interview_preferences, darren_interview_preferences, luke_preferences, interview_food_items # , modified_interview_preferences
+from preferences import ethan_interview_preferences, matthew_interview_preferences, hau_wen_interview_preferences, jonathan_interview_preferences, yi_heng_interview_preferences, amirul_interview_preferences, janssen_interview_preferences, ben_interview_preferences, aaradh_interview_preferences, darren_interview_preferences, luke_preferences, interrupt_preferences, interview_food_items # , modified_interview_preferences
 
 class FeedingBot:
     def __init__(self):
@@ -11,7 +11,7 @@ class FeedingBot:
         print("Feeding Bot initialized\n")
 
         self.execute = False
-        self.preference_interrupt = False
+        self.preference_interrupt = True
         self.exit = False
         self.speech_to_text = False
         self.modified = False
@@ -37,7 +37,7 @@ class FeedingBot:
             print('=== USING NON DECOMPOSER PROMPT ===')
 
         # self.preferences = range(len(ethan_interview_preferences))
-        self.preferences = [6]
+        self.preferences = [0,1]
 
     def clear_plate(self):
 
@@ -66,7 +66,7 @@ class FeedingBot:
 
             interview_preferences = luke_preferences
 
-            self.output_directory = f'feeding_bot_output/{participant}/'
+            self.output_directory = f'feeding_bot_output/{participant}/4_tests/'
         
             for preference_idx in self.preferences: # range(len(icorr_preferences)):
 
@@ -79,18 +79,23 @@ class FeedingBot:
                     if user_preference == "":
                         continue
 
+                previous_user_preference = "None"
+
                 self.items = [interview_food_items[preference_idx]]
                 food_items = self.items[0]
                 
                 if len(food_items) == 3:
                     self.item_portions = [3.0] * len(food_items)
                     actions_remaining = 9
+                    action_interrupt = (actions_remaining < 5)
                 else:
                     self.item_portions = [3.0] * len(food_items)
                     actions_remaining = 12
+                    action_interrupt = (actions_remaining < 7)
 
                 # Bite history
                 bite_history = []
+                previous_bite_history = []
                 # Token history
                 token_history = []
                 
@@ -103,17 +108,22 @@ class FeedingBot:
                     print(f"=== USER PREFERENCE ===")
                     print(user_preference)
 
-                    if self.preference_interrupt:
+                    if self.preference_interrupt & action_interrupt:
+                        previous_bite_history = bite_history
+
                         # Get user preferences
                         print("=== CURRENT USER PREFERENCE ===")
                         print(user_preference)
-                        new_user_preference = input("Do you want to update your preference? Otherwise input [n] or Enter to continue\n")
-                        if new_user_preference not in ['n', '']:
-                            user_preference = new_user_preference
-                            print("=== NEW USER PREFERENCE ===")
-                            print(user_preference)
-                            with open(self.output_directory + f'non_decomposer_output_idx_{preference_idx}.txt', 'a') as f:
-                                f.write(f"=== NEW USER PREFERENCE ===\n{user_preference}\n")
+                        # new_user_preference = input("Do you want to update your preference? Otherwise input [n] or Enter to continue\n")
+                        previous_user_preference = user_preference
+                        user_preference = interrupt_preferences[preference_idx] 
+                        # if new_user_preference not in ['n', '']:
+                        #     user_preference = new_user_preference
+                        print("=== NEW USER PREFERENCE ===")
+                        print(user_preference)
+                        with open(self.output_directory + f'non_decomposer_output_idx_{preference_idx}.txt', 'a') as f:
+                            f.write(f"=== NEW USER PREFERENCE ===\n{user_preference}\n")
+                            f.write(f"=== PREVIOUS BITE HISTORY ===\n{previous_bite_history}\n")
 
                     print("--------------------")
                     print("Labels List:", food_items)
@@ -126,6 +136,8 @@ class FeedingBot:
                         food_items, 
                         food_portion_rounded, 
                         user_preference, 
+                        # previous_user_preference, 
+                        # previous_bite_history, 
                         bite_history,
                         preference_idx,
                         self.mode,
