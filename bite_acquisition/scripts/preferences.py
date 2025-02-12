@@ -126,7 +126,7 @@ luke_preferences = [
 ]
 
 interrupt_preferences = [
-    "",
+    "Can you now give me smaller bites for egg and a higher tilt when feeding me eggs",
 ]
 
 hau_wen_interview_preferences = [

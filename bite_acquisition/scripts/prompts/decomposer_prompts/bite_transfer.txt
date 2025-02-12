@@ -1,7 +1,7 @@
 You are adjusting motion parameters for the food items under 'Items available'.
 Input Details:
 Items available: {%s}
-Previous motion parameters: {%s}. A list containing the available food items and their parameters in the format (<bite>, <bite_size>, <distance_to_mouth>, <exit_angle>, <transfer_speed>).
+Previous motion parameters: {%s}. A list containing the available food items and their parameters you previously suggested in the format, (<bite>, <bite_size>, <distance_to_mouth>, <exit_angle>, <transfer_speed>).
 Preference: {%s}
 
 Given this information, you will decide the following motion parameters:
@@ -11,26 +11,29 @@ Given this information, you will decide the following motion parameters:
 4. transfer_speed: Choose a value between 1.0 (slower) and 10.0 (faster), DEFAULT is 5.0.
 
 Instructions:
-1. Explain your high-level reasoning behind the selected values for each parameter of every food item.
-2. Decide Parameters:
+1. Summarize the values you previously suggested as shown in 'Previous motion parameters'.
+2. Explain your high-level reasoning behind the selected values for each parameter of every food item.
+3. Decide Parameters:
     - To determine the bite size parameter, use cues like "smaller", or "larger", and refer to the values you suggested previously in 'Previous motion parameters'. If my preference describes a significant change in bite_size, you should vary bite_size by magnitudes of 2.0. But if it describes a small change, vary bite_size by magnitudes of 1.0. Default to 5.0 if no specific preference is stated. ONLY change bite_size if my preference says so.
     - To determine the distance_to_mouth parameter, use preference cues like "closer", or "further", and refer to the values you suggested previously in 'Previous motion parameters'. If my preference describes a significant change in distance_to_mouth, you should vary distance_to_mouth by magnitudes of 1.0. But if it describes a small change, vary distance_to_mouth by magnitudes of 0.5. Do NOT use preference cues which correspond to the speed of feeding. Default to 7.5 if no preference applies. ONLY change distance_to_mouth if my preference says so.
     - To determine the exit_angle parameter, look for cues like "higher", "lower", or "tilt", and refer to the values you suggested previously in 'Previous motion parameters'. If my preference describes a significant change in exit_angle, you should vary exit_angle by magnitudes of 10.0. But if it describes a small change, vary exit_angle by magnitudes of 5.0. Default to 90.0 if no preference applies. ONLY change exit_angle if my preference says so.
     - To determine the transfer_speed parameter, look for cues like "slower", or "faster", and refer to the values you suggested previously in 'Previous motion parameters'. If a preference describes a significant change in transfer_speed, you should vary transfer_speed by magnitudes of 2.0. But if it describes a small change, vary transfer_speed by magnitudes of 1.0. Default to 5.0 if no specific preference is stated. ONLY change transfer_speed if my preference says so.
         Additional notes:
-            - If the 'Previous motion parameters' is None, you should only refer to my preference to suggest motion parameters.
+            - If the 'Previous motion parameters' is None, you should only refer to my preference to suggest motion parameters. Otherwise, suggest parameters based on the 'Previous Motion Parameters' while also considering my preferences.
+            - Make sure that the values you suggest do NOT go above or below the parameter's respective ranges. In the case that this happens, suggest the minimum value.
 
 Format Your Response as follows, be thorough and DO NOT add any extra formating:
 <food item 1>
-Next bite size reasoning <Sentence describing the reasoning behind choosing the bite size>
+Summary of the previous parameters suggested: <Sentence stating the parameters you suggested for food item 1>
+Next bite size reasoning: <Sentence describing the reasoning behind choosing the bite size>
 Next bite size as float: <bite size chosen as float. Do NOT write comments here>
-Next distance to mouth reasoning <Sentence describing the reasoning behind choosing the distance to mouth>
+Next distance to mouth reasoning: <Sentence describing the reasoning behind choosing the distance to mouth>
 Next distance to mouth as float: <distance to mouth chosen as float. Do NOT write comments here>
-Next exit angle reasoning <Sentence describing the reasoning behind choosing the exit_angle>
+Next exit angle reasoning: <Sentence describing the reasoning behind choosing the exit_angle>
 Next exit angle as float: <exit angle chosen as float. Do NOT write comments here>
-Next transfer speed reasoning <Sentence describing the reasoning behind choosing the transfer speed>
+Next transfer speed reasoning: <Sentence describing the reasoning behind choosing the transfer speed>
 Next transfer speed as float: <transfer speed chosen as float. Do NOT write comments here>
 
 # Continue until you have given a reason for all the food items in 'Items Available'.
 
-Motion parameters: <A list containing the available food items and their new suggested parameters in the format [(<bite>, <bite_size>, <distance_to_mouth>, <exit_angle>, <transfer_speed>)]>
+Motion parameters: <A list containing the available food items and their new suggested parameters in the format [(<food_item>, <bite_size>, <distance_to_mouth>, <exit_angle>, <transfer_speed>)]. Make sure you enclose food_item with ''>

@@ -1,0 +1,37 @@
+"I want to finish all the broccoli first, then feed me alternating bites of the salmon and the mashed potatoes. Make sure you keep the spoon further from my mouth when feeding me the salmon and keep the bites large for everything.",
+=== BITE PREFERENCE ===
+I want to finish all the broccoli first, then feed me alternating bites of the salmon and the mashed potatoes.  
+=== TRANSFER PREFERENCE ===
+Make sure you keep the spoon further from my mouth when feeding me the salmon and keep the bites large for everything.
+=== TRANSFER PARAMS RESPONSE ===
+mashed potatoes  
+Next bite size reasoning Mashed potatoes should be served in large bites as per preference.  
+Next bite size as float: 7.0  
+Next distance to mouth reasoning No specific distance preference for mashed potatoes, so default distance is used.  
+Next distance to mouth as float: 7.5  
+Next exit angle reasoning No preference given on exit angle, so default angle is used.  
+Next exit angle as float: 90.0  
+Next transfer speed reasoning No preference for speed, so it defaults to the middle range.  
+Next transfer speed as float: 5.0  
+
+salmon  
+Next bite size reasoning Salmon should be served in large bites as per preference.  
+Next bite size as float: 7.0  
+Next distance to mouth reasoning Preference states to keep the spoon further away when feeding salmon, so the distance is increased significantly.  
+Next distance to mouth as float: 8.5  
+Next exit angle reasoning No preference given on exit angle, so default angle is used.  
+Next exit angle as float: 90.0  
+Next transfer speed reasoning No preference for speed, so it defaults to the middle range.  
+Next transfer speed as float: 5.0  
+
+broccoli  
+Next bite size reasoning Broccoli should be served in large bites as per preference.  
+Next bite size as float: 7.0  
+Next distance to mouth reasoning No specific distance preference for broccoli, so default distance is used.  
+Next distance to mouth as float: 7.5  
+Next exit angle reasoning No preference given on exit angle, so default angle is used.  
+Next exit angle as float: 90.0  
+Next transfer speed reasoning No preference for speed, so it defaults to the middle range.  
+Next transfer speed as float: 5.0  
+
+Motion parameters: [('mashed potatoes', 7.0, 7.5, 90.0, 5.0), ('salmon', 7.0, 8.5, 90.0, 5.0), ('broccoli', 7.0, 7.5, 90.0, 5.0)]

@@ -24,7 +24,7 @@ class FeedingBot:
         self.participant_list = ['luke']
 
         # Choose to use decomposer or not
-        self.mode = 'no_decomposer'
+        self.mode = 'decomposer'
         # self.mode = 'decomposer'
         self.decomposer_output_directory = 'feeding_bot_output/interview_outputs/prompt_improvements/decomposer_outputs/'
         self.no_decomposer_output_directory = 'feeding_bot_output/interview_outputs/prompt_improvements/'
@@ -37,7 +37,7 @@ class FeedingBot:
             print('=== USING NON DECOMPOSER PROMPT ===')
 
         # self.preferences = range(len(ethan_interview_preferences))
-        self.preferences = [0,1]
+        self.preferences = [0]
 
     def clear_plate(self):
 
@@ -66,7 +66,7 @@ class FeedingBot:
 
             interview_preferences = luke_preferences
 
-            self.output_directory = f'feeding_bot_output/{participant}/4_tests/'
+            self.output_directory = f'feeding_bot_output/{participant}/interrupt_testing/'
         
             for preference_idx in self.preferences: # range(len(icorr_preferences)):
 
@@ -79,25 +79,24 @@ class FeedingBot:
                     if user_preference == "":
                         continue
 
-                previous_user_preference = "None"
-
                 self.items = [interview_food_items[preference_idx]]
                 food_items = self.items[0]
                 
                 if len(food_items) == 3:
                     self.item_portions = [3.0] * len(food_items)
                     actions_remaining = 9
-                    action_interrupt = (actions_remaining < 5)
+                    # action_interrupt = (actions_remaining < 5)
                 else:
                     self.item_portions = [3.0] * len(food_items)
                     actions_remaining = 12
-                    action_interrupt = (actions_remaining < 7)
 
                 # Bite history
                 bite_history = []
-                previous_bite_history = []
                 # Token history
                 token_history = []
+
+                preference_change = True
+                not_changed = True
                 
                 while actions_remaining:
 
@@ -108,41 +107,49 @@ class FeedingBot:
                     print(f"=== USER PREFERENCE ===")
                     print(user_preference)
 
-                    if self.preference_interrupt & action_interrupt:
-                        previous_bite_history = bite_history
+                    action_interrupt = (actions_remaining < 6)
 
+                    if self.preference_interrupt & action_interrupt & not_changed:
                         # Get user preferences
                         print("=== CURRENT USER PREFERENCE ===")
                         print(user_preference)
                         # new_user_preference = input("Do you want to update your preference? Otherwise input [n] or Enter to continue\n")
-                        previous_user_preference = user_preference
                         user_preference = interrupt_preferences[preference_idx] 
                         # if new_user_preference not in ['n', '']:
                         #     user_preference = new_user_preference
                         print("=== NEW USER PREFERENCE ===")
                         print(user_preference)
+
+                        preference_change = True
+                        not_changed = False
                         with open(self.output_directory + f'non_decomposer_output_idx_{preference_idx}.txt', 'a') as f:
                             f.write(f"=== NEW USER PREFERENCE ===\n{user_preference}\n")
-                            f.write(f"=== PREVIOUS BITE HISTORY ===\n{previous_bite_history}\n")
 
                     print("--------------------")
                     print("Labels List:", food_items)
                     print("Per Food Portions:", self.item_portions)
-                    print("--------------------\n")
+                    print("--------------------")
                     
                     food_portion_rounded = [round(portion) for portion in self.item_portions]
 
-                    next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed, token_data = self.preference_planner.plan(
+                    next_food = self.preference_planner.plan(
                         food_items, 
                         food_portion_rounded, 
                         user_preference, 
-                        # previous_user_preference, 
-                        # previous_bite_history, 
                         bite_history,
+                        preference_change,
                         preference_idx,
                         self.mode,
                         self.output_directory
                         )
+                    
+                    if next_food != None:
+                        bite_history.append(next_food)
+                    else:
+                        print("PLANNER DIDN'T SUGGEST A FOOD")
+                    
+                    next_bite = next_food[0]
+                    preference_change = False
 
                     if next_bite == 'salon':
                         next_bite = 'salmon'
@@ -155,15 +162,10 @@ class FeedingBot:
                             self.item_portions[idx] = round(self.item_portions[idx], 2)
                             break
 
-                    if next_bite != '':
-                        bite_history.append([next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed])
-                    else:
-                        print("PLANNER DIDN'T SUGGEST A FOOD")
-
                     print('=== HISTORY ===')
                     print(bite_history)
 
-                    if actions_remaining == 0 or (next_bite == ''):
+                    if actions_remaining == 0 or (next_food == None):
                         with open(self.output_directory + f'histories_idx_{preference_idx}.txt', 'a') as f:
                             f.write(f"=== FINAL HISTORY ===\n{bite_history}\n")
                             # f.write(f"=== FINAL TOKEN HISTORY ===\n{token_history}\n")

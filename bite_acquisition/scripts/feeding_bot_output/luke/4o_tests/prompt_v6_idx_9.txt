@@ -1,0 +1,126 @@
+=== HISTORY ===
+[]
+=== RESPONSE ===
+Previous bite fed: No bites have been fed yet as the bite history is empty.
+Food Items Left: [('rice', 3), ('chicken', 3), ('mixed vegetables', 3)]
+Next bite reasoning: You prefer alternating between rice and chicken without eating any vegetables, and since no bites have been taken yet, we will start with rice.
+Next bite as string: 'rice'
+Next bite size as float: 3.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 80.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 3.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 80.0
+PORTION SIZES: [3, 3, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 3.0, 7.5, 80.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was rice.
+Food Items Left: [('rice', 2), ('chicken', 3), ('mixed vegetables', 3)]
+Next bite reasoning: Based on your preference, you want to alternate between rice and chicken, avoiding mixed vegetables. The last fed item was rice, so the next bite should be chicken.
+Next bite as string: 'chicken'
+Next bite size as float: 2.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 80.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 2.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 80.0
+PORTION SIZES: [2, 3, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 3.0, 7.5, 80.0, 5.0], ['chicken', 2.0, 7.5, 80.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: Chicken was the latest food item that was fed.
+Food Items Left: [('rice', 2), ('chicken', 2), ('mixed vegetables', 3)]
+Next bite reasoning: Since the preference is to alternate between rice and chicken and the latest bite was chicken, the next bite will be rice.
+Next bite as string: 'rice'
+Next bite size as float: 2.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 80.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 2.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 80.0
+PORTION SIZES: [2, 2, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 3.0, 7.5, 80.0, 5.0], ['chicken', 2.0, 7.5, 80.0, 5.0], ['rice', 2.0, 7.5, 80.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was 'rice'.
+Food Items Left: [('rice', 1), ('chicken', 2), ('mixed vegetables', 3)]
+Next bite reasoning: Based on the preference to alternate between rice and chicken and given rice was the latest bite fed, the next bite should be chicken. We are avoiding vegetables as per your preference, and since rice has a portion remaining, we can alternate between rice and chicken.
+Next bite as string: 'chicken'
+Next bite size as float: 3.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 80.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 3.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 80.0
+PORTION SIZES: [1, 2, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 3.0, 7.5, 80.0, 5.0], ['chicken', 2.0, 7.5, 80.0, 5.0], ['rice', 2.0, 7.5, 80.0, 5.0], ['chicken', 3.0, 7.5, 80.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was chicken.
+Food Items Left: [('rice', 1), ('chicken', 1), ('mixed vegetables', 3)]
+Next bite reasoning: Since the last item fed was chicken and the preference is to alternate between rice and chicken, the next bite will be rice, and no mixed vegetables will be fed per preference.
+Next bite as string: 'rice'
+Next bite size as float: 2.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 80.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: rice
+BITE SIZE: 2.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 80.0
+PORTION SIZES: [1, 1, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 3.0, 7.5, 80.0, 5.0], ['chicken', 2.0, 7.5, 80.0, 5.0], ['rice', 2.0, 7.5, 80.0, 5.0], ['chicken', 3.0, 7.5, 80.0, 5.0], ['rice', 2.0, 7.5, 80.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was 'rice'.
+Food Items Left: [('rice', 0), ('chicken', 1), ('mixed vegetables', 3)]
+Next bite reasoning: Since you want to alternate between rice and chicken and the latest bite was rice, the next bite should be chicken. However, since rice is finished, we will stop alternating and focus on the remaining chicken.
+Next bite as string: 'chicken'
+Next bite size as float: 4.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 80.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: chicken
+BITE SIZE: 4.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 80.0
+PORTION SIZES: [0, 1, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['rice', 3.0, 7.5, 80.0, 5.0], ['chicken', 2.0, 7.5, 80.0, 5.0], ['rice', 2.0, 7.5, 80.0, 5.0], ['chicken', 3.0, 7.5, 80.0, 5.0], ['rice', 2.0, 7.5, 80.0, 5.0], ['chicken', 4.0, 7.5, 80.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was chicken.
+Food Items Left: [('rice', 0), ('chicken', 0), ('mixed vegetables', 3)]
+Next bite reasoning: The preference is to alternate between rice and chicken, but since both rice and chicken are finished, and you do not want to eat any of the mixed vegetables, there is no sensible option to choose.
+Next bite as string: ''
+Next bite size as float: 3.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 80.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: 
+BITE SIZE: 3.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 80.0
+PORTION SIZES: [0, 0, 3]
+TRANSFER SPEED: 5.0

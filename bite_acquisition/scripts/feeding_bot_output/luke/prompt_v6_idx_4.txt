@@ -215,3 +215,417 @@ DISTANCE TO MOUTH: 10.0
 EXIT ANGLE: 90.0
 PORTION SIZES: [0, 1, 0, 0]
 TRANSFER SPEED: 10.0
+=== HISTORY ===
+[]
+=== RESPONSE ===
+Previous bite fed: No bites have been fed yet.  
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 3), ('carrots', 3)]  
+Next bite reasoning: Since there have been no previous bites and my preference dictates that I should consume all the carrots first, I will choose to feed you a carrot as the next bite.  
+Next bite as string: 'carrots'  
+Next bite size as float: 5.0  
+Next distance to mouth as float: 7.5  
+Next exit angle as float: 90.0  
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 3, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[]
+=== RESPONSE ===
+Previous bite fed: No bites have been taken yet.
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 3), ('carrots', 3)]
+Next bite reasoning: With my preference to feed all the carrots first, followed by the green beans, then the mashed potatoes, and lastly the steak, I will start with the carrots as they are the first item on the list and there are still 3 portions remaining.
+Next bite as string: 'carrots'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 3, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The last food item that was fed was carrots.
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 3), ('carrots', 2)]
+Next bite reasoning: I will continue feeding you carrots since they are preferred first and there are still portions remaining.
+Next bite as string: 'carrots'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 3, 2]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The last food item fed was carrots.
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 3), ('carrots', 1)]
+Next bite reasoning: Since I need to feed you all the carrots before moving on to the other items, I will select the last remaining carrot for the next bite.
+Next bite as string: 'carrots' 
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 3, 1]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The last food item that was fed was carrots.
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 3), ('carrots', 0)]
+Next bite reasoning: Since my preference is to feed all the carrots first and there are no carrots remaining, I will move to the next item on the list, which is green beans.
+Next bite as string: 'green beans'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: green beans
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 3, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The last food item that was fed was carrots.  
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 2), ('carrots', 0)]  
+Next bite reasoning: Since I have finished the carrots and my preference dictates to feed all the food items in the sequence of carrots first, then green beans, and lastly the mashed potatoes and steak, the next logical bite should be from the green beans.  
+Next bite as string: 'green beans'  
+Next bite size as float: 5.0  
+Next distance to mouth as float: 7.5  
+Next exit angle as float: 90.0  
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: green beans
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 2, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was 'green beans'.  
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 1), ('carrots', 0)]  
+Next bite reasoning: Since all the carrots have been finished, I will now focus on the next item on the preference list, which is the green beans.  
+Next bite as string: 'green beans'  
+Next bite size as float: 5.0  
+Next distance to mouth as float: 7.5  
+Next exit angle as float: 90.0  
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: green beans
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 1, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was green beans.
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 0), ('carrots', 0)]
+Next bite reasoning: According to the preference, all carrots need to be eaten first; however, there are no carrots left to feed. The next logical step is to feed green beans next since they're the next item after carrots in my preference.
+Next bite as string: 'steak'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: steak
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 0, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['steak', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The last food item that was fed was steak.  
+Food Items Left: [('mashed potatoes', 3), ('steak', 2), ('green beans', 0), ('carrots', 0)]  
+Next bite reasoning: Since my preference is to feed all the carrots first and I have already finished all the carrots, the next logical choice is the green beans, which have been consistently requested after the carrots.  
+Next bite as string: 'green beans'  
+Next bite size as float: 5.0  
+Next distance to mouth as float: 7.5  
+Next exit angle as float: 90.0  
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: green beans
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 2, 0, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['steak', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The last food item that was fed was green beans.  
+Food Items Left: [('mashed potatoes', 3), ('steak', 2), ('green beans', 0), ('carrots', 3)]  
+Next bite reasoning: Since the last bite was green beans and there's still a preference to feed all the carrots first, the next bite will be a carrot.  
+Next bite as string: 'carrots'  
+Next bite size as float: 5.0  
+Next distance to mouth as float: 7.5  
+Next exit angle as float: 90.0  
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 2, -1, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['steak', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The last food item that was fed was 'carrots'.  
+Food Items Left: [('mashed potatoes', 3), ('steak', 2), ('green beans', 0)]  
+Next bite reasoning: Since carrots have been requested to be fed first according to your preference, and multiple portions of carrots have been consumed in the previous bites, I will serve the remaining carrots before moving on to the green beans.  
+Next bite as string: ''  
+Next bite size as float: 5.0  
+Next distance to mouth as float: 7.5  
+Next exit angle as float: 90.0  
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: 
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 2, -1, -1]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[]
+=== RESPONSE ===
+Previous bite fed: No bite has been fed yet as the Bite History is empty.
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 3), ('carrots', 3)]
+Next bite reasoning: Based on your preference, carrots should be fed first; since there is no alternating criteria specified, all carrots will be fed before moving to the next preferred item.
+Next bite as string: 'carrots'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 3, 3]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was carrots.
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 3), ('carrots', 2)]
+Next bite reasoning: According to your preference, you want to be fed all the carrots first, then the green beans, followed by the mashed potatoes and lastly the steak. Since the last bite was carrots and there are still portions of carrots remaining, the next bite should also be carrots.
+Next bite as string: 'carrots'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 3, 2]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was 'carrots'.
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 3), ('carrots', 1)]
+Next bite reasoning: Based on the preference to feed all the carrots first before moving to other items, the next bite should be the remaining carrot portion.
+Next bite as string: 'carrots'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: carrots
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 3, 1]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was 'carrots'.
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 3), ('carrots', 0)]
+Next bite reasoning: Since the preference indicates feeding all the carrots first and there are no portions of carrots remaining, I will move to the next preferred item on the list, which is green beans.
+Next bite as string: 'green beans'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: green beans
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 3, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was 'green beans'.
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 2), ('carrots', 0)]
+Next bite reasoning: According to the preference of feeding all the carrots first, then the green beans, then the mashed potatoes, and lastly the steak, carrots have already been finished. Therefore, the next item to feed is 'green beans', as it is the next in preference and there are still portions remaining.
+Next bite as string: 'green beans'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: green beans
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 2, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was green beans.
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 1), ('carrots', 0)]
+Next bite reasoning: According to your preference to finish all the carrots first and then the green beans, I will continue feeding you the remaining green beans since the carrots are already finished.
+Next bite as string: 'green beans'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: green beans
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 1, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was green beans.
+Food Items Left: [('mashed potatoes', 3), ('steak', 3), ('green beans', 0), ('carrots', 0)]
+Next bite reasoning: Since all the carrots and green beans have been fed, and based on your stated preference to be fed all the carrots first, then the green beans, followed by mashed potatoes and lastly steak, the next item to be fed will be mashed potatoes as it is the next in line in order of preference.
+Next bite as string: 'mashed potatoes'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: mashed potatoes
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [3, 3, 0, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was mashed potatoes.  
+Food Items Left: [('mashed potatoes', 2), ('steak', 3), ('green beans', 0), ('carrots', 0)]  
+Next bite reasoning: Based on my preference, all the carrots and green beans have been finished, leaving only mashed potatoes and steak. I should continue with the mashed potatoes since they are next in preference and have portions remaining.  
+Next bite as string: 'mashed potatoes'  
+Next bite size as float: 5.0  
+Next distance to mouth as float: 7.5  
+Next exit angle as float: 90.0  
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: mashed potatoes
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [2, 3, 0, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest bite fed was mashed potatoes.
+Food Items Left: [('mashed potatoes', 1), ('steak', 3), ('green beans', 0), ('carrots', 0)]
+Next bite reasoning: According to your preference, all the carrots and green beans are done; so, the next food preference is mashed potatoes.
+Next bite as string: 'mashed potatoes'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: mashed potatoes
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [1, 3, 0, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was 'mashed potatoes'.
+Food Items Left: [('mashed potatoes', 0), ('steak', 3), ('green beans', 0), ('carrots', 0)]
+Next bite reasoning: Since all carrots, green beans, and mashed potatoes have been finished, and the preference is to feed steak last, the next bite will be a piece of steak, as it is the only item left.
+Next bite as string: 'steak'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: steak
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 3, 0, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['steak', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was 'steak'.
+Food Items Left: [('mashed potatoes', 0), ('steak', 2), ('green beans', 0), ('carrots', 0)]
+Next bite reasoning: Based on the preference to feed all the carrots first, followed by green beans, mashed potatoes, and lastly the steak, and considering that only steak is remaining on the plate, the next bite will be steak.
+Next bite as string: 'steak'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: steak
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 2, 0, 0]
+TRANSFER SPEED: 5.0
+=== HISTORY ===
+[['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['carrots', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['green beans', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['mashed potatoes', 5.0, 7.5, 90.0, 5.0], ['steak', 5.0, 7.5, 90.0, 5.0], ['steak', 5.0, 7.5, 90.0, 5.0]]
+=== RESPONSE ===
+Previous bite fed: The latest food item that was fed was 'steak'.
+Food Items Left: [('mashed potatoes', 0), ('steak', 1), ('green beans', 0), ('carrots', 0)]
+Next bite reasoning: Based on your preference to have all the carrots first, then the green beans, then the mashed potatoes, and lastly the steak, and given that the only remaining item is 'steak', I will select 'steak' as the next item to feed.
+Next bite as string: 'steak'
+Next bite size as float: 5.0
+Next distance to mouth as float: 7.5
+Next exit angle as float: 90.0
+Next transfer speed as float: 5.0
+=== PARAMETERS ===
+NEXT BITE: steak
+BITE SIZE: 5.0
+DISTANCE TO MOUTH: 7.5
+EXIT ANGLE: 90.0
+PORTION SIZES: [0, 1, 0, 0]
+TRANSFER SPEED: 5.0

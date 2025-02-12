@@ -1,13 +1,22 @@
 You are analyzing a user preference statement in a robot-assisted feeding pipeline. The user may describe preferences for:
 
-Bite Acquisition: The order of foods, bite sizes, the speed at which to acquire food (e.g., "scoop the oatmeal slowly"), or specific patterns of eating (e.g., "alternate bites of rice and chicken", "I only want rice and vegetables").
-Bite Transfer: How the spoon approaches or leaves the user's mouth (e.g., "tilt the spoon higher for rice") as well as the speed of the process (e.g., "move the spoon a little slower when feeding me")
+Feeding Sequence: The order of foods, or specific patterns of eating (e.g., "alternate bites of rice and chicken", "I only want rice and vegetables").
+Motion Parameters: There are four motion parameters the user may have a preference for:
+    - Bite size - How much food to pick up (eg., "give me bigger bites for the chicken)
+    - Distance to mouth - The distance of the spoon to the user's mouth during bite transfer (eg., "make sure to keep the spoon further when feeding me mashed potatoes")
+    - Exit angle - How the spoon leaves the user's mouth (e.g., "tilt the spoon higher for rice")
+    - Transfer speed - The speed at which to feed the user food (e.g., "feed me slower for the carrots").
+
 User preference: {%s}
 
-Decide if the preference relates to bite sequence, bite transfer, or both. Then, extract and summarize the detected preferences into two sentences. Output "None" if no preference is provided
+Decide if the preference relates to feeding sequence, motion parameters, or both. Then, extract and summarize the detected preferences into two sentences. 
+Additional notes:
+    - ALWAYS give your answers as if you are me, speaking in the first person. 
+    - Try your absolute best to follow the wording that was used in the user preference.
+    - Output "None" if no preference is provided
 
-Format your response:
-Bite acquisition preference: <Extracted preference>
-Bite transfer preference: <Extracted preference>
+Format your response as follows:
+Feeding sequence preference: <Extracted preference>
+Motion parameters preference: <Extracted preference>
 
 

@@ -1,0 +1,47 @@
+"Feed me all the carrots first, then the green beans and feed me fast for these two foods. Then I want alternating bites of mashed potatoes and steak. I want bigger bites of steak and mashed potatoes. Also keep the spoon a little further from my mouth when feeding me steak.",
+=== BITE PREFERENCE ===
+Feed me all the carrots first, then the green beans. After that, I want alternating bites of mashed potatoes and steak.
+=== TRANSFER PREFERENCE ===
+Feed me fast for the carrots and green beans. I want bigger bites of steak and mashed potatoes, and keep the spoon a little further from my mouth when feeding me steak.
+=== TRANSFER PARAMS RESPONSE ===
+mashed potatoes  
+Next bite size reasoning Since you want bigger bites of mashed potatoes, we should increase the bite size significantly from the default.  
+Next bite size as float: 7.0  
+Next distance to mouth reasoning There is no preference for the distance so it remains at the default.  
+Next distance to mouth as float: 7.5  
+Next exit angle reasoning There is no preference regarding exit angle so it should remain at the default.  
+Next exit angle as float: 90.0  
+Next transfer speed reasoning There is no preference for the speed of transfer for mashed potatoes, so it remains at the default.  
+Next transfer speed as float: 5.0  
+
+steak  
+Next bite size reasoning You prefer larger bites of steak, so we are increasing the bite size significantly from the default.  
+Next bite size as float: 7.0  
+Next distance to mouth reasoning You want the spoon a little further from your mouth when feeding steak, so increase the distance slightly.  
+Next distance to mouth as float: 8.0  
+Next exit angle reasoning There is no preference regarding exit angle so it should remain at the default.  
+Next exit angle as float: 90.0  
+Next transfer speed reasoning There is no preference for the speed of transfer for steak, so it remains at the default.  
+Next transfer speed as float: 5.0  
+
+green beans  
+Next bite size reasoning There is no preference for the size of bites for green beans, so it remains at the default.  
+Next bite size as float: 5.0  
+Next distance to mouth reasoning There is no preference for the distance for green beans, so keep it at the default.  
+Next distance to mouth as float: 7.5  
+Next exit angle reasoning There is no preference regarding exit angle so it should remain at the default.  
+Next exit angle as float: 90.0  
+Next transfer speed reasoning You prefer to be fed faster for green beans, which dictates a significant increase from the default speed.  
+Next transfer speed as float: 7.0  
+
+carrots  
+Next bite size reasoning There is no preference for the size of bites for carrots, so it remains at the default.  
+Next bite size as float: 5.0  
+Next distance to mouth reasoning There is no preference for the distance for carrots, so it stays at the default.  
+Next distance to mouth as float: 7.5  
+Next exit angle reasoning There is no preference regarding exit angle so it should remain at the default.  
+Next exit angle as float: 90.0  
+Next transfer speed reasoning You prefer to be fed faster for carrots, which dictates a significant increase from the default speed.  
+Next transfer speed as float: 7.0  
+
+Motion parameters: [('mashed potatoes', 7.0, 7.5, 90.0, 5.0), ('steak', 7.0, 8.0, 90.0, 5.0), ('green beans', 5.0, 7.5, 90.0, 7.0), ('carrots', 5.0, 7.5, 90.0, 7.0)]
