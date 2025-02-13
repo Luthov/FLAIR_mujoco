@@ -3,6 +3,7 @@ import ast
 import rospy
 
 from std_msgs.msg import String
+from feeding_msgs.msg import FoodItem
 from feeding_msgs.srv import GetFeedingParam, GetFeedingParamResponse
 
 from preference_planner import PreferencePlanner
@@ -10,11 +11,12 @@ from preference_planner import PreferencePlanner
 class PreferenceServer():
     def __init__(self):
         
-        self.user_preference = None
-        self.available_food_items = ['chicken', 'rice', 'broccoli']
-        self.available_food_items_portions = [2, 2, 2]
+        self.user_preference = "Please feed me all the green beans first. Then I want you to alternate between the foods in the order of rice, then fish, then egg. Give me smaller bites for rice and feed me slower for the fish to give me more time to chew."
+        self.available_food_items = ["rice", "fish", "egg", "green beans"]
+        self.available_food_items_portions = [3, 3, 3, 3]
         self.history = []
-        self.mode = 'no_decomposer'
+        self.preference_change = True
+        self.mode = 'decomposer'
         self.output_directory = '/home/luthov/school/fyp/feeding_ws/src/feeding/task_planner/FLAIR_mujoco/bite_acquisition/scripts/feeding_bot_output/real_arm_testing/'
 
         self.preference_planner = PreferencePlanner()
@@ -30,15 +32,18 @@ class PreferenceServer():
 
         # TODO: Need to do something about this such that it won't rerun when I call it again
 
-        self.next_bite, self.bite_size, self.distance_to_mouth, self.exit_angle, self.transfer_speed, _ = self.preference_planner.plan(
+        self.feeding_sequence = self.preference_planner.plan(
             self.available_food_items, 
             self.available_food_items_portions, 
             self.user_preference, 
             self.history,
+            self.preference_change,
             0,
             self.mode,
             self.output_directory
             )
+        
+        self.preference_change = False
         
     def user_preference_cb(self, msg):
         """
@@ -46,6 +51,8 @@ class PreferenceServer():
         """
         self.user_preference = msg.data
         rospy.loginfo(f"Obtained user preference")
+
+        self.preference_change = True
 
         # Get updated feeding parameters
         rospy.loginfo("Calling planner")
@@ -64,21 +71,14 @@ class PreferenceServer():
         else:
             current_history = request.current_history # This should give me the current history after the robot fed. and the other updated variables
             current_history = ast.literal_eval(current_history)
+
             self.available_food_items_portions = request.food_item_portions
-            # if current_history != self.history:
-            #     rospy.logerr(f"Current history: {current_history}")
-            #     rospy.logerr(f"self.history: {self.history}")
-            #     rospy.logwarn("History has changed. Updating feeding parameters...")
             self.history = current_history
+
             self.update_feeding_parameters()
 
             response = GetFeedingParamResponse()
-            response.next_bite = self.next_bite
-            response.bite_size = self.bite_size
-            response.distance_to_mouth = self.distance_to_mouth
-            response.exit_angle = self.exit_angle
-            response.transfer_speed = self.transfer_speed
-            response.user_preference = self.user_preference
+            response.feeding_sequence = [FoodItem(food_item, bite_size, distance_to_mouth, exit_angle, transfer_speed) for food_item, bite_size, distance_to_mouth, exit_angle, transfer_speed in self.feeding_sequence]
 
         return response
     

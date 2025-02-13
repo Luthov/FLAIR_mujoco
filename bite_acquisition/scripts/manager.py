@@ -7,6 +7,7 @@ import rospy
 import actionlib
 
 from geometry_msgs.msg import PoseStamped
+from std_msgs.msg import String
 from feeding_msgs.srv import GetFeedingParam, GetFeedingParamRequest
 from feeding_msgs.srv import GetScoopingPoint, GetScoopingPointRequest
 from feeding_msgs.msg import ScoopAction, ScoopGoal
@@ -33,15 +34,17 @@ class FeedingManager():
         self.items = ['chicken', 'rice', 'broccoli']
 
         if len(self.items) == 3:
-            self.item_portions = [2.0] * len(self.items)
+            self.item_portions = [3.0] * len(self.items)
             self.actions_remaining = 9
         else:
-            self.item_portions = [2.0] * len(self.items)
+            self.item_portions = [3.0] * len(self.items)
             self.actions_remaining = 12
 
-        self.bite_portion = 0.6
+        self.bite_portion = 1.0
         self.bite_history = []
         self.token_history = []
+
+        self.start_feeding = True
 
         # TODO: Need to convert these to cart coordinates
         self.acq_pose = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
@@ -54,6 +57,8 @@ class FeedingManager():
         self.arm.set_mode(0)
         self.arm.set_state(0)
         self.margin_of_error = 10  # Define a margin of error
+
+        self.sub_user_preference = rospy.Subscriber("user_preference", String, self.user_preference_cb)
 
         # Service clients
         self.get_scooping_points_client = rospy.ServiceProxy('food_perception/get_scooping_point', GetScoopingPoint)
@@ -103,6 +108,26 @@ class FeedingManager():
         yaw = np.arctan2(t3, t4)
 
         return [roll, pitch, yaw]   # in radians
+    
+    def arrange_food_items(self, items):
+        # Convert ROS message list to tuples for easier manipulation
+        food_tuples = [(item.food_item, item.bite_size, item.distance_to_mouth, item.exit_angle, item.transfer_speed) for item in items]
+
+        # Define desired arrangement pattern
+        grouped_items = {}
+        for food in food_tuples:
+            if food[0] not in grouped_items:
+                grouped_items[food[0]] = []
+            grouped_items[food[0]].append(food)
+        
+        # Arrange items in the specified order
+        ordered_list = []
+        while any(grouped_items.values()):
+            for food in ['green beans', 'rice', 'fish', 'egg']:
+                if food in grouped_items and grouped_items[food]:
+                    ordered_list.append(grouped_items[food].pop(0))
+
+        return ordered_list
                          
     def move_to_pose(self, pose, wait=True):   
         """
@@ -141,6 +166,13 @@ class FeedingManager():
         self.arm.set_state(state=0)
         self.arm.set_position(x=800, y=-86.3, z=457.1, roll=2.852, pitch=-1.297, yaw=0.208, speed=10, radius=0, wait=True)
         print("Moved to start position")
+
+    def user_preference_cb(self, msg):
+        """
+        Callback function for user preference
+        """
+        self.preference_change = True
+        print('[Manager Node]: Preference has been changed')
 
     def execute_scooping(self, scoop_point, bowl_bbox, target_amount, get_scooping_point=False):
         """
@@ -185,7 +217,6 @@ class FeedingManager():
         """
         rospy.loginfo(f"Feedback received: {feedback.message}")
 
-    # TODO: Need to ask ethan to add distance_to_mouth and other transfer params
     def execute_bite_transfer(self, distance_to_mouth, exit_angle, transfer_speed):
         rospy.loginfo("Calling bite_transfer action server...")
         goal = BiteTransferActionGoal()
@@ -203,22 +234,11 @@ class FeedingManager():
         req_feeding_params.food_item_portions = food_item_portions
         resp_feeding_params = self.get_feeding_params_client(req_feeding_params)
 
-        next_bite = resp_feeding_params.next_bite
-        bite_size = resp_feeding_params.bite_size
-        distance_to_mouth = resp_feeding_params.distance_to_mouth
-        exit_angle = resp_feeding_params.exit_angle
-        transfer_speed = resp_feeding_params.transfer_speed
-        user_preference = resp_feeding_params.user_preference
-        rospy.loginfo("=== FEEDING PARAMETERS ===")
-        rospy.loginfo(f"Next bite: {next_bite}")
-        rospy.loginfo(f"Bite size: {bite_size}")
-        rospy.loginfo(f"Distance to mouth: {distance_to_mouth}")
-        rospy.loginfo(f"Exit angle: {exit_angle}")
-        rospy.loginfo(f"Transfer speed: {transfer_speed}")
-        rospy.loginfo(f"User preference: {user_preference}")
-        # rospy.logwarn(f"HISTORY: {self.bite_history}")
+        feeding_sequence = self.arrange_food_items(resp_feeding_params.feeding_sequence)
+        rospy.loginfo("=== FEEDING SEQUENCE ===")
+        rospy.logwarn(feeding_sequence)
 
-        return next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed, user_preference
+        return feeding_sequence
 
     def get_scooping_points(self):
         rospy.loginfo("Getting scooping points")
@@ -232,6 +252,8 @@ class FeedingManager():
         
         input("If you haven't already. give a user preference using the mic. Then press ENTER to continue")
 
+        sequence_idx = 0
+
         while self.actions_remaining:
 
             print(f"=== ACTIONS REMAINING ===")
@@ -243,19 +265,28 @@ class FeedingManager():
             input("Press Enter to move to perception pose...")
             self.move_to_perception_pose()
 
-            print("--------------------")
-            print("Labels List:", self.items)
-            print("Per Food Portions:", self.item_portions)
-            print("--------------------\n")
-
             food_portion_rounded = [round(portion) for portion in self.item_portions]
-            
-            next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed, user_preference = self.get_feeding_params(
-                self.bite_history, 
-                food_portion_rounded)
 
-            if next_bite == '':
-                break
+            # when get feeding params
+            # - preference change
+            # - start of feeding
+            
+            if self.start_feeding or self.preference_change:
+
+                feeding_sequence = self.get_feeding_params(
+                    self.bite_history, 
+                    food_portion_rounded
+                )
+
+                self.start_feeding = False
+                self.preference_change = False
+
+            next_food = feeding_sequence[sequence_idx]
+            next_bite = next_food[0]
+            bite_size = next_food[1]
+            distance_to_mouth = next_food[2]
+            exit_angle = next_food[3]
+            transfer_speed = next_food[4]
             
             input("Press ENTER to get scooping points")
             scooping_points, bounding_boxes = self.get_scooping_points() # Sorted in order of left to right
@@ -303,13 +334,14 @@ class FeedingManager():
 
             if transfer_success:
                 self.actions_remaining -= 1
+                sequence_idx += 1
             else:
                 rospy.logwarn("Transfer failed. Moving to reset pose...")
                 self.reset()
                 continue
 
             # Maybe want to publish history so that pref server can sub and update history
-            self.bite_history.append([next_bite, bite_size, distance_to_mouth, exit_angle, transfer_speed])
+            self.bite_history.append(next_food)
 
             # if (self.actions_remaining == 0) or (next_bite is []):
             #     with open(self.output_directory + f'results.txt', 'a') as f:

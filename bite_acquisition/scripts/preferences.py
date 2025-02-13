@@ -126,7 +126,7 @@ luke_preferences = [
 ]
 
 interrupt_preferences = [
-    "Can you now give me smaller bites for egg and a higher tilt when feeding me eggs",
+    "Can you now feed me all the rice, then the fish, then the egg, and give me smaller bites for egg and a higher tilt when feeding me eggs"
 ]
 
 hau_wen_interview_preferences = [

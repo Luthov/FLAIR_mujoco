@@ -127,11 +127,6 @@ class FeedingBot:
                         with open(self.output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
                             f.write(f"=== NEW USER PREFERENCE ===\n{user_preference}\n")
 
-                    print("--------------------")
-                    print("Labels List:", food_items)
-                    print("Per Food Portions:", self.item_portions)
-                    print("--------------------")
-
                     food_portion_rounded = [round(portion) for portion in self.item_portions]
 
                     if start or preference_change:
@@ -145,12 +140,14 @@ class FeedingBot:
                             self.mode,
                             self.output_directory
                         )
+
+                        print('=== FEEDING SEQUENCE ===')
+                        print(feeding_sequence)
                         start = False
+                        preference_change = False
                     
                     next_bite = feeding_sequence[sequence_idx]
                     next_food_item = next_bite[0]
-
-                    preference_change = False
 
                     actions_remaining -= 1
                         

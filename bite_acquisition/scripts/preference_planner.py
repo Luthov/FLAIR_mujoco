@@ -54,6 +54,7 @@ class PreferencePlanner:
         self.update_bite_sequence = False
         self.update_transfer_params = False
         self.current_motion_params = 'None'
+        self.food_sequence = []
         # self.transfer_preference = 'None'
 
 
@@ -129,6 +130,12 @@ class PreferencePlanner:
                 self.current_motion_params = ast.literal_eval(transfer_parameter_response.split('Motion parameters:')[1].strip())
                 print(f'CURRENT MOTION PARAMS: {self.current_motion_params}')
 
+                if self.food_sequence != []:
+                    for bite_idx in range(len(self.food_sequence)):
+                        for food_motion_param in self.current_motion_params:
+                            if self.food_sequence[bite_idx][0] == food_motion_param[0]:
+                                self.food_sequence[bite_idx] = food_motion_param
+
                 with open(output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
                     f.write(f"=== CURRENT MOTION PARAMS ===\n{self.current_motion_params}\n")
                     f.write(f"=== TRANSFER PARAMS RESPONSE ===\n{transfer_parameter_response}\n")
@@ -163,11 +170,29 @@ class PreferencePlanner:
                         if bite == food[0]:
                             food_sequence.append(food)
 
+                print(f'FOOD SEQUENCE BEFORE UPDATE: {self.food_sequence}')
+
+                self.food_sequence = food_sequence
+
+                print(f'FOOD SEQUENCE AFTER UPDATE: {self.food_sequence}')
+
+                self.food_sequence = history + self.food_sequence
+
+                print(f'FOOD SEQUENCE CONCAT HISTORY: {self.food_sequence}')
+
                 with open(output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
                     f.write(f"=== BITE SEQUENCING RESPONSE ===\n{bite_sequencing_response}\n")
-                    f.write(f"NEXT FOOD: {food_sequence}\n")
+                    f.write(f"NEXT FOOD: {self.food_sequence}\n")
 
                 self.update_bite_sequence = False
+
+            # Making the feeding sequence accurate with history
+            print('=== FEEDING SEQUENCE BEFORE LOOP ===')
+            print(self.food_sequence)
+            for bite_idx in range(len(history)):
+                    self.food_sequence[bite_idx] = history[bite_idx]
+            print('=== FEEDING SEQUENCE AFTER LOOP ===')
+            print(self.food_sequence)
 
             if self.debug:
                 print(f"=== BITE SEQUENCING PROMPT ===")
@@ -192,7 +217,7 @@ class PreferencePlanner:
                     f.write(f"=== BITE PREFERENCE ===\n{self.bite_preference}\n")
                     f.write(f"=== TRANSFER PREFERENCE ===\n{self.transfer_preference}\n")
 
-            return food_sequence
+            return self.food_sequence
 
         if mode == 'no_decomposer':
             with open('prompts/' + self.no_decomposer_prompt_file, 'r') as f:
