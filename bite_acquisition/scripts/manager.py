@@ -47,6 +47,8 @@ class FeedingManager():
 
         self.start_feeding = True
 
+        self.input_interrupts = True
+
         # TODO: Need to convert these to cart coordinates
         self.acq_pose = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
         self.transfer_pose = np.radians([0.0, -65.0, -25.0, 0.0, 0.0, -90.0])
@@ -292,14 +294,18 @@ class FeedingManager():
 
     def feed(self):
         
-        input("If you haven't already. give a user preference using the mic. Then press ENTER to continue")
+        if self.input_interrupts:
+            input("If you haven't already. give a user preference using the mic. Then press ENTER to continue")
 
         sequence_idx = 0
 
-        while self.actions_remaining:
+        if not self.input_interrupts:
+            check = 'y'
 
-            print(f"=== ACTIONS REMAINING ===")
-            print(self.actions_remaining)
+        while True:
+
+            # print(f"=== ACTIONS REMAINING ===")
+            # print(self.actions_remaining)
 
             ############
             # 1. RESET #
@@ -310,7 +316,8 @@ class FeedingManager():
             ##############################
             # 2. Move to Perception pose #
             ##############################
-            input("Press Enter to move to perception pose...")
+            if self.input_interrupts:
+                input("Press Enter to move to perception pose...")
             self.move_to_perception_pose()
 
             food_portion_rounded = [round(portion) for portion in self.item_portions]
@@ -318,9 +325,6 @@ class FeedingManager():
             ##########################
             # 3. Get feeding params #
             ##########################
-            # when get feeding params
-            # - preference change
-            # - start of feeding
             if self.start_feeding or self.preference_change:
 
                 feeding_sequence = self.get_feeding_params(
@@ -341,10 +345,12 @@ class FeedingManager():
             ###########################
             # 4a. Get scooping points #
             ###########################
-            input("Press ENTER to get scooping points")
+            if self.input_interrupts:
+                input("Press ENTER to get scooping points")
             scooping_points, bounding_boxes = self.get_scooping_points() # Sorted in order of left to right
             print(f"Scooping points: {scooping_points} | Bounding boxes: {bounding_boxes}")
-            check = input("Was the perception successful? (y/n): ")
+            if self.input_interrupts:
+                check = input("Was the perception successful? (y/n): ")
             if check != 'y':
                 rospy.logwarn("Getting scooping points failed. Moving to reset pose...")
                 self.reset()
@@ -363,12 +369,13 @@ class FeedingManager():
             ########################
             # 4b. Execute scooping #
             ########################
-            input("Press ENTER to execute scooping")
+            if self.input_interrupts:
+                input("Press ENTER to execute scooping")
             print("SCOOPING BBOX:", bowl_bbox)
             print("SCOOPING point:", point_to_be_scooped.point.x, point_to_be_scooped.point.y, point_to_be_scooped.point.z)
             acquisition_success = self.execute_scooping(point_to_be_scooped, bowl_bbox, bite_size)
-
-            check = input("Was the scooping successful? (y/n): ")
+            if self.input_interrupts:
+                check = input("Was the scooping successful? (y/n): ")
             if check.lower() == 'y':
                 acquisition_success = True
             else:
@@ -378,12 +385,15 @@ class FeedingManager():
             # 5. Execute bite transfer #
             ############################
             if acquisition_success:
-                input("Press ENTER to continue to transfer pose")
+                if self.input_interrupts:
+                    input("Press ENTER to continue to transfer pose")
                 self.move_to_transfer_pose()
-                input("Press ENTER to execute bite transfer")
+                if self.input_interrupts:
+                    input("Press ENTER to execute bite transfer")
                 transfer_success = self.execute_bite_transfer(distance_to_mouth, exit_angle, transfer_speed)
 
-                check = input("Was the transfer successful? (y/n): ")
+                if self.input_interrupts:
+                    check = input("Was the transfer successful? (y/n): ")
                 if check.lower() == 'y':
                     transfer_success = True
                 else:
@@ -399,8 +409,11 @@ class FeedingManager():
                     break
 
             if transfer_success:
-                self.actions_remaining -= 1
+                # self.actions_remaining -= 1
                 sequence_idx += 1
+                if sequence_idx == len(feeding_sequence):
+                    print("=== FEEDING HAS BEEN COMPLETED ===")
+                    break
             else:
                 rospy.logwarn("Transfer failed. Moving to reset pose...")
                 self.reset()

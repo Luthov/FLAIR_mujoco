@@ -5,7 +5,7 @@ Previous motion parameters: {%s}. A list containing the available food items and
 Preference: {%s}
 
 Given this information, you will decide the following motion parameters:
-1. bite_size: Choose a value between 1.0 (smallest bite) and 10.0 (largest bite), DEFAULT is 5.0.
+1. bite_size: Choose a value between 1.0 (smallest bite) and 5.0 (largest bite), DEFAULT is 3.0.
 2. distance_to_mouth: Choose a value between 5.0 (closer) and 10.0 (further), DEFAULT is 7.5.
 3. exit_angle: Choose a value between 80.0 (lower tilt) and 110.0 (higher tilt), DEFAULT is 90.0.
 4. transfer_speed: Choose a value between 1.0 (slower) and 10.0 (faster), DEFAULT is 5.0.
@@ -14,7 +14,7 @@ Instructions:
 1. Summarize the values you previously suggested as shown in 'Previous motion parameters'.
 2. Explain your high-level reasoning behind the selected values for each parameter of every food item.
 3. Decide Parameters:
-    - To determine the bite size parameter, use cues like "smaller", or "larger", and refer to the values you suggested previously in 'Previous motion parameters'. If my preference describes a significant change in bite_size, you should vary bite_size by magnitudes of 2.0. But if it describes a small change, vary bite_size by magnitudes of 1.0. Default to 5.0 if no specific preference is stated. ONLY change bite_size if my preference says so.
+    - To determine the bite size parameter, use cues like "smaller", or "larger", and refer to the values you suggested previously in 'Previous motion parameters'. If my preference describes a significant change in bite_size, you should vary bite_size by magnitudes of 2.0. But if it describes a small change, vary bite_size by magnitudes of 1.0. Default to 3.0 if no specific preference is stated. ONLY change bite_size if my preference says so.
     - To determine the distance_to_mouth parameter, use preference cues like "closer", or "further", and refer to the values you suggested previously in 'Previous motion parameters'. If my preference describes a significant change in distance_to_mouth, you should vary distance_to_mouth by magnitudes of 1.0. But if it describes a small change, vary distance_to_mouth by magnitudes of 0.5. Do NOT use preference cues which correspond to the speed of feeding. Default to 7.5 if no preference applies. ONLY change distance_to_mouth if my preference says so.
     - To determine the exit_angle parameter, look for cues like "higher", "lower", or "tilt", and refer to the values you suggested previously in 'Previous motion parameters'. If my preference describes a significant change in exit_angle, you should vary exit_angle by magnitudes of 10.0. But if it describes a small change, vary exit_angle by magnitudes of 5.0. Default to 90.0 if no preference applies. ONLY change exit_angle if my preference says so.
     - To determine the transfer_speed parameter, look for cues like "slower", or "faster", and refer to the values you suggested previously in 'Previous motion parameters'. If a preference describes a significant change in transfer_speed, you should vary transfer_speed by magnitudes of 2.0. But if it describes a small change, vary transfer_speed by magnitudes of 1.0. Default to 5.0 if no specific preference is stated. ONLY change transfer_speed if my preference says so.

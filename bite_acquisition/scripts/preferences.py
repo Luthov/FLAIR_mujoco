@@ -112,7 +112,7 @@ interview_food_items = [
     ]
 
 luke_preferences = [
-    "Please feed me all the green beans first. Then I want you to alternate between the foods in the order of rice, then fish, then egg. Give me smaller bites for rice and feed me slower for the fish to give me more time to chew.",
+    "Please feed me all the green beans first. Then I want you to alternate between the foods in the order of rice, then fish, then egg", # . Give me smaller bites for rice and feed me slower for the fish to give me more time to chew.",
     "Feed me all the grean beans first. Then I want to eat alternating bites of rice and chicken, after that is done I want to end with all the egg. Feed me slower for rice and with a higher tilt to prevent it from spilling.",
     "I want you to alternate between the foods in the order of carbs, then protein, then the vege. Save all the eggs for last. I also want bigger bites of rice and smaller bites for chicken. Also keep the spoon a little further from my mouth when feeding me eggs.",
     "Feed me alternating bites of rice and chicken. I don't want any vege. I want bigger bites of rice and smaller bites for chicken. Also tilt the spoon lower for chicken.",
