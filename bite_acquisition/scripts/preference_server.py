@@ -1,6 +1,7 @@
 import ast
 
 import rospy
+import rospkg
 
 from std_msgs.msg import String
 from feeding_msgs.msg import FoodItem
@@ -12,12 +13,12 @@ class PreferenceServer():
     def __init__(self):
         
         self.user_preference = "Please feed me all the green beans first. Then I want you to alternate between the foods in the order of rice, then fish, then egg. Give me smaller bites for rice and feed me slower for the fish to give me more time to chew."
-        self.available_food_items = ["rice", "fish", "egg", "green beans"]
-        self.available_food_items_portions = [3, 3, 3, 3]
+        self.available_food_items = ["chicken", "rice", "cucumber"]
+        self.available_food_items_portions = [3, 3, 3]
         self.history = []
         self.preference_change = True
         self.mode = 'decomposer'
-        self.output_directory = '/home/luthov/school/fyp/feeding_ws/src/feeding/task_planner/FLAIR_mujoco/bite_acquisition/scripts/feeding_bot_output/real_arm_testing/'
+        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/real_arm_testing'
 
         self.preference_planner = PreferencePlanner()
 
@@ -88,6 +89,9 @@ if __name__ == "__main__":
     rospy.loginfo(f"Starting {rospy.get_name()} node...")
 
     preference_server = PreferenceServer()
+    # # to avoid talking to moonshine
+    # preference_server.user_preference = "Give me the chicken and rice"
+    # preference_server.preference_change = False
 
     while not rospy.is_shutdown():
         rospy.spin()

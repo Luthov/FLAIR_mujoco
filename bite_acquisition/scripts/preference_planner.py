@@ -53,9 +53,10 @@ class PreferencePlanner:
 
         self.update_bite_sequence = False
         self.update_transfer_params = False
+        # TODO: set some defaults for current motion params
         self.current_motion_params = 'None'
         self.food_sequence = []
-        # self.transfer_preference = 'None'
+        self.transfer_preference = 'None'
 
 
     def parse_preferences(self, preference):

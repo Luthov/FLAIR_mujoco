@@ -1,4 +1,5 @@
 import numpy as np
+import time
 import random
 from scipy.spatial.transform import Rotation as R
 from xarm.wrapper import XArmAPI
@@ -11,7 +12,7 @@ from std_msgs.msg import String
 from feeding_msgs.srv import GetFeedingParam, GetFeedingParamRequest
 from feeding_msgs.srv import GetScoopingPoint, GetScoopingPointRequest
 from feeding_msgs.msg import ScoopAction, ScoopGoal
-from feeding_msgs.msg import BiteTransferAction, BiteTransferActionGoal
+from feeding_msgs.msg import BiteTransferAction, BiteTransferGoal
 
 """
 Feeding Sequence:
@@ -31,7 +32,7 @@ class FeedingManager():
 
     def __init__(self):
 
-        self.items = ['chicken', 'rice', 'broccoli']
+        self.items = ['chicken', 'rice', 'cucumber']
 
         if len(self.items) == 3:
             self.item_portions = [3.0] * len(self.items)
@@ -51,11 +52,6 @@ class FeedingManager():
         self.transfer_pose = np.radians([0.0, -65.0, -25.0, 0.0, 0.0, -90.0])
         self.perception_pose = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
     
-        # Initialize the xArm API
-        self.arm = XArmAPI(port="192.168.1.201", is_radian=True)
-        self.arm.motion_enable(enable=True)
-        self.arm.set_mode(0)
-        self.arm.set_state(0)
         self.margin_of_error = 10  # Define a margin of error
 
         self.sub_user_preference = rospy.Subscriber("user_preference", String, self.user_preference_cb)
@@ -77,11 +73,43 @@ class FeedingManager():
         self.transfer_client.wait_for_server()
         rospy.loginfo("Bite transfer server started")
 
-        # TODO: Need to change Action server name and msg when J-Anne ready
         self.execute_scooping_client = actionlib.SimpleActionClient('scooping_action', ScoopAction)
         rospy.loginfo("Waiting for scooping server")
         self.execute_scooping_client.wait_for_server()
         rospy.loginfo("Connected to scooping server")
+    
+    def setup_arm(self, ip="192.168.1.201", reset=False):
+        """
+        Set up the xArm robot.
+        """
+        self.arm = XArmAPI(port=ip, is_radian=True)
+        time.sleep(0.1)
+        ready = self.arm.motion_enable(enable=True)
+        if ready != 0:
+            max_retries = 5
+            for i in range (1, max_retries+1):
+                ready = self.arm.motion_enable(enable=True)
+                print(f"Trying to enable motion {i}/{max_retries}: {ready}")
+                if ready:
+                    break
+                time.sleep(0.1)
+        self.arm.set_mode(0)
+        self.arm.set_state(0)
+        time.sleep(0.1)
+
+        if reset:
+            self.reset()
+
+    def disconnect_arm(self, reset=False):
+        """
+        Disconnect the xArm robot.
+        """
+        if reset:
+            self.arm.reset(wait=True)
+        
+        self.arm.disconnect()
+        print("Disconnected arm...")
+        time.sleep(0.1)
 
     def quat2euler(self, quaternion):
         """
@@ -123,7 +151,7 @@ class FeedingManager():
         # Arrange items in the specified order
         ordered_list = []
         while any(grouped_items.values()):
-            for food in ['green beans', 'rice', 'fish', 'egg']:
+            for food in self.items:
                 if food in grouped_items and grouped_items[food]:
                     ordered_list.append(grouped_items[food].pop(0))
 
@@ -134,6 +162,9 @@ class FeedingManager():
         Move the robot to a given pose
         pose: geometry_msgs/PoseStamped
         """
+        # Connect to the robot
+        self.setup_arm()
+
         x_position = pose.pose.position.x
         y_position = pose.pose.position.y
         z_position = pose.pose.position.z
@@ -145,27 +176,37 @@ class FeedingManager():
         yaw = euler[2]
 
         self.arm.set_position(x=x_position, y=y_position, z=z_position, roll=roll, pitch=pitch, yaw=yaw, speed=40, mvacc=20, radius=0, wait=wait)
+        if wait:
+            self.disconnect_arm()
+        #TODO: if wait is False, how to disconnect?
 
     def reset(self):
+        self.setup_arm()
         # self.move_to_acq_pose()
+
         print("Moving to reset pose...")
-        self.arm.set_position(x=440, y=0, z=285, roll=3.14159, pitch=-1.5708, yaw=0, speed=40, mvacc=20, radius=0, wait=True)
+        self.arm.set_position(x=440, y=0, z=285, roll=3.14159, pitch=-1.5708, yaw=0, speed=60, mvacc=20, radius=0, wait=True)
+        self.disconnect_arm()
 
     def move_to_perception_pose(self):
+        self.setup_arm()
+        
         # self.move_to_pose(self.perception_pose)
         print("Moving to perception pose...")
         euler_angles = self.quat2euler([-0.1657, 0.5592, -0.6938, 0.4224])
         roll = euler_angles[0]
         pitch = euler_angles[1]
         yaw = euler_angles[2]
-        self.arm.set_position(x=391.5737, y=201.6162, z=322.8611, roll=roll, pitch=pitch, yaw=yaw, speed=40, mvacc=20, radius=0, wait=True)
+
+        self.arm.set_position(x=391.5737, y=201.6162, z=322.8611, roll=roll, pitch=pitch, yaw=yaw, speed=60, mvacc=20, radius=0, wait=True)
+        self.disconnect_arm()
 
     def move_to_transfer_pose(self):
-        self.arm.motion_enable(enable=True)
-        self.arm.set_mode(0)                   # Set to position control mode  
-        self.arm.set_state(state=0)
-        self.arm.set_position(x=800, y=-86.3, z=457.1, roll=2.852, pitch=-1.297, yaw=0.208, speed=10, radius=0, wait=True)
-        print("Moved to start position")
+        self.setup_arm()
+
+        self.arm.set_position(x=576, y=100, z=450, roll=-3.141, pitch=-1.368, yaw=0, speed=40, mvacc=20, radius=0, wait=True)
+        print("Moved to start position") 
+        self.disconnect_arm()
 
     def user_preference_cb(self, msg):
         """
@@ -194,7 +235,7 @@ class FeedingManager():
         goal = ScoopGoal()
         goal.scoop_pose = scoop_pose
         goal.bowl_bbox = bowl_bbox
-        goal.target_amount = target_amount
+        goal.target_amount = target_amount * 5
         goal.get_scooping_point = get_scooping_point
 
         rospy.loginfo(f"Sending scooping goal....")
@@ -215,11 +256,12 @@ class FeedingManager():
         Args:
             feedback (ScoopingFeedback): Feedback message from the action server.
         """
-        rospy.loginfo(f"Feedback received: {feedback.message}")
+        rospy.logdebug(f"[Scooping]: {feedback.message}")
 
     def execute_bite_transfer(self, distance_to_mouth, exit_angle, transfer_speed):
         rospy.loginfo("Calling bite_transfer action server...")
-        goal = BiteTransferActionGoal()
+        goal = BiteTransferGoal()
+        # TODO: Set defaults
         goal.distance_to_mouth = distance_to_mouth
         goal.exit_angle = exit_angle
         goal.transfer_speed = transfer_speed
@@ -259,18 +301,26 @@ class FeedingManager():
             print(f"=== ACTIONS REMAINING ===")
             print(self.actions_remaining)
 
-            input("Press Enter to continue...")
-            self.reset()
+            ############
+            # 1. RESET #
+            ############
+            # input("Press Enter to continue...")
+            # self.reset()
 
+            ##############################
+            # 2. Move to Perception pose #
+            ##############################
             input("Press Enter to move to perception pose...")
             self.move_to_perception_pose()
 
             food_portion_rounded = [round(portion) for portion in self.item_portions]
 
+            ##########################
+            # 3. Get feeding params #
+            ##########################
             # when get feeding params
             # - preference change
             # - start of feeding
-            
             if self.start_feeding or self.preference_change:
 
                 feeding_sequence = self.get_feeding_params(
@@ -288,6 +338,9 @@ class FeedingManager():
             exit_angle = next_food[3]
             transfer_speed = next_food[4]
             
+            ###########################
+            # 4a. Get scooping points #
+            ###########################
             input("Press ENTER to get scooping points")
             scooping_points, bounding_boxes = self.get_scooping_points() # Sorted in order of left to right
             print(f"Scooping points: {scooping_points} | Bounding boxes: {bounding_boxes}")
@@ -299,29 +352,42 @@ class FeedingManager():
             # Handle if in the case get scooping points fail. Can move 3 times until we decide it fails
 
             for idx in range(len(self.items)):
+                print(f'next_bite: {next_bite} | self.items[idx]: {self.items[idx]}')
                 if next_bite == self.items[idx]:
                     point_to_be_scooped = scooping_points[idx]
                     bowl_bbox = bounding_boxes[idx]
                     break
 
-            rospy.loginfo(f'Scooping point: {point_to_be_scooped} | Bowl index: {idx}')
+            rospy.loginfo(f'Scooping point: {point_to_be_scooped.point} | Bowl index (from left): {idx}')
 
+            ########################
+            # 4b. Execute scooping #
+            ########################
             input("Press ENTER to execute scooping")
+            print("SCOOPING BBOX:", bowl_bbox)
+            print("SCOOPING point:", point_to_be_scooped.point.x, point_to_be_scooped.point.y, point_to_be_scooped.point.z)
             acquisition_success = self.execute_scooping(point_to_be_scooped, bowl_bbox, bite_size)
 
             check = input("Was the scooping successful? (y/n): ")
-            if check == 'y':
+            if check.lower() == 'y':
                 acquisition_success = True
-            if acquisition_success:
+            else:
+                acquisition_success = False
 
+            ############################
+            # 5. Execute bite transfer #
+            ############################
+            if acquisition_success:
                 input("Press ENTER to continue to transfer pose")
                 self.move_to_transfer_pose()
                 input("Press ENTER to execute bite transfer")
                 transfer_success = self.execute_bite_transfer(distance_to_mouth, exit_angle, transfer_speed)
 
                 check = input("Was the transfer successful? (y/n): ")
-                if check == 'y':
+                if check.lower() == 'y':
                     transfer_success = True
+                else:
+                    transfer_success = False
             else:
                 rospy.logwarn("Acquisition failed. Moving to reset pose...")
                 self.reset()

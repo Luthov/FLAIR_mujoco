@@ -150,7 +150,7 @@ def get_user_preference():
                 if (time.time() - start_time) > MIN_REFRESH_SECS:
                     transcribed_speech = transcribe(speech)
                     print_captions(transcribe(speech), caption_cache)
-                    if transcribed_speech == "Stop.":
+                    if transcribed_speech.lower() == "stop.":
                         stream.close()
 
                         if recording:
@@ -159,7 +159,7 @@ def get_user_preference():
                                 speech = np.concatenate((speech, chunk))
                             end_recording(speech, transcribe, caption_cache, do_print=False)
                         if caption_cache:                            
-                            user_preference = ' '.join(caption_cache).split("Start. ")[1].split(" Stop.")[0]
+                            user_preference = ' '.join(caption_cache).split("Frank. ")[1].split(" Stop.")[0]
                             print("\n=== User Preference ===")
                             print(user_preference)
                             return user_preference
