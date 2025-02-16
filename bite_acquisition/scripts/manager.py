@@ -237,7 +237,7 @@ class FeedingManager():
         goal = ScoopGoal()
         goal.scoop_pose = scoop_pose
         goal.bowl_bbox = bowl_bbox
-        goal.target_amount = target_amount * 5
+        goal.target_amount = target_amount * 20
         goal.get_scooping_point = get_scooping_point
 
         rospy.loginfo(f"Sending scooping goal....")
@@ -349,8 +349,8 @@ class FeedingManager():
                 input("Press ENTER to get scooping points")
             scooping_points, bounding_boxes = self.get_scooping_points() # Sorted in order of left to right
             print(f"Scooping points: {scooping_points} | Bounding boxes: {bounding_boxes}")
-            if self.input_interrupts:
-                check = input("Was the perception successful? (y/n): ")
+            # if self.input_interrupts:
+            check = input("Was the perception successful? (y/n): ")
             if check != 'y':
                 rospy.logwarn("Getting scooping points failed. Moving to reset pose...")
                 self.reset()
