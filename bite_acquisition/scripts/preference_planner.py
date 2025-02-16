@@ -126,7 +126,7 @@ class PreferencePlanner:
                 motion_params_prompt = motion_params_prompt%(
                     str(items),
                     str(self.current_motion_params),
-                    self.motion_preference
+                    self.motion_parameter_preference
                     )
 
                 print(f'PREVIOUS MOTION PARAMS: {self.current_motion_params}')
@@ -212,7 +212,7 @@ class PreferencePlanner:
                 print(f"=== TRANSFER PARAMS PROMPT ===")
                 print(motion_params_prompt)
                 print("\n=== TRANSFER PARAMS RESPONSE ===")
-                print(f"TRANSFER PREFERENCE: {self.motion_preference}\n")
+                print(f"TRANSFER PREFERENCE: {self.motion_parameter_preference}\n")
                 print(motion_parameter_response)
 
             # Append responses and parameters to a file

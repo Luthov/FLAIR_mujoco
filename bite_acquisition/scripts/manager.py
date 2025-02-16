@@ -1,6 +1,6 @@
 import numpy as np
 import time
-import random
+import sys, signal
 from scipy.spatial.transform import Rotation as R
 from xarm.wrapper import XArmAPI
 
@@ -47,7 +47,9 @@ class FeedingManager():
 
         self.start_feeding = True
 
-        self.input_interrupts = True
+        self.input_interrupts = False
+
+        signal.signal(signal.SIGINT, self.signal_handler)
 
         # TODO: Need to convert these to cart coordinates
         self.acq_pose = np.radians([0.0, -65.0, -25.0, 0.0, 65.0, -90.0])
@@ -113,6 +115,30 @@ class FeedingManager():
         print("Disconnected arm...")
         time.sleep(0.1)
 
+    def start_feeding_button(self):
+
+        self.setup_arm()
+
+        self.arm.set_cgpio_analog(1, 5.0)
+        print("Frank is ready, please press the button to continue.")
+        while True:
+            digital_inputs = self.arm.get_cgpio_digital()
+            # print('Digital inputs:', digital_inputs)
+            c14_state = digital_inputs[1][3]
+            # print('C14 state:', c14_state)
+            if c14_state == 0:
+                print('Start button pressed')
+                self.arm.set_cgpio_analog(1, 0.0)
+                self.disconnect_arm()
+                return True
+            
+    def signal_handler(self, sig, frame):
+        print('You pressed Ctrl+C!')
+        rospy.signal_shutdown("Shutting down...")
+        self.reset()
+        self.disconnect_arm(reset=True)
+        sys.exit(0)
+
     def quat2euler(self, quaternion):
         """
         Converts a quaternion (w,x,y,z) to Euler angles (roll, pitch, yaw) in radians.
@@ -139,26 +165,6 @@ class FeedingManager():
 
         return [roll, pitch, yaw]   # in radians
     
-    def arrange_food_items(self, items):
-        # Convert ROS message list to tuples for easier manipulation
-        food_tuples = [(item.food_item, item.bite_size, item.distance_to_mouth, item.exit_angle, item.transfer_speed) for item in items]
-
-        # Define desired arrangement pattern
-        grouped_items = {}
-        for food in food_tuples:
-            if food[0] not in grouped_items:
-                grouped_items[food[0]] = []
-            grouped_items[food[0]].append(food)
-        
-        # Arrange items in the specified order
-        ordered_list = []
-        while any(grouped_items.values()):
-            for food in self.items:
-                if food in grouped_items and grouped_items[food]:
-                    ordered_list.append(grouped_items[food].pop(0))
-
-        return ordered_list
-                         
     def move_to_pose(self, pose, wait=True):   
         """
         Move the robot to a given pose
@@ -278,11 +284,14 @@ class FeedingManager():
         req_feeding_params.food_item_portions = food_item_portions
         resp_feeding_params = self.get_feeding_params_client(req_feeding_params)
 
-        feeding_sequence = self.arrange_food_items(resp_feeding_params.feeding_sequence)
-        rospy.loginfo("=== FEEDING SEQUENCE ===")
+        print(f"RAW FEEDING SEQUENCE: {resp_feeding_params.feeding_sequence}")
+
+        feeding_sequence = food_tuples = [(item.food_item, item.bite_size, item.distance_to_mouth, item.exit_angle, item.transfer_speed) for item in resp_feeding_params.feeding_sequence]
+        success = resp_feeding_params.success
+        rospy.loginfo("=== ARRANGED FEEDING SEQUENCE ===")
         rospy.logwarn(feeding_sequence)
 
-        return feeding_sequence
+        return feeding_sequence, success
 
     def get_scooping_points(self):
         rospy.loginfo("Getting scooping points")
@@ -313,9 +322,17 @@ class FeedingManager():
             # input("Press Enter to continue...")
             # self.reset()
 
+            print("=== BITE HISTORY ===")
+            print(self.bite_history)
+            print("=== SEQUENCE INDEX ===")
+            print(sequence_idx)
+
             ##############################
             # 2. Move to Perception pose #
             ##############################
+
+            self.start_feeding_button()
+
             if self.input_interrupts:
                 input("Press Enter to move to perception pose...")
             self.move_to_perception_pose()
@@ -327,13 +344,20 @@ class FeedingManager():
             ##########################
             if self.start_feeding or self.preference_change:
 
-                feeding_sequence = self.get_feeding_params(
+                feeding_sequence, feeding_param_success = self.get_feeding_params(
                     self.bite_history, 
                     food_portion_rounded
                 )
 
+                if not feeding_param_success:
+                    print('Failed to get feeding parameters. Please provide a user preference.')
+                    continue
+
+
                 self.start_feeding = False
                 self.preference_change = False
+
+            print(f"Feeding sequence: {feeding_sequence}")
 
             next_food = feeding_sequence[sequence_idx]
             next_bite = next_food[0]
@@ -348,14 +372,20 @@ class FeedingManager():
             if self.input_interrupts:
                 input("Press ENTER to get scooping points")
             scooping_points, bounding_boxes = self.get_scooping_points() # Sorted in order of left to right
-            print(f"Scooping points: {scooping_points} | Bounding boxes: {bounding_boxes}")
-            # if self.input_interrupts:
-            check = input("Was the perception successful? (y/n): ")
-            if check != 'y':
+            print(f"Scooping points: {scooping_points} | Bounding boxes: {bounding_boxes}, | Length: {len(scooping_points)}")
+
+            if len(scooping_points) != 3:
+                perception_success = False
+            else:
+                perception_success = True
+
+            if self.input_interrupts:
+                check = input("Was the perception successful? (y/n): ")
+            if check != 'y' or not perception_success:
                 rospy.logwarn("Getting scooping points failed. Moving to reset pose...")
                 self.reset()
                 continue
-            # Handle if in the case get scooping points fail. Can move 3 times until we decide it fails
+            # TODO: Handle if in the case get scooping points fail. Can move 3 times until we decide it fails
 
             for idx in range(len(self.items)):
                 print(f'next_bite: {next_bite} | self.items[idx]: {self.items[idx]}')
@@ -391,6 +421,7 @@ class FeedingManager():
                 if self.input_interrupts:
                     input("Press ENTER to execute bite transfer")
                 transfer_success = self.execute_bite_transfer(distance_to_mouth, exit_angle, transfer_speed)
+                print(f"Transfer success: {transfer_success}")
 
                 if self.input_interrupts:
                     check = input("Was the transfer successful? (y/n): ")

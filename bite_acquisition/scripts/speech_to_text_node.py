@@ -2,7 +2,7 @@
 import rospy
 
 from std_msgs.msg import String
-from speech_to_text.speech_to_text import get_user_preference
+from speech_to_text.speech_to_text_auto_stop import get_user_preference
 
 def publish_user_preference():
     rospy.init_node('speech_to_text_node', anonymous=True)

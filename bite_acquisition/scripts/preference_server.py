@@ -12,7 +12,8 @@ from preference_planner import PreferencePlanner
 class PreferenceServer():
     def __init__(self):
         
-        self.user_preference = "Please feed me all the green beans first. Then I want you to alternate between the foods in the order of rice, then fish, then egg. Give me smaller bites for rice and feed me slower for the fish to give me more time to chew."
+        # self.user_preference = "Please feed me all the green beans first. Then I want you to alternate between the foods in the order of rice, then fish, then egg. Give me smaller bites for rice and feed me slower for the fish to give me more time to chew."
+        self.user_preference = None
         self.available_food_items = ["chicken", "rice", "cucumber"]
         self.available_food_items_portions = [3, 3, 3]
         self.history = []
@@ -66,9 +67,12 @@ class PreferenceServer():
         """
         rospy.loginfo("Getting feeding parameters")
 
+        response = GetFeedingParamResponse()
+
         if self.user_preference is None:
             rospy.logwarn("User preference not set. Please set user preference first.")
-            return None
+            response.success = False
+            return response
         else:
             current_history = request.current_history # This should give me the current history after the robot fed. and the other updated variables
             current_history = ast.literal_eval(current_history)
@@ -78,8 +82,8 @@ class PreferenceServer():
 
             self.update_feeding_parameters()
 
-            response = GetFeedingParamResponse()
             response.feeding_sequence = [FoodItem(food_item, bite_size, distance_to_mouth, exit_angle, transfer_speed) for food_item, bite_size, distance_to_mouth, exit_angle, transfer_speed in self.feeding_sequence]
+            response.success = True
 
         return response
     
