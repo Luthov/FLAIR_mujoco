@@ -223,13 +223,14 @@ class FeedingManager():
         self.preference_change = True
         print('[Manager Node]: Preference has been changed')
 
-    def execute_scooping(self, scoop_point, bowl_bbox, target_amount, get_scooping_point=False):
+    def execute_scooping(self, scoop_point, bowl_bbox, next_bite, target_amount, get_scooping_point=False):
         """
         Sends a goal to the scooping action server.
 
         Args:
             scoop_pose (Point): The point for scooping action.
             bowl_bbox (BoundingBox): The bounding box of the bowl.
+            next_bite (str): The next bite to scoop.
             target_amount (float): Target amount to scoop.
         """
 
@@ -243,8 +244,17 @@ class FeedingManager():
         goal = ScoopGoal()
         goal.scoop_pose = scoop_pose
         goal.bowl_bbox = bowl_bbox
-        goal.target_amount = target_amount * 20
         goal.get_scooping_point = get_scooping_point
+
+        # goal.target_amount = target_amount * 10
+        if next_bite == 'mashed potatoes':
+            goal.target_amount = target_amount * 10
+        elif next_bite == 'corn':
+            goal.target_amount = (target_amount * 10) + 20
+        elif next_bite == 'minced meat':
+            goal.target_amount = (target_amount * 10) + 10
+        else:
+            goal.target_amount = (target_amount * 10) + 20
 
         rospy.loginfo(f"Sending scooping goal....")
         
@@ -403,7 +413,7 @@ class FeedingManager():
                 input("Press ENTER to execute scooping")
             print("SCOOPING BBOX:", bowl_bbox)
             print("SCOOPING point:", point_to_be_scooped.point.x, point_to_be_scooped.point.y, point_to_be_scooped.point.z)
-            acquisition_success = self.execute_scooping(point_to_be_scooped, bowl_bbox, bite_size)
+            acquisition_success = self.execute_scooping(point_to_be_scooped, bowl_bbox, next_bite, bite_size)
             if self.input_interrupts:
                 check = input("Was the scooping successful? (y/n): ")
             if check.lower() == 'y':
