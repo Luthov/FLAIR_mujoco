@@ -14,7 +14,7 @@ class PreferenceServer():
         
         # self.user_preference = "Please feed me all the green beans first. Then I want you to alternate between the foods in the order of rice, then fish, then egg. Give me smaller bites for rice and feed me slower for the fish to give me more time to chew."
         self.user_preference = None
-        self.available_food_items = ["chicken", "rice", "cucumber"]
+        self.available_food_items = ["mashed potatoes", "corn", "minced meat"]
         self.available_food_items_portions = [3, 3, 3]
         self.history = []
         self.preference_change = True

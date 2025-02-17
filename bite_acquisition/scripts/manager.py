@@ -47,7 +47,7 @@ class FeedingManager():
 
         self.start_feeding = True
 
-        self.simulated_sequence = True
+        self.simulated_sequence = False
         self.input_interrupts = False
 
         signal.signal(signal.SIGINT, self.signal_handler)
@@ -254,13 +254,13 @@ class FeedingManager():
 
         # goal.target_amount = target_amount * 10
         if next_bite == 'mashed potatoes':
-            goal.target_amount = target_amount * 10
+            goal.target_amount = target_amount * 5
         elif next_bite == 'corn':
-            goal.target_amount = (target_amount * 10) + 20
+            goal.target_amount = (target_amount * 10) + 5
         elif next_bite == 'minced meat':
-            goal.target_amount = (target_amount * 10) + 10
+            goal.target_amount = (target_amount * 10) + 5
         else:
-            goal.target_amount = (target_amount * 10) + 20
+            goal.target_amount = (target_amount * 10) + 5
 
         rospy.loginfo(f"Sending scooping goal....")
         
