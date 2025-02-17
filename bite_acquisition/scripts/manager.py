@@ -29,7 +29,6 @@ Feeding Sequence:
     7. Move to transfer pose (Might not need coz he has it in his code)
     8. Execute bite transfer through bite transfer action server
     9. Move to reset pose
-
 """
 
 class FeedingManager():
@@ -363,10 +362,13 @@ class FeedingManager():
             # 2. Move to Perception pose #
             ##############################
 
+            self.say("I am ready to start feeding. Please give your preference and press the button when you are ready.")
             self.start_feeding_button()
 
             if self.input_interrupts:
                 input("Press Enter to move to perception pose...")
+
+            self.say("I am moving to perception pose")
             self.move_to_perception_pose()
 
             food_portion_rounded = [round(portion) for portion in self.item_portions]
@@ -376,7 +378,8 @@ class FeedingManager():
             ##########################
             if not self.simulated_sequence:
                 if self.start_feeding or self.preference_change:
-
+                    
+                    self.say("I am getting the feeding parameters")
                     feeding_sequence, feeding_param_success = self.get_feeding_params(
                         self.bite_history, 
                         food_portion_rounded
@@ -419,6 +422,7 @@ class FeedingManager():
             ###########################
             if self.input_interrupts:
                 input("Press ENTER to get scooping points")
+            self.say("I am getting the scooping points")
             scooping_points, bounding_boxes = self.get_scooping_points() # Sorted in order of left to right
             print(f"Scooping points: {scooping_points} | Bounding boxes: {bounding_boxes}, | Length: {len(scooping_points)}")
 
@@ -431,6 +435,7 @@ class FeedingManager():
                 check = input("Was the perception successful? (y/n): ")
             if check != 'y' or not perception_success:
                 rospy.logwarn("Getting scooping points failed. Moving to reset pose...")
+                self.say("Getting scooping points failed. Moving to reset pose")
                 self.reset()
                 continue
             # TODO: Handle if in the case get scooping points fail. Can move 3 times until we decide it fails
@@ -451,6 +456,7 @@ class FeedingManager():
                 input("Press ENTER to execute scooping")
             print("SCOOPING BBOX:", bowl_bbox)
             print("SCOOPING point:", point_to_be_scooped.point.x, point_to_be_scooped.point.y, point_to_be_scooped.point.z)
+            self.say(f"I am going to acquire the {next_bite}")
             acquisition_success = self.execute_scooping(point_to_be_scooped, bowl_bbox, next_bite, bite_size)
             if self.input_interrupts:
                 check = input("Was the scooping successful? (y/n): ")
@@ -465,9 +471,13 @@ class FeedingManager():
             if acquisition_success:
                 if self.input_interrupts:
                     input("Press ENTER to continue to transfer pose")
+
+                self.say("I am moving to the transfer pose")
                 self.move_to_transfer_pose()
                 if self.input_interrupts:
                     input("Press ENTER to execute bite transfer")
+
+                self.say("I am going to transfer the bite now")
                 transfer_success = self.execute_bite_transfer(distance_to_mouth, exit_angle, transfer_speed)
                 print(f"Transfer success: {transfer_success}")
 
@@ -479,6 +489,7 @@ class FeedingManager():
                     transfer_success = False
             else:
                 rospy.logwarn("Acquisition failed. Moving to reset pose...")
+                self.say("Acquisition failed. Moving to reset pose")
                 self.reset()
                 continue
 
@@ -495,6 +506,7 @@ class FeedingManager():
                     break
             else:
                 rospy.logwarn("Transfer failed. Moving to reset pose...")
+                self.say("Transfer failed. Moving to reset pose")
                 self.reset()
                 continue
 
