@@ -246,6 +246,11 @@ class FeedingManager():
         goal.bowl_bbox = bowl_bbox
         goal.get_scooping_point = get_scooping_point
 
+        if target_amount < 1.0:
+            target_amount = 1.0
+        elif target_amount > 5.0:
+            target_amount = 5.0
+
         # goal.target_amount = target_amount * 10
         if next_bite == 'mashed potatoes':
             goal.target_amount = target_amount * 10
