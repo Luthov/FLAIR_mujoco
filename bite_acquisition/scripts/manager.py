@@ -3,6 +3,10 @@ import time
 import sys, signal
 from scipy.spatial.transform import Rotation as R
 from xarm.wrapper import XArmAPI
+from gtts import gTTS
+from pydub import AudioSegment
+from pydub.playback import play
+import io
 
 import rospy
 import actionlib
@@ -139,6 +143,15 @@ class FeedingManager():
         self.reset()
         self.disconnect_arm(reset=True)
         sys.exit(0)
+
+    def say(self, text):
+        tts = gTTS(text=text, lang="en", tld="us")  # "com" gives American English accentaudio_buffer = io.BytesIO()
+        audio_buffer = io.BytesIO()
+        tts.write_to_fp(audio_buffer)
+
+        audio_buffer.seek(0)
+        audio = AudioSegment.from_file(audio_buffer, format="mp3")
+        play(audio)
 
     def quat2euler(self, quaternion):
         """
