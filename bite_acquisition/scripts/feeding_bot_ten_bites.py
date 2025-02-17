@@ -25,7 +25,7 @@ class FeedingBot:
         # Choose to use decomposer or not
         self.mode = 'decomposer'
         # self.mode = 'decomposer'
-        self.decomposer_output_directory = 'feeding_bot_output/interview_outputs/prompt_improvements/decomposer_outputs/'
+        self.decomposer_output_directory = 'feeding_bot_output/testing_outputs/'
         self.no_decomposer_output_directory = 'feeding_bot_output/interview_outputs/prompt_improvements/'
 
         if self.mode == 'decomposer':
@@ -65,7 +65,7 @@ class FeedingBot:
 
             interview_preferences = luke_preferences
 
-            self.output_directory = f'feeding_bot_output/{participant}/10_bite_testing/'
+            self.output_directory = f'feeding_bot_output/testing_outputs/'
         
             for preference_idx in self.preferences: # range(len(icorr_preferences)):
 
@@ -79,7 +79,9 @@ class FeedingBot:
                         continue
 
                 self.items = [interview_food_items[preference_idx]]
-                food_items = self.items[0]
+                # food_items = self.items[0]
+                food_items = ['mashed potatoes', 'corn', 'minced meat']
+                user_preference = "Feed me randomly as randomly as possible."
                 
                 if len(food_items) == 3:
                     self.item_portions = [3.0] * len(food_items)

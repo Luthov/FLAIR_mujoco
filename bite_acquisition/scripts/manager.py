@@ -32,7 +32,7 @@ class FeedingManager():
 
     def __init__(self):
 
-        self.items = ['chicken', 'rice', 'cucumber']
+        self.items = ['mashed potatoes', 'corn', 'minced meat']
 
         if len(self.items) == 3:
             self.item_portions = [3.0] * len(self.items)
@@ -47,6 +47,7 @@ class FeedingManager():
 
         self.start_feeding = True
 
+        self.simulated_sequence = True
         self.input_interrupts = False
 
         signal.signal(signal.SIGINT, self.signal_handler)
@@ -337,6 +338,9 @@ class FeedingManager():
             # input("Press Enter to continue...")
             # self.reset()
 
+            if self.simulated_sequence:
+                feeding_sequence = [('minced meat', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('minced meat', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('minced meat', 3.0, 7.5, 90.0, 5.0)]
+
             print("=== BITE HISTORY ===")
             print(self.bite_history)
             print("=== SEQUENCE INDEX ===")
@@ -357,20 +361,21 @@ class FeedingManager():
             ##########################
             # 3. Get feeding params #
             ##########################
-            if self.start_feeding or self.preference_change:
+            if not self.simulated_sequence:
+                if self.start_feeding or self.preference_change:
 
-                feeding_sequence, feeding_param_success = self.get_feeding_params(
-                    self.bite_history, 
-                    food_portion_rounded
-                )
+                    feeding_sequence, feeding_param_success = self.get_feeding_params(
+                        self.bite_history, 
+                        food_portion_rounded
+                    )
 
-                if not feeding_param_success:
-                    print('Failed to get feeding parameters. Please provide a user preference.')
-                    continue
+                    if not feeding_param_success:
+                        print('Failed to get feeding parameters. Please provide a user preference.')
+                        continue
 
 
-                self.start_feeding = False
-                self.preference_change = False
+                    self.start_feeding = False
+                    self.preference_change = False
 
             print(f"Feeding sequence: {feeding_sequence}")
 
@@ -380,6 +385,21 @@ class FeedingManager():
             distance_to_mouth = next_food[2]
             exit_angle = next_food[3]
             transfer_speed = next_food[4]
+
+            if distance_to_mouth < 5.0:
+                distance_to_mouth = 5.0
+            if distance_to_mouth > 10.0:
+                distance_to_mouth = 10.0
+
+            if exit_angle < 80.0:
+                exit_angle = 80.0
+            if exit_angle > 110.0:
+                exit_angle = 110.0
+
+            if transfer_speed < 1.0:
+                transfer_speed = 1.0
+            if transfer_speed > 10.0:
+                transfer_speed = 10.0
             
             ###########################
             # 4a. Get scooping points #
