@@ -49,8 +49,9 @@ class FeedingManager():
         self.token_history = []
 
         self.start_feeding = True
+        self.start = True
 
-        self.simulated_sequence = False
+        self.simulated_sequence = True
         self.input_interrupts = False
 
         signal.signal(signal.SIGINT, self.signal_handler)
@@ -268,11 +269,11 @@ class FeedingManager():
         if next_bite == 'mashed potatoes':
             goal.target_amount = target_amount * 5
         elif next_bite == 'corn':
-            goal.target_amount = (target_amount * 10) + 5
+            goal.target_amount = (target_amount * 5)
         elif next_bite == 'minced meat':
-            goal.target_amount = (target_amount * 10) + 5
+            goal.target_amount = (target_amount * 5)
         else:
-            goal.target_amount = (target_amount * 10) + 5
+            goal.target_amount = (target_amount * 5)
 
         rospy.loginfo(f"Sending scooping goal....")
         
@@ -334,7 +335,7 @@ class FeedingManager():
         if self.input_interrupts:
             input("If you haven't already. give a user preference using the mic. Then press ENTER to continue")
 
-        sequence_idx = 0
+        sequence_idx = 3
 
         if not self.input_interrupts:
             check = 'y'
@@ -351,24 +352,29 @@ class FeedingManager():
             # self.reset()
 
             if self.simulated_sequence:
+                print("=== USING SIMULATED SEQUENCE ===")
                 feeding_sequence = [('minced meat', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('minced meat', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('minced meat', 3.0, 7.5, 90.0, 5.0)]
+                # feeding_sequence = [('corn', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0)]
 
             print("=== BITE HISTORY ===")
-            print(self.bite_history)
+            rospy.logwarn(self.bite_history)
             print("=== SEQUENCE INDEX ===")
-            print(sequence_idx)
+            rospy.logwarn(sequence_idx)
 
-            ##############################
+            ############################## c
             # 2. Move to Perception pose #
             ##############################
-
-            self.say("I am ready to start feeding. Please give your preference and press the button when you are ready.")
+            if self.start:
+                self.say("I am ready to start feeding. Please give your preference and wait until I have obtained the feeding sequence. After that you may press the button.")
+                self.start = False
+            else:
+                self.say("I am ready to start feeding. Please press the button when you are ready.")
             self.start_feeding_button()
 
             if self.input_interrupts:
                 input("Press Enter to move to perception pose...")
 
-            self.say("I am moving to perception pose")
+            # self.say("I am moving to perception pose")
             self.move_to_perception_pose()
 
             food_portion_rounded = [round(portion) for portion in self.item_portions]
@@ -378,14 +384,17 @@ class FeedingManager():
             ##########################
             if not self.simulated_sequence:
                 if self.start_feeding or self.preference_change:
+
+                    print("[Manager]: CALLING PLANNER")
                     
-                    self.say("I am getting the feeding parameters")
+                    # self.say("I am getting the feeding parameters")
                     feeding_sequence, feeding_param_success = self.get_feeding_params(
                         self.bite_history, 
                         food_portion_rounded
                     )
 
                     if not feeding_param_success:
+                        # self.say("Failed to get feeding parameters. Please provide a user preference.")
                         print('Failed to get feeding parameters. Please provide a user preference.')
                         continue
 
@@ -397,6 +406,7 @@ class FeedingManager():
 
             next_food = feeding_sequence[sequence_idx]
             next_bite = next_food[0]
+            print("Next bite:", next_bite)
             bite_size = next_food[1]
             distance_to_mouth = next_food[2]
             exit_angle = next_food[3]
@@ -422,7 +432,7 @@ class FeedingManager():
             ###########################
             if self.input_interrupts:
                 input("Press ENTER to get scooping points")
-            self.say("I am getting the scooping points")
+            # self.say("I am getting the scooping points")
             scooping_points, bounding_boxes = self.get_scooping_points() # Sorted in order of left to right
             print(f"Scooping points: {scooping_points} | Bounding boxes: {bounding_boxes}, | Length: {len(scooping_points)}")
 
@@ -435,7 +445,7 @@ class FeedingManager():
                 check = input("Was the perception successful? (y/n): ")
             if check != 'y' or not perception_success:
                 rospy.logwarn("Getting scooping points failed. Moving to reset pose...")
-                self.say("Getting scooping points failed. Moving to reset pose")
+                self.say("Oopsie getting scooping points failed. Moving to reset pose")
                 self.reset()
                 continue
             # TODO: Handle if in the case get scooping points fail. Can move 3 times until we decide it fails
@@ -456,7 +466,7 @@ class FeedingManager():
                 input("Press ENTER to execute scooping")
             print("SCOOPING BBOX:", bowl_bbox)
             print("SCOOPING point:", point_to_be_scooped.point.x, point_to_be_scooped.point.y, point_to_be_scooped.point.z)
-            self.say(f"I am going to acquire the {next_bite}")
+            self.say(f"I am going to acquire {next_bite}")
             acquisition_success = self.execute_scooping(point_to_be_scooped, bowl_bbox, next_bite, bite_size)
             if self.input_interrupts:
                 check = input("Was the scooping successful? (y/n): ")
@@ -472,12 +482,12 @@ class FeedingManager():
                 if self.input_interrupts:
                     input("Press ENTER to continue to transfer pose")
 
-                self.say("I am moving to the transfer pose")
+                # self.say("I am moving to the transfer pose")
                 self.move_to_transfer_pose()
                 if self.input_interrupts:
                     input("Press ENTER to execute bite transfer")
 
-                self.say("I am going to transfer the bite now")
+                # self.say("I am going to transfer the bite now")
                 transfer_success = self.execute_bite_transfer(distance_to_mouth, exit_angle, transfer_speed)
                 print(f"Transfer success: {transfer_success}")
 
@@ -489,7 +499,7 @@ class FeedingManager():
                     transfer_success = False
             else:
                 rospy.logwarn("Acquisition failed. Moving to reset pose...")
-                self.say("Acquisition failed. Moving to reset pose")
+                self.say("Oopsie acquisition failed. Moving to reset pose")
                 self.reset()
                 continue
 
@@ -506,7 +516,7 @@ class FeedingManager():
                     break
             else:
                 rospy.logwarn("Transfer failed. Moving to reset pose...")
-                self.say("Transfer failed. Moving to reset pose")
+                self.say("Oopsie transfer failed. Moving to reset pose")
                 self.reset()
                 continue
 

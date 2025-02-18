@@ -1,4 +1,8 @@
 import ast
+from gtts import gTTS
+from pydub import AudioSegment
+from pydub.playback import play
+import io
 
 import rospy
 import rospkg
@@ -19,7 +23,7 @@ class PreferenceServer():
         self.history = []
         self.preference_change = True
         self.mode = 'decomposer'
-        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/real_arm_testing'
+        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/real_arm_testing/'
 
         self.preference_planner = PreferencePlanner()
 
@@ -29,10 +33,21 @@ class PreferenceServer():
         # Service server
         self.srv_feeding_parameters = rospy.Service('get_feeding_parameters', GetFeedingParam, self.get_feeding_parameters_cb)
         rospy.loginfo(f"Service server started")
+
+    def say(self, text):
+        tts = gTTS(text=text, lang="en", tld="us")  # "com" gives American English accentaudio_buffer = io.BytesIO()
+        audio_buffer = io.BytesIO()
+        tts.write_to_fp(audio_buffer)
+
+        audio_buffer.seek(0)
+        audio = AudioSegment.from_file(audio_buffer, format="mp3")
+        play(audio)
         
     def update_feeding_parameters(self):
 
         # TODO: Need to do something about this such that it won't rerun when I call it again
+
+        self.say("I am getting your feeding sequence now. Please wait.")
 
         self.feeding_sequence = self.preference_planner.plan(
             self.available_food_items, 
@@ -45,6 +60,8 @@ class PreferenceServer():
             self.output_directory
             )
         
+        self.say("I have obtained your feeding sequence.")
+
         self.preference_change = False
         
     def user_preference_cb(self, msg):
@@ -80,7 +97,7 @@ class PreferenceServer():
             self.available_food_items_portions = request.food_item_portions
             self.history = current_history
 
-            self.update_feeding_parameters()
+            # self.update_feeding_parameters()
 
             response.feeding_sequence = [FoodItem(food_item, bite_size, distance_to_mouth, exit_angle, transfer_speed) for food_item, bite_size, distance_to_mouth, exit_angle, transfer_speed in self.feeding_sequence]
             response.success = True
