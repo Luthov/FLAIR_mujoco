@@ -1,8 +1,4 @@
 import ast
-from gtts import gTTS
-from pydub import AudioSegment
-from pydub.playback import play
-import io
 
 import rospy
 import rospkg
@@ -12,6 +8,7 @@ from feeding_msgs.msg import FoodItem
 from feeding_msgs.srv import GetFeedingParam, GetFeedingParamResponse
 
 from preference_planner import PreferencePlanner
+from text_to_speech import say
 
 class PreferenceServer():
     def __init__(self):
@@ -33,21 +30,12 @@ class PreferenceServer():
         # Service server
         self.srv_feeding_parameters = rospy.Service('get_feeding_parameters', GetFeedingParam, self.get_feeding_parameters_cb)
         rospy.loginfo(f"Service server started")
-
-    def say(self, text):
-        tts = gTTS(text=text, lang="en", tld="us")  # "com" gives American English accentaudio_buffer = io.BytesIO()
-        audio_buffer = io.BytesIO()
-        tts.write_to_fp(audio_buffer)
-
-        audio_buffer.seek(0)
-        audio = AudioSegment.from_file(audio_buffer, format="mp3")
-        play(audio)
         
     def update_feeding_parameters(self):
 
         # TODO: Need to do something about this such that it won't rerun when I call it again
 
-        self.say("I am getting your feeding sequence now. Please wait.")
+        say("I am getting your feeding sequence now. Please wait.")
 
         self.feeding_sequence = self.preference_planner.plan(
             self.available_food_items, 
@@ -60,7 +48,7 @@ class PreferenceServer():
             self.output_directory
             )
         
-        self.say("I have obtained your feeding sequence.")
+        say("I have obtained your feeding sequence.")
 
         self.preference_change = False
         

@@ -188,6 +188,9 @@ class PreferencePlanner:
                 self.food_sequence = history + self.food_sequence
                 # print(f'FOOD SEQUENCE CONCAT HISTORY: {self.food_sequence}')
 
+                print('=== FOOD SEQUENCE BEFORE FINAL ===')
+                print(self.food_sequence)
+
                 with open(output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
                     f.write(f"=== BITE SEQUENCING RESPONSE ===\n{bite_sequencing_response}\n")
                     f.write(f"NEXT FOOD: {self.food_sequence}\n")
