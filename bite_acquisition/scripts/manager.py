@@ -3,10 +3,9 @@ import time
 import sys, signal
 from scipy.spatial.transform import Rotation as R
 from xarm.wrapper import XArmAPI
+import pygame
 from gtts import gTTS
-from pydub import AudioSegment
-from pydub.playback import play
-import io
+import tempfile
 
 import rospy
 import actionlib
@@ -144,14 +143,25 @@ class FeedingManager():
         self.disconnect_arm(reset=True)
         sys.exit(0)
 
-    def say(self, text):
-        tts = gTTS(text=text, lang="en", tld="us")  # "com" gives American English accentaudio_buffer = io.BytesIO()
-        audio_buffer = io.BytesIO()
-        tts.write_to_fp(audio_buffer)
+    def say(text):
+        # Create a temporary file to store the audio
+        with tempfile.NamedTemporaryFile(delete=True, suffix='.mp3') as temp_audio_file:
+            # Convert the text to speech
+            tts = gTTS(text=text, lang='en')
+            
+            # Save the audio to the temporary file
+            tts.save(temp_audio_file.name)
+            
+            # Initialize pygame mixer
+            pygame.mixer.init()
+            
+            # Load and play the audio file
+            pygame.mixer.music.load(temp_audio_file.name)
+            pygame.mixer.music.play()
 
-        audio_buffer.seek(0)
-        audio = AudioSegment.from_file(audio_buffer, format="mp3")
-        play(audio)
+            # Wait for the audio to finish before returning
+            while pygame.mixer.music.get_busy():
+                pygame.time.Clock().tick(10)
 
     def quat2euler(self, quaternion):
         """
