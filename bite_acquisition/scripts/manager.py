@@ -340,11 +340,6 @@ class FeedingManager():
             # input("Press Enter to continue...")
             # self.reset()
 
-            if self.simulated_sequence:
-                print("=== USING SIMULATED SEQUENCE ===")
-                feeding_sequence = [('minced meat', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('minced meat', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('minced meat', 3.0, 7.5, 90.0, 5.0)]
-                # feeding_sequence = [('corn', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0)]
-
             print("=== BITE HISTORY ===")
             rospy.logwarn(self.bite_history)
             print("=== SEQUENCE INDEX ===")
@@ -371,25 +366,27 @@ class FeedingManager():
             ##########################
             # 3. Get feeding params #
             ##########################
-            if not self.simulated_sequence:
-                if self.start_feeding or self.preference_change:
+            # if not self.simulated_sequence:
+            if self.start_feeding or self.preference_change:
 
-                    print("[Manager]: CALLING PLANNER")
-                    
-                    # say("I am getting the feeding parameters")
-                    feeding_sequence, feeding_param_success = self.get_feeding_params(
-                        self.bite_history, 
-                        food_portion_rounded
-                    )
+                print("CALLING PLANNER")
+                
+                feeding_sequence, feeding_param_success = self.get_feeding_params(
+                    self.bite_history, 
+                    food_portion_rounded
+                )
 
-                    if not feeding_param_success:
-                        # say("Failed to get feeding parameters. Please provide a user preference.")
-                        print('Failed to get feeding parameters. Please provide a user preference.')
-                        continue
+                if not feeding_param_success:
+                    print('Failed to get feeding parameters. Please provide a user preference.')
+                    continue
 
 
-                    self.start_feeding = False
-                    self.preference_change = False
+                self.start_feeding = False
+                self.preference_change = False
+
+            if self.simulated_sequence:
+                print("=== USING SIMULATED SEQUENCE ===")
+                feeding_sequence = [('minced meat', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('minced meat', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('minced meat', 3.0, 7.5, 90.0, 5.0)]
 
             print(f"Feeding sequence: {feeding_sequence}")
 
@@ -457,12 +454,12 @@ class FeedingManager():
             print("SCOOPING point:", point_to_be_scooped.point.x, point_to_be_scooped.point.y, point_to_be_scooped.point.z)
             say(f"I am going to acquire {next_bite}")
             acquisition_success = self.execute_scooping(point_to_be_scooped, bowl_bbox, next_bite, bite_size)
-            if self.input_interrupts:
-                check = input("Was the scooping successful? (y/n): ")
-            if check.lower() == 'y':
-                acquisition_success = True
-            else:
-                acquisition_success = False
+            # if self.input_interrupts:
+            #     check = input("Was the scooping successful? (y/n): ")
+            # if check.lower() == 'y':
+            #     acquisition_success = True
+            # else:
+            #     acquisition_success = False
 
             ############################
             # 5. Execute bite transfer #
@@ -497,6 +494,15 @@ class FeedingManager():
                     self.item_portions[idx] -= self.bite_portion
                     break
 
+            if sequence_idx == len(feeding_sequence):
+                try:
+                    with open(self.output_directory + f'results.txt', 'a') as f:
+                        f.write(f"=== FINAL HISTORY ===\n{self.bite_history}\n")
+                        # f.write(f"=== FINAL TOKEN HISTORY ===\n{self.token_history}\n")
+                        # f.write(f"=== USER PREFERENCE ===\n{user_preference}\n")
+                except:
+                    pass
+
             if transfer_success:
                 # self.actions_remaining -= 1
                 sequence_idx += 1
@@ -511,12 +517,6 @@ class FeedingManager():
 
             # Maybe want to publish history so that pref server can sub and update history
             self.bite_history.append(next_food)
-
-            # if (self.actions_remaining == 0) or (next_bite is []):
-            #     with open(self.output_directory + f'results.txt', 'a') as f:
-            #         f.write(f"=== FINAL HISTORY ===\n{self.bite_history}\n")
-            #         f.write(f"=== FINAL TOKEN HISTORY ===\n{self.token_history}\n")
-            #         f.write(f"=== USER PREFERENCE ===\n{user_preference}\n")
 
 if __name__ == "__main__":
     rospy.init_node("feeding_manager")

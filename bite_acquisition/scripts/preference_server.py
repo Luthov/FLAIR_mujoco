@@ -33,9 +33,10 @@ class PreferenceServer():
         
     def update_feeding_parameters(self):
 
-        # TODO: Need to do something about this such that it won't rerun when I call it again
 
         print(f'self.history {self.history}')
+
+        say("I am getting your feeding sequence now. Please wait.")
 
         self.feeding_sequence = self.preference_planner.plan(
             self.available_food_items, 
@@ -85,11 +86,7 @@ class PreferenceServer():
             self.available_food_items_portions = request.food_item_portions
             self.history = current_history
 
-            print(f'current_history: {current_history}')
-
-            say("I am getting your feeding sequence now. Please wait.")
             self.update_feeding_parameters()
-            say("I have obtained your feeding sequence.")
 
             response.feeding_sequence = [FoodItem(food_item, bite_size, distance_to_mouth, exit_angle, transfer_speed) for food_item, bite_size, distance_to_mouth, exit_angle, transfer_speed in self.feeding_sequence]
             response.success = True
