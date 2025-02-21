@@ -219,12 +219,15 @@ class PreferencePlanner:
                 print(motion_parameter_response)
 
             # Append responses and parameters to a file
-            # if preference_change:
-            #     with open(output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
-            #         f.write(f"=== HISTORY ===\n{history}\n")
-            #         f.write(f"=== USER PREFERENCE ===\n{preference}\n")
-            #         f.write(f"=== BITE PREFERENCE ===\n{self.bite_preference}\n")
-            #         f.write(f"=== TRANSFER PREFERENCE ===\n{self.motion_preference}\n")
+            if preference_change:
+                with open(output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
+                    try:
+                        f.write(f"=== HISTORY ===\n{history}\n")
+                        f.write(f"=== USER PREFERENCE ===\n{preference}\n")
+                        f.write(f"=== BITE PREFERENCE ===\n{self.bite_preference}\n")
+                        f.write(f"=== TRANSFER PREFERENCE ===\n{self.motion_preference}\n")
+                    except:
+                        pass
 
             return self.food_sequence
 

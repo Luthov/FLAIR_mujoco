@@ -6,7 +6,7 @@ def say(text):
     # Create a temporary file to store the audio
     with tempfile.NamedTemporaryFile(delete=True, suffix='.mp3') as temp_audio_file:
         # Convert the text to speech
-        tts = gTTS(text=text, lang='en')
+        tts = gTTS(text=text, lang='en', tld="us")
         
         # Save the audio to the temporary file
         tts.save(temp_audio_file.name)

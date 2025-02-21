@@ -20,7 +20,7 @@ class PreferenceServer():
         self.history = []
         self.preference_change = True
         self.mode = 'decomposer'
-        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/real_arm_testing/'
+        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/user_study/vassanth/'
 
         self.preference_planner = PreferencePlanner()
 
@@ -35,7 +35,7 @@ class PreferenceServer():
 
         # TODO: Need to do something about this such that it won't rerun when I call it again
 
-        say("I am getting your feeding sequence now. Please wait.")
+        print(f'self.history {self.history}')
 
         self.feeding_sequence = self.preference_planner.plan(
             self.available_food_items, 
@@ -48,7 +48,7 @@ class PreferenceServer():
             self.output_directory
             )
         
-        say("I have obtained your feeding sequence.")
+        # say("I have obtained your feeding sequence.")
 
         self.preference_change = False
         
@@ -62,8 +62,8 @@ class PreferenceServer():
         self.preference_change = True
 
         # Get updated feeding parameters
-        rospy.loginfo("Calling planner")
-        self.update_feeding_parameters()
+        # rospy.loginfo("Calling planner")
+        # self.update_feeding_parameters()
 
 
     def get_feeding_parameters_cb(self, request):
@@ -85,7 +85,11 @@ class PreferenceServer():
             self.available_food_items_portions = request.food_item_portions
             self.history = current_history
 
-            # self.update_feeding_parameters()
+            print(f'current_history: {current_history}')
+
+            say("I am getting your feeding sequence now. Please wait.")
+            self.update_feeding_parameters()
+            say("I have obtained your feeding sequence.")
 
             response.feeding_sequence = [FoodItem(food_item, bite_size, distance_to_mouth, exit_angle, transfer_speed) for food_item, bite_size, distance_to_mouth, exit_angle, transfer_speed in self.feeding_sequence]
             response.success = True

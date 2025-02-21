@@ -49,7 +49,7 @@ class FeedingManager():
         self.start_feeding = True
         self.start = True
 
-        self.simulated_sequence = True
+        self.simulated_sequence = False
         self.input_interrupts = False
 
         signal.signal(signal.SIGINT, self.signal_handler)
@@ -256,11 +256,11 @@ class FeedingManager():
 
         # goal.target_amount = target_amount * 10
         if next_bite == 'mashed potatoes':
-            goal.target_amount = target_amount * 5
+            goal.target_amount = (target_amount * 5) + 10
         elif next_bite == 'corn':
-            goal.target_amount = (target_amount * 5)
+            goal.target_amount = (target_amount * 15) + 10
         elif next_bite == 'minced meat':
-            goal.target_amount = (target_amount * 5)
+            goal.target_amount = (target_amount * 15) + 10
         else:
             goal.target_amount = (target_amount * 5)
 
@@ -324,7 +324,7 @@ class FeedingManager():
         if self.input_interrupts:
             input("If you haven't already. give a user preference using the mic. Then press ENTER to continue")
 
-        sequence_idx = 3
+        sequence_idx = 0
 
         if not self.input_interrupts:
             check = 'y'
