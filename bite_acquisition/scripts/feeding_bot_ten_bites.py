@@ -20,7 +20,7 @@ class FeedingBot:
         # Choose to use decomposer or not
         self.mode = 'decomposer'
         # self.mode = 'decomposer'
-        self.decomposer_output_directory = 'feeding_bot_output/user_study/aaradh/'
+        self.decomposer_output_directory = 'feeding_bot_output/user_study/hauwen/'
         self.no_decomposer_output_directory = 'feeding_bot_output/interview_outputs/prompt_improvements/'
 
         if self.mode == 'decomposer':
@@ -34,29 +34,6 @@ class FeedingBot:
         self.preferences = [1]
 
     def clear_plate(self):
-
-        # for participant in self.participant_list:
-
-            # if participant == 'ethan':
-            #     interview_preferences = ethan_interview_preferences
-            # elif participant == 'matthew':
-            #     interview_preferences = matthew_interview_preferences
-            # elif participant == 'hauwen':
-            #     interview_preferences = hau_wen_interview_preferences
-            # elif participant == 'jonathan':
-            #     interview_preferences = jonathan_interview_preferences
-            # elif participant == 'yiheng':
-            #     interview_preferences = yi_heng_interview_preferences
-            # elif participant == 'amirul':
-            #     interview_preferences = amirul_interview_preferences
-            # elif participant == 'janssen':
-            #     interview_preferences = janssen_interview_preferences
-            # elif participant == 'ben':
-            #     interview_preferences = ben_interview_preferences
-            # elif participant == 'aaradh':
-            #     interview_preferences = aaradh_interview_preferences
-            # elif participant == 'darren':
-            #     interview_preferences = darren_interview_preferences
 
         self.items = [
                 ["rice", "chicken", "mixed vegetables"],
@@ -86,12 +63,40 @@ class FeedingBot:
             "First, alternate between all the foods except the oranges. I would like to have the oranges as dessert. ",
             "I would like to finish all the mash potatoes, green beans and carrots first in an alternating pattern. Then all the steak last. "
         ]
-        interview_preferences = [
+        vassanth_interview_preferences = [
             "I have no preference.",
             # "Feed me mostly rice followed by chicken and cucumber. ",
             "Feed me mostly rice followed by alternating between chicken and cucumber. ",
             "Feed me broccoli first and once that finishes alternate between beef, orange and rice.",
             "Feed me all the steak first then all the mashed potatoes then alternate between carrots and green beans"
+        ]
+        
+        ritesh_interview_preferences = [
+            "veggies first then the rest. Try to alternate textures for the 'rest'.",
+            "cucumbers first, then an alternating combination of rice and chicken",
+            "i can't eat beef, the rest just randomise the textures.",
+            "alternate all the textures, no other preference of order."
+        ]
+
+        gabriel_interview_preferences = [
+            "Please alternate between the food",
+            "I want to eat chicken, rice and cucumber in sequence",
+            "I want to finish the broccoli first, then alternate between the other items",
+            "I want to finish the steak first and then alternate between items"
+        ]
+
+        interview_preferences = [
+            "Alternate between rice and other foods. Leave more chicken at the end",
+            "Alternate between rice and other foods, leave more chicken at the end",
+            "Alternate between rice and other foods, leave all the oranges to the end",
+            "Alternate between mashed potatoes and other foods, leave more steak at the end"
+        ]
+
+        interview_preferences = [
+            "Alternate between rice and other foods. Leave more chicken at the end. For other foods also alternate between chicken and vegetables.",
+            "Alternate between rice and other foods, leave more chicken at the end. for other foods alternate between chicken and cucumber",
+            "",
+            "Alternate between mashed potatoes and other foods, leave more steak at the end. Dont have 3 of the same foods consecutively"
         ]
     
         for preference_idx in self.preferences: # range(len(icorr_preferences)):

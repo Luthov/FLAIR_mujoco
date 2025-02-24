@@ -115,8 +115,8 @@ class PreferencePlanner:
         if mode == 'decomposer':
 
             # Extracting bite preference and transfer preference
-            if preference_change:
-                _ = self.parse_preferences(preference)
+            # if preference_change:
+            #     _ = self.parse_preferences(preference)
 
             if self.update_motion_params:
 
@@ -147,6 +147,9 @@ class PreferencePlanner:
                     f.write(f"=== TRANSFER PARAMS RESPONSE ===\n{motion_parameter_response}\n")
 
                 self.update_motion_params = False
+            
+            self.update_bite_sequence = True
+            self.current_motion_params = 'None'
 
             if self.update_bite_sequence:
                 # Reading prompts
@@ -160,7 +163,7 @@ class PreferencePlanner:
                     str(items),
                     portions_sentence,
                     str(bite_sequencing_history),
-                    self.bite_preference
+                    preference
                     )
                 
                 print('=== CALLING FEEDING PLANNER ===')
