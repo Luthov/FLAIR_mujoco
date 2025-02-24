@@ -20,7 +20,7 @@ class PreferenceServer():
         self.history = []
         self.preference_change = True
         self.mode = 'decomposer'
-        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/user_study/vassanth/'
+        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/user_study/hauwen/scenario_a_'
 
         self.preference_planner = PreferencePlanner()
 
@@ -32,7 +32,6 @@ class PreferenceServer():
         rospy.loginfo(f"Service server started")
         
     def update_feeding_parameters(self):
-
 
         print(f'self.history {self.history}')
 
@@ -59,6 +58,7 @@ class PreferenceServer():
         """
         self.user_preference = msg.data
         rospy.loginfo(f"Obtained user preference")
+        say("I have received your preference.")
 
         self.preference_change = True
 

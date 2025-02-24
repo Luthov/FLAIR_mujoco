@@ -5,6 +5,7 @@ from scipy.spatial.transform import Rotation as R
 from xarm.wrapper import XArmAPI
 
 import rospy
+import rospkg
 import actionlib
 
 from geometry_msgs.msg import PoseStamped
@@ -42,6 +43,9 @@ class FeedingManager():
             self.item_portions = [3.0] * len(self.items)
             self.actions_remaining = 12
 
+        # self.item_portions = [3.0, 3.0, 2.0]
+
+        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/user_study/hauwen/scenario_a_'
         self.bite_portion = 1.0
         self.bite_history = []
         self.token_history = []
@@ -49,7 +53,7 @@ class FeedingManager():
         self.start_feeding = True
         self.start = True
 
-        self.simulated_sequence = False
+        self.simulated_sequence = True
         self.input_interrupts = False
 
         signal.signal(signal.SIGINT, self.signal_handler)
@@ -273,7 +277,7 @@ class FeedingManager():
         self.execute_scooping_client.wait_for_result()
         result = self.execute_scooping_client.get_result()
         rospy.loginfo(f"Result received: success={result.scooping_success}, reward={result.reward}, actual_amount={result.actual_amount}")
-        return result
+        return result.scooping_success
     
     def feedback_callback(self, feedback):
         """
@@ -302,12 +306,12 @@ class FeedingManager():
         req_feeding_params.food_item_portions = food_item_portions
         resp_feeding_params = self.get_feeding_params_client(req_feeding_params)
 
-        print(f"RAW FEEDING SEQUENCE: {resp_feeding_params.feeding_sequence}")
+        # print(f"RAW FEEDING SEQUENCE: {resp_feeding_params.feeding_sequence}")
 
         feeding_sequence = food_tuples = [(item.food_item, item.bite_size, item.distance_to_mouth, item.exit_angle, item.transfer_speed) for item in resp_feeding_params.feeding_sequence]
         success = resp_feeding_params.success
-        rospy.loginfo("=== ARRANGED FEEDING SEQUENCE ===")
-        rospy.logwarn(feeding_sequence)
+        # rospy.loginfo("=== ARRANGED FEEDING SEQUENCE ===")
+        # rospy.logwarn(feeding_sequence)
 
         return feeding_sequence, success
 
@@ -331,25 +335,16 @@ class FeedingManager():
 
         while True:
 
-            # print(f"=== ACTIONS REMAINING ===")
-            # print(self.actions_remaining)
-
-            ############
-            # 1. RESET #
-            ############
-            # input("Press Enter to continue...")
-            # self.reset()
-
-            print("=== BITE HISTORY ===")
+            rospy.logwarn("=== BITE HISTORY ===")
             rospy.logwarn(self.bite_history)
-            print("=== SEQUENCE INDEX ===")
+            rospy.logwarn("=== SEQUENCE INDEX ===")
             rospy.logwarn(sequence_idx)
 
-            ############################## c
+            ############################## 
             # 2. Move to Perception pose #
             ##############################
             if self.start:
-                say("I am ready to start feeding. Please give your preference and wait until I have obtained the feeding sequence. After that you may press the button.")
+                say("I am ready to start feeding. Please give your preference and wait until I have received it. After that you may press the button.")
                 self.start = False
             else:
                 say("I am ready to start feeding. Please press the button when you are ready.")
@@ -366,10 +361,9 @@ class FeedingManager():
             ##########################
             # 3. Get feeding params #
             ##########################
-            # if not self.simulated_sequence:
             if self.start_feeding or self.preference_change:
 
-                print("CALLING PLANNER")
+                # print("CALLING PLANNER")
                 
                 feeding_sequence, feeding_param_success = self.get_feeding_params(
                     self.bite_history, 
@@ -388,7 +382,7 @@ class FeedingManager():
                 print("=== USING SIMULATED SEQUENCE ===")
                 feeding_sequence = [('minced meat', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('minced meat', 3.0, 7.5, 90.0, 5.0), ('corn', 3.0, 7.5, 90.0, 5.0), ('mashed potatoes', 3.0, 7.5, 90.0, 5.0), ('minced meat', 3.0, 7.5, 90.0, 5.0)]
 
-            print(f"Feeding sequence: {feeding_sequence}")
+            rospy.logwarn(f"Feeding sequence: {feeding_sequence}")
 
             next_food = feeding_sequence[sequence_idx]
             next_bite = next_food[0]
@@ -418,7 +412,6 @@ class FeedingManager():
             ###########################
             if self.input_interrupts:
                 input("Press ENTER to get scooping points")
-            # say("I am getting the scooping points")
             scooping_points, bounding_boxes = self.get_scooping_points() # Sorted in order of left to right
             print(f"Scooping points: {scooping_points} | Bounding boxes: {bounding_boxes}, | Length: {len(scooping_points)}")
 
@@ -454,12 +447,6 @@ class FeedingManager():
             print("SCOOPING point:", point_to_be_scooped.point.x, point_to_be_scooped.point.y, point_to_be_scooped.point.z)
             say(f"I am going to acquire {next_bite}")
             acquisition_success = self.execute_scooping(point_to_be_scooped, bowl_bbox, next_bite, bite_size)
-            # if self.input_interrupts:
-            #     check = input("Was the scooping successful? (y/n): ")
-            # if check.lower() == 'y':
-            #     acquisition_success = True
-            # else:
-            #     acquisition_success = False
 
             ############################
             # 5. Execute bite transfer #
@@ -498,8 +485,6 @@ class FeedingManager():
                 try:
                     with open(self.output_directory + f'results.txt', 'a') as f:
                         f.write(f"=== FINAL HISTORY ===\n{self.bite_history}\n")
-                        # f.write(f"=== FINAL TOKEN HISTORY ===\n{self.token_history}\n")
-                        # f.write(f"=== USER PREFERENCE ===\n{user_preference}\n")
                 except:
                     pass
 
