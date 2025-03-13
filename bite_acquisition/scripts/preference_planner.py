@@ -115,8 +115,8 @@ class PreferencePlanner:
         if mode == 'decomposer':
 
             # Extracting bite preference and transfer preference
-            if preference_change:
-                _ = self.parse_preferences(preference)
+            # if preference_change:
+            #     _ = self.parse_preferences(preference)
 
             if self.update_motion_params:
 
@@ -147,6 +147,9 @@ class PreferencePlanner:
                     f.write(f"=== TRANSFER PARAMS RESPONSE ===\n{motion_parameter_response}\n")
 
                 self.update_motion_params = False
+            
+            self.update_bite_sequence = True
+            self.current_motion_params = 'None'
 
             if self.update_bite_sequence:
                 # Reading prompts
@@ -160,7 +163,7 @@ class PreferencePlanner:
                     str(items),
                     portions_sentence,
                     str(bite_sequencing_history),
-                    self.bite_preference
+                    preference
                     )
                 
                 print('=== CALLING FEEDING PLANNER ===')
@@ -187,6 +190,9 @@ class PreferencePlanner:
                 # print(f'FOOD SEQUENCE AFTER UPDATE: {self.food_sequence}')
                 self.food_sequence = history + self.food_sequence
                 # print(f'FOOD SEQUENCE CONCAT HISTORY: {self.food_sequence}')
+
+                print('=== FOOD SEQUENCE BEFORE FINAL ===')
+                print(self.food_sequence)
 
                 with open(output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
                     f.write(f"=== BITE SEQUENCING RESPONSE ===\n{bite_sequencing_response}\n")
@@ -216,12 +222,15 @@ class PreferencePlanner:
                 print(motion_parameter_response)
 
             # Append responses and parameters to a file
-            # if preference_change:
-            #     with open(output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
-            #         f.write(f"=== HISTORY ===\n{history}\n")
-            #         f.write(f"=== USER PREFERENCE ===\n{preference}\n")
-            #         f.write(f"=== BITE PREFERENCE ===\n{self.bite_preference}\n")
-            #         f.write(f"=== TRANSFER PREFERENCE ===\n{self.motion_preference}\n")
+            if preference_change:
+                with open(output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
+                    try:
+                        f.write(f"=== HISTORY ===\n{history}\n")
+                        f.write(f"=== USER PREFERENCE ===\n{preference}\n")
+                        f.write(f"=== BITE PREFERENCE ===\n{self.bite_preference}\n")
+                        f.write(f"=== TRANSFER PREFERENCE ===\n{self.motion_preference}\n")
+                    except:
+                        pass
 
             return self.food_sequence
 

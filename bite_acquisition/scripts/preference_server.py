@@ -8,6 +8,7 @@ from feeding_msgs.msg import FoodItem
 from feeding_msgs.srv import GetFeedingParam, GetFeedingParamResponse
 
 from preference_planner import PreferencePlanner
+from text_to_speech import say
 
 class PreferenceServer():
     def __init__(self):
@@ -19,7 +20,7 @@ class PreferenceServer():
         self.history = []
         self.preference_change = True
         self.mode = 'decomposer'
-        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/real_arm_testing'
+        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/user_study/hauwen/scenario_a_'
 
         self.preference_planner = PreferencePlanner()
 
@@ -32,7 +33,9 @@ class PreferenceServer():
         
     def update_feeding_parameters(self):
 
-        # TODO: Need to do something about this such that it won't rerun when I call it again
+        print(f'self.history {self.history}')
+
+        say("I am getting your feeding sequence now. Please wait.")
 
         self.feeding_sequence = self.preference_planner.plan(
             self.available_food_items, 
@@ -45,6 +48,8 @@ class PreferenceServer():
             self.output_directory
             )
         
+        # say("I have obtained your feeding sequence.")
+
         self.preference_change = False
         
     def user_preference_cb(self, msg):
@@ -53,12 +58,13 @@ class PreferenceServer():
         """
         self.user_preference = msg.data
         rospy.loginfo(f"Obtained user preference")
+        say("I have received your preference.")
 
         self.preference_change = True
 
         # Get updated feeding parameters
-        rospy.loginfo("Calling planner")
-        self.update_feeding_parameters()
+        # rospy.loginfo("Calling planner")
+        # self.update_feeding_parameters()
 
 
     def get_feeding_parameters_cb(self, request):
