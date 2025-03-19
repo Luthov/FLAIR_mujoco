@@ -14,6 +14,7 @@ from feeding_msgs.srv import GetFeedingParam, GetFeedingParamRequest
 from feeding_msgs.srv import GetScoopingPoint, GetScoopingPointRequest
 from feeding_msgs.msg import ScoopAction, ScoopGoal
 from feeding_msgs.msg import BiteTransferAction, BiteTransferGoal
+from feeding_msgs.msg import FoodItem, NextFoodItems
 
 from text_to_speech import say
 
@@ -88,6 +89,10 @@ class FeedingManager():
         rospy.loginfo("Waiting for scooping server")
         self.execute_scooping_client.wait_for_server()
         rospy.loginfo("Connected to scooping server")
+
+        # Publishers
+        self.pub_feeding_params = rospy.Publisher("feeding_params", FoodItem, queue_size=5)
+        self.pub_next_food_items = rospy.Publisher("next_food_items", NextFoodItems, queue_size=5)
     
     def setup_arm(self, ip="192.168.1.201", reset=False):
         """
@@ -308,7 +313,7 @@ class FeedingManager():
 
         # print(f"RAW FEEDING SEQUENCE: {resp_feeding_params.feeding_sequence}")
 
-        feeding_sequence = food_tuples = [(item.food_item, item.bite_size, item.distance_to_mouth, item.exit_angle, item.transfer_speed) for item in resp_feeding_params.feeding_sequence]
+        feeding_sequence = [(item.food_item, item.bite_size, item.distance_to_mouth, item.exit_angle, item.transfer_speed) for item in resp_feeding_params.feeding_sequence]
         success = resp_feeding_params.success
         # rospy.loginfo("=== ARRANGED FEEDING SEQUENCE ===")
         # rospy.logwarn(feeding_sequence)
@@ -387,11 +392,20 @@ class FeedingManager():
             next_food = feeding_sequence[sequence_idx]
             next_bite = next_food[0]
             print("Next bite:", next_bite)
+
+            # Get the next 3 food items - for webapp
+            next_food_item_msg = NextFoodItems()
+            remaining_items = feeding_sequence[sequence_idx:]
+            next_food_item_msg.next_food_items = [item for item in remaining_items[:3]]
+            next_food_item_msg.num_food_items_left = len(remaining_items)
+            self.pub_next_food_items.publish(next_food_item_msg)
+
             bite_size = next_food[1]
             distance_to_mouth = next_food[2]
             exit_angle = next_food[3]
             transfer_speed = next_food[4]
-
+            
+            # Enforce limits on feeding params
             if distance_to_mouth < 5.0:
                 distance_to_mouth = 5.0
             if distance_to_mouth > 10.0:
@@ -407,6 +421,15 @@ class FeedingManager():
             if transfer_speed > 10.0:
                 transfer_speed = 10.0
             
+            # Publish params to webapp
+            next_food_item_msg = FoodItem()
+            next_food_item_msg.food_item = next_bite
+            next_food_item_msg.bite_size = bite_size
+            next_food_item_msg.distance_to_mouth = distance_to_mouth
+            next_food_item_msg.exit_angle = exit_angle
+            next_food_item_msg.transfer_speed = transfer_speed
+            self.pub_feeding_params.publish(feeding_sequence)
+
             ###########################
             # 4a. Get scooping points #
             ###########################
