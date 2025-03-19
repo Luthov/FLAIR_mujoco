@@ -14,7 +14,7 @@ from feeding_msgs.srv import GetFeedingParam, GetFeedingParamRequest
 from feeding_msgs.srv import GetScoopingPoint, GetScoopingPointRequest
 from feeding_msgs.msg import ScoopAction, ScoopGoal
 from feeding_msgs.msg import BiteTransferAction, BiteTransferGoal
-from feeding_msgs.msg import FoodItem, NextFoodItems
+from feeding_msgs.msg import FoodItem, NextFoodItems, RobotFeedback
 
 from text_to_speech import say
 
@@ -93,6 +93,7 @@ class FeedingManager():
         # Publishers
         self.pub_feeding_params = rospy.Publisher("feeding_params", FoodItem, queue_size=5)
         self.pub_next_food_items = rospy.Publisher("next_food_items", NextFoodItems, queue_size=5)
+        self.pub_robot_feedback = rospy.Publisher("robot_feedback", RobotFeedback, queue_size=5)
     
     def setup_arm(self, ip="192.168.1.201", reset=False):
         """
@@ -327,6 +328,14 @@ class FeedingManager():
         scooping_points = resp_scooping_points.scooping_points
         bounding_boxes = resp_scooping_points.bounding_boxes
         return scooping_points, bounding_boxes
+    
+    def give_feedback(self, message, level, audio=True):
+        if audio:
+            say(message)
+        robot_feedback_msg = RobotFeedback()
+        robot_feedback_msg.feedback = message
+        robot_feedback_msg.level = level
+        self.pub_robot_feedback.publish(robot_feedback_msg)
 
     def feed(self):
         
@@ -349,16 +358,24 @@ class FeedingManager():
             # 2. Move to Perception pose #
             ##############################
             if self.start:
-                say("I am ready to start feeding. Please give your preference and wait until I have received it. After that you may press the button.")
+                self.give_feedback(
+                    message = "I am ready to start feeding. Please give your preference and wait until I have received it. After that you may press the button.",
+                    level = "info")
                 self.start = False
             else:
-                say("I am ready to start feeding. Please press the button when you are ready.")
+                self.give_feedback(
+                    message = "I am ready to start feeding. Please press the button when you are ready.",
+                    level = "info")
             self.start_feeding_button()
 
             if self.input_interrupts:
                 input("Press Enter to move to perception pose...")
 
-            # say("I am moving to perception pose")
+            self.give_feedback(
+                message = "Starting feeding.... Moving to see the food available",
+                level = "info",
+                audio = False
+            )
             self.move_to_perception_pose()
 
             food_portion_rounded = [round(portion) for portion in self.item_portions]
@@ -447,7 +464,9 @@ class FeedingManager():
                 check = input("Was the perception successful? (y/n): ")
             if check != 'y' or not perception_success:
                 rospy.logwarn("Getting scooping points failed. Moving to reset pose...")
-                say("Oopsie getting scooping points failed. Moving to reset pose")
+                self.give_feedback(
+                    message = "Oopsie getting scooping points failed. Moving to reset pose",
+                    level = "warning")
                 self.reset()
                 continue
             # TODO: Handle if in the case get scooping points fail. Can move 3 times until we decide it fails
@@ -468,7 +487,9 @@ class FeedingManager():
                 input("Press ENTER to execute scooping")
             print("SCOOPING BBOX:", bowl_bbox)
             print("SCOOPING point:", point_to_be_scooped.point.x, point_to_be_scooped.point.y, point_to_be_scooped.point.z)
-            say(f"I am going to acquire {next_bite}")
+            self.give_feedback(
+                message = f"I am going to acquire {next_bite}",
+                level = "info")
             acquisition_success = self.execute_scooping(point_to_be_scooped, bowl_bbox, next_bite, bite_size)
 
             ############################
@@ -484,6 +505,11 @@ class FeedingManager():
                     input("Press ENTER to execute bite transfer")
 
                 # say("I am going to transfer the bite now")
+                self.give_feedback(
+                    message = "Transferring the food to you now...",
+                    level = "info", 
+                    audio = False
+                )
                 transfer_success = self.execute_bite_transfer(distance_to_mouth, exit_angle, transfer_speed)
                 print(f"Transfer success: {transfer_success}")
 
@@ -491,11 +517,18 @@ class FeedingManager():
                     check = input("Was the transfer successful? (y/n): ")
                 if check.lower() == 'y':
                     transfer_success = True
+                    self.give_feedback(
+                        message = "Transfer success!",
+                        level = "success",
+                        audio = False
+                    )
                 else:
                     transfer_success = False
             else:
                 rospy.logwarn("Acquisition failed. Moving to reset pose...")
-                say("Oopsie acquisition failed. Moving to reset pose")
+                self.give_feedback(
+                    message = "Oopsie acquisition failed. Moving to reset pose",
+                    level = "warning")
                 self.reset()
                 continue
 
@@ -519,7 +552,9 @@ class FeedingManager():
                     break
             else:
                 rospy.logwarn("Transfer failed. Moving to reset pose...")
-                say("Oopsie transfer failed. Moving to reset pose")
+                self.give_feedback(
+                    message = "Oopsie transfer failed. Moving to reset pose",
+                    level = "warning")
                 self.reset()
                 continue
 
