@@ -46,7 +46,7 @@ class FeedingManager():
 
         # self.item_portions = [3.0, 3.0, 2.0]
 
-        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/user_study/hauwen/scenario_a_'
+        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/user_study/luke/'
         self.bite_portion = 1.0
         self.bite_history = []
         self.token_history = []
@@ -54,7 +54,7 @@ class FeedingManager():
         self.start_feeding = True
         self.start = True
 
-        self.simulated_sequence = True
+        self.simulated_sequence = False
         self.input_interrupts = False
 
         signal.signal(signal.SIGINT, self.signal_handler)
@@ -330,12 +330,12 @@ class FeedingManager():
         return scooping_points, bounding_boxes
     
     def give_feedback(self, message, level, audio=True):
-        if audio:
-            say(message)
         robot_feedback_msg = RobotFeedback()
         robot_feedback_msg.feedback = message
         robot_feedback_msg.level = level
         self.pub_robot_feedback.publish(robot_feedback_msg)
+        if audio:
+            say(message)
 
     def feed(self):
         
@@ -413,7 +413,7 @@ class FeedingManager():
             # Get the next 3 food items - for webapp
             next_food_item_msg = NextFoodItems()
             remaining_items = feeding_sequence[sequence_idx:]
-            next_food_item_msg.next_food_items = [item for item in remaining_items[:3]]
+            next_food_item_msg.next_food_items = [item[0] for item in remaining_items[:3]]
             next_food_item_msg.num_food_items_left = len(remaining_items)
             self.pub_next_food_items.publish(next_food_item_msg)
 
@@ -445,7 +445,7 @@ class FeedingManager():
             next_food_item_msg.distance_to_mouth = distance_to_mouth
             next_food_item_msg.exit_angle = exit_angle
             next_food_item_msg.transfer_speed = transfer_speed
-            self.pub_feeding_params.publish(feeding_sequence)
+            self.pub_feeding_params.publish(next_food_item_msg)
 
             ###########################
             # 4a. Get scooping points #

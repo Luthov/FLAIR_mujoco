@@ -62,7 +62,7 @@ class SpeechTranscriber():
         
         self.porcupine = pvporcupine.create(
             access_key=PICO_ACCESS_KEY,
-            keyword_paths=[os.path.join(BASE_PATH, '../../../Hey-Frank_en_linux_v3_0_0.ppn')],
+            keyword_paths=[os.path.join(BASE_PATH, '../../Hey-Frank_en_linux_v3_0_0.ppn')],
             sensitivities=[0.5]
         )
         self._sampling_rate = self.porcupine.sample_rate    # 16000 Hz

@@ -20,7 +20,7 @@ class PreferenceServer():
         self.history = []
         self.preference_change = True
         self.mode = 'decomposer'
-        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/user_study/hauwen/scenario_a_'
+        self.output_directory = rospkg.RosPack().get_path('bite_acquisition') + '/scripts/feeding_bot_output/user_study/luke/'
 
         self.preference_planner = PreferencePlanner()
 

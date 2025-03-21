@@ -85,7 +85,7 @@ class PreferencePlanner:
         print(preference)
         print(f"=== BITE PREFERENCE ===")
         print(bite_preference)
-        print(f"=== TRANSFER PREFERENCE ===")
+        print(f"=== MOTION PREFERENCE ===")
         print(motion_parameter_preference)
 
         if bite_preference != 'None':
@@ -115,8 +115,8 @@ class PreferencePlanner:
         if mode == 'decomposer':
 
             # Extracting bite preference and transfer preference
-            # if preference_change:
-            #     _ = self.parse_preferences(preference)
+            if preference_change:
+                _ = self.parse_preferences(preference)
 
             if self.update_motion_params:
 
@@ -144,12 +144,12 @@ class PreferencePlanner:
 
                 with open(output_directory + f'motion_param_output_idx_{preference_idx}.txt', 'a') as f:
                     f.write(f"=== CURRENT MOTION PARAMS ===\n{self.current_motion_params}\n")
-                    f.write(f"=== TRANSFER PARAMS RESPONSE ===\n{motion_parameter_response}\n")
+                    f.write(f"=== MOTION PARAMS RESPONSE ===\n{motion_parameter_response}\n")
 
                 self.update_motion_params = False
             
-            self.update_bite_sequence = True
-            self.current_motion_params = 'None'
+            # self.update_bite_sequence = True
+            # self.current_motion_params = 'None'
 
             if self.update_bite_sequence:
                 # Reading prompts
@@ -215,10 +215,10 @@ class PreferencePlanner:
                 print(f"BITE PREFERENCE: {self.bite_preference}\n")
                 print(bite_sequencing_response)
 
-                print(f"=== TRANSFER PARAMS PROMPT ===")
+                print(f"=== MOTION PARAMS PROMPT ===")
                 print(motion_params_prompt)
-                print("\n=== TRANSFER PARAMS RESPONSE ===")
-                print(f"TRANSFER PREFERENCE: {self.motion_parameter_preference}\n")
+                print("\n=== MOTION PARAMS RESPONSE ===")
+                print(f"MOTION PREFERENCE: {self.motion_parameter_preference}\n")
                 print(motion_parameter_response)
 
             # Append responses and parameters to a file
@@ -228,7 +228,7 @@ class PreferencePlanner:
                         f.write(f"=== HISTORY ===\n{history}\n")
                         f.write(f"=== USER PREFERENCE ===\n{preference}\n")
                         f.write(f"=== BITE PREFERENCE ===\n{self.bite_preference}\n")
-                        f.write(f"=== TRANSFER PREFERENCE ===\n{self.motion_preference}\n")
+                        f.write(f"=== MOTION PREFERENCE ===\n{self.motion_parameter_preference}\n")
                     except:
                         pass
 
